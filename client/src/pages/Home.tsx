@@ -3,6 +3,7 @@ import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, Dollar
 import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
 import DeducoesDeepDive from '@/components/DeducoesDeepDive';
 import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
+import RPADeepDive from '@/components/RPADeepDive';
 
 export default function Home() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -12,7 +13,7 @@ export default function Home() {
   // Detectar seção ativa ao fazer scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'parte1', 'parte2', 'parte3', 'carneLeao', 'deducoes', 'regimes'];
+      const sections = ['home', 'parte1', 'parte2', 'parte3', 'carneLeao', 'deducoes', 'regimes', 'rpa'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -44,6 +45,7 @@ export default function Home() {
     { id: 'carneLeao', title: 'Aprofundamento: Carnê-Leão', icon: BarChart3 },
     { id: 'deducoes', title: 'Aprofundamento: Deduções', icon: DollarSign },
     { id: 'regimes', title: 'Aprofundamento: PF vs MEI vs Empresa', icon: TrendingUp },
+    { id: 'rpa', title: 'Aprofundamento: Retenção (RPA)', icon: AlertCircle },
   ];
 
   const scrollToSection = (sectionId: string) => {
@@ -942,6 +944,11 @@ export default function Home() {
         {/* APROFUNDAMENTO: PF vs MEI vs EMPRESA */}
         <section id="regimes" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <PFvsMEIvsEmpresaDeepDive />
+        </section>
+
+        {/* APROFUNDAMENTO: RETENÇÃO (RPA) */}
+        <section id="rpa" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+          <RPADeepDive />
         </section>
       </main>
     </div>
