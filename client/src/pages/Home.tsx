@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X } from 'lucide-react';
+import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Star } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Home() {
@@ -117,8 +117,20 @@ export default function Home() {
         {/* HOME SECTION */}
         <section id="home" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           {/* Hero */}
-          <div className="bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg md:rounded-xl p-4 md:p-6 text-white space-y-3 md:space-y-4 animate-fade-in-up shadow-lg">
-            <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Transforme sua Arte em Carreira Profissional</h2>
+          <div className="bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg md:rounded-xl p-4 md:p-6 text-white space-y-3 md:space-y-4 animate-fade-in-up shadow-lg relative overflow-hidden">
+            {/* Banner Flutuante Mobile */}
+            <div className="md:hidden absolute top-0 right-0 p-2">
+              <Link href="/pro" className="bg-[#E07856] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+                🚀 Ver Kit PRO
+              </Link>
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Transforme sua Arte em Carreira Profissional</h2>
+              <Link href="/pro" className="hidden md:inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D06846] text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg transform hover:-translate-y-0.5">
+                <Star size={16} /> Conheça o Kit MusicoPro
+              </Link>
+            </div>
             <p className="text-xs md:text-sm leading-relaxed opacity-90">
               Tudo o que você precisa saber sobre Imposto de Renda, Carnê-Leão, MEI e gestão fiscal para músicos autônomos.
             </p>
