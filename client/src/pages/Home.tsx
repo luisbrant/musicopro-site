@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X } from 'lucide-react';
-import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
-import DeducoesDeepDive from '@/components/DeducoesDeepDive';
-import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
-import RPADeepDive from '@/components/RPADeepDive';
+import { Link } from 'wouter';
 
 export default function Home() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
@@ -13,7 +10,7 @@ export default function Home() {
   // Detectar seção ativa ao fazer scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'parte1', 'parte2', 'parte3', 'carneLeao', 'deducoes', 'regimes', 'rpa'];
+      const sections = ['home', 'parte1', 'parte2', 'parte3'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -42,10 +39,6 @@ export default function Home() {
     { id: 'parte1', title: 'Parte 1: Fundamentos', icon: BookOpen },
     { id: 'parte2', title: 'Parte 2: Gestão Fiscal', icon: DollarSign },
     { id: 'parte3', title: 'Parte 3: Implementação', icon: CheckCircle2 },
-    { id: 'carneLeao', title: 'Aprofundamento: Carnê-Leão', icon: BarChart3 },
-    { id: 'deducoes', title: 'Aprofundamento: Deduções', icon: DollarSign },
-    { id: 'regimes', title: 'Aprofundamento: PF vs MEI vs Empresa', icon: TrendingUp },
-    { id: 'rpa', title: 'Aprofundamento: Retenção (RPA)', icon: AlertCircle },
   ];
 
   const scrollToSection = (sectionId: string) => {
@@ -931,24 +924,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* APROFUNDAMENTO: CARNÊ-LEÃO */}
-        <section id="carneLeao" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <CarneLeaoDeepDive />
-        </section>
-
-        {/* APROFUNDAMENTO: DEDUÇÕES */}
-        <section id="deducoes" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <DeducoesDeepDive />
-        </section>
-
-        {/* APROFUNDAMENTO: PF vs MEI vs EMPRESA */}
-        <section id="regimes" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <PFvsMEIvsEmpresaDeepDive />
-        </section>
-
-        {/* APROFUNDAMENTO: RETENÇÃO (RPA) */}
-        <section id="rpa" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <RPADeepDive />
+        {/* CALL TO ACTION: FERRAMENTAS */}
+        <section className="bg-[#F9F7F4] rounded-lg p-8 text-center space-y-6 mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            🧮 Precisa fazer cálculos?
+          </h2>
+          <p className="text-[#2C3E50] max-w-2xl mx-auto">
+            Acesse nossa área de ferramentas exclusivas com calculadoras de Carnê-Leão, simulador de retenção RPA e consultoria automática para escolher o melhor regime fiscal.
+          </p>
+          <Link href="/ferramentas">
+            <a className="inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D66A49] text-white font-bold py-3 px-8 rounded-lg transition text-lg">
+              <BarChart3 size={24} />
+              Acessar Ferramentas Fiscais
+            </a>
+          </Link>
         </section>
       </main>
     </div>

@@ -16,24 +16,24 @@ export default function CarneLeaoDeepDive() {
     }));
   };
 
-  // Tabela progressiva 2025
+  // Tabela progressiva 2026 (Isenção R$ 5.000)
   const tabelaProgressiva = [
-    { faixa: 'Até R$ 2.259,20', aliquota: '0%', deducao: 'R$ 0,00', descricao: 'Isento' },
-    { faixa: 'R$ 2.259,21 a R$ 2.826,65', aliquota: '7,5%', deducao: 'R$ 169,44', descricao: 'Primeira faixa' },
-    { faixa: 'R$ 2.826,66 a R$ 3.751,05', aliquota: '15%', deducao: 'R$ 381,44', descricao: 'Segunda faixa' },
-    { faixa: 'R$ 3.751,06 a R$ 4.664,68', aliquota: '22,5%', deducao: 'R$ 662,77', descricao: 'Terceira faixa' },
-    { faixa: 'Acima de R$ 4.664,68', aliquota: '27,5%', deducao: 'R$ 896,00', descricao: 'Quarta faixa' },
+    { faixa: 'Até R$ 5.000,00', aliquota: '0%', deducao: 'R$ 0,00', descricao: 'Isento' },
+    { faixa: 'R$ 5.000,01 a R$ 7.500,00', aliquota: '7,5%', deducao: 'R$ 375,00', descricao: 'Primeira faixa' },
+    { faixa: 'R$ 7.500,01 a R$ 10.000,00', aliquota: '15%', deducao: 'R$ 937,50', descricao: 'Segunda faixa' },
+    { faixa: 'R$ 10.000,01 a R$ 12.500,00', aliquota: '22,5%', deducao: 'R$ 1.687,50', descricao: 'Terceira faixa' },
+    { faixa: 'Acima de R$ 12.500,00', aliquota: '27,5%', deducao: 'R$ 2.312,50', descricao: 'Quarta faixa' },
   ];
 
-  // Calcular IR
+  // Calcular IR (Tabela 2026)
   const calcularIR = () => {
     const baseCalculo = calculatorData.rendaBruta - calculatorData.despesas - calculatorData.inss;
     
-    if (baseCalculo <= 2259.20) return 0;
-    if (baseCalculo <= 2826.65) return (baseCalculo * 0.075) - 169.44;
-    if (baseCalculo <= 3751.05) return (baseCalculo * 0.15) - 381.44;
-    if (baseCalculo <= 4664.68) return (baseCalculo * 0.225) - 662.77;
-    return (baseCalculo * 0.275) - 896.00;
+    if (baseCalculo <= 5000.00) return 0;
+    if (baseCalculo <= 7500.00) return (baseCalculo * 0.075) - 375.00;
+    if (baseCalculo <= 10000.00) return (baseCalculo * 0.15) - 937.50;
+    if (baseCalculo <= 12500.00) return (baseCalculo * 0.225) - 1687.50;
+    return (baseCalculo * 0.275) - 2312.50;
   };
 
   const irCalculado = calcularIR();
@@ -43,9 +43,9 @@ export default function CarneLeaoDeepDive() {
     <div className="space-y-6">
       {/* Introdução */}
       <div className="bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg p-4 md:p-6 text-white space-y-3">
-        <h3 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
-          🎯 Carnê-Leão: Guia Completo e Aprofundado
-        </h3>
+            <h3 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              🎯 Carnê-Leão: Guia Completo (Tabela 2026)
+            </h3>
         <p className="text-sm md:text-base opacity-90">
           Entenda tudo sobre o Carnê-Leão: o que é, como funciona, quando é obrigatório, como calcular e como pagar. Com exemplos práticos e calculadora interativa.
         </p>
@@ -75,7 +75,7 @@ export default function CarneLeaoDeepDive() {
 
             <h5 className="font-semibold text-[#1B4965] mt-4">Características principais:</h5>
             <ul className="space-y-2 pl-4">
-              <li>✅ <strong>Obrigatório:</strong> Se sua renda mensal ultrapassa R$ 2.259,20</li>
+              <li>✅ <strong>Obrigatório:</strong> Se sua renda mensal ultrapassa R$ 5.000,00</li>
               <li>✅ <strong>Mensal:</strong> Você paga todo mês, não anualmente</li>
               <li>✅ <strong>Progressivo:</strong> Quanto mais você ganha, maior a alíquota</li>
               <li>✅ <strong>Descontável:</strong> Reduz sua renda na declaração anual de IR</li>
@@ -105,12 +105,12 @@ export default function CarneLeaoDeepDive() {
               <li>✅ Recebe direitos autorais de composições</li>
               <li>✅ Tem rendimentos de shows e apresentações</li>
               <li>✅ Trabalha como freelancer/profissional liberal</li>
-              <li>✅ Sua renda mensal ultrapassa R$ 2.259,20</li>
+              <li>✅ Sua renda mensal ultrapassa R$ 5.000,00</li>
             </ul>
 
             <div className="bg-[#FFF3CD] border-l-4 border-[#D4A574] p-4 rounded mt-4">
               <p className="font-semibold text-[#D4A574] mb-2">⚡ Atenção:</p>
-              <p>Mesmo que sua renda seja menor que R$ 2.259,20, você pode preencher Carnê-Leão voluntariamente. Isso é recomendado para manter controle e organização.</p>
+              <p>Mesmo que sua renda seja menor que R$ 5.000,00, você pode preencher Carnê-Leão voluntariamente. Isso é recomendado para manter controle e organização.</p>
             </div>
 
             <h5 className="font-semibold text-[#1B4965] mt-4">Você NÃO precisa de Carnê-Leão se:</h5>
@@ -130,15 +130,15 @@ export default function CarneLeaoDeepDive() {
           onClick={() => toggleTopic('tabela')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
         >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            📊 Tabela Progressiva 2025
-          </h4>
+            <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              📊 Tabela Progressiva 2026 (Isenção R$ 5k)
+            </h4>
           {expandedTopics['tabela'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
         {expandedTopics['tabela'] && (
           <div className="px-4 md:px-6 py-4 space-y-4">
             <p className="text-sm md:text-base text-[#2C3E50]">
-              A tabela abaixo mostra as alíquotas progressivas do Carnê-Leão para 2025. Quanto maior sua renda, maior o percentual de imposto.
+              A tabela abaixo mostra as alíquotas progressivas do Carnê-Leão para 2026, com a nova isenção de R$ 5.000,00. Quanto maior sua renda, maior o percentual de imposto.
             </p>
             
             <div className="overflow-x-auto">

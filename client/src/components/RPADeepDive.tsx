@@ -16,22 +16,22 @@ export default function RPADeepDive() {
     }));
   };
 
-  // Tabela de alíquotas de retenção
+  // Tabela de alíquotas de retenção 2026 (Isenção R$ 5k)
   const tabelaRetencao = [
-    { faixa: 'Até R$ 1.903,98', aliquota: '0%', deducao: 'R$ 0,00' },
-    { faixa: 'R$ 1.903,99 a R$ 2.826,65', aliquota: '7,5%', deducao: 'R$ 142,80' },
-    { faixa: 'R$ 2.826,66 a R$ 3.751,05', aliquota: '15%', deducao: 'R$ 354,80' },
-    { faixa: 'R$ 3.751,06 a R$ 4.664,68', aliquota: '22,5%', deducao: 'R$ 636,13' },
-    { faixa: 'Acima de R$ 4.664,68', aliquota: '27,5%', deducao: 'R$ 869,36' },
+    { faixa: 'Até R$ 5.000,00', aliquota: '0%', deducao: 'R$ 0,00' },
+    { faixa: 'R$ 5.000,01 a R$ 7.500,00', aliquota: '7,5%', deducao: 'R$ 375,00' },
+    { faixa: 'R$ 7.500,01 a R$ 10.000,00', aliquota: '15%', deducao: 'R$ 937,50' },
+    { faixa: 'R$ 10.000,01 a R$ 12.500,00', aliquota: '22,5%', deducao: 'R$ 1.687,50' },
+    { faixa: 'Acima de R$ 12.500,00', aliquota: '27,5%', deducao: 'R$ 2.312,50' },
   ];
 
-  // Calcular retenção
+  // Calcular retenção (Tabela 2026)
   const calcularRetencao = (valor: number) => {
-    if (valor <= 1903.98) return 0;
-    if (valor <= 2826.65) return (valor * 0.075) - 142.80;
-    if (valor <= 3751.05) return (valor * 0.15) - 354.80;
-    if (valor <= 4664.68) return (valor * 0.225) - 636.13;
-    return (valor * 0.275) - 869.36;
+    if (valor <= 5000.00) return 0;
+    if (valor <= 7500.00) return (valor * 0.075) - 375.00;
+    if (valor <= 10000.00) return (valor * 0.15) - 937.50;
+    if (valor <= 12500.00) return (valor * 0.225) - 1687.50;
+    return (valor * 0.275) - 2312.50;
   };
 
   const retencaoCalculada = calcularRetencao(calculatorData.cacheBruto);
@@ -68,9 +68,9 @@ export default function RPADeepDive() {
     <div className="space-y-6">
       {/* Introdução */}
       <div className="bg-gradient-to-br from-[#E07856] to-[#D4A574] rounded-lg p-4 md:p-6 text-white space-y-3">
-        <h3 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
-          💸 Retenção de IR (RPA): Guia Completo
-        </h3>
+            <h3 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              💸 Retenção de IR (RPA): Guia Completo (Tabela 2026)
+            </h3>
         <p className="text-sm md:text-base opacity-90">
           Entenda tudo sobre retenção de Imposto de Renda em cachês: o que é, quando ocorre, como calcular e como compensar na declaração anual.
         </p>
@@ -160,15 +160,15 @@ export default function RPADeepDive() {
           onClick={() => toggleTopic('tabela')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
         >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            📊 Tabela de Alíquotas de Retenção
-          </h4>
+            <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              📊 Tabela de Alíquotas 2026 (Isenção R$ 5k)
+            </h4>
           {expandedTopics['tabela'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
         {expandedTopics['tabela'] && (
           <div className="px-4 md:px-6 py-4 space-y-4">
             <p className="text-sm md:text-base text-[#2C3E50]">
-              A tabela abaixo mostra as alíquotas de retenção por valor de cachê (2025):
+              A tabela abaixo mostra as alíquotas de retenção por valor de cachê para 2026, com a nova isenção de R$ 5.000,00:
             </p>
             
             <div className="overflow-x-auto">
