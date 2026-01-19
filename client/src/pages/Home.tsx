@@ -130,9 +130,12 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Transforme sua Arte em Carreira Profissional</h2>
               <div className="flex gap-2">
-                <a href="/app-musico-pro.html" download className="hidden md:inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg backdrop-blur-sm">
+                <button 
+                  onClick={() => setIsDownloadModalOpen(true)}
+                  className="hidden md:inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg backdrop-blur-sm cursor-pointer"
+                >
                   <Download size={16} /> App Grátis
-                </a>
+                </button>
                 <Link href="/pro" className="hidden md:inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D06846] text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg transform hover:-translate-y-0.5">
                   <Star size={16} /> Licença PRO
                 </Link>
