@@ -54,11 +54,9 @@ export default function Ferramentas() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/">
-              <a className="flex items-center gap-2 text-[#1B4965] hover:text-[#2C5F7F] transition">
-                <ArrowLeft size={20} />
-                <span className="font-semibold hidden md:inline">Voltar ao Guia</span>
-              </a>
+            <Link href="/" className="flex items-center gap-2 text-[#1B4965] hover:text-[#2C5F7F] transition">
+              <ArrowLeft size={20} />
+              <span className="font-semibold hidden md:inline">Voltar ao Guia</span>
             </Link>
             <div className="h-6 w-px bg-[#E8E3DC] mx-2 hidden md:block"></div>
             <div className="flex items-center gap-2">
@@ -82,10 +80,8 @@ export default function Ferramentas() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="mt-4 space-y-2 md:hidden border-t border-[#E8E3DC] pt-4">
-            <Link href="/">
-              <a className="block w-full text-left px-4 py-2 rounded-lg text-[#2C3E50] hover:bg-[#F5F2ED] mb-2 font-medium">
-                ← Voltar ao Guia
-              </a>
+            <Link href="/" className="block w-full text-left px-4 py-2 rounded-lg text-[#2C3E50] hover:bg-[#F5F2ED] mb-2 font-medium">
+              ← Voltar ao Guia
             </Link>
             {sections.map(section => (
               <button
@@ -107,11 +103,9 @@ export default function Ferramentas() {
       {/* Desktop Sidebar Navigation */}
       <div className="hidden md:fixed md:left-0 md:top-24 md:w-64 md:h-[calc(100vh-96px)] md:bg-[#F9F7F4] md:border-r md:border-[#E8E3DC] md:overflow-y-auto md:p-6 md:z-40">
         <nav className="space-y-2">
-          <Link href="/">
-            <a className="block w-full text-left px-4 py-3 rounded-lg text-[#2C3E50] hover:bg-[#E8E3DC] mb-4 font-medium flex items-center gap-2">
-              <ArrowLeft size={18} />
-              Voltar ao Guia
-            </a>
+          <Link href="/" className="block w-full text-left px-4 py-3 rounded-lg text-[#2C3E50] hover:bg-[#E8E3DC] mb-4 font-medium flex items-center gap-2">
+            <ArrowLeft size={18} />
+            Voltar ao Guia
           </Link>
           <div className="h-px bg-[#E8E3DC] my-2"></div>
           {sections.map(section => (

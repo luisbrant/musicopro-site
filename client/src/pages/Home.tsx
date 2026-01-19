@@ -932,11 +932,9 @@ export default function Home() {
           <p className="text-[#2C3E50] max-w-2xl mx-auto">
             Acesse nossa área de ferramentas exclusivas com calculadoras de Carnê-Leão, simulador de retenção RPA e consultoria automática para escolher o melhor regime fiscal.
           </p>
-          <Link href="/ferramentas">
-            <a className="inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D66A49] text-white font-bold py-3 px-8 rounded-lg transition text-lg">
-              <BarChart3 size={24} />
-              Acessar Ferramentas Fiscais
-            </a>
+          <Link href="/ferramentas" className="inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D66A49] text-white font-bold py-3 px-8 rounded-lg transition text-lg">
+            <BarChart3 size={24} />
+            Acessar Ferramentas Fiscais
           </Link>
         </section>
       </main>
