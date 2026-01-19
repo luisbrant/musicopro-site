@@ -12,7 +12,7 @@ export default function Vendas() {
             <span>Guia IR Músicos</span>
           </Link>
           <a href="#comprar" className="bg-[#E07856] text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-[#D06846] transition">
-            Quero o Kit Completo
+            Quero a Licença PRO
           </a>
         </div>
       </header>
@@ -25,17 +25,17 @@ export default function Vendas() {
             Oferta Especial de Lançamento
           </span>
           <h1 className="text-3xl md:text-5xl font-bold mb-6 font-['Lexend',_sans-serif] leading-tight">
-            Profissionalize sua Carreira Musical e <span className="text-[#6BA587]">Economize Milhares de Reais</span> em Impostos
+            Licença PRO + Guia Completo
           </h1>
-          <p className="text-lg md:text-xl text-gray-200 mb-8 leading-relaxed">
-            O sistema completo que une conhecimento fiscal e ferramentas práticas para músicos autônomos. Pare de perder dinheiro e durma tranquilo com a Receita Federal.
+          <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+            Desbloqueie todo o potencial do App MusicoPro, baixe o E-book em PDF e acesse checklists exclusivos.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <a href="#comprar" className="bg-[#E07856] text-white px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#D06846] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
               Quero Acesso Imediato <ArrowRight size={20} />
             </a>
-            <a href="#demo" className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
-              Ver o que está incluso
+            <a href="/app-musico-pro.html" download className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
+              <Download size={20} /> Baixar App Grátis
             </a>
           </div>
         </div>
@@ -179,21 +179,22 @@ export default function Vendas() {
                 <span className="text-4xl font-bold text-[#1B4965]">R$ 97,00</span>
               </div>
 
-              <ul className="space-y-3 text-left mb-8">
-                <li className="flex items-center gap-2 text-sm text-[#2C3E50]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" /> E-book Guia IR 2026 (PDF + Web)
+              <ul className="space-y-4 mb-8 text-left">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
+                  <span><strong>Licença PRO Vitalícia:</strong> Desbloqueie todas as funções do App.</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm text-[#2C3E50]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" /> App MusicoPro (Download)
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
+                  <span><strong>E-book PDF (Download):</strong> Guia completo para ler offline.</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm text-[#2C3E50]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" /> Pack de Checklists em PDF
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
+                  <span><strong>Pacote de Checklists:</strong> Organização fiscal mês a mês.</span>
                 </li>
-                <li className="flex items-center gap-2 text-sm text-[#2C3E50]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" /> Atualizações por 1 ano
-                </li>
-                <li className="flex items-center gap-2 text-sm text-[#2C3E50]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" /> Suporte por email
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
+                  <span><strong>Atualizações Garantidas:</strong> Acesso às novas versões do App.</span>
                 </li>
               </ul>
 
@@ -201,9 +202,16 @@ export default function Vendas() {
                 href="https://pay.hotmart.com/SEU_LINK_AQUI" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-[#6BA587] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#5A8F73] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="block w-full bg-[#E07856] hover:bg-[#D06846] text-white text-xl font-bold py-4 rounded-xl shadow-lg transform hover:-translate-y-1 transition mb-4"
               >
-                COMPRAR AGORA
+                Comprar Licença PRO
+              </a>
+              <a 
+                href="/app-musico-pro.html" 
+                download
+                className="block w-full bg-white border-2 border-[#1B4965] text-[#1B4965] hover:bg-gray-50 text-lg font-bold py-3 rounded-xl transition"
+              >
+                Baixar App Grátis (Versão Free)
               </a>
               <p className="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
                 <ShieldCheck size={12} /> Pagamento 100% seguro via Hotmart

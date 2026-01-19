@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Músico Pro v30 - Com IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* =========================================
+           CORE VISUALS & THEME
+           ========================================= */
+        :root {
+            --primary: #4e4376; --accent: #2b5876;
+            --success: #00b894; --danger: #d63031; --warning: #fdcb6e;
+            --bg-body: #f4f7f6; --bg-card: #ffffff;
+            --text-main: #2d3436; --text-light: #636e72;
+            --border: #dfe6e9; --input-bg: #fdfdfd;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        body.dark-mode {
+            --primary: #a29bfe; --accent: #74b9ff;
+            --bg-body: #1e1e1e; --bg-card: #2d3436;
+            --text-main: #dfe6e9; --text-light: #b2bec3;
+            --border: #444; --input-bg: #2d2d2d;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 90px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 15px; }
+
+        /* =========================================
+           HEADER & CONTROLES
+           ========================================= */
+        .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+        
+        .app-logo h1 { 
+            font-size: 22px; font-weight: 800; 
+            background: linear-gradient(45deg, var(--primary), var(--accent)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin: 0; display: flex; align-items: center; 
+        }
+        
+        /* Badge Grátis/Pro */
+        .license-badge { 
+            font-size: 11px; padding: 4px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; 
+            margin-left: 8px; vertical-align: middle; color: #fff !important; 
+            background-color: #ff9f43; box-shadow: 0 2px 5px rgba(255, 159, 67, 0.3); letter-spacing: 0.5px;
+            -webkit-text-fill-color: #fff !important;
+        }
+        .license-badge.pro { background-color: var(--success); box-shadow: 0 2px 5px rgba(0, 184, 148, 0.3); }
+
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+
+        /* Seletor de Ano */
+        .year-selector-wrapper { position: relative; display: inline-block; }
+        .year-btn {
+            background: var(--bg-card); border: 2px solid var(--primary); color: var(--primary);
+            padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 14px;
+            display: flex; align-items: center; gap: 5px; cursor: pointer;
+        }
+        .year-select-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        
+        .theme-btn { background: none; border: none; font-size: 22px; cursor: pointer; }
+
+        /* =========================================
+           NAVEGAÇÃO (TABS)
+           ========================================= */
+        .nav-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; }
+        .nav-pills::-webkit-scrollbar { display: none; }
+        .nav-item { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-light); transition: 0.2s; cursor: pointer; }
+        .nav-item.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(78, 67, 118, 0.3); }
+
+        /* =========================================
+           CARDS & LAYOUT
+           ========================================= */
+        .view-section { display: none; animation: fadeIn 0.2s ease-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: var(--bg-card); padding: 15px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .stat-card.full { grid-column: span 2; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; }
+        .stat-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; margin-bottom: 5px; }
+        .stat-card .value { font-size: 20px; font-weight: 800; }
+        .stat-card.full .value { font-size: 26px; }
+
+        /* Lista Histórico */
+        .transaction-list { display: flex; flex-direction: column; gap: 10px; }
+        .transaction-item { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .t-info { flex: 1; }
+        .t-date { font-size: 11px; color: var(--text-light); display: block; margin-bottom: 2px; }
+        .t-cat { font-size: 11px; font-weight: bold; color: var(--primary); background: rgba(78, 67, 118, 0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+        .t-desc { font-size: 14px; font-weight: 500; color: var(--text-main); display: block; }
+        .t-value { font-size: 16px; font-weight: 800; text-align: right; }
+        
+        .t-actions { margin-left: 15px; display: flex; gap: 15px; }
+        .action-icon { cursor: pointer; font-size: 18px; opacity: 0.7; transition: 0.2s; }
+        .action-icon:hover { opacity: 1; transform: scale(1.1); }
+
+        .val-plus { color: var(--success); }
+        .val-minus { color: var(--danger); }
+
+        /* FAB */
+        .fab-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; width: 90%; max-width: 400px; }
+        .fab-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 700; font-size: 15px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
+        .fab-btn:active { transform: scale(0.95); }
+        .fab-in { background: var(--success); }
+        .fab-out { background: var(--danger); }
+
+        /* =========================================
+           FORMULÁRIOS
+           ========================================= */
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; }
+        .form-control { width: 100%; padding: 12px; font-size: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--input-bg); color: var(--text-main); -webkit-appearance: none; }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+        .big-money { font-size: 32px; font-weight: 800; text-align: center; border: none; border-bottom: 2px solid var(--border); border-radius: 0; background: transparent; padding: 10px 0; color: var(--text-main); width: 100%; }
+        .big-money:focus { outline: none; border-color: var(--primary); }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* =========================================
+           CONSULTOR IA - ESTILOS NOVOS
+           ========================================= */
+        .intro-card {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .intro-card h2 { font-size: 20px; margin-bottom: 8px; }
+        .intro-card p { opacity: 0.95; line-height: 1.5; font-size: 14px; }
+
+        .form-section {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .form-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 67, 118, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-full { width: 100%; }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .understanding-box {
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.1), rgba(78, 67, 118, 0.1));
+            border: 2px solid rgba(78, 67, 118, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .understanding-box h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .understanding-box p { line-height: 1.6; color: var(--text-main); font-size: 14px; }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .idea-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        .idea-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .idea-card h5 { color: var(--primary); margin-bottom: 10px; font-size: 16px; }
+        .idea-card p { color: var(--text-main); line-height: 1.5; margin-bottom: 12px; font-size: 14px; }
+
+        .idea-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-priority-alta, .badge-priority-high { background: rgba(214, 48, 49, 0.15); color: var(--danger); }
+        .badge-priority-média, .badge-priority-medium { background: rgba(253, 203, 110, 0.15); color: var(--warning); }
+        .badge-priority-baixa, .badge-priority-low { background: rgba(0, 184, 148, 0.15); color: var(--success); }
+
+        .badge-effort-alto, .badge-effort-high { background: rgba(155, 89, 182, 0.15); color: #9b59b6; }
+        .badge-effort-médio, .badge-effort-medium { background: rgba(52, 152, 219, 0.15); color: #3498db; }
+        .badge-effort-baixo, .badge-effort-low { background: rgba(26, 188, 156, 0.15); color: #1abc9c; }
+
+        .badge-impact-alto, .badge-impact-high { background: rgba(0, 184, 148, 0.15); color: var(--success); }
+        .badge-impact-médio, .badge-impact-medium { background: rgba(230, 126, 34, 0.15); color: #e67e22; }
+        .badge-impact-baixo, .badge-impact-low { background: rgba(149, 165, 166, 0.15); color: #95a5a6; }
+
+        .info-box {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid #3498db;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* =========================================
+           HELP & PRO
+           ========================================= */
+        .help-container { display: flex; flex-direction: column; gap: 15px; }
+        .pro-activation-card { background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78, 67, 118, 0.05) 100%); border: 2px dashed var(--primary); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 10px; }
+        
+        .help-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .help-grid { grid-template-columns: 1fr 1fr; } .full-width-desktop { grid-column: span 2; } }
+
+        .help-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+        .help-summary { padding: 15px; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); background: rgba(0,0,0,0.02); }
+        .help-content { padding: 15px; font-size: 14px; color: var(--text-light); line-height: 1.6; border-top: 1px solid var(--border); }
+        
+        .code-badge { background: #eee; color: #333; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 12px; border: 1px solid #ccc; }
+        body.dark-mode .code-badge { background: #444; color: #fff; border-color: #555; }
+        
+        .tax-alert { background: var(--bg-card); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border); margin-top: 15px; position: relative; overflow: hidden; }
+        .blur-overlay { filter: blur(6px); user-select: none; pointer-events: none; opacity: 0.6; }
+        .pro-lock { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-align: center; width: 80%; }
+        .pro-btn { background: linear-gradient(45deg, #FFD700, #FFA500); border: none; color: #333; font-weight: bold; padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        /* Utils */
+        .hidden { display: none !important; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-light); padding: 10px 15px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 13px; width: 100%; text-decoration: none; display:block; box-sizing:border-box; }
+        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 600; z-index: 9999; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideDown 0.3s; }
+        @keyframes slideDown { from { transform: translate(-50%, -20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+        /* Fake File Upload */
+        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-top: 5px; }
+        .btn-upload { border: 2px dashed var(--border); color: var(--text-light); background: var(--bg-body); padding: 10px; border-radius: 8px; width: 100%; text-align: center; font-weight: 600; font-size: 13px; cursor: pointer; }
+        .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+
+        textarea.form-control { min-height: 100px; resize: vertical; font-family: inherit; }
+
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="notification hidden"></div>
+
+    <div class="container">
+        
+        <header class="app-header">
+            <div class="app-logo">
+                <h1>Músico Pro <span id="badgePro" class="license-badge">GRÁTIS</span></h1>
+            </div>
+            <div class="header-actions">
+                
+                <div class="year-selector-wrapper">
+                    <div class="year-btn">
+                        <span>📅</span> <span id="anoLabel">2024</span> <span>▼</span>
+                    </div>
+                    <select id="anoSelect" class="year-select-hidden" onchange="mudarAno(this.value)">
+                        <option value="2024">Ano Fiscal 2024</option>
+                        <option value="2025">Ano Fiscal 2025</option>
+                        <option value="2026">Ano Fiscal 2026</option>
+                    </select>
+                </div>
+
+                <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+            </div>
+        </header>
+
+        <nav class="nav-pills">
+            <div class="nav-item active" onclick="navTo('home')">📊 Visão Geral</div>
+            <div class="nav-item" onclick="navTo('carne')">🦁 Carnê-Leão</div>
+            <div class="nav-item" onclick="navTo('consultor')">🤖 Consultor IA</div>
+            <div class="nav-item" onclick="navTo('historico')">📝 Histórico</div>
+            <div class="nav-item" onclick="navTo('ajuda')">📘 Ajuda & PRO</div>
+        </nav>
+
+        <section id="view-home" class="view-section active">
+            <div class="stats-grid">
+                <div class="stat-card full">
+                    <h3>Lucro Líquido (Caixa)</h3>
+                    <div class="value" id="dashSaldo">R$ 0,00</div>
+                </div>
+                <div class="stat-card">
+                    <h3 style="color:var(--success)">Receita (PF)</h3>
+                    <div class="value" id="dashReceita" style="color:var(--success)">R$ 0,00</div>
+                </div>
+                <div class="stat-card">
+                    <h3 style="color:var(--danger)">Despesas Totais</h3>
+                    <div class="value" id="dashDespesa" style="color:var(--danger)">R$ 0,00</div>
+                </div>
+            </div>
+            <div class="stat-card" style="height: 250px; position:relative;">
+                <h3>Resumo Financeiro</h3>
+                <canvas id="chartHome"></canvas>
+            </div>
+            <div class="stat-card" style="height: 250px; position:relative; margin-top:10px;">
+                <h3>Evolução 6 Meses (PRO)</h3>
+                <canvas id="chartEvolution"></canvas>
+                <div id="chartEvolutionLock" class="pro-lock hidden">
+                    <div style="font-size: 24px; margin-bottom:5px;">🔒</div>
+                    <p style="font-size: 12px; margin-bottom:10px;">Upgrade para ver sua evolução</p>
+                    <button class="pro-btn" style="font-size:12px; padding:5px 15px;" onclick="navTo('ajuda')">VER PRO</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-carne" class="view-section">
+            <div style="background: rgba(41, 128, 185, 0.1); color: var(--accent); padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; border: 1px solid rgba(41, 128, 185, 0.2);">
+                ℹ️ <strong>Apuração Mensal:</strong> Apenas para receitas de Pessoa Física.
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Base de Cálculo</h3>
+                    <div class="value" id="fiscalBase">R$ 0,00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Gastos Dedutíveis</h3>
+                    <div class="value" id="fiscalDedutivel">R$ 0,00</div>
+                </div>
+            </div>
+
+            <div class="tax-alert" id="taxAlertBox">
+                <div id="taxContent">
+                    <div class="tax-status" id="taxStatusText">CALCULANDO...</div>
+                    <div class="value" style="font-size: 32px; margin: 10px 0;" id="taxValueDisplay">R$ 0,00</div>
+                    <div class="tax-detail" id="taxDetailText">-</div>
+                </div>
+                
+                <div id="taxLock" class="pro-lock hidden">
+                    <div style="font-size: 30px;">🔒</div>
+                    <p style="font-size: 14px; margin: 5px 0 15px 0; color: var(--text-main); font-weight:600; background:var(--bg-card); padding:5px; border-radius:5px;">
+                        Imposto Detectado.<br>Libere o valor exato.
+                    </p>
+                    <button class="pro-btn" onclick="navTo('ajuda')">ATIVAR PRO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOVA SEÇÃO: CONSULTOR IA -->
+        <section id="view-consultor" class="view-section">
+            <div class="intro-card">
+                <h2>💡 Estratégias IA para seu Negócio Musical</h2>
+                <p>
+                    Preencha o formulário e receba recomendações personalizadas para aumentar receita, 
+                    reduzir impostos e profissionalizar sua carreira.
+                </p>
+            </div>
+
+            <form id="advisorForm" onsubmit="event.preventDefault(); generateAdvice();">
+                <div class="form-section">
+                    <h3>🎯 Seu Perfil Musical</h3>
+                    
+                    <div class="form-grid-2">
+                        <div class="input-group">
+                            <label>Nome Artístico</label>
+                            <input type="text" id="artistName" class="form-control" placeholder="ex: DJ Groove">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Tipo de Atuação</label>
+                            <select id="musicType" class="form-control">
+                                <option value="">Selecione...</option>
+                                <option value="shows-eventos">Shows e Eventos</option>
+                                <option value="professor">Professor de Música</option>
+                                <option value="produtor">Produtor Musical</option>
+                                <option value="instrumentista">Instrumentista/Sideman</option>
+                                <option value="compositor">Compositor/Arranjador</option>
+                                <option value="multiplo">Múltiplas Atividades</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="input-group">
+                            <label>Receita Mensal Média</label>
+                            <input type="text" id="monthlyRevenue" class="form-control" placeholder="R$ 5.000">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Despesas Mensais Médias</label>
+                            <input type="text" id="monthlyExpenses" class="form-control" placeholder="R$ 1.500">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>📊 Situação Atual</h3>
+                    
+                    <div class="info-box">
+                        💡 <strong>Dica:</strong> Seja específico para receber recomendações mais precisas.
+                    </div>
+
+                    <div class="input-group">
+                        <label>Principais Desafios</label>
+                        <textarea id="challenges" class="form-control" placeholder="Ex: Receita irregular, muitos impostos, falta de organização..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Objetivos (6-12 meses)</label>
+                        <textarea id="goals" class="form-control" placeholder="Ex: Aumentar receita em 30%, regularizar impostos, criar MEI..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Foco da Consultoria</label>
+                        <select id="consultingFocus" class="form-control">
+                            <option value="aumento-receita">💰 Aumentar Receita</option>
+                            <option value="reducao-impostos">🦁 Redução de Impostos</option>
+                            <option value="organizacao-financeira">📊 Organização Financeira</option>
+                            <option value="diversificacao">🎯 Diversificação de Renda</option>
+                            <option value="profissionalizacao">🚀 Profissionalização</option>
+                            <option value="planejamento-completo">📈 Planejamento Completo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full" id="generateBtn">
+                    <span id="btnText">✨ Gerar Estratégias Personalizadas</span>
+                    <span id="btnLoading" style="display: none;" class="loading-spinner"></span>
+                </button>
+            </form>
+
+            <div id="resultsSection" style="display: none; margin-top: 30px;">
+                <div class="understanding-box">
+                    <h4>🎯 Análise da Sua Situação</h4>
+                    <p id="understandingText"></p>
+                </div>
+
+                <h3 style="margin-bottom: 15px; color: var(--primary);">💡 Estratégias Recomendadas</h3>
+                <div id="ideasGrid" class="ideas-grid"></div>
+            </div>
+        </section>
+
+        <section id="view-historico" class="view-section">
+            <div class="input-group">
+                <input type="text" id="searchBox" class="form-control" placeholder="🔍 Buscar lançamentos..." onkeyup="renderHistorico()">
+            </div>
+            <div id="listaLancamentos" class="transaction-list"></div>
+            
+            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button class="btn-outline" onclick="exportarCSV()">📥 Excel (PRO)</button>
+                <button class="btn-outline" onclick="gerarPDF()">📄 PDF (PRO)</button>
+            </div>
+        </section>
+
+        <section id="view-form" class="view-section">
+            <h2 id="formTitle" style="margin-bottom: 20px;">Novo Lançamento</h2>
+            
+            <div class="input-group">
+                <label>Valor (R$)</label>
+                <input type="text" id="inpValor" class="big-money" placeholder="0,00" inputmode="numeric" oninput="mascaraMoeda(this)">
+            </div>
+
+            <div class="form-grid-2">
+                <div class="input-group">
+                    <label>Data</label>
+                    <input type="date" id="inpData" class="form-control">
+                </div>
+                <div class="input-group">
+                    <label>Categoria</label>
+                    <select id="inpCat" class="form-control"></select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Descrição</label>
+                <input type="text" id="inpDesc" class="form-control" placeholder="Ex: Cachê Bar do Zé">
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('home')">Cancelar</button>
+                <button class="btn" id="btnSalvar" style="flex:2;" onclick="salvarLancamento()">SALVAR</button>
+            </div>
+        </section>
+
+        <section id="view-recibo" class="view-section">
+            <h2 style="margin-bottom: 20px;">🧾 Gerador de Recibos</h2>
+            
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <label style="flex:1; cursor:pointer;">
+                    <input type="radio" name="tipoRecibo" value="simples" onchange="toggleReciboTipo()" checked> Simples
+                </label>
+                <label style="flex:1; cursor:pointer;">
+                    <input type="radio" name="tipoRecibo" value="rpa" onchange="toggleReciboTipo()"> RPA (Impostos)
+                </label>
+            </div>
+
+            <div class="input-group">
+                <label>Recebi de (Pagador)</label>
+                <input type="text" id="recPagador" class="form-control" placeholder="Nome ou Razão Social">
+            </div>
+            <div class="input-group">
+                <label>CPF ou CNPJ (Pagador)</label>
+                <input type="text" id="recDoc" class="form-control" placeholder="000.000.000-00">
+            </div>
+            <div class="form-grid-2">
+                <div class="input-group">
+                    <label id="lblValor">Valor (R$)</label>
+                    <input type="text" id="recValor" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                </div>
+                <div class="input-group">
+                    <label>Data</label>
+                    <input type="date" id="recData" class="form-control">
+                </div>
+            </div>
+            
+            <div id="div-impostos" class="hidden" style="background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border);">
+                <div class="form-grid-2">
+                    <div class="input-group" style="margin-bottom:0;">
+                        <label>INSS (R$)</label>
+                        <input type="text" id="recINSS" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                    </div>
+                    <div class="input-group" style="margin-bottom:0;">
+                        <label>IRRF (R$)</label>
+                        <input type="text" id="recIRRF" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                    </div>
+                    <div class="input-group" style="margin-bottom:0; grid-column: span 2;">
+                        <label>ISS (R$)</label>
+                        <input type="text" id="recISS" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                    </div>
+                </div>
+                <div style="margin-top:10px; text-align:right; font-weight:bold; color:var(--primary);">
+                    Valor Líquido: <span id="recLiquido">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Referente a (Serviço)</label>
+                <input type="text" id="recDesc" class="form-control" placeholder="Ex: Show voz e violão">
+            </div>
+            <div class="input-group">
+                <label>Cidade</label>
+                <input type="text" id="recCidade" class="form-control" placeholder="São Paulo">
+            </div>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('ajuda')">Voltar</button>
+                <button class="btn" style="background:var(--primary); color:white; flex:2;" onclick="gerarReciboPDF()">📄 GERAR PDF</button>
+            </div>
+        </section>
+
+        <section id="view-ajuda" class="view-section">
+            <div class="help-container">
+                
+                <div class="pro-activation-card">
+                    <h3 style="margin-bottom: 5px; color: var(--primary);">🚀 Ativar Versão PRO</h3>
+                    <p style="font-size: 13px; color: var(--text-light); margin-bottom: 15px;">
+                        Libera cálculo de imposto e Excel.
+                    </p>
+                    <div style="display: flex; gap: 8px; justify-content: center;">
+                        <input type="text" id="licencaKey" class="form-control" placeholder="Chave: CLM-XXXX..." style="text-transform:uppercase; text-align:center; max-width: 200px;">
+                        <button class="btn" style="background: var(--success); color: white; width: auto; padding: 0 20px;" onclick="ativarPro()">OK</button>
+                    </div>
+                </div>
+
+                <div class="help-grid">
+                    
+                    <div class="help-card full-width-desktop" style="border: 2px solid var(--primary);">
+                        <div class="help-summary" style="background: rgba(78, 67, 118, 0.1); color: var(--primary);">🛠️ Ferramentas PRO</div>
+                        <div class="help-content" style="display:block;">
+                            <p style="margin-bottom:10px; font-size:13px;">Gere recibos profissionais para seus contratantes.</p>
+                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
+                        </div>
+                    </div>
+
+                    <div class="help-card full-width-desktop">
+                        <div class="help-summary">📖 Manual do Sistema</div>
+                        <div class="help-content">
+                            <ol style="padding-left: 20px; line-height: 1.8; color: var(--text-main);">
+                                <li><strong>Lançamentos:</strong> Use os botões <strong>+ RECEITA</strong> e <strong>- DESPESA</strong> para registrar seus ganhos e gastos do mês.</li>
+                                <li><strong>Apuração:</strong> Vá na aba <strong>🦁 Carnê-Leão</strong> para ver o resultado. O sistema calculará se você está <em>Isento</em> ou se tem <em>Imposto a Pagar</em>.</li>
+                                <li><strong>Consultor IA:</strong> Use a aba <strong>🤖 Consultor IA</strong> para receber estratégias personalizadas para melhorar suas finanças.</li>
+                                <li><strong>Pagamento:</strong> Se houver imposto, use os links abaixo para gerar o DARF (Imposto de Renda) e a GPS (INSS).</li>
+                                <li><strong>Segurança:</strong> Seus dados ficam salvos apenas neste navegador. Faça <strong>Backup</strong> (abaixo) mensalmente para não perder nada.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="help-card full-width-desktop">
+                        <div class="help-summary">🔗 Links Oficiais (Receita Federal)</div>
+                        <div class="help-content">
+                            <p style="font-size:13px; margin-bottom:15px;">Acesso rápido aos sistemas do governo para emissão de guias:</p>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                                <a href="https://sicalc.receita.fazenda.gov.br/sicalc-web/" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                    📄 SicalcWeb (Gerar DARF)
+                                </a>
+                                <a href="http://sal.receita.fazenda.gov.br/PortalSalInternet/faces/pages/index.xhtml" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                    🛡️ SAL (Gerar Guia INSS)
+                                </a>
+                                <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold;">
+                                    🦁 Carnê-Leão Web (e-CAC)
+                                </a>
+                                <a href="https://www.gov.br/governodigital/pt-br/assinatura-eletronica" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; grid-column: span 1; border-color: #00b894; color: #00b894;">
+                                    🖊️ Assinatura Eletrônica (GOV.BR)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-card full-width-desktop">
+                        <div class="help-summary">💾 Dados, Segurança e Backup</div>
+                        <div class="help-content">
+                            <p style="margin-bottom:10px;">Este sistema é <strong>100% Privado</strong>. Seus dados financeiros ficam gravados <strong>apenas na memória do seu navegador</strong> (Local Storage) e nunca são enviados para a internet.</p>
+                            
+                            <div style="background:rgba(214, 48, 49, 0.1); border:1px solid rgba(214, 48, 49, 0.3); padding:10px; border-radius:8px; margin-bottom:15px; font-size:13px; color: var(--danger);">
+                                ⚠️ <strong>Atenção:</strong> Se você limpar o histórico/dados do navegador, desinstalar o app ou formatar o celular, <strong>VOCÊ PERDERÁ TUDO</strong> se não tiver um backup salvo.
+                            </div>
+
+                            <p style="font-weight:bold; margin-bottom:5px;">Recomendação:</p>
+                            <p style="margin-bottom:10px;">Baixe o Backup mensalmente e salve em um local seguro (E-mail, Google Drive, etc).</p>
+
+                            <div style="display:flex; gap:10px; margin-top:10px;">
+                                <button class="btn-outline" style="flex:1; border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="baixarBackup()">⬇️ Baixar Backup</button>
+                                <div class="file-upload-wrapper" style="flex:1; margin-top:5px;">
+                                    <div class="btn-upload">📂 Restaurar Backup</div>
+                                    <input type="file" onchange="restaurarBackup(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="fabContainer" class="fab-container">
+        <button class="fab-btn fab-out" onclick="abrirForm('despesa')">➖ DESPESA</button>
+        <button class="fab-btn fab-in" onclick="abrirForm('receita')">➕ RECEITA</button>
+    </div>
+
+    <script>
+        // --- CONFIG & STATE ---
+        let registros = JSON.parse(localStorage.getItem('musico_db') || '[]');
+        let isPro = localStorage.getItem('musico_pro_status') === 'true';
+        let anoFiscal = localStorage.getItem('musico_ano') || '2024';
+        let currentType = 'receita';
+        let idEdicao = null;
+
+        const TABLES = {
+            '2024': [ {ate:2259.20, aliq:0, ded:0}, {ate:2826.65, aliq:0.075, ded:169.44}, {ate:3751.05, aliq:0.15, ded:381.44}, {ate:4664.68, aliq:0.225, ded:662.77}, {ate:Infinity, aliq:0.275, ded:896.00} ],
+            '2025': [ {ate:2259.20, aliq:0, ded:0}, {ate:2826.65, aliq:0.075, ded:169.44}, {ate:3751.05, aliq:0.15, ded:381.44}, {ate:4664.68, aliq:0.225, ded:662.77}, {ate:Infinity, aliq:0.275, ded:896.00} ],
+            '2026': [ {ate:5000.00, aliq:0, ded:0}, {ate:7500.00, aliq:0.075, ded:375.00}, {ate:10000.00, aliq:0.15, ded:937.50}, {ate:Infinity, aliq:0.275, ded:2187.50} ]
+        };
+
+        const CATS = {
+            receita: ["Cachê Show", "Aulas", "Produção", "Direitos Autorais", "Outros (PF)"],
+            despesa: ["Custeio (Luz/Aluguel)", "Material Consumo", "Roadies/Equipe", "Marketing", "Transporte/Logística", "Formação/Cursos", "Previdência (INSS)", "Alimentação (Não dedutível)", "Equipamentos (Bens)"]
+        };
+        const DEDUTIVEIS = ["Custeio (Luz/Aluguel)", "Material Consumo", "Roadies/Equipe", "Marketing", "Transporte/Logística", "Formação/Cursos"];
+        const LEGAIS = ["Previdência (INSS)", "Pensão Alimentícia"];
+
+        // --- NAV ---
+        function navTo(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-' + viewId).classList.add('active');
+            
+            const tabs = ['home', 'carne', 'consultor', 'historico', 'ajuda'];
+            if(tabs.includes(viewId)) document.querySelectorAll('.nav-item')[tabs.indexOf(viewId)].classList.add('active');
+
+            const fab = document.getElementById('fabContainer');
+            if (viewId === 'form' || viewId === 'ajuda' || viewId === 'recibo' || viewId === 'consultor') fab.style.display = 'none';
+            else fab.style.display = 'flex';
+
+            if (viewId === 'home') renderHome();
+            if (viewId === 'carne') renderCarne();
+            if (viewId === 'historico') renderHistorico();
+        }
+        
+        function abrirRecibo() {
+            if(!isPro) { toast('Recurso PRO', 'erro'); return; }
+            document.getElementById('recData').value = new Date().toISOString().split('T')[0];
+            toggleReciboTipo();
+            navTo('recibo');
+        }
+
+        function toggleReciboTipo() {
+            const tipo = document.querySelector('input[name="tipoRecibo"]:checked').value;
+            const div = document.getElementById('div-impostos');
+            const lbl = document.getElementById('lblValor');
+            
+            if (tipo === 'rpa') {
+                div.classList.remove('hidden');
+                lbl.textContent = "Valor Bruto (R$)";
+                calcularLiquido();
+            } else {
+                div.classList.add('hidden');
+                lbl.textContent = "Valor (R$)";
+            }
+        }
+
+        function calcularLiquido() {
+            const parse = v => parseFloat(v.replace(/\./g, '').replace(',', '.') || 0);
+            const bruto = parse(document.getElementById('recValor').value);
+            const inss = parse(document.getElementById('recINSS').value);
+            const irrf = parse(document.getElementById('recIRRF').value);
+            const iss = parse(document.getElementById('recISS').value);
+            
+            const liq = bruto - inss - irrf - iss;
+            document.getElementById('recLiquido').textContent = liq.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+        }
+
+        function abrirForm(tipo, modoEdicao = false) {
+            currentType = tipo;
+            const btn = document.getElementById('btnSalvar');
+            
+            if (modoEdicao) {
+                document.getElementById('formTitle').textContent = '📝 Editar Lançamento';
+                btn.textContent = 'ATUALIZAR';
+            } else {
+                idEdicao = null;
+                document.getElementById('formTitle').textContent = tipo === 'receita' ? '💰 Nova Receita' : '💸 Nova Despesa';
+                btn.textContent = 'SALVAR';
+                
+                document.getElementById('inpValor').value = '';
+                document.getElementById('inpDesc').value = '';
+                document.getElementById('inpData').value = new Date().toISOString().split('T')[0];
+            }
+
+            btn.style.background = tipo === 'receita' ? 'var(--success)' : 'var(--danger)';
+            
+            const sel = document.getElementById('inpCat');
+            sel.innerHTML = '';
+            CATS[tipo].forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.text = c; sel.add(opt); });
+
+            navTo('form');
+            if(!modoEdicao) document.getElementById('inpValor').focus();
+        }
+
+        // --- CONSULTOR "LOCAL" (IA SIMULADA) ---
+        const ADVICE_DB = {
+            "aumento-receita": [
+                {
+                    types: ["professor", "multiplo"],
+                    titulo: "Crie Infoprodutos Musicais",
+                    descricao: "Transforme sua metodologia em um curso gravado, ebook ou workshop online. Venda para alunos de outros estados e escale sua hora/aula sem aumentar carga horária.",
+                    prioridade: "Alta", esforco: "Médio", impacto: "Alto"
+                },
+                {
+                    types: ["shows-eventos", "instrumentista"],
+                    titulo: "Revisão de Tabela de Cachês",
+                    descricao: "Defina valores mínimos para diferentes tipos de eventos (casamento, bar, corporativo). Inclua custos de transporte e alimentação no preço base para não pagar para tocar.",
+                    prioridade: "Alta", esforco: "Baixo", impacto: "Médio"
+                },
+                {
+                    types: ["produtor", "compositor", "multiplo"],
+                    titulo: "Licenciamento e Sync",
+                    descricao: "Cadastre suas obras em bibliotecas de áudio e bancos de trilha branca. Produtores de conteúdo precisam de música constantemente e pagam em dólar.",
+                    prioridade: "Média", esforco: "Médio", impacto: "Alto"
+                },
+                {
+                    types: ["shows-eventos", "multiplo"],
+                    titulo: "Merchandising em Shows",
+                    descricao: "Venda camisetas, adesivos, CDs ou QR Codes para apoiar o artista durante as apresentações. É uma renda extra imediata que fideliza fãs.",
+                    prioridade: "Baixa", esforco: "Médio", impacto: "Baixo"
+                }
+            ],
+            "reducao-impostos": [
+                {
+                    types: ["all"],
+                    titulo: "Livro-Caixa Otimizado",
+                    descricao: "Como Pessoa Física, lance TODAS as despesas dedutíveis no Carnê-Leão (aluguel estúdio, luz, internet, partituras, software). Isso reduz drasticamente seu imposto a pagar.",
+                    prioridade: "Alta", esforco: "Médio", impacto: "Alto"
+                },
+                {
+                    types: ["all"],
+                    titulo: "Análise de MEI (Até R$ 81k)",
+                    descricao: "Se fatura até R$ 6.750/mês, abrir um MEI (como Editor de Música ou Promotor) pode reduzir seus impostos para fixos ~R$ 70,00, isentando o IR da Pessoa Física.",
+                    prioridade: "Alta", esforco: "Baixo", impacto: "Alto"
+                },
+                {
+                    types: ["shows-eventos", "produtor"],
+                    titulo: "Planejamento Tributário PJ",
+                    descricao: "Para faturamentos acima de R$ 10k/mês, consulte um contador para abrir uma Microempresa (Simples Nacional). A alíquota (6%) é muito menor que a tabela do IRPF (27.5%).",
+                    prioridade: "Média", esforco: "Alto", impacto: "Alto"
+                }
+            ],
+            "organizacao-financeira": [
+                {
+                    types: ["all"],
+                    titulo: "Separação PF / PJ",
+                    descricao: "Tenha duas contas bancárias: uma para receber cachês e pagar despesas de música, e outra pessoal. Transfira para você apenas um 'salário' fixo mensal.",
+                    prioridade: "Alta", esforco: "Baixo", impacto: "Alto"
+                },
+                {
+                    types: ["all"],
+                    titulo: "Fundo de Reserva (6 meses)",
+                    descricao: "Música é sazonal (janeiro/fevereiro costumam ser fracos). Guarde 20% de tudo que entra até ter 6 meses de contas pagas guardados.",
+                    prioridade: "Alta", esforco: "Médio", impacto: "Muito Alto"
+                },
+                {
+                    types: ["all"],
+                    titulo: "Dia do Pagamento Fixo",
+                    descricao: "Agrupe o pagamento de todas as contas no dia 05 ou 10. Isso evita esquecimentos e multas, além de dar clareza sobre o fluxo de caixa do mês.",
+                    prioridade: "Baixa", esforco: "Baixo", impacto: "Médio"
+                }
+            ],
+            "profissionalizacao": [
+                {
+                    types: ["shows-eventos", "instrumentista"],
+                    titulo: "Contrato de Prestação de Serviço",
+                    descricao: "Nunca feche datas apenas de boca. Tenha um modelo simples de contrato (ou e-mail formal) estipulando valor, horário, alimentação e multa por cancelamento.",
+                    prioridade: "Alta", esforco: "Baixo", impacto: "Alto"
+                },
+                {
+                    types: ["all"],
+                    titulo: "Press Kit e Portfólio Digital",
+                    descricao: "Tenha um link único (Linktree/site) com fotos profissionais, vídeos tocando e contato atualizado. Contratantes decidem em segundos vendo seu Instagram.",
+                    prioridade: "Média", esforco: "Médio", impacto: "Médio"
+                }
+            ],
+            "diversificacao": [
+                {
+                    types: ["instrumentista", "professor"],
+                    titulo: "Aulas Particulares Online",
+                    descricao: "Não dependa só de escolas. Ofereça mentorias online para alunos avançados de qualquer lugar do mundo, cobrando valor hora mais alto.",
+                    prioridade: "Média", esforco: "Baixo", impacto: "Médio"
+                },
+                {
+                    types: ["compositor", "produtor"],
+                    titulo: "Cadastro no ECAD/Associações",
+                    descricao: "Garanta que suas obras estejam cadastradas na UBC/Abramus. O dinheiro de execução pública (rádio, shows, TV) só chega se os dados estiverem corretos.",
+                    prioridade: "Alta", esforco: "Baixo", impacto: "Alto"
+                }
+            ]
+        };
+
+        const GENERAL_ADVICE = [
+            {
+                titulo: "Organização de Recibos",
+                descricao: "Mantenha fotos digitalizadas de todos os recibos de equipamentos e transporte. Em caso de malha fina, você precisará comprovar as despesas lançadas.",
+                prioridade: "Média", esforco: "Baixo", impacto: "Médio"
+            },
+            {
+                titulo: "Networking Estratégico",
+                descricao: "Dedique tempo semanal para reativar contatos com antigos contratantes e parceiros. Quem não é visto não é lembrado para gigs.",
+                prioridade: "Média", esforco: "Médio", impacto: "Médio"
+            }
+        ];
+
+        function generateAdvice() {
+            const artistName = document.getElementById('artistName').value;
+            const musicType = document.getElementById('musicType').value;
+            const monthlyRevenue = document.getElementById('monthlyRevenue').value;
+            const focus = document.getElementById('consultingFocus').value;
+            const challenges = document.getElementById('challenges').value;
+
+            if (!artistName || !musicType || !challenges) {
+                toast('Preencha os campos obrigatórios!', 'erro');
+                return;
+            }
+
+            const btn = document.getElementById('generateBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'block';
+
+            // Simula tempo de processamento da IA
+            setTimeout(() => {
+                const estrategiasSelecionadas = [];
+                
+                // 1. Pega dicas específicas do foco escolhido
+                const dicasFoco = ADVICE_DB[focus] || [];
+                dicasFoco.forEach(dica => {
+                    if (dica.types.includes("all") || dica.types.includes(musicType)) {
+                        estrategiasSelecionadas.push(dica);
+                    }
+                });
+
+                // 2. Complementa com dicas de outros focos relevantes se sobrar espaço
+                if (estrategiasSelecionadas.length < 6) {
+                    const outrasCategorias = ["organizacao-financeira", "reducao-impostos", "aumento-receita"].filter(c => c !== focus);
+                    outrasCategorias.forEach(cat => {
+                        if (estrategiasSelecionadas.length >= 6) return;
+                        const dicasExtras = ADVICE_DB[cat] || [];
+                        dicasExtras.forEach(dica => {
+                            if (estrategiasSelecionadas.length < 6 && (dica.types.includes("all") || dica.types.includes(musicType))) {
+                                // Evita duplicatas (pelo titulo)
+                                if (!estrategiasSelecionadas.some(e => e.titulo === dica.titulo)) {
+                                    estrategiasSelecionadas.push(dica);
+                                }
+                            }
+                        });
+                    });
+                }
+
+                // 3. Complementa com dicas gerais se ainda faltar
+                GENERAL_ADVICE.forEach(dica => {
+                    if (estrategiasSelecionadas.length < 6) {
+                         if (!estrategiasSelecionadas.some(e => e.titulo === dica.titulo)) {
+                            estrategiasSelecionadas.push(dica);
+                         }
+                    }
+                });
+
+                // Gera texto de análise personalizado
+                const focusTexts = {
+                    'aumento-receita': 'focando na expansão do seu faturamento',
+                    'reducao-impostos': 'buscando eficiência tributária',
+                    'organizacao-financeira': 'priorizando a organização do fluxo de caixa',
+                    'diversificacao': 'criando novas fontes de renda',
+                    'profissionalizacao': 'estruturando sua carreira profissional',
+                    'planejamento-completo': 'com uma visão 360º da carreira'
+                };
+                
+                const analise = `Olá ${artistName}! Analisei seu perfil de ${musicType} e vejo que você está no momento certo para profissionalizar sua gestão, ${focusTexts[focus] || ''}. Identifiquei algumas oportunidades de melhoria baseadas nos desafios que você relatou ("${challenges.substring(0, 50)}..."). Confira abaixo as estratégias selecionadas para o seu cenário:`;
+
+                const results = {
+                    analise: analise,
+                    estrategias: estrategiasSelecionadas
+                };
+
+                displayResults(results);
+
+                btn.disabled = false;
+                btnText.style.display = 'block';
+                btnLoading.style.display = 'none';
+                
+                toast('Análise concluída com sucesso!');
+
+            }, 1500); // 1.5s de delay
+        }
+
+        function displayResults(results) {
+            document.getElementById('understandingText').textContent = results.analise;
+            
+            const grid = document.getElementById('ideasGrid');
+            grid.innerHTML = '';
+
+            results.estrategias.forEach(estrategia => {
+                const card = document.createElement('div');
+                card.className = 'idea-card';
+                
+                const p = estrategia.prioridade.toLowerCase();
+                const e = estrategia.esforco.toLowerCase();
+                const i = estrategia.impacto.toLowerCase();
+
+                card.innerHTML = `
+                    <h5>${estrategia.titulo}</h5>
+                    <p>${estrategia.descricao}</p>
+                    <div class="idea-meta">
+                        <span class="badge badge-priority-${p}">📌 ${estrategia.prioridade}</span>
+                        <span class="badge badge-effort-${e}">⏱️ ${estrategia.esforco}</span>
+                        <span class="badge badge-impact-${i}">🎯 ${estrategia.impacto}</span>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function displayFallbackResults(artistName, focus) {
+            const fallback = {
+                analise: `${artistName} está buscando otimizar sua gestão financeira como músico profissional. Com foco em ${focus}, identificamos oportunidades de melhoria na organização tributária e diversificação de receitas.`,
+                estrategias: [
+                    {
+                        titulo: "Regularização via MEI Musical",
+                        descricao: "Abra MEI como músico profissional para faturar até R$ 81.000/ano com tributação reduzida (6-11%). Reduza drasticamente seus impostos versus Carnê-Leão.",
+                        prioridade: "Alta",
+                        esforco: "Baixo",
+                        impacto: "Alto"
+                    },
+                    {
+                        titulo: "Diversificação: Aulas Online",
+                        descricao: "Crie curso gravado ou aulas ao vivo via Hotmart/Udemy. Trabalho feito uma vez, renda recorrente. Músicos faturam R$ 2-10k/mês com isso.",
+                        prioridade: "Alta",
+                        esforco: "Médio",
+                        impacto: "Alto"
+                    },
+                    {
+                        titulo: "Sistema de Precificação Inteligente",
+                        descricao: "Crie tabela de cachês com valores mínimos por tipo de evento (casamento, corporativo, bar). Considere distância, equipamentos e horários especiais.",
+                        prioridade: "Média",
+                        esforco: "Baixo",
+                        impacto: "Médio"
+                    },
+                    {
+                        titulo: "Fundo de Emergência Musical",
+                        descricao: "Separe 20% da receita mensal para reserva equivalente a 6 meses de despesas. Essencial para cobrir meses fracos sem comprometer compromissos.",
+                        prioridade: "Alta",
+                        esforco: "Médio",
+                        impacto: "Alto"
+                    },
+                    {
+                        titulo: "Registro de Obras na ECAD",
+                        descricao: "Registre composições próprias para receber direitos autorais. Músicos com 20+ obras cadastradas recebem R$ 500-3k/mês passivamente.",
+                        prioridade: "Média",
+                        esforco: "Baixo",
+                        impacto: "Médio"
+                    },
+                    {
+                        titulo: "Otimização de Despesas Dedutíveis",
+                        descricao: "Organize recibos de equipamentos, transporte, cursos e espaço de trabalho. Pode reduzir base de cálculo do IR em 30-40%.",
+                        prioridade: "Média",
+                        esforco: "Baixo",
+                        impacto: "Médio"
+                    }
+                ]
+            };
+
+            displayResults(fallback);
+        }
+
+        // --- CORE ---
+        function salvarLancamento() {
+            const valorRaw = document.getElementById('inpValor').value;
+            if (!valorRaw) return toast('Digite um valor!', 'erro');
+            const valor = parseFloat(valorRaw.replace(/\./g, '').replace(',', '.'));
+            
+            const novoObj = {
+                id: idEdicao ? idEdicao : Date.now(),
+                tipo: currentType,
+                data: document.getElementById('inpData').value,
+                valor: Math.round(valor * 100),
+                categoria: document.getElementById('inpCat').value,
+                desc: document.getElementById('inpDesc').value || 'Sem descrição'
+            };
+
+            if (idEdicao) {
+                const index = registros.findIndex(r => r.id === idEdicao);
+                if (index !== -1) {
+                    registros[index] = novoObj;
+                    toast('Lançamento atualizado!');
+                }
+                idEdicao = null;
+            } else {
+                registros.push(novoObj);
+                toast('Salvo com sucesso!');
+            }
+
+            localStorage.setItem('musico_db', JSON.stringify(registros));
+            navTo('home');
+        }
+
+        function editar(id) {
+            const item = registros.find(r => r.id === id);
+            if (!item) return;
+
+            idEdicao = id;
+            
+            abrirForm(item.tipo, true);
+
+            document.getElementById('inpValor').value = (item.valor / 100).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            document.getElementById('inpData').value = item.data;
+            document.getElementById('inpCat').value = item.categoria;
+            document.getElementById('inpDesc').value = item.desc;
+        }
+
+        function calcularMes(ano, mes) {
+            const dFilter = r => {
+                const d = new Date(r.data + 'T00:00');
+                return d.getFullYear() === ano && d.getMonth() === mes;
+            };
+            const rec = registros.filter(r => r.tipo === 'receita' && dFilter(r)).reduce((s,r) => s + r.valor, 0);
+            const des = registros.filter(r => r.tipo === 'despesa' && DEDUTIVEIS.includes(r.categoria) && dFilter(r)).reduce((s,r) => s + r.valor, 0);
+            const inss = registros.filter(r => r.tipo === 'despesa' && LEGAIS.includes(r.categoria) && dFilter(r)).reduce((s,r) => s + r.valor, 0);
+
+            let base = rec - des - inss;
+            if(base < 0) base = 0;
+
+            const baseReais = base / 100;
+            const tab = TABLES[anoFiscal] || TABLES['2024'];
+            const faixa = tab.find(f => baseReais <= f.ate);
+            let imposto = (baseReais * faixa.aliq) - faixa.ded;
+            if(imposto < 0) imposto = 0;
+
+            return { rec, des, inss, base, imposto: imposto * 100, aliq: faixa.aliq };
+        }
+
+        // --- RENDER ---
+        function renderHome() {
+            const hoje = new Date();
+            const r = calcularMes(hoje.getFullYear(), hoje.getMonth());
+            
+            const totalGasto = registros.filter(i => {
+                const d = new Date(i.data + 'T00:00');
+                return i.tipo === 'despesa' && d.getMonth() === hoje.getMonth();
+            }).reduce((s, i) => s + i.valor, 0);
+
+            document.getElementById('dashReceita').textContent = fmtMoeda(r.rec);
+            document.getElementById('dashDespesa').textContent = fmtMoeda(totalGasto);
+            document.getElementById('dashSaldo').textContent = fmtMoeda(r.rec - totalGasto);
+
+            if(window.myChart) window.myChart.destroy();
+            const ctx = document.getElementById('chartHome').getContext('2d');
+            window.myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Lucro', 'Custos', 'Imposto'],
+                    datasets: [{ data: [(r.rec-totalGasto-r.imposto)/100, totalGasto/100, r.imposto/100], backgroundColor: ['#00b894', '#d63031', '#fdcb6e'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+            
+            renderEvolutionChart();
+        }
+
+        function renderEvolutionChart() {
+            const ctx = document.getElementById('chartEvolution');
+            const lock = document.getElementById('chartEvolutionLock');
+            
+            if(!isPro) {
+                ctx.style.filter = 'blur(5px)';
+                lock.classList.remove('hidden');
+                if(window.evoChart) window.evoChart.destroy();
+                window.evoChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
+                        datasets: [{ label: 'Receita', data: [100, 150, 120, 180, 200, 250], borderColor: '#00b894' }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                });
+                return;
+            }
+
+            ctx.style.filter = 'none';
+            lock.classList.add('hidden');
+
+            const labels = [];
+            const dataRec = [];
+            const dataDes = [];
+            
+            for(let i=5; i>=0; i--) {
+                const d = new Date();
+                d.setMonth(d.getMonth() - i);
+                const mes = d.getMonth(); 
+                const ano = d.getFullYear();
+                
+                labels.push(`${mes+1}/${ano}`);
+                
+                const rec = registros.filter(r => r.tipo === 'receita' && new Date(r.data+'T00:00').getMonth() === mes && new Date(r.data+'T00:00').getFullYear() === ano).reduce((s,x) => s+x.valor, 0);
+                const des = registros.filter(r => r.tipo === 'despesa' && new Date(r.data+'T00:00').getMonth() === mes && new Date(r.data+'T00:00').getFullYear() === ano).reduce((s,x) => s+x.valor, 0);
+                
+                dataRec.push(rec/100);
+                dataDes.push(des/100);
+            }
+
+            if(window.evoChart) window.evoChart.destroy();
+            window.evoChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Receita', data: dataRec, borderColor: '#00b894', tension: 0.3 },
+                        { label: 'Despesa', data: dataDes, borderColor: '#d63031', tension: 0.3 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function renderCarne() {
+            const hoje = new Date();
+            const r = calcularMes(hoje.getFullYear(), hoje.getMonth());
+
+            document.getElementById('fiscalBase').textContent = fmtMoeda(r.base);
+            document.getElementById('fiscalDedutivel').textContent = fmtMoeda(r.des + r.inss);
+
+            const content = document.getElementById('taxContent');
+            const lock = document.getElementById('taxLock');
+            const statusText = document.getElementById('taxStatusText');
+            const valueDisplay = document.getElementById('taxValueDisplay');
+            const detailText = document.getElementById('taxDetailText');
+            const box = document.getElementById('taxAlertBox');
+
+            if (r.imposto === 0) {
+                box.style.background = '#e8f5e9';
+                box.style.borderColor = '#c8e6c9';
+                content.classList.remove('blur-overlay');
+                lock.classList.add('hidden');
+                statusText.textContent = "ISENTO NESTE MÊS";
+                statusText.style.color = "var(--success)";
+                valueDisplay.textContent = "R$ 0,00";
+                detailText.textContent = "Base abaixo do limite de isenção.";
+            } else {
+                box.style.background = '#fff3e0';
+                box.style.borderColor = '#ffe0b2';
+                statusText.textContent = "IMPOSTO A PAGAR";
+                statusText.style.color = "#d35400";
+
+                if (isPro) {
+                    content.classList.remove('blur-overlay');
+                    lock.classList.add('hidden');
+                    valueDisplay.textContent = fmtMoeda(r.imposto);
+                    detailText.innerHTML = `Aliq. Efetiva: ${(r.aliq*100).toFixed(1)}%<br><strong>Gere o DARF Cód. 0190</strong>`;
+                } else {
+                    content.classList.add('blur-overlay');
+                    lock.classList.remove('hidden');
+                    valueDisplay.textContent = "R$ 9.999,99";
+                    detailText.textContent = "Detalhes ocultos";
+                }
+            }
+        }
+
+        const escapeHtml = txt => txt.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+        function renderHistorico() {
+            const lista = document.getElementById('listaLancamentos');
+            
+            let filtroMes = document.getElementById('filtroMes');
+            if(!filtroMes) {
+                const container = document.getElementById('view-historico');
+                const divFiltro = document.createElement('div');
+                divFiltro.style.marginBottom = '15px';
+                divFiltro.innerHTML = `
+                    <select id="filtroMes" class="form-control" onchange="renderHistorico()">
+                        <option value="todos">📅 Todo o Período</option>
+                    </select>
+                `;
+                container.insertBefore(divFiltro, document.getElementById('searchBox').parentNode);
+                filtroMes = document.getElementById('filtroMes');
+            }
+
+            const currentVal = filtroMes.value;
+            filtroMes.innerHTML = '<option value="todos">📅 Todo o Período</option>';
+            const meses = [...new Set(registros.map(r => r.data.substring(0, 7)))].sort().reverse();
+            meses.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m;
+                const parts = m.split('-');
+                opt.text = `${parts[1]}/${parts[0]}`;
+                filtroMes.add(opt);
+            });
+            if (currentVal && [...filtroMes.options].some(o => o.value === currentVal)) filtroMes.value = currentVal;
+
+            lista.innerHTML = '';
+            const busca = document.getElementById('searchBox').value.toLowerCase();
+            const mesSelecionado = filtroMes.value;
+            
+            registros.filter(r => {
+                const matchTexto = r.desc.toLowerCase().includes(busca) || r.categoria.toLowerCase().includes(busca);
+                const matchMes = mesSelecionado === 'todos' || r.data.startsWith(mesSelecionado);
+                return matchTexto && matchMes;
+            })
+                .sort((a,b) => new Date(b.data) - new Date(a.data))
+                .forEach(r => {
+                    const div = document.createElement('div');
+                    div.className = 'transaction-item';
+                    div.innerHTML = `
+                        <div class="t-info">
+                            <span class="t-date">${fmtData(r.data)}</span>
+                            <span class="t-cat">${escapeHtml(r.categoria)}</span>
+                            <span class="t-desc">${escapeHtml(r.desc)}</span>
+                        </div>
+                        <div class="t-value ${r.tipo === 'receita' ? 'val-plus' : 'val-minus'}">
+                            ${r.tipo === 'receita' ? '+' : '-'} ${fmtMoeda(r.valor)}
+                        </div>
+                        <div class="t-actions">
+                            <span class="action-icon" onclick="editar(${r.id})">✏️</span>
+                            <span class="action-icon" onclick="removerItem(${r.id})">🗑️</span>
+                        </div>
+                    `;
+                    lista.appendChild(div);
+                });
+        }
+
+        // --- UTILS ---
+        function removerItem(id) { if(confirm('Apagar?')) { registros = registros.filter(r => r.id !== id); localStorage.setItem('musico_db', JSON.stringify(registros)); renderHistorico(); toast('Apagado'); } }
+        function mascaraMoeda(i) { let v = i.value.replace(/\D/g,''); v = (v/100).toFixed(2) + ''; v = v.replace(".", ","); v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); i.value = v; }
+        function fmtMoeda(cents) { return (cents/100).toLocaleString('pt-BR', {style:'currency', currency:'BRL'}); }
+        function fmtData(d) { const p = d.split('-'); return `${p[2]}/${p[1]}`; }
+        function toast(msg, tipo) { const t = document.getElementById('toast'); t.textContent = msg; t.style.background = tipo === 'erro' ? '#d63031' : '#333'; t.classList.remove('hidden'); setTimeout(() => t.classList.add('hidden'), 3000); }
+        function toggleTheme() { document.body.classList.toggle('dark-mode'); localStorage.setItem('musico_dark', document.body.classList.contains('dark-mode')); }
+        
+        function mudarAno(novoAno) { 
+            anoFiscal = novoAno; 
+            localStorage.setItem('musico_ano', novoAno); 
+            document.getElementById('anoLabel').textContent = novoAno;
+            document.getElementById('anoSelect').value = novoAno;
+            navTo('home'); 
+            toast(`Ano Fiscal: ${novoAno}`); 
+        }
+        
+        function ativarPro() {
+            const key = document.getElementById('licencaKey').value.toUpperCase();
+            if(/^CLM-\d{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(key)) {
+                isPro = true; localStorage.setItem('musico_pro_status', 'true');
+                document.getElementById('badgePro').textContent = 'PRO';
+                document.getElementById('badgePro').className = 'license-badge pro';
+                toast('PRO Ativado! 🚀'); navTo('carne');
+            } else { toast('Chave inválida', 'erro'); }
+        }
+
+        function exportarCSV() { 
+            if (!isPro) {
+                toast('🔒 Recurso exclusivo PRO', 'erro');
+                setTimeout(() => navTo('ajuda'), 1000);
+                return;
+            }
+            let csv = "Data;Tipo;Categoria;Desc;Valor\n"; 
+            registros.forEach(r => csv += `${r.data};${r.tipo};${r.categoria};${r.desc};${r.valor}\n`); 
+            const a = document.createElement('a'); 
+            a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'})); 
+            a.download = 'musico.csv'; 
+            a.click(); 
+        }
+
+        function gerarPDF() {
+            if (!isPro) {
+                toast('🔒 Recurso exclusivo PRO', 'erro');
+                setTimeout(() => navTo('ajuda'), 1000);
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(18);
+            doc.text("Relatório Financeiro - Músico Pro", 14, 22);
+            doc.setFontSize(11);
+            doc.text(`Gerado em: ${new Date().toLocaleDateString()}`, 14, 30);
+
+            const rec = registros.filter(r => r.tipo === 'receita').reduce((s,r) => s+r.valor, 0);
+            const des = registros.filter(r => r.tipo === 'despesa').reduce((s,r) => s+r.valor, 0);
+            
+            doc.text(`Receita Total: ${fmtMoeda(rec)}`, 14, 40);
+            doc.text(`Despesa Total: ${fmtMoeda(des)}`, 14, 46);
+            doc.text(`Saldo Geral: ${fmtMoeda(rec - des)}`, 14, 52);
+
+            const tableData = registros.sort((a,b) => new Date(b.data) - new Date(a.data)).map(r => [
+                fmtData(r.data),
+                r.tipo.toUpperCase(),
+                r.categoria,
+                r.desc,
+                fmtMoeda(r.valor)
+            ]);
+
+            doc.autoTable({
+                startY: 60,
+                head: [['Data', 'Tipo', 'Categoria', 'Descrição', 'Valor']],
+                body: tableData,
+                theme: 'striped',
+                headStyles: { fillColor: [78, 67, 118] }
+            });
+
+            doc.save('relatorio_musico.pdf');
+            toast('PDF Gerado!');
+        }
+
+        function gerarReciboPDF() {
+            const tipo = document.querySelector('input[name="tipoRecibo"]:checked').value;
+            const pagador = document.getElementById('recPagador').value;
+            const docPagador = document.getElementById('recDoc').value;
+            const valorRaw = document.getElementById('recValor').value;
+            const data = document.getElementById('recData').value;
+            const desc = document.getElementById('recDesc').value;
+            const cidade = document.getElementById('recCidade').value;
+
+            if(!pagador || !valorRaw) return toast('Preencha os campos', 'erro');
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            const dataFormatada = data ? new Date(data).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+
+            if (tipo === 'simples') {
+                pdf.setFontSize(22);
+                pdf.text("RECIBO DE PAGAMENTO", 105, 30, null, null, "center");
+                
+                pdf.setFontSize(16);
+                pdf.text(`Valor: R$ ${valorRaw}`, 105, 45, null, null, "center");
+                
+                pdf.setFontSize(12);
+                const texto = `Recebi(emos) de ${pagador}, inscrito(a) no CPF/CNPJ sob o nº ${docPagador}, a importância de R$ ${valorRaw}, referente a ${desc}.`;
+                
+                const splitText = pdf.splitTextToSize(texto, 170);
+                pdf.text(splitText, 20, 70);
+                
+                pdf.text(`Por ser verdade firmo(amos) o presente.`, 20, 100);
+                pdf.text(`${cidade}, ${dataFormatada}.`, 105, 120, null, null, "center");
+                
+                pdf.line(60, 150, 150, 150);
+                pdf.text("Assinatura", 105, 155, null, null, "center");
+                
+                try {
+                    const qrText = `Recibo Simples\nDe: ${pagador}\nValor: R$ ${valorRaw}\nData: ${dataFormatada}\nAutenticidade: ${Date.now().toString(36)}`;
+                    const qrContainer = document.createElement('div');
+                    new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
+                    const qrImg = qrContainer.querySelector('img').src;
+                    pdf.addImage(qrImg, 'PNG', 160, 20, 30, 30);
+                    pdf.setFontSize(8);
+                    pdf.text("Validação", 175, 52, null, null, "center");
+                } catch(e) { console.log('Erro QR', e); }
+
+                pdf.save('recibo_simples.pdf');
+            } else {
+                const inssRaw = document.getElementById('recINSS').value || "0,00";
+                const irrfRaw = document.getElementById('recIRRF').value || "0,00";
+                const issRaw = document.getElementById('recISS').value || "0,00";
+                
+                const parseMoney = (v) => parseFloat(v.replace(/\./g, '').replace(',', '.') || 0);
+                const vBruto = parseMoney(valorRaw);
+                const vINSS = parseMoney(inssRaw);
+                const vIRRF = parseMoney(irrfRaw);
+                const vISS = parseMoney(issRaw);
+                const vLiquido = vBruto - vINSS - vIRRF - vISS;
+
+                pdf.setFontSize(18);
+                pdf.text("RECIBO DE PAGAMENTO AUTÔNOMO (RPA)", 105, 20, null, null, "center");
+                
+                pdf.setDrawColor(0);
+                pdf.setFillColor(240, 240, 240);
+                pdf.rect(20, 30, 170, 35, 'F');
+                
+                pdf.setFontSize(10);
+                pdf.text("VALOR BRUTO", 30, 40);
+                pdf.text(`R$ ${valorRaw}`, 30, 45);
+                
+                pdf.text("(-) INSS", 70, 40);
+                pdf.text(`R$ ${inssRaw}`, 70, 45);
+                
+                pdf.text("(-) IRRF", 110, 40);
+                pdf.text(`R$ ${irrfRaw}`, 110, 45);
+
+                pdf.text("(-) ISS", 150, 40);
+                pdf.text(`R$ ${issRaw}`, 150, 45);
+
+                pdf.setFontSize(12);
+                pdf.setFont(undefined, 'bold');
+                pdf.text("VALOR LÍQUIDO", 105, 55, null, null, "center");
+                pdf.setFontSize(16);
+                pdf.text(`R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`, 105, 62, null, null, "center");
+                pdf.setFont(undefined, 'normal');
+
+                pdf.setFontSize(11);
+                const texto = `Recebi(emos) de ${pagador}, inscrito(a) no CPF/CNPJ sob o nº ${docPagador}, a importância líquida de R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}, referente a serviços prestados de: ${desc}.`;
+                
+                const splitText = pdf.splitTextToSize(texto, 170);
+                pdf.text(splitText, 20, 80);
+                
+                let y = 110;
+                pdf.text("Discriminativo de Deduções:", 20, y);
+                y += 7;
+                if(vINSS > 0) { pdf.text(`• INSS Retido: R$ ${inssRaw}`, 25, y); y+=6; }
+                if(vIRRF > 0) { pdf.text(`• IRRF Retido: R$ ${irrfRaw}`, 25, y); y+=6; }
+                if(vISS > 0) { pdf.text(`• ISS Retido: R$ ${issRaw}`, 25, y); y+=6; }
+                
+                y += 15;
+                pdf.text(`${cidade}, ${dataFormatada}.`, 105, y, null, null, "center");
+                
+                y += 25;
+                pdf.line(60, y, 150, y);
+                pdf.text("Assinatura do Prestador", 105, y + 5, null, null, "center");
+                
+                pdf.setFontSize(9);
+                pdf.setTextColor(100);
+                pdf.text("Assinatura Eletrônica (Gov.br) disponível em: https://assinatura.gov.br", 105, y + 15, null, null, "center");
+
+                try {
+                    const qrText = `RPA\nDe: ${pagador}\nBruto: R$ ${valorRaw}\nLiquido: R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\nData: ${dataFormatada}\nAuth: ${Date.now().toString(36)}`;
+                    const qrContainer = document.createElement('div');
+                    new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
+                    const qrImg = qrContainer.querySelector('img').src;
+                    pdf.addImage(qrImg, 'PNG', 160, 25, 25, 25);
+                } catch(e) { console.log('Erro QR', e); }
+
+                pdf.save('recibo_rpa.pdf');
+            }
+            toast('Recibo Gerado!');
+        }
+
+        function baixarBackup() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(registros)], {type:'application/json'})); a.download = 'backup_musico.json'; a.click(); }
+        function restaurarBackup(input) { 
+            const r = new FileReader(); 
+            r.onload = e => { 
+                try {
+                    const dados = JSON.parse(e.target.result); 
+                    if(Array.isArray(dados)) {
+                        registros = dados; 
+                        localStorage.setItem('musico_db', JSON.stringify(registros)); 
+                        navTo('home'); 
+                        toast('Restaurado!'); 
+                    } else {
+                        toast('Arquivo inválido!', 'erro');
+                    }
+                } catch(err) {
+                    toast('Erro no arquivo', 'erro');
+                }
+            }; 
+            r.readAsText(input.files[0]); 
+        }
+
+        // INIT
+        if(localStorage.getItem('musico_dark') === 'true') document.body.classList.add('dark-mode');
+        if(localStorage.getItem('musico_ano')) { mudarAno(localStorage.getItem('musico_ano')); }
+        if(isPro) { document.getElementById('badgePro').textContent = 'PRO'; document.getElementById('badgePro').className = 'license-badge pro'; }
+
+        if(registros.length > 0 && !localStorage.getItem('musico_db_v2')) {
+            registros = registros.map(r => ({...r, valor: Math.round(r.valor * 100)}));
+            localStorage.setItem('musico_db', JSON.stringify(registros));
+            localStorage.setItem('musico_db_v2', 'true');
+            toast('App atualizado (v2)');
+        } else if (!localStorage.getItem('musico_db_v2')) {
+            localStorage.setItem('musico_db_v2', 'true');
+        }
+        
+        navTo('home');
+
+    </script>
+</body>
+</html>
