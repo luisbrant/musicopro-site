@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, Calculator, AlertCircle, CheckCircle2, Info } f
 
 export default function CarneLeaoDeepDive() {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
+  const [anoBase, setAnoBase] = useState<'2025' | '2026'>('2026');
   const [calculatorData, setCalculatorData] = useState({
     rendaBruta: 0,
     despesas: 0,
@@ -25,15 +26,25 @@ export default function CarneLeaoDeepDive() {
     { faixa: 'Acima de R$ 12.500,00', aliquota: '27,5%', deducao: 'R$ 2.312,50', descricao: 'Quarta faixa' },
   ];
 
-  // Calcular IR (Tabela 2026)
+  // Calcular IR (Tabela 2026 ou 2025)
   const calcularIR = () => {
     const baseCalculo = calculatorData.rendaBruta - calculatorData.despesas - calculatorData.inss;
     
-    if (baseCalculo <= 5000.00) return 0;
-    if (baseCalculo <= 7500.00) return (baseCalculo * 0.075) - 375.00;
-    if (baseCalculo <= 10000.00) return (baseCalculo * 0.15) - 937.50;
-    if (baseCalculo <= 12500.00) return (baseCalculo * 0.225) - 1687.50;
-    return (baseCalculo * 0.275) - 2312.50;
+    if (anoBase === '2026') {
+      // Tabela 2026 (Isenção 5k)
+      if (baseCalculo <= 5000.00) return 0;
+      if (baseCalculo <= 7500.00) return (baseCalculo * 0.075) - 375.00;
+      if (baseCalculo <= 10000.00) return (baseCalculo * 0.15) - 937.50;
+      if (baseCalculo <= 12500.00) return (baseCalculo * 0.225) - 1687.50;
+      return (baseCalculo * 0.275) - 2312.50;
+    } else {
+      // Tabela 2025 (Isenção 2.259,20)
+      if (baseCalculo <= 2259.20) return 0;
+      if (baseCalculo <= 2826.65) return (baseCalculo * 0.075) - 169.44;
+      if (baseCalculo <= 3751.05) return (baseCalculo * 0.15) - 381.44;
+      if (baseCalculo <= 4664.68) return (baseCalculo * 0.225) - 662.77;
+      return (baseCalculo * 0.275) - 896.00;
+    }
   };
 
   const irCalculado = calcularIR();
@@ -195,6 +206,30 @@ export default function CarneLeaoDeepDive() {
             </p>
 
             <div className="space-y-4">
+              {/* Seletor de Ano */}
+              <div className="flex gap-2 mb-4 bg-white p-1 rounded-lg border border-[#E8E3DC] w-fit">
+                <button
+                  onClick={() => setAnoBase('2026')}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                    anoBase === '2026' 
+                      ? 'bg-[#1B4965] text-white shadow-sm' 
+                      : 'text-[#7F8C8D] hover:bg-[#F5F2ED]'
+                  }`}
+                >
+                  Regra 2026 (Carnê-Leão)
+                </button>
+                <button
+                  onClick={() => setAnoBase('2025')}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                    anoBase === '2025' 
+                      ? 'bg-[#1B4965] text-white shadow-sm' 
+                      : 'text-[#7F8C8D] hover:bg-[#F5F2ED]'
+                  }`}
+                >
+                  Regra 2025 (Declaração)
+                </button>
+              </div>
+
               <div>
                 <label className="block text-sm font-semibold text-[#1B4965] mb-2">
                   Renda Bruta Mensal (R$)
@@ -285,7 +320,8 @@ export default function CarneLeaoDeepDive() {
                 
                 <div className="bg-white p-3 rounded mt-3 space-y-2">
                   <p>Base de Cálculo = R$ 2.000 - R$ 300 - R$ 180 = <strong>R$ 1.520</strong></p>
-                  <p className="text-[#6BA587]">✅ Resultado: <strong>ISENTO</strong> (abaixo de R$ 5.000,00)</p>
+                  <p className="text-[#6BA587]">✅ Resultado 2026: <strong>ISENTO</strong> (abaixo de R$ 5.000,00)</p>
+                  <p className="text-xs text-[#7F8C8D] mt-1">Nota: Na declaração referente a 2025, o limite era R$ 2.259,20.</p>
                   <p className="text-xs text-[#7F8C8D]">João não precisa pagar Carnê-Leão este mês</p>
                 </div>
               </div>
@@ -400,7 +436,7 @@ export default function CarneLeaoDeepDive() {
                 {
                   erro: 'Não preencher Carnê-Leão quando obrigatório',
                   consequencia: 'Multa de 75% + juros + possível malha fina',
-                  solucao: 'Preencha todo mês se sua renda ultrapassa R$ 5.000,00'
+                  solucao: 'Preencha se renda > R$ 5.000 (Regra 2026) ou > R$ 2.259 (Regra 2025)'
                 },
                 {
                   erro: 'Deduzir despesas sem comprovação',
@@ -484,7 +520,8 @@ export default function CarneLeaoDeepDive() {
       <div className="bg-[#E8F5E9] border-l-4 border-[#6BA587] rounded-lg p-4 md:p-6 space-y-3">
         <h4 className="font-semibold text-[#6BA587] text-base md:text-lg">✅ Resumo: Carnê-Leão em 5 Pontos</h4>
         <ol className="space-y-2 pl-4 list-decimal text-sm md:text-base text-[#2C3E50]">
-          <li><strong>É obrigatório</strong> se sua renda mensal ultrapassa R$ 5.000,00</li>
+          <li><strong>Para 2026 (Carnê-Leão):</strong> Obrigatório se renda mensal &gt; R$ 5.000,00</li>
+          <li><strong>Para Declaração 2026 (Ano-base 2025):</strong> Obrigatório se renda mensal &gt; R$ 2.259,20</li>
           <li><strong>Você calcula e paga</strong> mensalmente (até o último dia útil)</li>
           <li><strong>Use a tabela progressiva</strong> para calcular o valor correto</li>
           <li><strong>Deduza apenas despesas comprovadas</strong> relacionadas à sua atividade</li>
