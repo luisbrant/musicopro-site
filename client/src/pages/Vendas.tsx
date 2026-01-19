@@ -8,8 +8,8 @@ export default function Vendas() {
       <header className="bg-white border-b border-[#E8E3DC] sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-[#1B4965] font-bold text-lg">
-            <span>🎵</span>
-            <span>Guia IR Músicos</span>
+            <img src="/images/compasso-fiscal-logo.png" alt="Compasso Fiscal" className="h-8 w-8" />
+            <span>Compasso Fiscal</span>
           </Link>
           <a href="#comprar" className="bg-[#E07856] text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-[#D06846] transition">
             Quero a Licença PRO

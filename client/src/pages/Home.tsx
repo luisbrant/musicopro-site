@@ -58,10 +58,10 @@ export default function Home() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Music size={28} className="text-[#1B4965]" />
+            <img src="/images/compasso-fiscal-logo.png" alt="Compasso Fiscal" className="h-10 w-10" />
             <div>
-              <h1 className="text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>Guia IR para Músicos</h1>
-              <p className="text-xs text-[#7F8C8D]">Edição 2026</p>
+              <h1 className="text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>Compasso Fiscal</h1>
+              <p className="text-xs text-[#7F8C8D]">Gestão Fiscal para Músicos</p>
             </div>
           </div>
           
@@ -128,7 +128,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Transforme sua Arte em Carreira Profissional</h2>
+              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>No Compasso Certo da Gestão Fiscal</h2>
               <div className="flex gap-2">
                 <button 
                   onClick={() => setIsDownloadModalOpen(true)}
@@ -142,7 +142,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-xs md:text-sm leading-relaxed opacity-90">
-              Tudo o que você precisa saber sobre Imposto de Renda, Carnê-Leão, MEI e gestão fiscal para músicos autônomos.
+              Guia completo sobre Imposto de Renda, Carnê-Leão, MEI, deduções fiscais e gestão profissional para músicos autônomos. Conteúdo criado POR músicos PARA músicos.
             </p>
             <div className="flex gap-3 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-1">
