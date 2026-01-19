@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Star, Download } from 'lucide-react';
 import { Link } from 'wouter';
+import { EmailCaptureModal } from '@/components/EmailCaptureModal';
 
 export default function Home() {
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -955,6 +957,21 @@ export default function Home() {
           </Link>
         </section>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-[#1B4965] text-white py-8 text-center text-sm opacity-90">
+        <div className="container mx-auto px-4">
+          <p>&copy; 2026 Guia IR para Músicos. Todos os direitos reservados.</p>
+          <p className="mt-2 text-xs opacity-70">Este site não possui vínculo com a Receita Federal.</p>
+        </div>
+      </footer>
+
+      <EmailCaptureModal 
+        isOpen={isDownloadModalOpen}
+        onClose={() => setIsDownloadModalOpen(false)}
+        downloadUrl="/app-musico-pro.html"
+        fileName="MusicoPro-App.html"
+      />
     </div>
   );
 }
