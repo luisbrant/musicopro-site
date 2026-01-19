@@ -59,7 +59,7 @@ export default function Home() {
             <Music size={28} className="text-[#1B4965]" />
             <div>
               <h1 className="text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>Guia IR para Músicos</h1>
-              <p className="text-xs text-[#7F8C8D]">Edição 2025</p>
+              <p className="text-xs text-[#7F8C8D]">Edição 2026</p>
             </div>
           </div>
           
@@ -129,7 +129,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-1">
                 <Zap size={16} />
-                <span>Atualizado 2025</span>
+                <span>Atualizado 2026</span>
               </div>
             </div>
           </div>
@@ -562,27 +562,27 @@ export default function Home() {
                     </thead>
                     <tbody>
                       <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">Até 2.259,20</td>
+                        <td className="border border-[#E8E3DC] p-2">Até 5.000,00</td>
                         <td className="border border-[#E8E3DC] p-2"><strong>Isento (0%)</strong></td>
                         <td className="border border-[#E8E3DC] p-2">0,00</td>
                       </tr>
                       <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">2.259,21 a 2.826,65</td>
+                        <td className="border border-[#E8E3DC] p-2">5.000,01 a 7.500,00</td>
                         <td className="border border-[#E8E3DC] p-2">7,5%</td>
                         <td className="border border-[#E8E3DC] p-2">169,44</td>
                       </tr>
                       <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">2.826,66 a 3.751,05</td>
+                        <td className="border border-[#E8E3DC] p-2">7.500,01 a 10.000,00</td>
                         <td className="border border-[#E8E3DC] p-2">15%</td>
                         <td className="border border-[#E8E3DC] p-2">381,44</td>
                       </tr>
                       <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">3.751,06 a 4.664,68</td>
+                        <td className="border border-[#E8E3DC] p-2">10.000,01 a 12.500,00</td>
                         <td className="border border-[#E8E3DC] p-2">22,5%</td>
                         <td className="border border-[#E8E3DC] p-2">662,77</td>
                       </tr>
                       <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">Acima de 4.664,68</td>
+                        <td className="border border-[#E8E3DC] p-2">Acima de 12.500,00</td>
                         <td className="border border-[#E8E3DC] p-2">27,5%</td>
                         <td className="border border-[#E8E3DC] p-2">896,00</td>
                       </tr>
@@ -916,7 +916,7 @@ export default function Home() {
                     Com gestão fiscal responsável, você protege sua carreira e maximiza seus ganhos. Este guia é seu primeiro passo para profissionalização.
                   </p>
                   <p className="text-xs opacity-75">
-                    Edição Atualizada 2025 | Base Legal: Ano-Calendário 2024
+                    Edição Atualizada 2026 | Base Legal: Ano-Calendário 2025
                   </p>
                 </div>
               </div>

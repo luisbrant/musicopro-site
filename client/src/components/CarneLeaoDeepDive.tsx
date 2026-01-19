@@ -285,7 +285,7 @@ export default function CarneLeaoDeepDive() {
                 
                 <div className="bg-white p-3 rounded mt-3 space-y-2">
                   <p>Base de Cálculo = R$ 2.000 - R$ 300 - R$ 180 = <strong>R$ 1.520</strong></p>
-                  <p className="text-[#6BA587]">✅ Resultado: <strong>ISENTO</strong> (abaixo de R$ 2.259,20)</p>
+                  <p className="text-[#6BA587]">✅ Resultado: <strong>ISENTO</strong> (abaixo de R$ 5.000,00)</p>
                   <p className="text-xs text-[#7F8C8D]">João não precisa pagar Carnê-Leão este mês</p>
                 </div>
               </div>
@@ -400,7 +400,7 @@ export default function CarneLeaoDeepDive() {
                 {
                   erro: 'Não preencher Carnê-Leão quando obrigatório',
                   consequencia: 'Multa de 75% + juros + possível malha fina',
-                  solucao: 'Preencha todo mês se sua renda ultrapassa R$ 2.259,20'
+                  solucao: 'Preencha todo mês se sua renda ultrapassa R$ 5.000,00'
                 },
                 {
                   erro: 'Deduzir despesas sem comprovação',
@@ -484,7 +484,7 @@ export default function CarneLeaoDeepDive() {
       <div className="bg-[#E8F5E9] border-l-4 border-[#6BA587] rounded-lg p-4 md:p-6 space-y-3">
         <h4 className="font-semibold text-[#6BA587] text-base md:text-lg">✅ Resumo: Carnê-Leão em 5 Pontos</h4>
         <ol className="space-y-2 pl-4 list-decimal text-sm md:text-base text-[#2C3E50]">
-          <li><strong>É obrigatório</strong> se sua renda mensal ultrapassa R$ 2.259,20</li>
+          <li><strong>É obrigatório</strong> se sua renda mensal ultrapassa R$ 5.000,00</li>
           <li><strong>Você calcula e paga</strong> mensalmente (até o último dia útil)</li>
           <li><strong>Use a tabela progressiva</strong> para calcular o valor correto</li>
           <li><strong>Deduza apenas despesas comprovadas</strong> relacionadas à sua atividade</li>
