@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Compasso Fiscal">
+  <defs>
+    <style>
+      .navy { fill:#0c2461; }
+      .gold { fill:#d4af37; }
+      .serif { font-family: "Playfair Display","Times New Roman",serif; }
+    </style>
+  </defs>
+
+  <!-- Ícone à esquerda -->
+  <g transform="translate(90,60)">
+    <circle cx="120" cy="120" r="120" class="navy"/>
+    <circle cx="120" cy="120" r="108" fill="none" stroke="#d4af37" stroke-width="8"/>
+
+    <ellipse cx="78" cy="170" rx="28" ry="22" class="gold"/>
+    <ellipse cx="148" cy="150" rx="28" ry="22" class="gold"/>
+
+    <rect x="100" y="65" width="20" height="110" class="gold"/>
+    <rect x="160" y="60" width="20" height="92" class="gold"/>
+
+    <path class="gold" d="M120 72 L180 56 L180 82 L120 98 Z"/>
+  </g>
+
+  <!-- Texto -->
+  <text x="360" y="165" font-size="92" class="navy serif" font-weight="700">Compasso</text>
+  <text x="760" y="165" font-size="92" class="gold serif" font-weight="700">Fiscal</text>
+
+  <!-- Linha fina decorativa -->
+  <rect x="360" y="210" width="620" height="4" fill="#0c2461" opacity="0.15"/>
+</svg>

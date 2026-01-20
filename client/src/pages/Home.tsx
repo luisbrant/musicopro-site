@@ -57,12 +57,8 @@ export default function Home() {
       {/* Header Sticky */}
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/images/compasso-fiscal-logo.png" alt="Compasso Fiscal" className="h-10 w-10" />
-            <div>
-              <h1 className="text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>Compasso Fiscal</h1>
-              <p className="text-xs text-[#7F8C8D]">Gestão Fiscal para Músicos</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <img src="/images/compasso-fiscal-logo.svg" alt="Compasso Fiscal" className="h-12" style={{ maxWidth: '120px' }} />
           </div>
           
           {/* Mobile Menu Button */}

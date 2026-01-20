@@ -60,11 +60,7 @@ export default function Ferramentas() {
             </Link>
             <div className="h-6 w-px bg-[#E8E3DC] mx-2 hidden md:block"></div>
             <div className="flex items-center gap-2">
-              <img src="/images/compasso-fiscal-logo.png" alt="Compasso Fiscal" className="h-8 w-8" />
-              <div>
-                <h1 className="text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>Ferramentas Compasso</h1>
-                <p className="text-xs text-[#7F8C8D]">Calculadoras & Simuladores</p>
-              </div>
+              <img src="/images/compasso-fiscal-logo.svg" alt="Compasso Fiscal" className="h-10" style={{ maxWidth: '120px' }} />
             </div>
           </div>
           
