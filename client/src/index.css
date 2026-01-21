@@ -45,51 +45,51 @@
 }
 
 :root {
-  /* Design: Warm & Accessible */
-  /* Primary: Azul-petróleo profundo */
-  --primary: #1B4965;
+  /* Design: Compasso Fiscal - Navy, Ouro, Verde */
+  /* Primary: Navy profundo (#0c2461) */
+  --primary: #0c2461;
   --primary-foreground: #FFFBF7;
-  --sidebar-primary: #1B4965;
+  --sidebar-primary: #0c2461;
   --sidebar-primary-foreground: #FFFBF7;
   
-  /* Secondary: Coral suave */
-  --secondary: #E07856;
-  --secondary-foreground: #FFFBF7;
+  /* Secondary: Ouro (#d4af37) */
+  --secondary: #d4af37;
+  --secondary-foreground: #0c2461;
   
   /* Accent colors for categories */
-  --accent-tip: #6BA587;      /* Verde suave para dicas */
-  --accent-alert: #D4A574;    /* Âmbar suave para alertas */
-  --accent-danger: #C85A54;   /* Vermelho suave para perigo */
+  --accent-tip: #6ba587;      /* Verde para dicas */
+  --accent-alert: #d4af37;    /* Ouro para alertas */
+  --accent-danger: #c85a54;   /* Vermelho para perigo */
   
   /* Core theme */
   --radius: 0.75rem;
   --background: #FFFBF7;      /* Creme muito suave */
-  --foreground: #2C3E50;      /* Azul-escuro */
+  --foreground: #0c2461;      /* Navy escuro */
   --card: #F5F1ED;            /* Bege claro */
-  --card-foreground: #2C3E50;
+  --card-foreground: #0c2461;
   --popover: #FFFBF7;
-  --popover-foreground: #2C3E50;
+  --popover-foreground: #0c2461;
   --muted: #E8E3DC;           /* Cinza claro */
   --muted-foreground: #7F8C8D;/* Cinza médio */
-  --accent: #E07856;          /* Coral */
-  --accent-foreground: #FFFBF7;
-  --destructive: #C85A54;
+  --accent: #d4af37;          /* Ouro */
+  --accent-foreground: #0c2461;
+  --destructive: #c85a54;
   --destructive-foreground: #FFFBF7;
   --border: #E8E3DC;
   --input: #F5F1ED;
-  --ring: #1B4965;
+  --ring: #0c2461;
   --sidebar: #FFFBF7;
-  --sidebar-foreground: #2C3E50;
-  --sidebar-accent: #E07856;
-  --sidebar-accent-foreground: #FFFBF7;
+  --sidebar-foreground: #0c2461;
+  --sidebar-accent: #d4af37;
+  --sidebar-accent-foreground: #0c2461;
   --sidebar-border: #E8E3DC;
-  --sidebar-ring: #1B4965;
+  --sidebar-ring: #0c2461;
   
-  /* Chart colors (warm palette) */
-  --chart-1: #1B4965;
-  --chart-2: #E07856;
-  --chart-3: #6BA587;
-  --chart-4: #D4A574;
+  /* Chart colors (Compasso Fiscal palette) */
+  --chart-1: #0c2461;
+  --chart-2: #d4af37;
+  --chart-3: #6ba587;
+  --chart-4: #E07856;
   --chart-5: #7F8C8D;
 }
 

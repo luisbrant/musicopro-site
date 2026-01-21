@@ -17,7 +17,7 @@ export default function Vendas() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-[#1B4965] text-white py-16 md:py-24 relative overflow-hidden">
+      <section className="bg-[#0c2461] text-white py-16 md:py-24 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center"></div>
         <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
           <span className="bg-[#E07856] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">
@@ -43,31 +43,31 @@ export default function Vendas() {
       {/* O Problema */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965] text-center mb-12 font-['Lexend',_sans-serif]">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461] text-center mb-12 font-['Lexend',_sans-serif]">
             Você vive essa realidade?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
               <div className="text-4xl mb-4">😰</div>
-              <h3 className="font-bold text-[#1B4965] mb-2">Medo da Malha Fina</h3>
-              <p className="text-[#2C3E50] text-sm">Recebe PIX de cachês e alunos, mas não sabe se deve declarar ou como fazer isso corretamente.</p>
+              <h3 className="font-bold text-[#0c2461] mb-2">Medo da Malha Fina</h3>
+              <p className="text-[#0c2461] text-sm">Recebe PIX de cachês e alunos, mas não sabe se deve declarar ou como fazer isso corretamente.</p>
             </div>
             <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
               <div className="text-4xl mb-4">💸</div>
-              <h3 className="font-bold text-[#1B4965] mb-2">Imposto Alto Demais</h3>
-              <p className="text-[#2C3E50] text-sm">Sente que paga muito imposto ou tem medo de pagar uma fortuna de uma vez só no ajuste anual.</p>
+              <h3 className="font-bold text-[#0c2461] mb-2">Imposto Alto Demais</h3>
+              <p className="text-[#0c2461] text-sm">Sente que paga muito imposto ou tem medo de pagar uma fortuna de uma vez só no ajuste anual.</p>
             </div>
             <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
               <div className="text-4xl mb-4">📉</div>
-              <h3 className="font-bold text-[#1B4965] mb-2">Desorganização Total</h3>
-              <p className="text-[#2C3E50] text-sm">Mistura dinheiro pessoal com profissional, perde recibos e não sabe quanto realmente lucra.</p>
+              <h3 className="font-bold text-[#0c2461] mb-2">Desorganização Total</h3>
+              <p className="text-[#0c2461] text-sm">Mistura dinheiro pessoal com profissional, perde recibos e não sabe quanto realmente lucra.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* A Solução: O Kit */}
-      <section id="demo" className="py-16 bg-[#1B4965] text-white">
+      <section id="demo" className="py-16 bg-[#0c2461] text-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-2xl md:text-4xl font-bold mb-4 font-['Lexend',_sans-serif]">

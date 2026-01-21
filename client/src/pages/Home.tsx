@@ -79,8 +79,8 @@ export default function Home() {
                 onClick={() => scrollToSection(section.id)}
                 className={`w-full text-left px-4 py-2 rounded-lg transition ${
                   activeSection === section.id
-                    ? 'bg-[#1B4965] text-white'
-                    : 'hover:bg-[#F5F2ED] text-[#2C3E50]'
+                    ? 'bg-[#0c2461] text-white'
+                    : 'hover:bg-[#F5F2ED] text-[#0c2461]'
                 }`}
               >
                 {section.title}
@@ -97,10 +97,10 @@ export default function Home() {
             <button
               key={section.id}
               onClick={() => scrollToSection(section.id)}
-              className={`w-full text-left px-4 py-3 rounded-lg transition font-medium ${
-                activeSection === section.id
-                  ? 'bg-[#1B4965] text-white'
-                  : 'text-[#2C3E50] hover:bg-[#E8E3DC]'
+                className={`w-full text-left px-4 py-3 rounded-lg transition font-medium ${
+                  activeSection === section.id
+                    ? 'bg-[#0c2461] text-white'
+                    : 'text-[#0c2461] hover:bg-[#E8E3DC]'
               }`}
               style={{ fontFamily: activeSection === section.id ? 'Lexend, sans-serif' : 'Poppins, sans-serif' }}
             >
@@ -115,7 +115,7 @@ export default function Home() {
         {/* HOME SECTION */}
         <section id="home" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           {/* Hero */}
-          <div className="bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg md:rounded-xl p-4 md:p-6 text-white space-y-3 md:space-y-4 animate-fade-in-up shadow-lg relative overflow-hidden">
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg md:rounded-xl p-4 md:p-6 text-white space-y-3 md:space-y-4 animate-fade-in-up shadow-lg relative overflow-hidden">
             {/* Banner Flutuante Mobile */}
             <div className="md:hidden absolute top-0 right-0 p-2">
               <Link href="/pro" className="bg-[#E07856] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
@@ -154,13 +154,13 @@ export default function Home() {
 
           {/* Quick Guide */}
           <div className="space-y-3 md:space-y-4">
-            <h3 className="text-lg md:text-xl font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>⚡ Guia Rápido</h3>
+            <h3 className="text-lg md:text-xl font-semibold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>⚡ Guia Rápido</h3>
             <div className="space-y-3">
               <div className="badge-tip">
                 <Lightbulb size={16} />
                 <span>Para Quem é Este Guia</span>
               </div>
-              <ul className="text-xs md:text-sm text-[#2C3E50] space-y-1 md:space-y-2 pl-4">
+              <ul className="text-xs md:text-sm text-[#0c2461] space-y-1 md:space-y-2 pl-4">
                 <li>✅ Músicos autônomos que recebem cachês</li>
                 <li>✅ Professores de música particulares</li>
                 <li>✅ Artistas com receitas de shows e direitos autorais</li>
@@ -175,7 +175,7 @@ export default function Home() {
               <AlertCircle size={20} className="text-[#C85A54] flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-semibold text-[#C85A54] text-sm md:text-base">Aviso Importante</h4>
-                <p className="text-xs md:text-sm text-[#2C3E50] mt-2">
+                <p className="text-xs md:text-sm text-[#0c2461] mt-2">
                   Este guia é educativo e informativo. A legislação tributária brasileira é dinâmica. Sempre consulte a legislação vigente e procure um contador especializado em atividades artísticas.
                 </p>
               </div>
@@ -184,11 +184,11 @@ export default function Home() {
 
           {/* Table of Contents */}
           <div className="bg-[#F9F7F4] rounded-lg p-4 md:p-6 space-y-3 md:space-y-4">
-            <h3 className="text-base md:text-lg font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>📚 Sumário Completo</h3>
+            <h3 className="text-base md:text-lg font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>📚 Sumário Completo</h3>
             <div className="grid md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
               <div>
-                <h4 className="font-semibold text-[#1B4965] mb-2 text-xs md:text-sm">Parte 1: Fundamentos</h4>
-                <ul className="space-y-0.5 md:space-y-1 text-[#2C3E50]">
+                <h4 className="font-semibold text-[#0c2461] mb-2 text-xs md:text-sm">Parte 1: Fundamentos</h4>
+                <ul className="space-y-0.5 md:space-y-1 text-[#0c2461]">
                   <li>1. O Conceito de Renda para o Músico</li>
                   <li>2. Obrigatoriedade da Declaração</li>
                   <li>3. Meios de Recebimento</li>
@@ -196,8 +196,8 @@ export default function Home() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-[#1B4965] mb-2">Parte 2: Gestão Fiscal</h4>
-                <ul className="space-y-1 text-[#2C3E50]">
+                <h4 className="font-semibold text-[#0c2461] mb-2">Parte 2: Gestão Fiscal</h4>
+                <ul className="space-y-1 text-[#0c2461]">
                   <li>5. Carnê-Leão</li>
                   <li>6. Retenção de IR (RPA)</li>
                   <li>7. Despesas Dedutíveis</li>

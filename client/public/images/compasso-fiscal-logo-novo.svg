@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360">
+  <defs>
+    <style>
+      .navy { fill: #0c2461; }
+      .gold { fill: #d4af37; }
+      .green { fill: #6ba587; }
+      .serif { font-family: "Playfair Display", "Times New Roman", serif; }
+    </style>
+  </defs>
+
+  <!-- Ícone à esquerda -->
+  <g transform="translate(30, 20)">
+    <!-- Círculo externo (borda ouro) -->
+    <circle cx="150" cy="150" r="145" class="gold"/>
+
+    <!-- Círculo interno (fundo navy) -->
+    <circle cx="150" cy="150" r="130" class="navy"/>
+
+    <!-- Clave de Sol (Treble Clef) -->
+    <g class="gold">
+      <!-- Cabeça da clave -->
+      <circle cx="105" cy="120" r="16"/>
+      <circle cx="105" cy="120" r="10" class="navy"/>
+
+      <!-- Haste da clave -->
+      <path d="M 118 108 Q 122 90 127 65 Q 128 55 130 48" stroke="#d4af37" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+      <!-- Decoração superior da clave -->
+      <path d="M 130 48 Q 138 44 145 52 Q 141 60 132 56" fill="#d4af37"/>
+    </g>
+
+    <!-- Notas Musicais (Quavers) -->
+    <g class="gold">
+      <!-- Primeira nota -->
+      <circle cx="170" cy="105" r="10"/>
+      <path d="M 180 105 L 192 82" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- Segunda nota -->
+      <circle cx="210" cy="118" r="10"/>
+      <path d="M 220 118 L 228 95" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- Terceira nota -->
+      <circle cx="245" cy="130" r="10"/>
+      <path d="M 255 130 L 260 102" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- Conectar as hastes (ligadura) -->
+      <path d="M 192 82 L 228 95 L 260 102" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Gráfico de Barras (Fiscal) -->
+    <g class="gold">
+      <!-- Linha de base -->
+      <line x1="90" y1="220" x2="260" y2="220" stroke="#d4af37" stroke-width="5" stroke-linecap="round"/>
+
+      <!-- Barra 1 (mais baixa) -->
+      <rect x="105" y="200" width="20" height="20" rx="3"/>
+
+      <!-- Barra 2 -->
+      <rect x="135" y="185" width="20" height="35" rx="3"/>
+
+      <!-- Barra 3 -->
+      <rect x="165" y="168" width="20" height="52" rx="3"/>
+
+      <!-- Barra 4 (mais alta) -->
+      <rect x="195" y="148" width="20" height="72" rx="3"/>
+
+      <!-- Barra 5 -->
+      <rect x="225" y="165" width="20" height="55" rx="3"/>
+    </g>
+  </g>
+
+  <!-- Texto -->
+  <text x="380" y="210" font-size="90" class="navy serif" font-weight="700">Compasso</text>
+  <text x="880" y="210" font-size="90" class="gold serif" font-weight="700">Fiscal</text>
+
+  <!-- Linha fina decorativa -->
+  <rect x="380" y="240" width="520" height="3" fill="#0c2461" opacity="0.2"/>
+</svg>

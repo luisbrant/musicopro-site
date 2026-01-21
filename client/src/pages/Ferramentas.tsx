@@ -54,7 +54,7 @@ export default function Ferramentas() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2 text-[#1B4965] hover:text-[#2C5F7F] transition">
+            <Link href="/" className="flex items-center gap-2 text-[#0c2461] hover:text-[#1a3a5c] transition">
               <ArrowLeft size={20} />
               <span className="font-semibold hidden md:inline">Voltar ao Guia</span>
             </Link>
@@ -76,7 +76,7 @@ export default function Ferramentas() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="mt-4 space-y-2 md:hidden border-t border-[#E8E3DC] pt-4">
-            <Link href="/" className="block w-full text-left px-4 py-2 rounded-lg text-[#2C3E50] hover:bg-[#F5F2ED] mb-2 font-medium">
+            <Link href="/" className="block w-full text-left px-4 py-2 rounded-lg text-[#0c2461] hover:bg-[#F5F2ED] mb-2 font-medium">
               ← Voltar ao Guia
             </Link>
             {sections.map(section => (
@@ -85,8 +85,8 @@ export default function Ferramentas() {
                 onClick={() => scrollToSection(section.id)}
                 className={`w-full text-left px-4 py-2 rounded-lg transition ${
                   activeSection === section.id
-                    ? 'bg-[#E07856] text-white'
-                    : 'hover:bg-[#F5F2ED] text-[#2C3E50]'
+                    ? 'bg-[#0c2461] text-white'
+                    : 'hover:bg-[#F5F2ED] text-[#0c2461]'
                 }`}
               >
                 {section.title}
