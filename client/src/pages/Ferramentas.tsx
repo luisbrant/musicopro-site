@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Calculator, ArrowLeft } from 'lucide-react';
-import { Link } from 'wouter';
+import React, { useState, useEffect } from 'react';
+import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Calculator, ArrowLeft, Lock } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
 import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
 import DeducoesDeepDive from '@/components/DeducoesDeepDive';
 import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
@@ -8,8 +8,21 @@ import RPADeepDive from '@/components/RPADeepDive';
 import ConsultoriaRapida from '@/components/ConsultoriaRapida';
 
 export default function Ferramentas() {
+  const [isLocked, setIsLocked] = useState(true);
+  const [accessCode, setAccessCode] = useState('');
+  const [accessError, setAccessError] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('consultoria');
+
+  const handleAccessCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (accessCode.toUpperCase() === 'MUSICOPRO2026') {
+      setIsLocked(false);
+      setAccessError('');
+    } else {
+      setAccessError('Codigo de acesso invalido. Verifique seu email do Hotmart.');
+    }
+  };
 
   // Detectar seção ativa ao fazer scroll
   useEffect(() => {
@@ -60,7 +73,10 @@ export default function Ferramentas() {
             </Link>
             <div className="h-6 w-px bg-[#E8E3DC] mx-2 hidden md:block"></div>
             <div className="flex items-center gap-2">
-              <img src="/images/compasso-fiscal-logo.svg" alt="Compasso Fiscal" className="h-10" style={{ maxWidth: '120px' }} />
+              <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Músico Pro
+              </h1>
+              <p className="text-xs md:text-sm font-normal text-[#6ba587]">Ferramentas</p>
             </div>
           </div>
           
@@ -124,7 +140,44 @@ export default function Ferramentas() {
 
       {/* Main Content */}
       <main className="md:ml-64 px-4 md:px-6 py-6 md:py-8 max-w-5xl mx-auto">
-        
+        {isLocked ? (
+          <div className="space-y-8 py-12">
+            <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
+              <Lock size={48} className="mx-auto text-[#d4af37]" />
+              <h2 className="text-2xl md:text-3xl font-bold">Ferramentas Premium</h2>
+              <p className="text-sm md:text-base opacity-90">
+                Digite seu codigo de acesso para acessar as ferramentas fiscais.
+              </p>
+            </div>
+
+            <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-6">
+              <form onSubmit={handleAccessCode} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-[#0c2461] mb-2">
+                    Codigo de Acesso
+                  </label>
+                  <input
+                    type="password"
+                    value={accessCode}
+                    onChange={(e) => setAccessCode(e.target.value)}
+                    placeholder="Cole seu codigo do Hotmart aqui"
+                    className="w-full px-4 py-3 border border-[#d4af37] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0c2461] text-[#0c2461]"
+                  />
+                  {accessError && (
+                    <p className="text-sm text-[#C85A54] mt-2">{accessError}</p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-[#0c2461] hover:bg-[#1a3a5c] text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"
+                >
+                  <Zap size={18} /> Acessar Ferramentas
+                </button>
+              </form>
+            </div>
+          </div>
+        ) : (
+          <>
         {/* CONSULTORIA RÁPIDA */}
         <section id="consultoria" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <ConsultoriaRapida />
@@ -149,6 +202,8 @@ export default function Ferramentas() {
         <section id="rpa" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <RPADeepDive />
         </section>
+          </>
+        )}
       </main>
     </div>
   );
