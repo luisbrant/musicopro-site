@@ -58,7 +58,7 @@ export default function Home() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/compasso-fiscal-logo.svg" alt="Compasso Fiscal" className="h-12" style={{ maxWidth: '120px' }} />
+            <img src="/images/compasso-fiscal-logo.svg" alt="Músico Pro" className="h-12" style={{ maxWidth: '120px' }} />
           </div>
           
           {/* Mobile Menu Button */}
@@ -124,7 +124,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>No Compasso Certo da Gestão Fiscal</h2>
+              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro - Organização Fiscal para Músicos</h2>
               <div className="flex gap-2">
                 <button 
                   onClick={() => setIsDownloadModalOpen(true)}
@@ -138,7 +138,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-xs md:text-sm leading-relaxed opacity-90">
-              Guia completo sobre Imposto de Renda, Carnê-Leão, MEI, deduções fiscais e gestão profissional para músicos autônomos. Conteúdo criado POR músicos PARA músicos.
+              Organização fiscal completa sobre Imposto de Renda, Carnê-Leão, MEI, deduções fiscais e gestão profissional para músicos autônomos. Conteúdo criado POR músicos PARA músicos.
             </p>
             <div className="flex gap-3 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-1">
@@ -960,7 +960,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-[#1B4965] text-white py-8 text-center text-sm opacity-90">
         <div className="container mx-auto px-4">
-          <p>&copy; 2026 Guia IR para Músicos. Todos os direitos reservados.</p>
+          <p>&copy; 2026 Músico Pro - Organização Fiscal para Músicos. Todos os direitos reservados.</p>
           <p className="mt-2 text-xs opacity-70">Este site não possui vínculo com a Receita Federal.</p>
         </div>
       </footer>
