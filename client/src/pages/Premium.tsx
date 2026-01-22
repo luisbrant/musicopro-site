@@ -18,7 +18,7 @@ export default function Premium() {
 
   const handleAccessCode = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accessCode.toUpperCase() === 'MUSICOPRO2026') {
+    if (accessCode.toUpperCase() === 'MUSICOPRO2026PREMIUM') {
       setIsLocked(false);
       setAccessError('');
     } else {

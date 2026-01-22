@@ -16,7 +16,7 @@ export default function Ferramentas() {
 
   const handleAccessCode = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accessCode.toUpperCase() === 'MUSICOPRO2026') {
+    if (accessCode.toUpperCase() === 'MUSICOPRO2026FERRAMENTAS') {
       setIsLocked(false);
       setAccessError('');
     } else {

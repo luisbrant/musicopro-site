@@ -8,7 +8,9 @@ export default function Vendas() {
       <header className="bg-white border-b border-[#E8E3DC] sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/images/compasso-fiscal-logo.svg" alt="Compasso Fiscal" className="h-10" style={{ maxWidth: '140px' }} />
+            <h1 className="text-lg font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Músico Pro
+            </h1>
           </Link>
           <a href="#comprar" className="bg-[#E07856] text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-[#D06846] transition">
             Quero a Licença PRO

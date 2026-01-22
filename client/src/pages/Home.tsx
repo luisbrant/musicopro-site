@@ -89,6 +89,14 @@ export default function Home() {
                 {section.title}
               </button>
             ))}
+            <div className="border-t border-[#E8E3DC] my-2 pt-2">
+              <Link href="/ferramentas" className="w-full text-left px-4 py-2 rounded-lg transition text-[#0c2461] hover:bg-[#F5F2ED] block">
+                Ferramentas
+              </Link>
+              <Link href="/premium" className="w-full text-left px-4 py-2 rounded-lg transition text-[#0c2461] hover:bg-[#F5F2ED] block">
+                Premium
+              </Link>
+            </div>
           </nav>
         )}
       </header>
@@ -110,6 +118,14 @@ export default function Home() {
               {section.title}
             </button>
           ))}
+          <div className="border-t border-[#E8E3DC] my-4 pt-4">
+            <Link href="/ferramentas" className="w-full text-left px-4 py-3 rounded-lg transition font-medium text-[#0c2461] hover:bg-[#E8E3DC] block">
+              Ferramentas
+            </Link>
+            <Link href="/premium" className="w-full text-left px-4 py-3 rounded-lg transition font-medium text-[#0c2461] hover:bg-[#E8E3DC] block">
+              Premium
+            </Link>
+          </div>
         </nav>
       </div>
 
