@@ -145,7 +145,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-xs md:text-sm leading-relaxed opacity-90">
-              Organização fiscal completa sobre Imposto de Renda, Carnê-Leão, MEI, deduções fiscais e gestão profissional para músicos autônomos. Conteúdo criado POR músicos PARA músicos.
+              Domine sua gestão fiscal com confiança. Aprenda sobre Imposto de Renda, Carnê-Leão, MEI vs PF vs Empresa, deduções e muito mais. Guia prático, direto e criado POR músicos PARA músicos.
             </p>
             <div className="flex gap-3 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-1">
@@ -168,10 +168,10 @@ export default function Home() {
                 <span>Para Quem é Este Guia</span>
               </div>
               <ul className="text-xs md:text-sm text-[#0c2461] space-y-1 md:space-y-2 pl-4">
-                <li>✅ Músicos autônomos que recebem cachês</li>
-                <li>✅ Professores de música particulares</li>
-                <li>✅ Artistas com receitas de shows e direitos autorais</li>
-                <li>✅ Profissionais que querem profissionalizar a gestão fiscal</li>
+                <li>✅ Músicos autônomos que recebem cachês e quer organizar a fiscal</li>
+                <li>✅ Professores de música com alunos regulares</li>
+                <li>✅ Artistas com múltiplas fontes de renda (shows, direitos, aulas)</li>
+                <li>✅ Qualquer músico que quer evitar problemas com a Receita Federal</li>
               </ul>
             </div>
           </div>
