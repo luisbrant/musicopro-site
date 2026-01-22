@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { Menu, X, Lock, Calculator, FileText, Zap, Download, ArrowRight } from 'lucide-react';
+import { Menu, X, Lock, Calculator, FileText, Zap, Download, ArrowRight, BarChart3, DollarSign, TrendingUp, AlertCircle, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react';
+import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
+import DeducoesDeepDive from '@/components/DeducoesDeepDive';
+import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
+import RPADeepDive from '@/components/RPADeepDive';
 
 export default function Premium() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   const [accessCode, setAccessCode] = useState('');
   const [accessError, setAccessError] = useState('');
+  const [activeSection, setActiveSection] = useState('carneLeao');
 
   // Calculadora Carnê-Leão
   const [carneInput, setCarneInput] = useState('');
@@ -51,44 +58,128 @@ export default function Premium() {
     setRpaResult(Math.round(rpa * 100) / 100);
   };
 
+  // Detectar seção ativa ao fazer scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['carneLeao', 'deducoes', 'regimes', 'rpa'];
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom > 150) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const sections = [
+    { id: 'carneLeao', title: 'Carnê-Leão', icon: BarChart3 },
+    { id: 'deducoes', title: 'Deduções Fiscais', icon: DollarSign },
+    { id: 'regimes', title: 'PF vs MEI vs Empresa', icon: TrendingUp },
+    { id: 'rpa', title: 'Retenção (RPA)', icon: AlertCircle },
+  ];
+
+  const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
+    setMobileMenuOpen(false);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white scroll-smooth">
-      {/* Header */}
+      {/* Header Sticky */}
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-2 text-[#0c2461] hover:text-[#1a3a5c] transition">
+              <ArrowLeft size={20} />
+              <span className="font-semibold hidden md:inline">Voltar ao Guia</span>
+            </Link>
+            <div className="h-6 w-px bg-[#E8E3DC] mx-2 hidden md:block"></div>
+            <div className="flex items-center gap-2">
               <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
                 Músico Pro
               </h1>
-              <p className="text-xs md:text-sm font-normal text-[#6ba587]">Organização Fiscal para Músicos</p>
+              <p className="text-xs md:text-sm font-normal text-[#6ba587]">Premium</p>
             </div>
           </div>
           
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 hover:bg-[#F5F2ED] rounded-lg transition"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
-          <nav className="hidden md:flex gap-4">
-            <Link href="/" className="text-sm text-[#0c2461] hover:text-[#6ba587] transition font-medium">
-              ← Voltar
-            </Link>
-          </nav>
         </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <nav className="mt-4 space-y-2 md:hidden border-t border-[#E8E3DC] pt-4">
+            <Link href="/" className="block w-full text-left px-4 py-2 rounded-lg text-[#0c2461] hover:bg-[#F5F2ED] mb-2 font-medium">
+              ← Voltar ao Guia
+            </Link>
+            {sections.map(section => (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`w-full text-left px-4 py-2 rounded-lg transition ${
+                  activeSection === section.id
+                    ? 'bg-[#0c2461] text-white'
+                    : 'hover:bg-[#F5F2ED] text-[#0c2461]'
+                }`}
+              >
+                {section.title}
+              </button>
+            ))}
+          </nav>
+        )}
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+      {/* Desktop Sidebar Navigation */}
+      <div className="hidden md:fixed md:left-0 md:top-24 md:w-64 md:h-[calc(100vh-96px)] md:bg-[#F9F7F4] md:border-r md:border-[#E8E3DC] md:overflow-y-auto md:p-6 md:z-40">
+        <nav className="space-y-2">
+          <Link href="/" className="block w-full text-left px-4 py-3 rounded-lg text-[#2C3E50] hover:bg-[#E8E3DC] mb-4 font-medium flex items-center gap-2">
+            <ArrowLeft size={18} />
+            Voltar ao Guia
+          </Link>
+          <div className="h-px bg-[#E8E3DC] my-2"></div>
+          {sections.map(section => (
+            <button
+              key={section.id}
+              onClick={() => scrollToSection(section.id)}
+              className={`w-full text-left px-4 py-3 rounded-lg transition font-medium flex items-center gap-2 ${
+                activeSection === section.id
+                  ? 'bg-[#E07856] text-white'
+                  : 'text-[#2C3E50] hover:bg-[#E8E3DC]'
+              }`}
+              style={{ fontFamily: activeSection === section.id ? 'Lexend, sans-serif' : 'Poppins, sans-serif' }}
+            >
+              <section.icon size={18} />
+              {section.title}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* Main Content */}
+      <main className="md:ml-64 px-4 md:px-6 py-6 md:py-8 max-w-5xl mx-auto">
         {isLocked ? (
-          // Tela de Acesso
-          <div className="space-y-8">
+          <div className="space-y-8 py-12">
             <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
               <Lock size={48} className="mx-auto text-[#d4af37]" />
-              <h2 className="text-2xl md:text-3xl font-bold">Conteúdo Exclusivo</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">Área Premium</h2>
               <p className="text-sm md:text-base opacity-90">
-                Você está acessando a área premium do Músico Pro. Digite seu código de acesso para continuar.
+                Digite seu código de acesso para acessar ferramentas, explicações e conteúdo exclusivo.
               </p>
             </div>
 
@@ -125,178 +216,57 @@ export default function Premium() {
             </div>
           </div>
         ) : (
-          // Conteúdo Premium
-          <div className="space-y-8">
+          <>
             {/* Welcome Banner */}
-            <div className="bg-gradient-to-r from-[#0c2461] to-[#6ba587] rounded-lg p-6 md:p-8 text-white space-y-2">
+            <div className="bg-gradient-to-r from-[#0c2461] to-[#6ba587] rounded-lg p-6 md:p-8 text-white space-y-2 mb-12">
               <div className="flex items-center gap-2">
                 <Zap size={24} className="text-[#d4af37]" />
                 <h2 className="text-2xl md:text-3xl font-bold">Bem-vindo à Área Premium!</h2>
               </div>
               <p className="text-sm md:text-base opacity-90">
-                Acesso exclusivo a ferramentas, consultoria e conteúdo avançado.
+                Acesso exclusivo a ferramentas interativas, explicações detalhadas e conteúdo avançado.
               </p>
             </div>
 
-            {/* Ferramentas */}
-            <div className="space-y-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                🛠️ Ferramentas Exclusivas
-              </h3>
+            {/* CARNÊ-LEÃO */}
+            <section id="carneLeao" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+              <CarneLeaoDeepDive />
+            </section>
 
-              {/* Calculadora Carnê-Leão */}
-              <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-4 border-l-4 border-[#6ba587]">
-                <div className="flex items-center gap-2">
-                  <Calculator size={20} className="text-[#6ba587]" />
-                  <h4 className="text-lg font-bold text-[#0c2461]">Calculadora Carnê-Leão</h4>
-                </div>
-                <p className="text-sm text-[#0c2461] opacity-80">
-                  Calcule o imposto mensal sobre seus rendimentos usando a tabela progressiva 2026.
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-semibold text-[#0c2461] mb-2">
-                      Rendimento Bruto (R$)
-                    </label>
-                    <input
-                      type="number"
-                      value={carneInput}
-                      onChange={(e) => setCarneInput(e.target.value)}
-                      placeholder="Ex: 5000.00"
-                      className="w-full px-4 py-2 border border-[#d4af37] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6ba587] text-[#0c2461]"
-                    />
-                  </div>
-                  <button
-                    onClick={calculateCarne}
-                    className="w-full bg-[#6ba587] hover:bg-[#5a9476] text-white font-bold py-2 rounded-lg transition"
-                  >
-                    Calcular
-                  </button>
-                  {carneResult !== null && (
-                    <div className="bg-white p-4 rounded-lg border-2 border-[#6ba587]">
-                      <p className="text-xs text-[#0c2461] opacity-70">Imposto Mensal (Carnê-Leão)</p>
-                      <p className="text-2xl font-bold text-[#0c2461]">
-                        R$ {carneResult.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </p>
-                    </div>
-                  )}
-                </div>
+            {/* DEDUÇÕES */}
+            <section id="deducoes" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+              <DeducoesDeepDive />
+            </section>
+
+            {/* PF vs MEI vs EMPRESA */}
+            <section id="regimes" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+              <PFvsMEIvsEmpresaDeepDive />
+            </section>
+
+            {/* RETENÇÃO (RPA) */}
+            <section id="rpa" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+              <RPADeepDive />
+            </section>
+
+            {/* Downloads */}
+            <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4 border-l-4 border-[#d4af37] mb-12">
+              <div className="flex items-center gap-2">
+                <Download size={20} className="text-[#d4af37]" />
+                <h3 className="text-lg md:text-xl font-bold text-[#0c2461]">📥 Downloads Exclusivos</h3>
               </div>
-
-              {/* Calculadora RPA */}
-              <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-4 border-l-4 border-[#d4af37]">
-                <div className="flex items-center gap-2">
-                  <Calculator size={20} className="text-[#d4af37]" />
-                  <h4 className="text-lg font-bold text-[#0c2461]">Calculadora RPA (Retenção na Fonte)</h4>
-                </div>
-                <p className="text-sm text-[#0c2461] opacity-80">
-                  Simule a retenção de 15% sobre seus cachês quando contratado como PJ.
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-sm font-semibold text-[#0c2461] mb-2">
-                      Valor do Cachê (R$)
-                    </label>
-                    <input
-                      type="number"
-                      value={rpaInput}
-                      onChange={(e) => setRpaInput(e.target.value)}
-                      placeholder="Ex: 3000.00"
-                      className="w-full px-4 py-2 border border-[#d4af37] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#d4af37] text-[#0c2461]"
-                    />
-                  </div>
-                  <button
-                    onClick={calculateRPA}
-                    className="w-full bg-[#d4af37] hover:bg-[#c49f2a] text-[#0c2461] font-bold py-2 rounded-lg transition"
-                  >
-                    Calcular
-                  </button>
-                  {rpaResult !== null && (
-                    <div className="bg-white p-4 rounded-lg border-2 border-[#d4af37]">
-                      <p className="text-xs text-[#0c2461] opacity-70">Retenção na Fonte (RPA)</p>
-                      <p className="text-2xl font-bold text-[#d4af37]">
-                        R$ {rpaResult.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </p>
-                    </div>
-                  )}
-                </div>
+              <p className="text-sm text-[#0c2461] opacity-80">
+                Acesse modelos, checklists e documentos para facilitar sua organização fiscal.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4 mt-4">
+                <a href="#" className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2">
+                  <FileText size={18} /> E-book Completo (PDF)
+                </a>
+                <a href="#" className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2">
+                  <FileText size={18} /> Modelos de Contrato
+                </a>
               </div>
             </div>
-
-            {/* Conteúdo Exclusivo */}
-            <div className="space-y-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                📚 Conteúdo Exclusivo
-              </h3>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-3 hover:shadow-lg transition">
-                  <div className="flex items-center gap-2">
-                    <FileText size={20} className="text-[#0c2461]" />
-                    <h4 className="font-bold text-[#0c2461]">Guia Completo (PDF)</h4>
-                  </div>
-                  <p className="text-sm text-[#0c2461] opacity-80">
-                    Baixe o guia completo em PDF para consultar offline.
-                  </p>
-                  <button className="flex items-center gap-2 text-[#6ba587] font-bold hover:text-[#0c2461] transition">
-                    <Download size={16} /> Baixar PDF
-                  </button>
-                </div>
-
-                <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-3 hover:shadow-lg transition">
-                  <div className="flex items-center gap-2">
-                    <Zap size={20} className="text-[#d4af37]" />
-                    <h4 className="font-bold text-[#0c2461]">Consultoria Automática</h4>
-                  </div>
-                  <p className="text-sm text-[#0c2461] opacity-80">
-                    Respostas personalizadas baseadas em sua situação fiscal.
-                  </p>
-                  <button className="flex items-center gap-2 text-[#d4af37] font-bold hover:text-[#0c2461] transition">
-                    Acessar <ArrowRight size={16} />
-                  </button>
-                </div>
-
-                <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-3 hover:shadow-lg transition">
-                  <div className="flex items-center gap-2">
-                    <FileText size={20} className="text-[#6ba587]" />
-                    <h4 className="font-bold text-[#0c2461]">Modelos de Contrato</h4>
-                  </div>
-                  <p className="text-sm text-[#0c2461] opacity-80">
-                    Contratos prontos para cachês, aulas e shows.
-                  </p>
-                  <button className="flex items-center gap-2 text-[#6ba587] font-bold hover:text-[#0c2461] transition">
-                    <Download size={16} /> Baixar
-                  </button>
-                </div>
-
-                <div className="bg-[#F9F7F4] rounded-lg p-6 space-y-3 hover:shadow-lg transition">
-                  <div className="flex items-center gap-2">
-                    <Zap size={20} className="text-[#d4af37]" />
-                    <h4 className="font-bold text-[#0c2461]">Atualizações Mensais</h4>
-                  </div>
-                  <p className="text-sm text-[#0c2461] opacity-80">
-                    Receba atualizações sobre mudanças na legislação fiscal.
-                  </p>
-                  <button className="flex items-center gap-2 text-[#d4af37] font-bold hover:text-[#0c2461] transition">
-                    Ver Últimas <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Logout */}
-            <div className="text-center pt-6 border-t border-[#E8E3DC]">
-              <button
-                onClick={() => {
-                  setIsLocked(true);
-                  setAccessCode('');
-                }}
-                className="text-sm text-[#0c2461] hover:text-[#6ba587] transition font-medium"
-              >
-                Sair da Área Premium
-              </button>
-            </div>
-          </div>
+          </>
         )}
       </main>
     </div>

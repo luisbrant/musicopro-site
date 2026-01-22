@@ -5,7 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import Ferramentas from "./pages/Ferramentas";
+
 import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
 import Premium from "./pages/Premium";
@@ -14,7 +14,7 @@ import Premium from "./pages/Premium";
 function Router() {
   return (
     <Switch>      <Route path={"//"} component={Home} />
-       <Route path="/ferramentas" component={Ferramentas} />
+
       <Route path="/pro" component={Vendas} />
       <Route path="/premium" component={Premium} />
       <Route path="/demo" component={Demo} />
