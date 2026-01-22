@@ -248,46 +248,7 @@ export default function Premium() {
               <RPADeepDive />
             </section>
 
-            {/* Downloads */}
-            <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4 border-l-4 border-[#d4af37] mb-12">
-              <div className="flex items-center gap-2">
-                <Download size={20} className="text-[#d4af37]" />
-                <h3 className="text-lg md:text-xl font-bold text-[#0c2461]">📥 Downloads Exclusivos</h3>
-              </div>
-              <p className="text-sm text-[#0c2461] opacity-80">
-                Acesse guias, vídeos, modelos e documentos para facilitar sua organização fiscal.
-              </p>
-              <div className="space-y-4 mt-4">
-                {/* PDFs */}
-                <div>
-                  <h4 className="font-semibold text-[#0c2461] mb-3 text-sm">📄 Guias em PDF:</h4>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    <a href="/downloads/%F0%9F%93%98OGuiaDefinitivodoINSSparaMúsicosAutônomoseCLTs.pdf" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
-                      <FileText size={18} /> Guia INSS para Músicos
-                    </a>
-                    <a href="/downloads/DeduçõeseDespesasDedutíveisparaMúsicosAutônomos.pdf" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
-                      <FileText size={18} /> Deduções e Despesas
-                    </a>
-                  </div>
-                </div>
 
-                {/* Vídeos */}
-                <div>
-                  <h4 className="font-semibold text-[#0c2461] mb-3 text-sm">🎥 Vídeos Educativos:</h4>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    <a href="/downloads/Deduções_de_IR_para_Músicos.mp4" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
-                      <Download size={18} /> Deduções de IR
-                    </a>
-                    <a href="/downloads/As_Consequências_de_Não_Declarar_Renda_no_Brasil.mp4" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
-                      <Download size={18} /> Consequências Fiscais
-                    </a>
-                    <a href="/downloads/Finanças_do_Artista_no_Brasil.mp4" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
-                      <Download size={18} /> Finanças do Artista
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
           </>
         )}
       </main>
