@@ -262,7 +262,7 @@ export default function Premium() {
                 <div>
                   <h4 className="font-semibold text-[#0c2461] mb-3 text-sm">📄 Guias em PDF:</h4>
                   <div className="grid md:grid-cols-2 gap-3">
-                    <a href="/downloads/#📘OGuiaDefinitivodoINSSparaMúsicosAutônomoseCLTs.pdf" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
+                    <a href="/downloads/%F0%9F%93%98OGuiaDefinitivodoINSSparaMúsicosAutônomoseCLTs.pdf" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
                       <FileText size={18} /> Guia INSS para Músicos
                     </a>
                     <a href="/downloads/DeduçõeseDespesasDedutíveisparaMúsicosAutônomos.pdf" download className="bg-white hover:bg-[#E8E3DC] text-[#0c2461] px-4 py-3 rounded-lg font-medium transition border border-[#E8E3DC] flex items-center gap-2 text-sm">
