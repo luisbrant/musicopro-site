@@ -18,7 +18,7 @@ export default function Premium() {
 
   const handleAccessCode = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accessCode.toUpperCase() === 'MUSICOPRO2026' || accessCode.length > 10) {
+    if (accessCode.toUpperCase() === 'MUSICOPRO2026') {
       setIsLocked(false);
       setAccessError('');
     } else {
@@ -57,10 +57,12 @@ export default function Premium() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              Músico Pro
-              <span className="block text-xs md:text-sm font-normal text-[#6ba587]">Área Premium</span>
-            </h1>
+            <div>
+              <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Músico Pro
+              </h1>
+              <p className="text-xs md:text-sm font-normal text-[#6ba587]">Organização Fiscal para Músicos</p>
+            </div>
           </div>
           
           <button
