@@ -58,7 +58,10 @@ export default function Home() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/ritmo-fiscal-logo.svg" alt="Ritmo Fiscal - Músico Pro" className="h-12" style={{ maxWidth: '200px' }} />
+            <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Músico Pro
+              <span className="block text-xs md:text-sm font-normal text-[#6ba587]">Organização Fiscal para Músicos</span>
+            </h1>
           </div>
           
           {/* Mobile Menu Button */}
