@@ -58,7 +58,7 @@ export default function Home() {
       <header className="sticky top-0 bg-white border-b border-[#E8E3DC] py-4 px-4 z-50 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/compasso-fiscal-logo.svg" alt="Músico Pro" className="h-12" style={{ maxWidth: '120px' }} />
+            <img src="/images/ritmo-fiscal-logo.svg" alt="Ritmo Fiscal - Músico Pro" className="h-12" style={{ maxWidth: '200px' }} />
           </div>
           
           {/* Mobile Menu Button */}
@@ -123,6 +123,10 @@ export default function Home() {
               </Link>
             </div>
 
+            <div className="mb-2">
+              <p className="text-xs md:text-sm font-semibold text-[#d4af37] uppercase tracking-wider">Guia Músico Pro</p>
+              <h1 className="text-lg md:text-xl font-bold text-[#d4af37]" style={{ fontFamily: 'Lexend, sans-serif' }}>Imposto sem medo, do jeito certo</h1>
+            </div>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro - Organização Fiscal para Músicos</h2>
               <div className="flex gap-2">

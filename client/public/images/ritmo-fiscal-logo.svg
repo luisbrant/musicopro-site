@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Ritmo Fiscal - Músico Pro">
+  <defs>
+    <style>
+      .navy { fill:#0c2461; }
+      .gold { fill:#d4af37; }
+      .green { fill:#6ba587; }
+      .serif { font-family: "Playfair Display","Times New Roman",serif; }
+      .sans { font-family: "Poppins","Arial",sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Ícone à esquerda: Nota Musical + Ritmo -->
+  <g transform="translate(90,60)">
+    <!-- Círculo externo (ouro) -->
+    <circle cx="120" cy="120" r="120" class="gold" opacity="0.2"/>
+    <circle cx="120" cy="120" r="120" fill="none" stroke="#d4af37" stroke-width="6"/>
+
+    <!-- Nota musical (navy) -->
+    <g class="navy">
+      <!-- Cabeça da nota -->
+      <circle cx="85" cy="145" r="16"/>
+      <!-- Haste -->
+      <rect x="100" y="50" width="6" height="95" rx="3"/>
+      <!-- Bandeira rítmica -->
+      <path d="M106 50 Q130 55 130 75 Q130 95 106 100" fill="none" stroke="#0c2461" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Barras de ritmo (verde e ouro) -->
+    <g>
+      <!-- Barra 1 (verde) -->
+      <rect x="145" y="100" width="12" height="60" class="green" rx="2"/>
+      <!-- Barra 2 (ouro) -->
+      <rect x="165" y="80" width="12" height="80" class="gold" rx="2"/>
+      <!-- Barra 3 (verde) -->
+      <rect x="185" y="60" width="12" height="100" class="green" rx="2"/>
+      <!-- Barra 4 (ouro) -->
+      <rect x="205" y="40" width="12" height="120" class="gold" rx="2"/>
+    </g>
+
+    <!-- Linha de base -->
+    <line x1="140" y1="165" x2="220" y2="165" stroke="#0c2461" stroke-width="3" opacity="0.3"/>
+  </g>
+
+  <!-- Texto Principal -->
+  <text x="360" y="130" font-size="48" class="navy serif" font-weight="700">Ritmo Fiscal</text>
+  
+  <!-- Subtítulo -->
+  <text x="360" y="165" font-size="32" class="green sans" font-weight="600">Músico Pro</text>
+
+  <!-- Descrição -->
+  <text x="360" y="200" font-size="16" class="navy sans" font-weight="400">Organização Fiscal para Músicos</text>
+
+  <!-- Linha decorativa -->
+  <rect x="360" y="220" width="500" height="2" fill="#0c2461" opacity="0.15"/>
+
+  <!-- Tagline -->
+  <text x="360" y="260" font-size="14" class="gold sans" font-weight="600" letter-spacing="1">IMPOSTO SEM MEDO, DO JEITO CERTO</text>
+</svg>
