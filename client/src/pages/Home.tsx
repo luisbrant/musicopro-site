@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Star, Download } from 'lucide-react';
+import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Star, Download, Copy } from 'lucide-react';
 import { Link } from 'wouter';
 import { EmailCaptureModal } from '@/components/EmailCaptureModal';
 
@@ -8,6 +8,7 @@ export default function Home() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [copiedCode, setCopiedCode] = useState(false);
 
   // Detectar seção ativa ao fazer scroll
   useEffect(() => {
@@ -50,6 +51,12 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const copyCode = (code: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
   };
 
   return (
@@ -127,85 +134,145 @@ export default function Home() {
       <main className="md:ml-64 px-4 md:px-6 py-6 md:py-8 max-w-5xl mx-auto">
         {/* HOME SECTION */}
         <section id="home" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          {/* Hero */}
-          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg md:rounded-xl p-4 md:p-6 text-white space-y-3 md:space-y-4 animate-fade-in-up shadow-lg relative overflow-hidden">
-            {/* Banner Flutuante Mobile */}
-            <div className="md:hidden absolute top-0 right-0 p-2">
-              <Link href="/pro" className="bg-[#E07856] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
-                🚀 Ver Kit PRO
-              </Link>
+          {/* Badge Superior */}
+          <div className="flex justify-center">
+            <span className="inline-block bg-[#d4af37]/10 text-[#0c2461] px-4 py-2 rounded-full text-xs md:text-sm font-semibold border border-[#d4af37]/30">
+              📖 Guia Músico Pro
+            </span>
+          </div>
+
+          {/* Hero Principal */}
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg md:rounded-xl p-6 md:p-8 text-white space-y-4 md:space-y-6 animate-fade-in-up shadow-lg relative overflow-hidden">
+            {/* Slogan */}
+            <div>
+              <p className="text-sm md:text-base font-semibold text-[#d4af37] uppercase tracking-wider mb-2">Imposto sem medo, do jeito certo</p>
+              <h1 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Músico Pro — Organização Fiscal para Músicos
+              </h1>
             </div>
 
-            <div className="mb-2">
-              <p className="text-xs md:text-sm font-semibold text-[#d4af37] uppercase tracking-wider">Guia Músico Pro</p>
-              <h1 className="text-lg md:text-xl font-bold text-[#d4af37]" style={{ fontFamily: 'Lexend, sans-serif' }}>Imposto sem medo, do jeito certo</h1>
-            </div>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <h2 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro - Organização Fiscal para Músicos</h2>
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => setIsDownloadModalOpen(true)}
-                  className="hidden md:inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg backdrop-blur-sm cursor-pointer"
-                >
-                  <Download size={16} /> App Grátis
-                </button>
-                <Link href="/pro" className="hidden md:inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D06846] text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg transform hover:-translate-y-0.5">
-                  <Star size={16} /> Licença PRO
-                </Link>
-              </div>
-            </div>
-            <p className="text-xs md:text-sm leading-relaxed opacity-90">
-              Domine sua gestão fiscal com confiança. Aprenda sobre Imposto de Renda, Carnê-Leão, MEI vs PF vs Empresa, deduções e muito mais. Guia prático, direto e criado POR músicos PARA músicos.
+            {/* Texto Introdutório */}
+            <p className="text-base md:text-lg leading-relaxed opacity-95">
+              O Músico Pro é um guia prático para músicos que querem organizar sua vida fiscal com clareza, segurança e sem burocracia.
             </p>
-            <div className="flex gap-3 md:gap-4 text-xs md:text-sm">
-              <div className="flex items-center gap-1">
-                <BookOpen size={16} />
-                <span>45-60 min</span>
+
+            <p className="text-sm md:text-base leading-relaxed opacity-90">
+              Aqui você aprende, de forma simples e direta, como lidar com Imposto de Renda, Carnê-Leão, MEI, pessoa física, pessoa jurídica e deduções, sempre considerando a realidade de quem vive de música.
+            </p>
+
+            {/* Linha de Reforço */}
+            <p className="text-xs md:text-sm italic opacity-85 border-l-2 border-[#d4af37] pl-4">
+              Conteúdo claro, objetivo e atualizado para quem recebe cachês, PIX e tem múltiplas fontes de renda.
+            </p>
+
+            {/* Metadados */}
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-xs md:text-sm border-t border-white/20 pt-4">
+              <div className="flex items-center gap-2">
+                <BookOpen size={18} className="text-[#d4af37]" />
+                <span>Leitura estimada: 45–60 minutos</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Zap size={16} />
-                <span>Atualizado 2026</span>
+              <div className="flex items-center gap-2">
+                <Zap size={18} className="text-[#d4af37]" />
+                <span>Conteúdo atualizado – 2026</span>
               </div>
+            </div>
+
+            {/* CTA Principal */}
+            <div className="flex flex-col md:flex-row gap-3 pt-4">
+              <Link 
+                href="/pro" 
+                className="flex-1 md:flex-none bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-6 rounded-lg text-center transition transform hover:scale-105 shadow-lg"
+              >
+                Ver Kit Músico Pro
+              </Link>
+              <button 
+                onClick={() => setIsDownloadModalOpen(true)}
+                className="flex-1 md:flex-none bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-lg transition backdrop-blur-sm"
+              >
+                Acessar conteúdo completo
+              </button>
             </div>
           </div>
 
-          {/* Quick Guide */}
-          <div className="space-y-3 md:space-y-4">
-            <h3 className="text-lg md:text-xl font-semibold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>⚡ Guia Rápido</h3>
-            <div className="space-y-3">
-              <div className="badge-tip">
-                <Lightbulb size={16} />
-                <span>Para Quem é Este Guia</span>
-              </div>
-              <ul className="text-xs md:text-sm text-[#0c2461] space-y-1 md:space-y-2 pl-4">
-                <li>✅ Músicos autônomos que recebem cachês e quer organizar a fiscal</li>
-                <li>✅ Professores de música com alunos regulares</li>
-                <li>✅ Artistas com múltiplas fontes de renda (shows, direitos, aulas)</li>
-                <li>✅ Qualquer músico que quer evitar problemas com a Receita Federal</li>
+          {/* Seção: Guia Rápido */}
+          <div className="space-y-4 md:space-y-5">
+            <h3 className="text-xl md:text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              ⚡ Guia Rápido
+            </h3>
+
+            {/* Para Quem é Este Guia */}
+            <div className="bg-[#F9F7F4] rounded-lg p-5 md:p-6 space-y-3">
+              <h4 className="font-bold text-[#0c2461] text-base md:text-lg flex items-center gap-2">
+                <Lightbulb size={20} className="text-[#d4af37]" />
+                Para quem é este guia
+              </h4>
+              <ul className="space-y-2 md:space-y-3 text-sm md:text-base text-[#0c2461]">
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Músicos autônomos que recebem cachês e querem se organizar fiscalmente</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Professores de música com alunos regulares</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Artistas com múltiplas fontes de renda (shows, direitos, aulas)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Músicos que querem evitar problemas com a Receita Federal</span>
+                </li>
               </ul>
             </div>
           </div>
 
           {/* Important Notice */}
-          <div className="highlight-box highlight-danger space-y-2 md:space-y-3">
+          <div className="bg-[#FFF3E0] border-l-4 border-[#FF9800] rounded-lg p-5 md:p-6 space-y-3">
             <div className="flex items-start gap-3">
-              <AlertCircle size={20} className="text-[#C85A54] flex-shrink-0 mt-0.5" />
+              <AlertCircle size={22} className="text-[#FF9800] flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-[#C85A54] text-sm md:text-base">Aviso Importante</h4>
-                <p className="text-xs md:text-sm text-[#0c2461] mt-2">
+                <h4 className="font-bold text-[#0c2461] text-base md:text-lg">Aviso Importante</h4>
+                <p className="text-sm md:text-base text-[#0c2461] mt-2 opacity-90">
                   Este guia é educativo e informativo. A legislação tributária brasileira é dinâmica. Sempre consulte a legislação vigente e procure um contador especializado em atividades artísticas.
                 </p>
               </div>
             </div>
           </div>
 
+          {/* Frase de Posicionamento */}
+          <div className="bg-gradient-to-r from-[#0c2461]/5 to-[#6ba587]/5 border border-[#6ba587]/20 rounded-lg p-5 md:p-6 text-center">
+            <p className="text-sm md:text-base text-[#0c2461] italic">
+              <strong>O Músico Pro foi criado por um profissional com experiência em sistema bancário, tecnologia e legislação fiscal, com foco exclusivo na realidade do músico.</strong>
+            </p>
+          </div>
+
+          {/* Transição para Premium */}
+          <div className="bg-[#6ba587]/10 border border-[#6ba587]/30 rounded-lg p-5 md:p-6 space-y-4">
+            <h4 className="font-bold text-[#0c2461] text-base md:text-lg">Conteúdo Completo na Área Premium</h4>
+            <p className="text-sm md:text-base text-[#0c2461] leading-relaxed">
+              Este guia apresenta os conceitos essenciais para você entender sua situação fiscal.
+            </p>
+            <p className="text-sm md:text-base text-[#0c2461] leading-relaxed">
+              Na área premium do Músico Pro, você encontra o conteúdo completo, exemplos práticos, checklists e ferramentas para aplicar tudo com segurança no dia a dia.
+            </p>
+            <Link 
+              href="/premium" 
+              className="inline-block bg-[#6ba587] hover:bg-[#5a9476] text-white font-bold py-3 px-6 rounded-lg transition"
+            >
+              Acessar conteúdo completo
+            </Link>
+          </div>
+
           {/* Table of Contents */}
-          <div className="bg-[#F9F7F4] rounded-lg p-4 md:p-6 space-y-3 md:space-y-4">
-            <h3 className="text-base md:text-lg font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>📚 Sumário Completo</h3>
-            <div className="grid md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
+          <div className="bg-[#F9F7F4] rounded-lg p-5 md:p-6 space-y-4">
+            <h3 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              📚 Sumário Completo
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6 text-sm md:text-base">
               <div>
-                <h4 className="font-semibold text-[#0c2461] mb-2 text-xs md:text-sm">Parte 1: Fundamentos</h4>
-                <ul className="space-y-0.5 md:space-y-1 text-[#0c2461]">
+                <h4 className="font-bold text-[#0c2461] mb-3 text-base">Parte 1: Fundamentos</h4>
+                <ul className="space-y-1.5 text-[#0c2461]">
                   <li>1. O Conceito de Renda para o Músico</li>
                   <li>2. Obrigatoriedade da Declaração</li>
                   <li>3. Meios de Recebimento</li>
@@ -213,780 +280,424 @@ export default function Home() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-[#0c2461] mb-2">Parte 2: Gestão Fiscal</h4>
-                <ul className="space-y-1 text-[#0c2461]">
+                <h4 className="font-bold text-[#0c2461] mb-3 text-base">Parte 2: Gestão Fiscal</h4>
+                <ul className="space-y-1.5 text-[#0c2461]">
                   <li>5. Carnê-Leão</li>
                   <li>6. Retenção de IR (RPA)</li>
                   <li>7. Despesas Dedutíveis</li>
                   <li>8. Tabela Progressiva</li>
                 </ul>
               </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6 text-sm md:text-base">
               <div>
-                <h4 className="font-semibold text-[#1B4965] mb-2">Parte 3: Implementação</h4>
-                <ul className="space-y-1 text-[#2C3E50]">
-                  <li>9. Consequências da Não Declaração</li>
-                  <li>10. Checklist Mensal</li>
-                  <li>11. Casos Práticos</li>
-                  <li>12. Ferramentas</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-[#1B4965] mb-2">Referência</h4>
-                <ul className="space-y-1 text-[#2C3E50]">
-                  <li>13. FAQ</li>
-                  <li>14. Glossário</li>
-                  <li>15. Conclusão</li>
+                <h4 className="font-bold text-[#0c2461] mb-3 text-base">Parte 3: Implementação</h4>
+                <ul className="space-y-1.5 text-[#0c2461]">
+                  <li>9. Checklist Prático</li>
+                  <li>10. Ferramentas Recomendadas</li>
+                  <li>11. Contatos Úteis</li>
+                  <li>12. Conclusão</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* PARTE 1: FUNDAMENTOS */}
+        {/* PARTE 1 - FUNDAMENTOS */}
         <section id="parte1" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965] border-b-4 border-[#E07856] pb-3 md:pb-4" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            📚 Parte 1: Fundamentos
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            📖 Parte 1: Fundamentos
           </h2>
 
-          {/* Section 1 */}
-          <div className="space-y-4">
+          {/* Seção 1 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec1')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                1. O Conceito de Renda para o Músico
-              </h3>
+              <span className="text-base md:text-lg">1. O Conceito de Renda para o Músico</span>
               {expandedSections['sec1'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec1'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  Para a Receita Federal do Brasil (RFB), <strong>renda</strong> é todo valor recebido que aumenta o seu patrimônio e não possui caráter de devolução.
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  Para a Receita Federal, renda é qualquer valor que você recebe em troca de um serviço prestado. Para o músico, isso inclui:
                 </p>
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#6BA587]">💰 O que é considerado renda tributável:</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>✓ Cachês de shows e apresentações</li>
-                    <li>✓ Direitos Autorais e direitos conexos</li>
-                    <li>✓ Rendimentos de aulas particulares</li>
-                    <li>✓ Vendas de merchandising</li>
-                    <li>✓ Receitas de plataformas digitais</li>
-                  </ul>
-                </div>
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <p className="text-sm text-[#2C3E50]">
-                    <strong>🎯 Regra de Ouro:</strong> Cachês, shows e participações são SEMPRE renda tributável, independentemente de frequência, meio de pagamento ou valor.
-                  </p>
-                </div>
+                <ul className="space-y-2 pl-4 list-disc">
+                  <li><strong>Cachês</strong> por apresentações</li>
+                  <li><strong>Aulas</strong> de música</li>
+                  <li><strong>Direitos autorais</strong> e royalties</li>
+                  <li><strong>Venda de produtos</strong> (CDs, partituras, etc.)</li>
+                  <li><strong>Patrocínios</strong> e parcerias</li>
+                </ul>
+                <p className="mt-3">
+                  <strong>Importante:</strong> A Receita Federal considera renda tanto o dinheiro quanto valores recebidos por PIX, transferência bancária ou qualquer outro meio.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Section 2 */}
-          <div className="space-y-4">
+          {/* Seção 2 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec2')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                2. Obrigatoriedade da Declaração de IR
-              </h3>
+              <span className="text-base md:text-lg">2. Obrigatoriedade da Declaração</span>
               {expandedSections['sec2'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec2'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  O músico autônomo deve declarar o Imposto de Renda Pessoa Física (IRPF) se se enquadrar em qualquer uma das regras de obrigatoriedade estabelecidas pela RFB.
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  Você é obrigado a declarar Imposto de Renda se:
                 </p>
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#6BA587]">✅ Você DEVE declarar se:</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-2">
-                    <li><strong>1. Recebeu rendimentos tributáveis</strong> acima do limite anual (R$ 30.639,90 em 2024)</li>
-                    <li><strong>2. Recebeu rendimentos isentos</strong> acima do limite patrimonial (R$ 800.000,00)</li>
-                    <li><strong>3. Possui bens ou direitos</strong> acima do limite patrimonial</li>
-                    <li><strong>4. Teve imposto retido</strong> na fonte (RPA)</li>
-                    <li><strong>5. Obteve ganho de capital</strong> na venda de bens</li>
-                  </ul>
-                </div>
-                <div className="bg-[#C85A54]/5 border-l-4 border-[#C85A54] p-4 rounded">
-                  <p className="text-sm text-[#2C3E50]">
-                    <strong>⚠️ ATENÇÃO:</strong> A declaração não significa necessariamente pagamento de imposto. Você pode declarar e não ter imposto a pagar ou até receber restituição.
-                  </p>
-                </div>
+                <ul className="space-y-2 pl-4 list-disc">
+                  <li>Recebeu renda bruta acima de R$ 30.639,90 em 2025</li>
+                  <li>Recebeu renda de trabalho não assalariado acima de R$ 876,00</li>
+                  <li>Possui bens ou direitos acima de R$ 300.000,00</li>
+                  <li>Realizou operações na bolsa de valores</li>
+                </ul>
+                <p className="mt-3 bg-[#FFF3E0] p-3 rounded border border-[#FFB74D]">
+                  <strong>Dica:</strong> Mesmo que não seja obrigado, é recomendável declarar para evitar problemas futuros com a Receita Federal.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Section 3 */}
-          <div className="space-y-4">
+          {/* Seção 3 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec3')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                3. Meios de Recebimento: Pix, Dinheiro e Transferência
-              </h3>
+              <span className="text-base md:text-lg">3. Meios de Recebimento</span>
               {expandedSections['sec3'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec3'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#C85A54]/5 border-l-4 border-[#C85A54] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#C85A54]">❌ O MITO DO PIX</h4>
-                  <p className="text-sm text-[#2C3E50]">
-                    Existe um mito de que Pix ou dinheiro vivo não geram obrigação fiscal. <strong>Essa premissa está completamente incorreta.</strong>
-                  </p>
-                </div>
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#6BA587]">✅ A VERDADE</h4>
-                  <p className="text-sm text-[#2C3E50] mb-2">
-                    Não existe "imposto sobre o Pix". O Pix é apenas um meio de pagamento. <strong>O imposto incide sobre a ORIGEM e NATUREZA do dinheiro.</strong>
-                  </p>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>• Valor via Pix = cachê → renda tributável</li>
-                    <li>• Valor em dinheiro = aula → renda tributável</li>
-                    <li>• Transferência = produtora → renda tributável</li>
-                  </ul>
-                </div>
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <p className="text-sm text-[#2C3E50]">
-                    <strong>💡 DICA PRO:</strong> O problema nunca é o Pix ou dinheiro. O problema é a omissão de renda.
-                  </p>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  A forma como você recebe o dinheiro afeta sua tributação:
+                </p>
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-bold text-[#0c2461]">💰 Dinheiro em espécie</h5>
+                    <p>Sem comprovação automática. Você precisa guardar recibos.</p>
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-[#0c2461]">📱 PIX</h5>
+                    <p>Deixa rastro. A Receita Federal consegue rastrear.</p>
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-[#0c2461]">🏦 Transferência bancária</h5>
+                    <p>Comprovação automática. Recomendado para valores maiores.</p>
+                  </div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Section 4 */}
-          <div className="space-y-4">
+          {/* Seção 4 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec4')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                4. Pessoa Física (PF) vs. Pessoa Jurídica (PJ)
-              </h3>
+              <span className="text-base md:text-lg">4. PF vs PJ: Qual Escolher?</span>
               {expandedSections['sec4'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec4'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  A escolha entre atuar como Pessoa Física (PF) ou abrir uma Pessoa Jurídica (PJ) é um dos pontos mais críticos na gestão fiscal do músico.
-                </p>
-                
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse">
-                    <thead>
-                      <tr className="bg-[#1B4965] text-white">
-                        <th className="border border-[#E8E3DC] p-2 text-left">Modelo</th>
-                        <th className="border border-[#E8E3DC] p-2 text-left">Tributação</th>
-                        <th className="border border-[#E8E3DC] p-2 text-left">Indicado Para</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2"><strong>PF (Autônomo)</strong></td>
-                        <td className="border border-[#E8E3DC] p-2">Carnê-Leão mensal</td>
-                        <td className="border border-[#E8E3DC] p-2">Cachês esporádicos, até R$ 5.000/mês</td>
-                      </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2"><strong>MEI</strong></td>
-                        <td className="border border-[#E8E3DC] p-2">DAS ~R$ 75/mês</td>
-                        <td className="border border-[#E8E3DC] p-2">Renda recorrente R$ 3.000-7.000/mês</td>
-                      </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2"><strong>Empresa</strong></td>
-                        <td className="border border-[#E8E3DC] p-2">Simples Nacional</td>
-                        <td className="border border-[#E8E3DC] p-2">Renda acima de R$ 7.000/mês</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded">
-                  <h4 className="font-semibold text-[#6BA587] mb-2">💡 EXEMPLO PRÁTICO DE ECONOMIA</h4>
-                  <p className="text-sm text-[#2C3E50] mb-2"><strong>Cenário:</strong> Músico com renda mensal de R$ 5.000</p>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li><strong>Como PF:</strong> ~R$ 450/mês = R$ 5.400/ano</li>
-                    <li><strong>Como MEI:</strong> R$ 75/mês = R$ 900/ano</li>
-                    <li><strong>Economia: R$ 4.500/ano</strong></li>
-                  </ul>
+              <div className="p-4 md:p-5 space-y-4 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-[#F9F7F4] p-4 rounded">
+                    <h5 className="font-bold text-[#0c2461] mb-2">👤 Pessoa Física (PF)</h5>
+                    <ul className="space-y-1 text-xs md:text-sm">
+                      <li>✓ Mais simples</li>
+                      <li>✓ Menos burocracia</li>
+                      <li>✗ Tributação progressiva</li>
+                      <li>✗ Sem deduções de despesas</li>
+                    </ul>
+                  </div>
+                  <div className="bg-[#E8F5E9] p-4 rounded">
+                    <h5 className="font-bold text-[#0c2461] mb-2">🏢 Pessoa Jurídica (PJ)</h5>
+                    <ul className="space-y-1 text-xs md:text-sm">
+                      <li>✓ Dedução de despesas</li>
+                      <li>✓ Alíquota fixa (MEI/Simples)</li>
+                      <li>✗ Mais burocracia</li>
+                      <li>✗ Custos de manutenção</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             )}
           </div>
         </section>
 
-        {/* PARTE 2: GESTÃO FISCAL */}
+        {/* PARTE 2 - GESTÃO FISCAL */}
         <section id="parte2" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965] border-b-4 border-[#E07856] pb-3 md:pb-4" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            🎯 Parte 2: Gestão Fiscal na Prática
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            💰 Parte 2: Gestão Fiscal
           </h2>
 
-          {/* Section 5 */}
-          <div className="space-y-4">
+          {/* Seção 5 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec5')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                5. Carnê-Leão: Obrigatoriedade e Aplicação
-              </h3>
+              <span className="text-base md:text-lg">5. Carnê-Leão: O que é e Como Pagar</span>
               {expandedSections['sec5'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec5'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  O <strong>Carnê-Leão</strong> é o recolhimento mensal obrigatório do Imposto de Renda devido por Pessoa Física que recebe rendimentos de outra Pessoa Física ou de Pessoa Jurídica que não faz a retenção na fonte.
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  O Carnê-Leão é um imposto que você paga mensalmente sobre a renda que recebe como autônomo.
                 </p>
-                
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded">
-                  <h4 className="font-semibold text-[#6BA587] mb-2">✅ Quando Usar o Carnê-Leão</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>✓ Receber rendimentos como Pessoa Física</li>
-                    <li>✓ Pagamento feito por outra Pessoa Física</li>
-                    <li>✓ Pagamento por PJ que NÃO reteve IR na fonte</li>
+                <div className="bg-[#E3F2FD] p-4 rounded border border-[#64B5F6]">
+                  <p><strong>Como funciona:</strong></p>
+                  <ul className="space-y-1 mt-2 pl-4 list-disc">
+                    <li>Você calcula 15% sobre a renda recebida</li>
+                    <li>Paga mensalmente até o 15º dia do mês seguinte</li>
+                    <li>Guarda o comprovante para a declaração anual</li>
                   </ul>
                 </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <h4 className="font-semibold text-[#D4A574] mb-2">📅 Passo a Passo Mensal</h4>
-                  <ol className="text-sm text-[#2C3E50] space-y-1">
-                    <li>1. Receba o cachê/pagamento (durante o mês)</li>
-                    <li>2. Registre no sistema do Carnê-Leão até o último dia</li>
-                    <li>3. Informe despesas dedutíveis com comprovantes</li>
-                    <li>4. Sistema calcula o imposto automaticamente</li>
-                    <li>5. Gere o DARF (boleto de pagamento)</li>
-                    <li>6. Pague até o último dia útil do mês seguinte</li>
-                  </ol>
-                </div>
-
-                <div className="bg-[#C85A54]/5 border-l-4 border-[#C85A54] p-4 rounded">
-                  <p className="text-sm text-[#2C3E50]">
-                    <strong>🚨 ERRO COMUM:</strong> Mesmo quando o cálculo resulta em R$ 0,00 de imposto, você deve registrar a movimentação para cumprir a obrigação acessória.
-                  </p>
-                </div>
+                <p className="mt-3">
+                  <strong>Exemplo:</strong> Se você recebeu R$ 1.000 em janeiro, paga R$ 150 de Carnê-Leão até 15 de fevereiro.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Section 6 */}
-          <div className="space-y-4">
+          {/* Seção 6 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec6')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                6. Retenção de IR em Pagamentos (RPA)
-              </h3>
+              <span className="text-base md:text-lg">6. Retenção de IR (RPA)</span>
               {expandedSections['sec6'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec6'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  Quando uma banda, produtora ou casa de shows possui CNPJ, ela pode contratar o músico PF e realizar o pagamento via <strong>Recibo de Pagamento a Autônomo (RPA).</strong>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  RPA significa "Recibo de Pagamento Autônomo". Quando uma pessoa ou empresa te contrata, ela pode reter 15% do seu cachê como antecipação de imposto.
                 </p>
-
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#6BA587]">📋 Responsabilidades da Empresa (PJ)</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>✓ Reter o INSS (11% sobre o valor)</li>
-                    <li>✓ Reter o Imposto de Renda</li>
-                    <li>✓ Recolher esses impostos aos cofres públicos</li>
-                    <li>✓ Pagar o valor líquido ao músico</li>
-                    <li>✓ Fornecer Informe de Rendimentos</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <h4 className="font-semibold text-[#D4A574] mb-2">📝 EXEMPLO PRÁTICO</h4>
-                  <p className="text-sm text-[#2C3E50] mb-2"><strong>Cachê combinado:</strong> R$ 3.000,00</p>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>INSS (11%): R$ 330,00</li>
-                    <li>IR: R$ 54,00</li>
-                    <li><strong>Você recebe líquido:</strong> R$ 2.616,00</li>
-                  </ul>
+                <div className="bg-[#FFF3E0] p-4 rounded border border-[#FFB74D]">
+                  <p><strong>Importante:</strong> Essa retenção é creditada na sua declaração anual. Se você pagou mais do que deve, recebe restituição.</p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Section 7 */}
-          <div className="space-y-4">
+          {/* Seção 7 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec7')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                7. Despesas Dedutíveis: Reduzindo a Base de Cálculo
-              </h3>
+              <span className="text-base md:text-lg">7. Despesas Dedutíveis</span>
               {expandedSections['sec7'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec7'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  A grande vantagem de declarar como autônomo (PF) via Carnê-Leão é a possibilidade de <strong>deduzir despesas</strong>, reduzindo ou zerando o valor a pagar.
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  Se você é PJ (MEI ou Simples), pode deduzir despesas da sua renda:
                 </p>
-
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#6BA587]">✅ O Que PODE Ser Deduzido</h4>
-                  <div className="text-sm text-[#2C3E50] space-y-2">
-                    <p><strong>🚗 Transporte:</strong> Combustível, pedágios, Uber, passagens aéreas</p>
-                    <p><strong>🎸 Equipamentos:</strong> Manutenção de instrumentos, cordas, cabos, aluguel</p>
-                    <p><strong>🏢 Espaços:</strong> Aluguel de estúdio, sala de ensaio, internet profissional</p>
-                    <p><strong>📢 Divulgação:</strong> Ads, website, fotos profissionais, designer</p>
-                    <p><strong>👔 Serviços:</strong> Contador, advogado, produtor musical</p>
-                    <p><strong>📚 Capacitação:</strong> Cursos, workshops, material didático</p>
-                  </div>
-                </div>
-
-                <div className="bg-[#C85A54]/5 border-l-4 border-[#C85A54] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#C85A54]">❌ O Que NÃO Pode Ser Deduzido</h4>
-                  <div className="text-sm text-[#2C3E50] space-y-1">
-                    <p>✗ Alimentação comum (supermercado, restaurantes)</p>
-                    <p>✗ Roupas do dia a dia</p>
-                    <p>✗ Lazer e entretenimento pessoal</p>
-                    <p>✗ Instrumentos novos (são bens, não despesas)</p>
-                    <p>✗ Despesas sem comprovação</p>
-                  </div>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <h4 className="font-semibold text-[#D4A574] mb-2">💡 DICA DE OURO</h4>
-                  <p className="text-sm text-[#2C3E50]">
-                    Separe contas bancárias: uma para uso pessoal e outra para receber cachês e pagar despesas profissionais. No fim do ano, o extrato da conta profissional é seu "espelho fiscal".
-                  </p>
-                </div>
+                <ul className="space-y-2 pl-4 list-disc">
+                  <li>🎸 Instrumentos musicais</li>
+                  <li>🎤 Equipamentos de áudio</li>
+                  <li>🚗 Transporte para shows</li>
+                  <li>📚 Cursos e treinamentos</li>
+                  <li>🏢 Aluguel de estúdio</li>
+                  <li>💻 Software e tecnologia</li>
+                </ul>
+                <p className="mt-3 bg-[#E8F5E9] p-3 rounded border border-[#81C784]">
+                  <strong>Dica:</strong> Guarde todas as notas fiscais e recibos. A Receita Federal pode pedir comprovação.
+                </p>
               </div>
             )}
           </div>
 
-          {/* Section 8 */}
-          <div className="space-y-4">
+          {/* Seção 8 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec8')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                8. Tabela Progressiva do IR
-              </h3>
+              <span className="text-base md:text-lg">8. Tabela Progressiva de IR</span>
               {expandedSections['sec8'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec8'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <p className="text-sm text-[#2C3E50] leading-relaxed">
-                  O cálculo do Carnê-Leão segue a <strong>tabela progressiva mensal</strong>. A alíquota aumenta conforme a base de cálculo sobe.
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  Se você é PF, a alíquota de IR aumenta conforme sua renda:
                 </p>
-
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm border-collapse">
+                  <table className="w-full text-xs md:text-sm">
                     <thead>
-                      <tr className="bg-[#1B4965] text-white">
-                        <th className="border border-[#E8E3DC] p-2 text-left">Base Mensal (R$)</th>
-                        <th className="border border-[#E8E3DC] p-2 text-left">Alíquota</th>
-                        <th className="border border-[#E8E3DC] p-2 text-left">Parcela a Deduzir</th>
+                      <tr className="bg-[#F9F7F4]">
+                        <th className="text-left p-2 border border-[#E8E3DC]">Renda Mensal</th>
+                        <th className="text-left p-2 border border-[#E8E3DC]">Alíquota</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">Até 5.000,00</td>
-                        <td className="border border-[#E8E3DC] p-2"><strong>Isento (0%)</strong></td>
-                        <td className="border border-[#E8E3DC] p-2">0,00</td>
+                      <tr>
+                        <td className="p-2 border border-[#E8E3DC]">Até R$ 2.112</td>
+                        <td className="p-2 border border-[#E8E3DC]">Isento</td>
                       </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">5.000,01 a 7.500,00</td>
-                        <td className="border border-[#E8E3DC] p-2">7,5%</td>
-                        <td className="border border-[#E8E3DC] p-2">169,44</td>
+                      <tr className="bg-[#F9F7F4]">
+                        <td className="p-2 border border-[#E8E3DC]">R$ 2.112 a R$ 2.826</td>
+                        <td className="p-2 border border-[#E8E3DC]">7,5%</td>
                       </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">7.500,01 a 10.000,00</td>
-                        <td className="border border-[#E8E3DC] p-2">15%</td>
-                        <td className="border border-[#E8E3DC] p-2">381,44</td>
+                      <tr>
+                        <td className="p-2 border border-[#E8E3DC]">R$ 2.826 a R$ 3.751</td>
+                        <td className="p-2 border border-[#E8E3DC]">15%</td>
                       </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">10.000,01 a 12.500,00</td>
-                        <td className="border border-[#E8E3DC] p-2">22,5%</td>
-                        <td className="border border-[#E8E3DC] p-2">662,77</td>
+                      <tr className="bg-[#F9F7F4]">
+                        <td className="p-2 border border-[#E8E3DC]">R$ 3.751 a R$ 4.664</td>
+                        <td className="p-2 border border-[#E8E3DC]">22,5%</td>
                       </tr>
-                      <tr className="hover:bg-[#F9F7F4]">
-                        <td className="border border-[#E8E3DC] p-2">Acima de 12.500,00</td>
-                        <td className="border border-[#E8E3DC] p-2">27,5%</td>
-                        <td className="border border-[#E8E3DC] p-2">896,00</td>
+                      <tr>
+                        <td className="p-2 border border-[#E8E3DC]">Acima de R$ 4.664</td>
+                        <td className="p-2 border border-[#E8E3DC]">27,5%</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded">
-                  <h4 className="font-semibold text-[#D4A574] mb-2">🧮 EXEMPLO DE CÁLCULO</h4>
-                  <p className="text-sm text-[#2C3E50] mb-2"><strong>Renda bruta:</strong> R$ 5.000 | <strong>Despesas:</strong> R$ 1.500</p>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>Base de Cálculo: R$ 5.000 - R$ 1.500 = R$ 3.500</li>
-                    <li>Alíquota: 15%</li>
-                    <li>Imposto: (R$ 3.500 × 15%) - R$ 381,44 = <strong>R$ 143,56</strong></li>
-                  </ul>
-                </div>
               </div>
             )}
           </div>
         </section>
 
-        {/* PARTE 3: IMPLEMENTAÇÃO */}
+        {/* PARTE 3 - IMPLEMENTAÇÃO */}
         <section id="parte3" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965] border-b-4 border-[#E07856] pb-3 md:pb-4" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ✅ Parte 3: Implementação e Casos Práticos
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            ✅ Parte 3: Implementação
           </h2>
 
-          {/* Section 9 */}
-          <div className="space-y-4">
+          {/* Seção 9 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec9')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                9. Consequências da Não Declaração
-              </h3>
+              <span className="text-base md:text-lg">9. Checklist Prático</span>
               {expandedSections['sec9'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec9'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#C85A54]/5 border-l-4 border-[#C85A54] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#C85A54]">⚠️ Consequências Graves</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-2">
-                    <li><strong>Multa:</strong> 75% a 150% do imposto devido</li>
-                    <li><strong>Juros:</strong> Calculados desde a data de vencimento</li>
-                    <li><strong>Presunção de renda:</strong> RFB pode presumir valores maiores</li>
-                    <li><strong>Bloqueio de contas:</strong> Congelamento de valores em bancos</li>
-                    <li><strong>Restrições:</strong> Impossibilidade de obter crédito, passaporte</li>
-                    <li><strong>Processo criminal:</strong> Em casos de fraude grave</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded">
-                  <h4 className="font-semibold text-[#6BA587] mb-2">💡 Como a RFB Detecta</h4>
-                  <p className="text-sm text-[#2C3E50]">
-                    A RFB cruza dados bancários, transações Pix, notas fiscais e informações de terceiros. Omissões de renda são facilmente detectadas.
-                  </p>
-                </div>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p className="font-semibold">Passos para organizar sua vida fiscal:</p>
+                <ul className="space-y-2 pl-4 list-disc">
+                  <li>☐ Abrir conta bancária separada para renda de música</li>
+                  <li>☐ Guardar todos os recibos e notas fiscais</li>
+                  <li>☐ Registrar a renda mensalmente (planilha ou app)</li>
+                  <li>☐ Pagar Carnê-Leão mensalmente</li>
+                  <li>☐ Consultar um contador especializado</li>
+                  <li>☐ Fazer a declaração anual de IR</li>
+                </ul>
               </div>
             )}
           </div>
 
-          {/* Section 10 */}
-          <div className="space-y-4">
+          {/* Seção 10 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec10')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                10. Checklist Mensal e Roteiro Anual
-              </h3>
+              <span className="text-base md:text-lg">10. Ferramentas Recomendadas</span>
               {expandedSections['sec10'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec10'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#6BA587]">📋 CHECKLIST MENSAL</h4>
-                  <div className="text-sm text-[#2C3E50] space-y-2">
-                    <p><strong>Até o 5º dia útil:</strong></p>
-                    <ul className="space-y-1 pl-4">
-                      <li>☐ Registre todos os cachês/rendimentos</li>
-                      <li>☐ Organize notas fiscais e comprovantes</li>
-                      <li>☐ Calcule despesas dedutíveis</li>
-                      <li>☐ Acesse Carnê-Leão Web</li>
-                      <li>☐ Gere DARF e pague até o último dia útil</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#D4A574]">📅 ROTEIRO ANUAL</h4>
-                  <div className="text-sm text-[#2C3E50] space-y-2">
-                    <p><strong>Janeiro:</strong> Organize documentos, receba Informes</p>
-                    <p><strong>Fevereiro-Março:</strong> Finalize cálculos, preencha IRPF</p>
-                    <p><strong>Abril em diante:</strong> Mantenha controle mensal</p>
-                  </div>
-                </div>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <ul className="space-y-2">
+                  <li><strong>📊 Planilhas:</strong> Google Sheets ou Excel para registrar renda</li>
+                  <li><strong>💰 Apps:</strong> Nubank, Banco Inter (para separar renda)</li>
+                  <li><strong>📱 Nota Fiscal:</strong> Gerador de RPA online</li>
+                  <li><strong>🧮 Calculadoras:</strong> Simule seu IR antes de declarar</li>
+                </ul>
               </div>
             )}
           </div>
 
-          {/* Section 11 */}
-          <div className="space-y-4">
+          {/* Seção 11 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec11')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                11. Estudos de Caso e Exemplos Práticos
-              </h3>
+              <span className="text-base md:text-lg">11. Contatos Úteis</span>
               {expandedSections['sec11'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec11'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#6BA587]">📖 CASO 1: Músico com Cachês Esporádicos</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li><strong>Perfil:</strong> Toca em bares ocasionalmente, 2 shows/mês</li>
-                    <li><strong>Renda anual:</strong> R$ 12.000 a R$ 48.000</li>
-                    <li><strong>Ideal:</strong> Pessoa Física com Carnê-Leão</li>
-                    <li><strong>Imposto estimado:</strong> R$ 0 a R$ 3.000/ano</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#D4A574]">📖 CASO 2: Professor de Música com Renda Recorrente</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li><strong>Perfil:</strong> 15 alunos regulares, R$ 200/mês cada</li>
-                    <li><strong>Renda mensal:</strong> R$ 3.000</li>
-                    <li><strong>Ideal:</strong> MEI</li>
-                    <li><strong>Imposto:</strong> R$ 75/mês = R$ 900/ano</li>
-                    <li><strong>Economia vs PF:</strong> ~R$ 2.500/ano</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-2">
-                  <h4 className="font-semibold text-[#6BA587]">📖 CASO 3: Banda com Múltiplas Fontes</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li><strong>Perfil:</strong> 4 integrantes, shows + aulas + produção</li>
-                    <li><strong>Renda mensal:</strong> R$ 12.000</li>
-                    <li><strong>Ideal:</strong> Empresa (Simples Nacional)</li>
-                    <li><strong>Imposto:</strong> ~8-16% da receita bruta</li>
-                    <li><strong>Lucros:</strong> Isentos para distribuição</li>
-                  </ul>
-                </div>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <ul className="space-y-2">
+                  <li><strong>🏛️ Receita Federal:</strong> www.gov.br/receitafederal</li>
+                  <li><strong>💼 Sindicato dos Músicos:</strong> Consulte sua região</li>
+                  <li><strong>📞 Contador Especializado:</strong> Busque profissionais com experiência em atividades artísticas</li>
+                </ul>
               </div>
             )}
           </div>
 
-          {/* Section 12 */}
-          <div className="space-y-4">
+          {/* Seção 12 */}
+          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
             <button
               onClick={() => toggleSection('sec12')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
+              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                12. Ferramentas e Recursos Recomendados
-              </h3>
+              <span className="text-base md:text-lg">12. Conclusão</span>
               {expandedSections['sec12'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
-            
             {expandedSections['sec12'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#6BA587]">🔗 Recursos Oficiais</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li><strong>Receita Federal:</strong> https://www.gov.br/receitafederal</li>
-                    <li><strong>e-CAC:</strong> https://cac.receita.fazenda.gov.br</li>
-                    <li><strong>Telefone:</strong> 146 (seg-sex, 8h-20h)</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#D4A574]">🛠️ Ferramentas Práticas</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>✓ Planilha Excel/Google Sheets para controle</li>
-                    <li>✓ Apps de nota fiscal eletrônica</li>
-                    <li>✓ Software de contabilidade simplificada</li>
-                    <li>✓ Contador especializado em atividades artísticas</li>
-                  </ul>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Section 13 */}
-          <div className="space-y-4">
-            <button
-              onClick={() => toggleSection('sec13')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
-            >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                13. Perguntas Frequentes (FAQ)
-              </h3>
-              {expandedSections['sec13'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            
-            {expandedSections['sec13'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="space-y-3">
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="text-sm font-semibold text-[#1B4965]">P: Se receber via Pix, preciso declarar?</p>
-                    <p className="text-sm text-[#2C3E50] mt-1"><strong>R:</strong> SIM. Pix é apenas meio de pagamento. Se a origem é cachê, aula ou direito autoral, é renda tributável.</p>
-                  </div>
-
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="text-sm font-semibold text-[#1B4965]">P: Qual é o limite para declarar IR?</p>
-                    <p className="text-sm text-[#2C3E50] mt-1"><strong>R:</strong> Em 2024, acima de R$ 30.639,90 em rendimentos tributáveis é obrigatório declarar.</p>
-                  </div>
-
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="text-sm font-semibold text-[#1B4965]">P: Posso deduzir alimentação em shows?</p>
-                    <p className="text-sm text-[#2C3E50] mt-1"><strong>R:</strong> Não. Alimentação pessoal não é dedutível. Apenas despesas diretamente ligadas à produção.</p>
-                  </div>
-
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="text-sm font-semibold text-[#1B4965]">P: Vale a pena abrir MEI?</p>
-                    <p className="text-sm text-[#2C3E50] mt-1"><strong>R:</strong> Depende da renda. Se acima de R$ 3.000/mês, geralmente vale. Faça as contas com contador.</p>
-                  </div>
-
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="text-sm font-semibold text-[#1B4965]">P: O que acontece se não declarar?</p>
-                    <p className="text-sm text-[#2C3E50] mt-1"><strong>R:</strong> Multa de 75-150% do imposto devido + juros. RFB cruza dados bancários e detecta omissões.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Section 14 */}
-          <div className="space-y-4">
-            <button
-              onClick={() => toggleSection('sec14')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
-            >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                14. Glossário de Termos Fiscais
-              </h3>
-              {expandedSections['sec14'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            
-            {expandedSections['sec14'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="grid md:grid-cols-2 gap-3 text-sm">
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">Carnê-Leão</p>
-                    <p className="text-[#2C3E50]">Recolhimento mensal de IR para PF autônoma.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">CNPJ</p>
-                    <p className="text-[#2C3E50]">Cadastro Nacional da Pessoa Jurídica.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">CPF</p>
-                    <p className="text-[#2C3E50]">Cadastro de Pessoa Física.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">DAS</p>
-                    <p className="text-[#2C3E50]">Documento de Arrecadação do Simples Nacional.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">DARF</p>
-                    <p className="text-[#2C3E50]">Documento de Arrecadação de Receitas Federais.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">IRPF</p>
-                    <p className="text-[#2C3E50]">Imposto de Renda Pessoa Física (declaração anual).</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">MEI</p>
-                    <p className="text-[#2C3E50]">Microempreendedor Individual.</p>
-                  </div>
-                  <div className="bg-[#F9F7F4] p-3 rounded">
-                    <p className="font-semibold text-[#1B4965]">RPA</p>
-                    <p className="text-[#2C3E50]">Recibo de Pagamento a Autônomo.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Section 15 */}
-          <div className="space-y-4">
-            <button
-              onClick={() => toggleSection('sec15')}
-              className="w-full flex items-center justify-between p-4 bg-[#F9F7F4] hover:bg-[#E8E3DC] rounded-lg transition"
-            >
-              <h3 className="text-lg font-semibold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                15. Conclusão e Próximos Passos
-              </h3>
-              {expandedSections['sec15'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            
-            {expandedSections['sec15'] && (
-              <div className="px-4 py-4 space-y-4 bg-white border-l-4 border-[#1B4965]">
-                <div className="bg-[#6BA587]/5 border-l-4 border-[#6BA587] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#6BA587]">🎯 Resumo do Guia</h4>
-                  <ul className="text-sm text-[#2C3E50] space-y-1">
-                    <li>✓ Renda é renda - independentemente do meio de pagamento</li>
-                    <li>✓ Declaração é obrigatória - para a maioria dos músicos profissionais</li>
-                    <li>✓ Existem opções - PF, MEI ou Empresa, cada com vantagens</li>
-                    <li>✓ Deduções reduzem imposto - organize despesas e maximize economia</li>
-                    <li>✓ Organização é essencial - mantenha documentos em dia</li>
-                  </ul>
-                </div>
-
-                <div className="bg-[#D4A574]/5 border-l-4 border-[#D4A574] p-4 rounded space-y-3">
-                  <h4 className="font-semibold text-[#D4A574]">🚀 Próximos Passos</h4>
-                  <div className="text-sm text-[#2C3E50] space-y-2">
-                    <p><strong>Imediato (Esta semana):</strong></p>
-                    <ul className="space-y-1 pl-4">
-                      <li>1. Verifique se se enquadra em obrigatoriedade</li>
-                      <li>2. Organize documentos fiscais do ano passado</li>
-                      <li>3. Abra conta bancária separada para rendimentos</li>
-                    </ul>
-                    <p className="mt-2"><strong>Curto prazo (Este mês):</strong></p>
-                    <ul className="space-y-1 pl-4">
-                      <li>1. Consulte contador especializado</li>
-                      <li>2. Decida entre PF, MEI ou Empresa</li>
-                      <li>3. Comece a registrar renda e despesas</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-[#E07856] to-[#D4A574] rounded-xl p-6 text-white space-y-3">
-                  <h3 className="text-lg font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>🎵 Transforme sua Arte em Carreira Profissional</h3>
-                  <p className="text-sm opacity-90">
-                    Com gestão fiscal responsável, você protege sua carreira e maximiza seus ganhos. Este guia é seu primeiro passo para profissionalização.
-                  </p>
-                  <p className="text-xs opacity-75">
-                    Edição Atualizada 2026 | Base Legal: Ano-Calendário 2025
-                  </p>
-                </div>
+              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+                <p>
+                  Organizar sua vida fiscal não precisa ser complicado. Com as informações certas e um pouco de disciplina, você consegue:
+                </p>
+                <ul className="space-y-2 pl-4 list-disc">
+                  <li>✓ Evitar problemas com a Receita Federal</li>
+                  <li>✓ Aproveitar deduções e economizar impostos</li>
+                  <li>✓ Ter clareza sobre sua renda</li>
+                  <li>✓ Focar no que realmente importa: sua música</li>
+                </ul>
+                <p className="mt-3 font-semibold text-[#0c2461]">
+                  O Músico Pro está aqui para ajudar você nessa jornada. 🎵
+                </p>
               </div>
             )}
           </div>
         </section>
 
-        {/* CALL TO ACTION: FERRAMENTAS */}
-        <section className="bg-[#F9F7F4] rounded-lg p-8 text-center space-y-6 mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1B4965]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            🧮 Precisa fazer cálculos?
-          </h2>
-          <p className="text-[#2C3E50] max-w-2xl mx-auto">
-            Acesse nossa área de ferramentas exclusivas com calculadoras de Carnê-Leão, simulador de retenção RPA e consultoria automática para escolher o melhor regime fiscal.
+        {/* Final CTA */}
+        <section className="bg-gradient-to-r from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 md:p-8 text-white space-y-4 text-center mb-12">
+          <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Pronto para organizar sua vida fiscal?
+          </h3>
+          <p className="text-base md:text-lg opacity-90">
+            Acesse a área premium com ferramentas, calculadoras e conteúdo completo.
           </p>
-          <Link href="/premium" className="inline-flex items-center gap-2 bg-[#E07856] hover:bg-[#D66A49] text-white font-bold py-3 px-8 rounded-lg transition text-lg">
-            <BarChart3 size={24} />
-            Acessar Ferramentas Fiscais
-          </Link>
+          <div className="flex flex-col md:flex-row gap-3 justify-center">
+            <Link 
+              href="/premium" 
+              className="bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-8 rounded-lg transition"
+            >
+              Acessar Premium
+            </Link>
+            <Link 
+              href="/pro" 
+              className="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-lg transition backdrop-blur-sm"
+            >
+              Ver Planos
+            </Link>
+          </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#1B4965] text-white py-8 text-center text-sm opacity-90">
-        <div className="container mx-auto px-4">
-          <p>&copy; 2026 Músico Pro - Organização Fiscal para Músicos. Todos os direitos reservados.</p>
-          <p className="mt-2 text-xs opacity-70">Este site não possui vínculo com a Receita Federal.</p>
-        </div>
-      </footer>
-
+      {/* Email Capture Modal */}
       <EmailCaptureModal 
-        isOpen={isDownloadModalOpen}
+        isOpen={isDownloadModalOpen} 
         onClose={() => setIsDownloadModalOpen(false)}
-        downloadUrl="/app-musico-pro.html"
-        fileName="MusicoPro-App.html"
+        downloadUrl="/Guia-IR-Musicos-2026.pdf"
+        fileName="Guia-IR-Musicos-2026.pdf"
       />
     </div>
   );
