@@ -3,6 +3,7 @@ import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, Dollar
 import { Link } from 'wouter';
 import { EmailCaptureModal } from '@/components/EmailCaptureModal';
 import LockedTeaser from '@/components/LockedTeaser';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
@@ -707,6 +708,24 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Mini Bio - Autoridade */}
+        <section className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4 mb-12 border-l-4 border-[#d4af37]">
+          <div className="flex items-start gap-4">
+            <div className="text-3xl">📊</div>
+            <div className="text-left">
+              <h3 className="text-lg md:text-xl font-bold text-[#0c2461] mb-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Quem está por trás do Músico Pro
+              </h3>
+              <p className="text-sm md:text-base text-[#0c2461] leading-relaxed mb-3">
+                Sou profissional de tecnologia com experiência em sistemas e organização financeira.
+              </p>
+              <p className="text-sm md:text-base text-[#0c2461] leading-relaxed">
+                Criei o Músico Pro para ajudar músicos autônomos a entender e organizar seus impostos de forma prática, sem juridiquês e sem depender de terceiros para o básico.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="bg-gradient-to-r from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 md:p-8 text-white space-y-4 text-center mb-12">
           <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
@@ -717,16 +736,16 @@ export default function Home() {
           </p>
           <div className="flex flex-col md:flex-row gap-3 justify-center">
             <Link 
-              href="/premium" 
+              href="/pro" 
               className="bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-8 rounded-lg transition"
             >
-              Acessar Premium
+              Comprar Licença PRO
             </Link>
             <Link 
-              href="/pro" 
+              href="/premium" 
               className="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-lg transition backdrop-blur-sm"
             >
-              Ver Planos
+              Entrar no Premium (tenho código)
             </Link>
           </div>
         </section>
@@ -739,6 +758,9 @@ export default function Home() {
         downloadUrl="/Guia-IR-Musicos-2026.pdf"
         fileName="Guia-IR-Musicos-2026.pdf"
       />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
