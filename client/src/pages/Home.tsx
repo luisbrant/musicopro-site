@@ -323,11 +323,11 @@ export default function Home() {
                   Para a Receita Federal, renda é qualquer valor que você recebe em troca de um serviço prestado. Para o músico, isso inclui:
                 </p>
                 <ul className="space-y-2 pl-4 list-disc">
-                  <li><strong>Cachês</strong> por apresentações</li>
-                  <li><strong>Aulas</strong> de música</li>
-                  <li><strong>Direitos autorais</strong> e royalties</li>
-                  <li><strong>Venda de produtos</strong> (CDs, partituras, etc.)</li>
-                  <li><strong>Patrocínios</strong> e parcerias</li>
+                  <li><strong>Cachês</strong> por apresentações.</li>
+                  <li><strong>Aulas</strong> de música.</li>
+                  <li><strong>Direitos autorais</strong> e royalties.</li>
+                  <li><strong>Venda de produtos</strong> (CDs, partituras, etc.).</li>
+                  <li><strong>Patrocínios</strong> e parcerias.</li>
                 </ul>
                 <p className="mt-3">
                   <strong>Importante:</strong> A Receita Federal considera renda tanto o dinheiro quanto valores recebidos por PIX, transferência bancária ou qualquer outro meio.
@@ -351,10 +351,10 @@ export default function Home() {
                   Você é obrigado a declarar Imposto de Renda se:
                 </p>
                 <ul className="space-y-2 pl-4 list-disc">
-                  <li>Recebeu renda bruta acima de R$ 30.639,90 em 2025</li>
-                  <li>Recebeu renda de trabalho não assalariado acima de R$ 876,00</li>
-                  <li>Possui bens ou direitos acima de R$ 300.000,00</li>
-                  <li>Realizou operações na bolsa de valores</li>
+                  <li>Recebeu renda bruta acima de R$ 30.639,90 em 2025.</li>
+                  <li>Recebeu renda de trabalho não assalariado acima de R$ 876,00.</li>
+                  <li>Possui bens ou direitos acima de R$ 300.000,00.</li>
+                  <li>Realizou operações na bolsa de valores.</li>
                 </ul>
                 <p className="mt-3 bg-[#FFF3E0] p-3 rounded border border-[#FFB74D]">
                   <strong>Dica:</strong> Mesmo que não seja obrigado, é recomendável declarar para evitar problemas futuros com a Receita Federal.
@@ -410,19 +410,19 @@ export default function Home() {
                   <div className="bg-[#F9F7F4] p-4 rounded">
                     <h5 className="font-bold text-[#0c2461] mb-2">👤 Pessoa Física (PF)</h5>
                     <ul className="space-y-1 text-xs md:text-sm">
-                      <li>✓ Mais simples</li>
-                      <li>✓ Menos burocracia</li>
-                      <li>✗ Tributação progressiva</li>
-                      <li>✗ Sem deduções de despesas</li>
+                      <li>✓ Mais simples.</li>
+                      <li>✓ Menos burocracia.</li>
+                      <li>✗ Tributação progressiva.</li>
+                      <li>✗ Sem deduções de despesas.</li>
                     </ul>
                   </div>
                   <div className="bg-[#E8F5E9] p-4 rounded">
                     <h5 className="font-bold text-[#0c2461] mb-2">🏢 Pessoa Jurídica (PJ)</h5>
                     <ul className="space-y-1 text-xs md:text-sm">
-                      <li>✓ Dedução de despesas</li>
-                      <li>✓ Alíquota fixa (MEI/Simples)</li>
-                      <li>✗ Mais burocracia</li>
-                      <li>✗ Custos de manutenção</li>
+                      <li>✓ Dedução de despesas.</li>
+                      <li>✓ Alíquota fixa (MEI/Simples).</li>
+                      <li>✗ Mais burocracia.</li>
+                      <li>✗ Custos de manutenção.</li>
                     </ul>
                   </div>
                 </div>
@@ -454,9 +454,9 @@ export default function Home() {
                 <div className="bg-[#E3F2FD] p-4 rounded border border-[#64B5F6]">
                   <p><strong>Como funciona:</strong></p>
                   <ul className="space-y-1 mt-2 pl-4 list-disc">
-                    <li>Você calcula 15% sobre a renda recebida</li>
-                    <li>Paga mensalmente até o 15º dia do mês seguinte</li>
-                    <li>Guarda o comprovante para a declaração anual</li>
+                    <li>Você calcula 15% sobre a renda recebida.</li>
+                    <li>Paga mensalmente até o 15º dia do mês seguinte.</li>
+                    <li>Guarda o comprovante para a declaração anual.</li>
                   </ul>
                 </div>
                 <p className="mt-3">
@@ -502,12 +502,12 @@ export default function Home() {
                   Se você é PJ (MEI ou Simples), pode deduzir despesas da sua renda:
                 </p>
                 <ul className="space-y-2 pl-4 list-disc">
-                  <li>🎸 Instrumentos musicais</li>
-                  <li>🎤 Equipamentos de áudio</li>
-                  <li>🚗 Transporte para shows</li>
-                  <li>📚 Cursos e treinamentos</li>
-                  <li>🏢 Aluguel de estúdio</li>
-                  <li>💻 Software e tecnologia</li>
+                  <li>🌸 Instrumentos musicais.</li>
+                  <li>🌤 Equipamentos de áudio.</li>
+                  <li>🚗 Transporte para shows.</li>
+                  <li>📚 Cursos e treinamentos.</li>
+                  <li>🏢 Aluguel de estúdio.</li>
+                  <li>💻 Software e tecnologia.</li>
                 </ul>
                 <p className="mt-3 bg-[#E8F5E9] p-3 rounded border border-[#81C784]">
                   <strong>Dica:</strong> Guarde todas as notas fiscais e recibos. A Receita Federal pode pedir comprovação.
@@ -586,12 +586,12 @@ export default function Home() {
               <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
                 <p className="font-semibold">Passos para organizar sua vida fiscal:</p>
                 <ul className="space-y-2 pl-4 list-disc">
-                  <li>☐ Abrir conta bancária separada para renda de música</li>
-                  <li>☐ Guardar todos os recibos e notas fiscais</li>
-                  <li>☐ Registrar a renda mensalmente (planilha ou app)</li>
-                  <li>☐ Pagar Carnê-Leão mensalmente</li>
-                  <li>☐ Consultar um contador especializado</li>
-                  <li>☐ Fazer a declaração anual de IR</li>
+                  <li>☐ Abrir conta bancária separada para renda de música.</li>
+                  <li>☐ Guardar todos os recibos e notas fiscais.</li>
+                  <li>☐ Registrar a renda mensalmente (planilha ou app).</li>
+                  <li>☐ Pagar Carnê-Leão mensalmente.</li>
+                  <li>☐ Consultar um contador especializado.</li>
+                  <li>☐ Fazer a declaração anual de IR.</li>
                 </ul>
               </div>
             )}
@@ -609,10 +609,10 @@ export default function Home() {
             {expandedSections['sec10'] && (
               <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
                 <ul className="space-y-2">
-                  <li><strong>📊 Planilhas:</strong> Google Sheets ou Excel para registrar renda</li>
-                  <li><strong>💰 Apps:</strong> Nubank, Banco Inter (para separar renda)</li>
-                  <li><strong>📱 Nota Fiscal:</strong> Gerador de RPA online</li>
-                  <li><strong>🧮 Calculadoras:</strong> Simule seu IR antes de declarar</li>
+                  <li><strong>📊 Planilhas:</strong> Google Sheets ou Excel para registrar renda.</li>
+                  <li><strong>💰 Apps:</strong> Nubank, Banco Inter (para separar renda).</li>
+                  <li><strong>📱 Nota Fiscal:</strong> Gerador de RPA online.</li>
+                  <li><strong>🧶 Calculadoras:</strong> Simule seu IR antes de declarar.</li>
                 </ul>
               </div>
             )}
@@ -630,9 +630,9 @@ export default function Home() {
             {expandedSections['sec11'] && (
               <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
                 <ul className="space-y-2">
-                  <li><strong>🏛️ Receita Federal:</strong> www.gov.br/receitafederal</li>
-                  <li><strong>💼 Sindicato dos Músicos:</strong> Consulte sua região</li>
-                  <li><strong>📞 Contador Especializado:</strong> Busque profissionais com experiência em atividades artísticas</li>
+                  <li><strong>🏰️ Receita Federal:</strong> www.gov.br/receitafederal.</li>
+                  <li><strong>💼 Sindicato dos Músicos:</strong> Consulte sua região.</li>
+                  <li><strong>📞 Contador Especializado:</strong> Busque profissionais com experiência em atividades artísticas.</li>
                 </ul>
               </div>
             )}
@@ -653,10 +653,10 @@ export default function Home() {
                   Organizar sua vida fiscal não precisa ser complicado. Com as informações certas e um pouco de disciplina, você consegue:
                 </p>
                 <ul className="space-y-2 pl-4 list-disc">
-                  <li>✓ Evitar problemas com a Receita Federal</li>
-                  <li>✓ Aproveitar deduções e economizar impostos</li>
-                  <li>✓ Ter clareza sobre sua renda</li>
-                  <li>✓ Focar no que realmente importa: sua música</li>
+                  <li>✓ Evitar problemas com a Receita Federal.</li>
+                  <li>✓ Aproveitar deduções e economizar impostos.</li>
+                  <li>✓ Ter clareza sobre sua renda.</li>
+                  <li>✓ Focar no que realmente importa: sua música.</li>
                 </ul>
                 <p className="mt-3 font-semibold text-[#0c2461]">
                   O Músico Pro está aqui para ajudar você nessa jornada. 🎵
