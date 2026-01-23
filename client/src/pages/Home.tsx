@@ -208,19 +208,19 @@ export default function Home() {
               <ul className="space-y-2 md:space-y-3 text-sm md:text-base text-[#0c2461]">
                 <li className="flex items-start gap-3">
                   <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
-                  <span>Músicos autônomos que recebem cachês e querem se organizar fiscalmente</span>
+                  <span>Músicos autônomos que recebem cachês e querem se organizar fiscalmente.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
-                  <span>Professores de música com alunos regulares</span>
+                  <span>Professores de música com alunos regulares.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
-                  <span>Artistas com múltiplas fontes de renda (shows, direitos, aulas)</span>
+                  <span>Artistas com múltiplas fontes de renda (shows, direitos, aulas).</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
-                  <span>Músicos que querem evitar problemas com a Receita Federal</span>
+                  <span>Músicos que querem evitar problemas com a Receita Federal.</span>
                 </li>
               </ul>
             </div>

@@ -92,8 +92,8 @@ export default function Vendas() {
               <div className="flex gap-4">
                 <div className="bg-[#6BA587] w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xl">2</div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Ferramenta MusicoPro AI (App)</h3>
-                  <p className="text-gray-300 text-sm">Aplicativo exclusivo para controle financeiro. Lance cachês, despesas, gere recibos profissionais e tenha um consultor IA na palma da mão.</p>
+                  <h3 className="text-xl font-bold mb-2">Ferramenta MusicoPro (App)</h3>
+                  <p className="text-gray-300 text-sm">Aplicativo exclusivo para controle financeiro. Lance cachês, despesas e gere recibos profissionais na palma da mão.</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -133,7 +133,7 @@ export default function Vendas() {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
-                  <span className="text-[#2C3E50]"><strong>Gerador de Recibos:</strong> Crie recibos profissionais em PDF com QR Code em segundos.</span>
+                  <span className="text-[#2C3E50]"><strong>Gerador de Recibos:</strong> Crie recibos profissionais em PDF em segundos.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
@@ -173,7 +173,7 @@ export default function Vendas() {
             </div>
             <div className="p-8">
               <h3 className="text-xl font-bold text-[#2C3E50] mb-2">Kit MusicoPro Completo</h3>
-              <p className="text-gray-500 text-sm mb-6">Acesso vitalício a todo o conteúdo</p>
+              <p className="text-gray-500 text-sm mb-6">Acesso anual a todo o conteúdo.</p>
               
               <div className="flex justify-center items-baseline gap-1 mb-8">
                 <span className="text-gray-400 text-lg line-through">R$ 197,00</span>
@@ -183,7 +183,7 @@ export default function Vendas() {
               <ul className="space-y-4 mb-8 text-left">
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
-                  <span><strong>Licença PRO Vitalícia:</strong> Desbloqueie todas as funções do App.</span>
+                  <span><strong>Licença PRO Anual:</strong> Desbloqueie todas as funções do App.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
@@ -215,7 +215,7 @@ export default function Vendas() {
                 Baixar App Grátis (Versão Free)
               </a>
               <p className="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
-                <ShieldCheck size={12} /> Pagamento 100% seguro via Hotmart
+                <ShieldCheck size={12} /> Pagamento 100% seguro via Hotmart.
               </p>
             </div>
             <div className="bg-gray-50 p-4 text-xs text-gray-500 border-t border-gray-100">
