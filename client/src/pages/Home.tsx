@@ -143,11 +143,10 @@ export default function Home() {
 
           {/* Hero Principal */}
           <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg md:rounded-xl p-6 md:p-8 text-white space-y-4 md:space-y-6 animate-fade-in-up shadow-lg relative overflow-hidden">
-            {/* Slogan */}
+            {/* Título Principal */}
             <div>
-              <p className="text-sm md:text-base font-semibold text-[#d4af37] uppercase tracking-wider mb-2">Imposto sem medo, do jeito certo</p>
-              <h1 className="text-3xl md:text-4xl font-bold leading-tight" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                Músico Pro — Organização Fiscal para Músicos
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Imposto sem medo, do jeito certo
               </h1>
             </div>
 
