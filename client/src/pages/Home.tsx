@@ -67,7 +67,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <h1 className="text-lg md:text-xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
               Músico Pro
-              <span className="block text-xs md:text-sm font-normal text-[#6ba587]">Organização Fiscal para Músicos</span>
+              <span className="block text-xs md:text-sm font-normal text-[#6ba587]">Guia + App para organizar sua vida fiscal como músico autônomo</span>
             </h1>
           </div>
           
@@ -152,7 +152,7 @@ export default function Home() {
 
             {/* Texto Introdutório */}
             <p className="text-base md:text-lg leading-relaxed opacity-95">
-              O Músico Pro é um guia prático para músicos que querem organizar sua vida fiscal com clareza, segurança e sem burocracia.
+              Músico Pro é um guia prático + app para músicos que querem organizar sua vida fiscal com clareza, segurança e sem burocracia.
             </p>
 
             <p className="text-sm md:text-base leading-relaxed opacity-90">
@@ -182,13 +182,13 @@ export default function Home() {
                 href="/pro" 
                 className="flex-1 md:flex-none bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-6 rounded-lg text-center transition transform hover:scale-105 shadow-lg"
               >
-                Ver Kit Músico Pro
+                Comprar Licença PRO
               </Link>
               <button 
                 onClick={() => setIsDownloadModalOpen(true)}
                 className="flex-1 md:flex-none bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-lg transition backdrop-blur-sm"
               >
-                Acessar conteúdo completo
+                Entrar no Premium (tenho código)
               </button>
             </div>
           </div>

@@ -210,7 +210,7 @@ export default function Premium() {
 
               <div className="border-t border-[#d4af37] pt-6">
                 <p className="text-xs md:text-sm text-[#0c2461] text-center">
-                  Ainda não tem acesso? <a href="#" className="text-[#d4af37] font-bold hover:underline">Compre sua licença PRO</a>
+                  Ainda não tem acesso? <a href="/pro" className="text-[#d4af37] font-bold hover:underline">Compre sua Licença PRO</a>
                 </p>
               </div>
             </div>

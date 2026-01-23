@@ -73,7 +73,7 @@ export default function Vendas() {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-2xl md:text-4xl font-bold mb-4 font-['Lexend',_sans-serif]">
-              Apresentando o Kit MusicoPro
+              Apresentando o Kit Músico Pro
             </h2>
             <p className="text-gray-300">
               Não é apenas um e-book. É um sistema completo de gestão para sua carreira.
@@ -122,9 +122,9 @@ export default function Vendas() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
             <div className="flex-1 bg-[#F9F7F4] p-8 rounded-2xl border border-[#E8E3DC] w-full">
-              <h3 className="text-xl font-bold text-[#1B4965] mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-[#1B4965] mb-4 flex items-center gap-2">
                 <Star className="text-[#E07856] fill-current" />
-                O que o App MusicoPro faz por você:
+                O que o App Músico Pro faz por você:
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -172,7 +172,7 @@ export default function Vendas() {
               MAIS VENDIDO
             </div>
             <div className="p-8">
-              <h3 className="text-xl font-bold text-[#2C3E50] mb-2">Kit MusicoPro Completo</h3>
+              <h3 className="text-xl font-bold text-[#2C3E50] mb-2">Kit Músico Pro Completo</h3>
               <p className="text-gray-500 text-sm mb-6">Acesso anual a todo o conteúdo.</p>
               
               <div className="flex justify-center items-baseline gap-1 mb-8">
@@ -212,7 +212,7 @@ export default function Vendas() {
                 download
                 className="block w-full bg-white border-2 border-[#1B4965] text-[#1B4965] hover:bg-gray-50 text-lg font-bold py-3 rounded-xl transition"
               >
-                Baixar App Grátis (Versão Free)
+                Baixar App Grátis
               </a>
               <p className="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
                 <ShieldCheck size={12} /> Pagamento 100% seguro via Hotmart.
