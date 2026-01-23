@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { Menu, X, Lock, Calculator, FileText, Zap, Download, ArrowRight, BarChart3, DollarSign, TrendingUp, AlertCircle, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react';
+import { Menu, X, Lock, Calculator, FileText, Zap, Download, ArrowRight, BarChart3, DollarSign, TrendingUp, AlertCircle, ChevronDown, ChevronUp, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
 import DeducoesDeepDive from '@/components/DeducoesDeepDive';
 import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
@@ -183,7 +183,48 @@ export default function Premium() {
               </p>
             </div>
 
-            <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-6">
+            <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-8">
+              {/* Bloco: Como Funciona */}
+              <div className="bg-white rounded-lg p-6 border border-[#E8E3DC] space-y-6">
+                <h3 className="text-xl font-bold text-[#0c2461] flex items-center gap-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                  <Zap size={24} className="text-[#d4af37]" />
+                  Como funciona o acesso ao Premium
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#0c2461] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                      1
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#0c2461] mb-1">Compre a Licença PRO</h4>
+                      <p className="text-sm text-[#6ba587]">A compra é feita pela Hotmart.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#0c2461] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                      2
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#0c2461] mb-1">Receba seu código de acesso</h4>
+                      <p className="text-sm text-[#6ba587]">Após a confirmação do pagamento, o código é enviado automaticamente para o seu e-mail.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 bg-[#0c2461] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                      3
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#0c2461] mb-1">Desbloqueie o conteúdo Premium</h4>
+                      <p className="text-sm text-[#6ba587]">Digite o código abaixo e tenha acesso imediato às ferramentas e materiais exclusivos.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Formulário de Acesso */}
               <form onSubmit={handleAccessCode} className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-[#0c2461] mb-2">
@@ -204,13 +245,55 @@ export default function Premium() {
                   type="submit"
                   className="w-full bg-[#0c2461] hover:bg-[#1a3a5c] text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"
                 >
-                  <Zap size={18} /> Acessar Área Premium
+                  <Zap size={18} /> Desbloquear Conteúdo
                 </button>
               </form>
 
-              <div className="border-t border-[#d4af37] pt-6">
-                <p className="text-xs md:text-sm text-[#0c2461] text-center">
-                  Ainda não tem acesso? <a href="/pro" className="text-[#d4af37] font-bold hover:underline">Compre sua Licença PRO</a>
+              {/* Bloco: O que você libera */}
+              <div className="bg-[#E8F5E9] rounded-lg p-6 border border-[#6ba587]/20 space-y-4">
+                <h3 className="font-bold text-[#0c2461] flex items-center gap-2">
+                  <CheckCircle2 size={20} className="text-[#6ba587]" />
+                  O que você libera no Premium
+                </h3>
+                <p className="text-sm text-[#0c2461] mb-4">Ao liberar o Premium, você terá acesso a:</p>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#6ba587] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[#0c2461]">Checklists mensais do Carnê-Leão</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#6ba587] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[#0c2461]">Exemplos práticos preenchidos (PIX, cachê, aulas)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#6ba587] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[#0c2461]">Calculadoras de imposto</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#6ba587] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[#0c2461]">Organização de receitas e despesas</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-[#6ba587] flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-[#0c2461]">Conteúdos aprofundados e atualizados</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Links auxiliares */}
+              <div className="border-t border-[#d4af37] pt-6 space-y-3">
+                <p className="text-sm text-[#0c2461] text-center">
+                  Ainda não tem acesso? <a href="/pro" className="text-[#d4af37] font-bold hover:underline">Comprar Licença PRO</a>
+                </p>
+                <p className="text-sm text-[#0c2461] text-center">
+                  Não recebi meu código? <a href="mailto:suporte@musicopro.app.br" className="text-[#d4af37] font-bold hover:underline">Falar com o suporte</a>
+                </p>
+              </div>
+
+              {/* Aviso discreto */}
+              <div className="bg-[#FFF9E6] rounded-lg p-4 border border-[#d4af37]/30">
+                <p className="text-xs text-[#6ba587] text-center">
+                  🔐 O código é pessoal e intransferível. Em caso de troca de dispositivo, o acesso pode ser recuperado pelo suporte.
                 </p>
               </div>
             </div>
