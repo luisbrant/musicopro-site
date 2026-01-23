@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Music, ChevronDown, ChevronUp, Lightbulb, AlertCircle, BookOpen, DollarSign, CheckCircle2, TrendingUp, FileText, HelpCircle, Zap, BarChart3, Menu, X, Star, Download, Copy } from 'lucide-react';
 import { Link } from 'wouter';
 import { EmailCaptureModal } from '@/components/EmailCaptureModal';
+import LockedTeaser from '@/components/LockedTeaser';
 
 export default function Home() {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
@@ -438,135 +439,175 @@ export default function Home() {
           </h2>
 
           {/* Seção 5 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+          <div className="border-2 border-[#d4af37] rounded-lg overflow-hidden bg-gradient-to-br from-[#FFF9E6] to-[#F9F7F4]">
             <button
               onClick={() => toggleSection('sec5')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
+              className="w-full bg-[#d4af37] hover:bg-[#c99a2e] p-4 md:p-5 flex items-center justify-between transition font-bold text-[#0c2461]"
             >
-              <span className="text-base md:text-lg">5. Carnê-Leão: O que é e Como Pagar</span>
+              <span className="text-base md:text-lg flex items-center gap-2">
+                <span>🎁</span>
+                5. Carnê-Leão: O que é e Como Pagar (GRATUITO)
+              </span>
               {expandedSections['sec5'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections['sec5'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
+              <div className="p-4 md:p-5 space-y-4 text-sm md:text-base text-[#0c2461] border-t border-[#d4af37]">
                 <p>
-                  O Carnê-Leão é um imposto que você paga mensalmente sobre a renda que recebe como autônomo.
+                  O Carnê-Leão é um imposto que você paga mensalmente sobre a renda que recebe como autônomo. É uma das obrigações mais importantes para músicos que trabalham como PF (Pessoa Física).
                 </p>
+
                 <div className="bg-[#E3F2FD] p-4 rounded border border-[#64B5F6]">
                   <p><strong>Como funciona:</strong></p>
                   <ul className="space-y-1 mt-2 pl-4 list-disc">
-                    <li>Você calcula 15% sobre a renda recebida.</li>
+                    <li>Você calcula 15% sobre a renda bruta recebida.</li>
                     <li>Paga mensalmente até o 15º dia do mês seguinte.</li>
                     <li>Guarda o comprovante para a declaração anual.</li>
+                    <li>O valor pago é creditado no Imposto de Renda anual.</li>
                   </ul>
                 </div>
-                <p className="mt-3">
-                  <strong>Exemplo:</strong> Se você recebeu R$ 1.000 em janeiro, paga R$ 150 de Carnê-Leão até 15 de fevereiro.
-                </p>
-              </div>
-            )}
-          </div>
 
-          {/* Seção 6 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec6')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">6. Retenção de IR (RPA)</span>
-              {expandedSections['sec6'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec6'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <p>
-                  RPA significa "Recibo de Pagamento Autônomo". Quando uma pessoa ou empresa te contrata, ela pode reter 15% do seu cachê como antecipação de imposto.
-                </p>
-                <div className="bg-[#FFF3E0] p-4 rounded border border-[#FFB74D]">
-                  <p><strong>Importante:</strong> Essa retenção é creditada na sua declaração anual. Se você pagou mais do que deve, recebe restituição.</p>
+                <div className="space-y-3">
+                  <p><strong>Exemplos Práticos:</strong></p>
+                  
+                  <div className="bg-[#E8F5E9] p-4 rounded border border-[#81C784]">
+                    <p className="font-bold text-[#2E7D32] mb-2">Exemplo 1: Recebimento por PIX</p>
+                    <ul className="space-y-1 pl-4 list-disc text-sm">
+                      <li>Você recebe R$ 500 de um cachê por PIX em janeiro.</li>
+                      <li>Carnê-Leao devido: R$ 500 × 15% = R$ 75.</li>
+                      <li>Prazo para pagar: até 15 de fevereiro.</li>
+                      <li>Comprovante: guarde o recibo do Carnê-Leão.</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-[#FCE4EC] p-4 rounded border border-[#F48FB1]">
+                    <p className="font-bold text-[#C2185B] mb-2">Exemplo 2: Múltiplos Cachês no Mês</p>
+                    <ul className="space-y-1 pl-4 list-disc text-sm">
+                      <li>Janeiro: R$ 300 (show) + R$ 200 (aulas) + R$ 150 (gravacao) = R$ 650.</li>
+                      <li>Carnê-Leao devido: R$ 650 × 15% = R$ 97,50.</li>
+                      <li>Você paga uma única guia com o total acumulado.</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-[#FFF3E0] p-4 rounded border border-[#FFB74D]">
+                    <p className="font-bold text-[#E65100] mb-2">Exemplo 3: Aulas Regulares (Pessoa Física)</p>
+                    <ul className="space-y-1 pl-4 list-disc text-sm">
+                      <li>Você dá 5 aulas por mês a R$ 100 cada = R$ 500.</li>
+                      <li>Carnê-Leao: R$ 500 × 15% = R$ 75 mensais.</li>
+                      <li>Anual: R$ 75 × 12 = R$ 900 de Carnê-Leão.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-[#E8F5E9] p-3 rounded border border-[#81C784]">
+                  <p><strong>Dica:</strong> Organize seus recibos mensalmente. Isso facilita a declaração de IR e evita multas.</p>
+                </div>
+
+                <div className="bg-[#FFF3E0] p-3 rounded border border-[#FFB74D]">
+                  <p><strong>Importante:</strong> Se você é MEI ou PJ, as regras são diferentes. Consulte a seção "PF vs PJ" para entender melhor.</p>
+                </div>
+
+                <div className="bg-gradient-to-r from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 text-white space-y-3 mt-6">
+                  <p className="font-bold text-lg flex items-center gap-2">
+                    <Zap size={20} className="text-[#d4af37]" />
+                    Quer exemplos completos, checklists e calculadoras prontas?
+                  </p>
+                  <p className="text-sm opacity-90">
+                    Acesse o Premium do Músico Pro e tenha acesso a:
+                  </p>
+                  <ul className="space-y-1 pl-4 list-disc text-sm">
+                    <li>Calculadora de Carnê-Leão automatizada.</li>
+                    <li>Checklist mensal de obrigações.</li>
+                    <li>Planilha de controle de cachês.</li>
+                    <li>Exemplos com diferentes cenários.</li>
+                  </ul>
+                  <Link href="/pro">
+                    <button className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold py-3 rounded-lg transition mt-4">
+                      Comprar Licença PRO
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Seção 7 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec7')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">7. Despesas Dedutíveis</span>
-              {expandedSections['sec7'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec7'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <p>
-                  Se você é PJ (MEI ou Simples), pode deduzir despesas da sua renda:
-                </p>
-                <ul className="space-y-2 pl-4 list-disc">
-                  <li>🌸 Instrumentos musicais.</li>
-                  <li>🌤 Equipamentos de áudio.</li>
-                  <li>🚗 Transporte para shows.</li>
-                  <li>📚 Cursos e treinamentos.</li>
-                  <li>🏢 Aluguel de estúdio.</li>
-                  <li>💻 Software e tecnologia.</li>
-                </ul>
-                <p className="mt-3 bg-[#E8F5E9] p-3 rounded border border-[#81C784]">
-                  <strong>Dica:</strong> Guarde todas as notas fiscais e recibos. A Receita Federal pode pedir comprovação.
-                </p>
-              </div>
-            )}
-          </div>
+          {/* Seção 6 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="6. Retenção de IR (RPA)"
+            preview="RPA significa 'Recibo de Pagamento Autônomo'. Quando uma pessoa ou empresa te contrata, ela pode reter 15% do seu cachê como antecipação de imposto. No Premium, você aprende como essa retenção funciona, como receber restituição e como calcular corretamente."
+            icon="💵"
+          />
 
-          {/* Seção 8 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec8')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">8. Tabela Progressiva de IR</span>
-              {expandedSections['sec8'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec8'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <p>
-                  Se você é PF, a alíquota de IR aumenta conforme sua renda:
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs md:text-sm">
-                    <thead>
-                      <tr className="bg-[#F9F7F4]">
-                        <th className="text-left p-2 border border-[#E8E3DC]">Renda Mensal</th>
-                        <th className="text-left p-2 border border-[#E8E3DC]">Alíquota</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="p-2 border border-[#E8E3DC]">Até R$ 2.112</td>
-                        <td className="p-2 border border-[#E8E3DC]">Isento</td>
-                      </tr>
-                      <tr className="bg-[#F9F7F4]">
-                        <td className="p-2 border border-[#E8E3DC]">R$ 2.112 a R$ 2.826</td>
-                        <td className="p-2 border border-[#E8E3DC]">7,5%</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 border border-[#E8E3DC]">R$ 2.826 a R$ 3.751</td>
-                        <td className="p-2 border border-[#E8E3DC]">15%</td>
-                      </tr>
-                      <tr className="bg-[#F9F7F4]">
-                        <td className="p-2 border border-[#E8E3DC]">R$ 3.751 a R$ 4.664</td>
-                        <td className="p-2 border border-[#E8E3DC]">22,5%</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 border border-[#E8E3DC]">Acima de R$ 4.664</td>
-                        <td className="p-2 border border-[#E8E3DC]">27,5%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
+          {/* Seção 7 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="7. Despesas Dedutíveis"
+            preview="Se você é PJ (MEI ou Simples), pode deduzir despesas da sua renda, como instrumentos, equipamentos, transporte e cursos. No Premium, você tem uma lista completa de despesas dedutíveis, exemplos reais de como registrá-las e dicas para não cometer erros com a Receita Federal."
+            icon="🎸"
+          />
+
+          {/* Seção 8 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="8. Tabela Progressiva de IR"
+            preview="Se você é PF, a alíquota de IR aumenta conforme sua renda. Entender essa tabela é essencial para calcular quanto você vai pagar. No Premium, você tem a tabela atualizada para 2026, exemplos de cálculo e uma ferramenta interativa para simular seu imposto."
+            icon="📊"
+          />
         </section>
 
+        {/* PARTE 3 - IMPLEMENTAÇÃO */}
+        <section id="parte3" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            ✅ Parte 3: Implementação
+          </h2>
+
+          {/* Seção 9 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="9. Checklist Prático"
+            preview="Um passo a passo completo para organizar sua vida fiscal: abrir conta bancária separada, guardar recibos, registrar renda, pagar Carnê-Leão e fazer a declaração anual. No Premium, você tem checklists mensais prontos para imprimir e usar."
+            icon="✅"
+          />
+
+          {/* Seção 10 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="10. Ferramentas Recomendadas"
+            preview="Descubra as melhores ferramentas para organizar sua vida fiscal: planilhas, apps de banco, geradores de RPA e calculadoras de imposto. No Premium, você tem links diretos, tutoriais de uso e recomendações personalizadas."
+            icon="🛠️"
+          />
+
+          {/* Seção 11 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="11. Contatos Úteis"
+            preview="Contatos da Receita Federal, sindicatos de músicos e recomendações de contadores especializados em atividades artísticas. No Premium, você tem uma lista completa com links e dicas de como escolher o profissional certo."
+            icon="📞"
+          />
+
+          {/* Seção 12 - TEASER COM CADEADO */}
+          <LockedTeaser
+            title="12. Conclusão e Próximos Passos"
+            preview="Um resumo de tudo que você aprendeu e um plano de ação para os próximos 30 dias. No Premium, você tem um guia passo a passo para implementar tudo na sua rotina e evitar problemas com a Receita Federal."
+            icon="🎯"
+          />
+        </section>
+
+        {/* PARTE 4 - CTA FINAL */}
+        <section className="space-y-6 md:space-y-8 mb-12 md:mb-16">
+          <div className="bg-gradient-to-r from-[#0c2461] to-[#6ba587] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold">Pronto para organizar sua vida fiscal?</h2>
+            <p className="text-sm md:text-base opacity-90">
+              Acesse a área premium com ferramentas, calculadoras e conteúdo completo.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+              <Link href="/pro">
+                <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
+                  Comprar Licença PRO
+                </button>
+              </Link>
+              <Link href="/premium">
+                <button className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition border border-white">
+                  Entrar no Premium (tenho código)
+                </button>
+              </Link>
+            </div>
+          </div>
+        </section>
         {/* PARTE 3 - IMPLEMENTAÇÃO */}
         <section id="parte3" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
