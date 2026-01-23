@@ -189,7 +189,7 @@ export default function Home() {
                 onClick={() => setIsDownloadModalOpen(true)}
                 className="flex-1 md:flex-none bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-lg transition backdrop-blur-sm"
               >
-                Entrar no Premium (tenho código)
+                Baixar App Grátis
               </button>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function Home() {
               href="/premium" 
               className="inline-block bg-[#6ba587] hover:bg-[#5a9476] text-white font-bold py-3 px-6 rounded-lg transition"
             >
-              Acessar conteúdo completo
+              Entrar no Premium (tenho código)
             </Link>
           </div>
 

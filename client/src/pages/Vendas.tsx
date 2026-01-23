@@ -12,9 +12,9 @@ export default function Vendas() {
               Músico Pro
             </h1>
           </Link>
-          <a href="#comprar" className="bg-[#E07856] text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-[#D06846] transition">
-            Quero a Licença PRO
-          </a>
+            <a href="#comprar" className="bg-[#d4af37] text-[#0c2461] px-4 py-2 rounded-full text-sm font-bold hover:bg-[#c99a2e] transition">
+            Comprar Licença PRO
+            </a>
         </div>
       </header>
 
@@ -32,8 +32,8 @@ export default function Vendas() {
             Desbloqueie todo o potencial do App MusicoPro, baixe o E-book em PDF e acesse checklists exclusivos.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <a href="#comprar" className="bg-[#E07856] text-white px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#D06846] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
-              Quero Acesso Imediato <ArrowRight size={20} />
+            <a href="#comprar" className="bg-[#d4af37] text-[#0c2461] px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#c99a2e] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+              Comprar Licença PRO <ArrowRight size={20} />
             </a>
             <a href="/app-musico-pro.html" download className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
               <Download size={20} /> Baixar App Grátis
