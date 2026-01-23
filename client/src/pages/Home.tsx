@@ -4,6 +4,7 @@ import { Link } from 'wouter';
 import { EmailCaptureModal } from '@/components/EmailCaptureModal';
 import LockedTeaser from '@/components/LockedTeaser';
 import Footer from '@/components/Footer';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export default function Home() {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
@@ -11,6 +12,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [copiedCode, setCopiedCode] = useState(false);
+  const { trackBuyClick, trackDownloadAppClick, trackPremiumClick, trackPageView } = useAnalytics();
 
   // Detectar seção ativa ao fazer scroll
   useEffect(() => {
@@ -228,7 +230,122 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Important Notice */}
+          {/* Seção: Por que o App é Essencial */}
+          <div className="bg-gradient-to-br from-[#0c2461]/5 to-[#d4af37]/5 border border-[#d4af37]/30 rounded-lg p-5 md:p-8 space-y-6">
+            <div className="text-center space-y-2">
+              <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                🎵 Por que o App Músico Pro é essencial para músicos?
+              </h3>
+              <p className="text-base md:text-lg text-[#0c2461] font-semibold">
+                Porque músico não tem salário fixo — e a Receita não aceita bagunça.
+              </p>
+            </div>
+
+            <div className="space-y-4 text-sm md:text-base text-[#0c2461] leading-relaxed">
+              <p>
+                Músicos autônomos recebem de várias formas: PIX, cachê, aulas, eventos, bandas diferentes.
+              </p>
+              <p>
+                Sem controle mensal, isso vira problema com o Imposto de Renda.
+              </p>
+              <p>
+                <strong>O App Músico Pro foi criado para resolver exatamente isso:</strong> organizar receitas e despesas do jeito que a Receita Federal exige, sem planilhas complicadas.
+              </p>
+            </div>
+
+            {/* Benefícios */}
+            <div className="bg-white rounded-lg p-5 md:p-6 space-y-3">
+              <h4 className="font-bold text-[#0c2461] text-base md:text-lg mb-4">Benefícios do App:</h4>
+              <ul className="space-y-2.5">
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Registre todas as receitas (PIX, cachê, aulas, eventos).</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Lance despesas dedutíveis (instrumentos, transporte, estudo).</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Veja quanto imposto pagar no Carnê-Leão.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Gere o valor correto do DARF mensal.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Evite multas, juros e dor de cabeça no futuro.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                  <span>Tenha tudo organizado se cair na malha fina.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Comparação */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 md:p-5 space-y-2">
+                <h5 className="font-bold text-[#0c2461] text-base">❌ Sem o app:</h5>
+                <ul className="space-y-1.5 text-sm text-[#0c2461]">
+                  <li>• Anotações soltas</li>
+                  <li>• Esquecimento de rendimentos</li>
+                  <li>• Medo do imposto</li>
+                  <li>• Multa e atraso no DARF</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 md:p-5 space-y-2">
+                <h5 className="font-bold text-[#0c2461] text-base">✅ Com o App Músico Pro:</h5>
+                <ul className="space-y-1.5 text-sm text-[#0c2461]">
+                  <li>• Tudo organizado mês a mês</li>
+                  <li>• Imposto calculado automaticamente</li>
+                  <li>• Segurança para declarar</li>
+                  <li>• Tranquilidade com a Receita</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="bg-white rounded-lg p-5 md:p-6 space-y-4 text-center">
+              <p className="text-base md:text-lg font-bold text-[#0c2461]">
+                O imposto não espera.
+              </p>
+              <p className="text-sm md:text-base text-[#0c2461]">
+                Organize sua vida fiscal como músico, mês a mês.
+              </p>
+              <div className="flex flex-col md:flex-row gap-3 md:gap-4 justify-center">
+                <Link
+                  href="/pro"
+                  onClick={() => trackBuyClick()}
+                  className="bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-6 rounded-lg transition"
+                >
+                  Comprar Licença PRO
+                </Link>
+                <button
+                  onClick={() => {
+                    trackDownloadAppClick();
+                    setIsDownloadModalOpen(true);
+                  }}
+                  className="bg-[#6ba587] hover:bg-[#5a9476] text-white font-bold py-3 px-6 rounded-lg transition"
+                >
+                  Baixar App Grátis
+                </button>
+              </div>
+            </div>
+
+            {/* Frase-chave de reforço */}
+            <div className="bg-[#0c2461] text-white rounded-lg p-5 md:p-6 text-center space-y-2">
+              <p className="text-base md:text-lg font-bold">
+                O Músico Pro não é só um guia.
+              </p>
+              <p className="text-sm md:text-base opacity-90">
+                É um sistema de organização fiscal para quem vive de música.
+              </p>
+            </div>
+          </div>
+
+          {/* Conteúdo das Seções */}
           <div className="bg-[#FFF3E0] border-l-4 border-[#FF9800] rounded-lg p-5 md:p-6 space-y-3">
             <div className="flex items-start gap-3">
               <AlertCircle size={22} className="text-[#FF9800] flex-shrink-0 mt-0.5" />
