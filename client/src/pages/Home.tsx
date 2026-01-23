@@ -146,7 +146,7 @@ export default function Home() {
             {/* Título Principal */}
             <div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                Imposto sem medo, do jeito certo
+                Imposto sem medo, do jeito certo.
               </h1>
             </div>
 
