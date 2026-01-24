@@ -81,19 +81,13 @@ export default function Home() {
         <section id="home" className="mb-12 md:mb-16 scroll-mt-24">
           <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-6 md:p-10 text-white space-y-6">
             <div className="inline-block bg-[#d4af37]/20 text-[#d4af37] px-3 py-1 rounded-full text-sm font-semibold">
-              📖 Guia Músico Pro
+              📖 App + Guia Completo
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
-            <p className="text-base md:text-lg opacity-90">
-              Músico Pro é um guia prático + app para músicos que querem organizar sua vida fiscal com clareza, segurança e sem burocracia.
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
+            <p className="text-lg md:text-xl opacity-95 font-medium">
+              Organize receitas, despesas e impostos mês a mês — sem planilhas e sem medo da Receita.
             </p>
-            <p className="text-base md:text-lg opacity-90">
-              Aqui você aprende, de forma simples e direta, como lidar com Imposto de Renda, Carnê-Leão, MEI, pessoa física, pessoa jurídica e deduções, sempre considerando a realidade de quem vive de música.
-            </p>
-            <p className="text-sm md:text-base opacity-75 italic border-l-4 border-[#d4af37] pl-4">
-              Conteúdo claro, objetivo e atualizado para quem recebe cachês, PIX e tem múltiplas fontes de renda.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <div className="text-sm opacity-75">
                 📖 Leitura estimada: 45–60 minutos
               </div>
@@ -101,21 +95,97 @@ export default function Home() {
                 ⚡ Conteúdo atualizado – 2026
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 pt-6">
+            <div className="flex flex-col sm:flex-row gap-4 pt-8">
               <Link href="/pro">
                 <button
                   onClick={() => trackBuyClick()}
-                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition w-full sm:w-auto"
+                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition w-full sm:w-auto text-lg shadow-lg hover:shadow-xl"
                 >
                   Comprar Licença PRO
                 </button>
               </Link>
               <button
                 onClick={() => trackDownloadAppClick()}
-                className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition border border-white w-full sm:w-auto"
+                className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
               >
                 Baixar App Grátis
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* MINI-BLOCO DO APP */}
+        <section className="mb-12 md:mb-16 bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6 border-l-4 border-[#d4af37]">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            <Music className="w-6 h-6 text-[#d4af37]" />
+            Use o App Músico Pro no dia a dia
+          </h3>
+          
+          <p className="text-lg text-[#0c2461] leading-relaxed">
+            Sempre que você receber um PIX, cachê ou pagamento por aula, o App Músico Pro te ajuda a registrar, organizar e saber exatamente quanto imposto pagar no mês.
+          </p>
+          
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Registre receitas em segundos</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Lance despesas dedutíveis</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Veja o imposto antes de virar multa</span>
+            </div>
+          </div>
+          
+          <div className="pt-4">
+            <Link href="/pro">
+              <button
+                onClick={() => trackBuyClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition shadow-md hover:shadow-lg"
+              >
+                Comprar Licença PRO
+              </button>
+            </Link>
+          </div>
+        </section>
+
+        {/* COMO O APP FUNCIONA - 3 PASSOS */}
+        <section className="mb-12 md:mb-16 space-y-8">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Como o App Músico Pro funciona na prática
+            </h3>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Passo 1 */}
+            <div className="bg-white border-2 border-[#d4af37] rounded-lg p-6 space-y-4 hover:shadow-lg transition">
+              <div className="text-4xl font-bold text-[#d4af37]">1️⃣</div>
+              <h4 className="text-xl font-bold text-[#0c2461]">Registre seus ganhos</h4>
+              <p className="text-[#0c2461] leading-relaxed">
+                PIX, cachês, aulas e eventos — tudo em um só lugar.
+              </p>
+            </div>
+            
+            {/* Passo 2 */}
+            <div className="bg-white border-2 border-[#d4af37] rounded-lg p-6 space-y-4 hover:shadow-lg transition">
+              <div className="text-4xl font-bold text-[#d4af37]">2️⃣</div>
+              <h4 className="text-xl font-bold text-[#0c2461]">Organize despesas</h4>
+              <p className="text-[#0c2461] leading-relaxed">
+                Instrumentos, transporte, estudo e custos dedutíveis.
+              </p>
+            </div>
+            
+            {/* Passo 3 */}
+            <div className="bg-white border-2 border-[#d4af37] rounded-lg p-6 space-y-4 hover:shadow-lg transition">
+              <div className="text-4xl font-bold text-[#d4af37]">3️⃣</div>
+              <h4 className="text-xl font-bold text-[#0c2461]">Veja o imposto do mês</h4>
+              <p className="text-[#0c2461] leading-relaxed">
+                O app calcula o valor para o Carnê-Leão e te orienta sobre o DARF.
+              </p>
             </div>
           </div>
         </section>
@@ -207,6 +277,13 @@ export default function Home() {
             </ul>
           </div>
 
+          {/* BADGE DE USO MENSAL */}
+          <div className="bg-[#d4af37]/20 border-2 border-[#d4af37] rounded-lg p-6 text-center">
+            <p className="text-lg font-bold text-white">
+              💡 O App Músico Pro é pensado para uso todo mês, não só na declaração anual.
+            </p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-[#ffe5e5] border-l-4 border-[#dc3545] rounded-lg p-6">
               <h4 className="font-bold text-[#721c24] mb-3">❌ Sem o app:</h4>
@@ -251,30 +328,34 @@ export default function Home() {
 
           <div className="bg-[#0c2461] text-white rounded-lg p-6 md:p-8 text-center space-y-3">
             <p className="font-bold text-lg">O Músico Pro não é só um guia.</p>
-            <p className="text-base opacity-90">É um sistema de organização fiscal para quem vive de música.</p>
+            <p className="text-base opacity-90">É uma ferramenta mensal para quem vive de música.</p>
           </div>
         </section>
 
-        {/* CONTEÚDO COMPLETO */}
-        <section className="mb-12 md:mb-16 space-y-6">
-          <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4">
-            <h3 className="text-xl md:text-2xl font-bold text-[#0c2461]">Conteúdo Completo na Área Premium</h3>
-            <p className="text-[#0c2461]">
-              Este guia apresenta os conceitos essenciais para você entender sua situação fiscal.
-            </p>
-            <p className="text-[#0c2461]">
-              Na área premium do Músico Pro, você encontra o conteúdo completo, exemplos práticos, checklists e ferramentas para aplicar tudo com segurança no dia a dia.
-            </p>
-            <Link href="/premium">
-              <button
-                onClick={() => trackPremiumClick()}
-                className="bg-[#6ba587] hover:bg-[#5a9476] text-white font-bold px-6 py-3 rounded-lg transition"
-              >
-                Entrar no Premium (tenho código)
-              </button>
-            </Link>
-          </div>
+        {/* PROVA SOCIAL */}
+        <section className="mb-12 md:mb-16 bg-gradient-to-r from-[#f0f4f8] to-[#e8ecf2] rounded-lg p-8 md:p-10 text-center space-y-4">
+          <p className="text-lg text-[#0c2461] font-medium">
+            🎶 Criado para músicos que recebem de várias fontes e precisam de organização fiscal simples e segura.
+          </p>
         </section>
+
+        {/* CTA FINAL */}
+        <section className="mb-12 md:mb-16 bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-center space-y-6">
+          <div className="space-y-3">
+            <p className="text-white text-lg font-semibold">O imposto não espera.</p>
+            <p className="text-white text-xl font-bold">Organize sua vida fiscal como músico agora.</p>
+          </div>
+          
+          <Link href="/pro">
+            <button
+              onClick={() => trackBuyClick()}
+              className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl"
+            >
+              👉 Comprar Licença PRO
+            </button>
+          </Link>
+        </section>
+
 
         {/* SUMÁRIO */}
         <section className="mb-12 md:mb-16 space-y-6">
