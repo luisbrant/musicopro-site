@@ -122,12 +122,10 @@ export default function Home() {
 
         {/* GUIA RÁPIDO */}
         <section className="mb-12 md:mb-16 space-y-6">
-          <div className="flex items-center gap-3">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <Zap className="w-6 h-6 text-[#d4af37]" />
-            <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              ⚡ Guia Rápido
-            </h3>
-          </div>
+            Guia Rápido
+          </h3>
 
           <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4">
             <h4 className="text-lg md:text-xl font-bold text-[#0c2461]">Para quem é este guia</h4>
@@ -160,12 +158,10 @@ export default function Home() {
 
         {/* POR QUE O APP É ESSENCIAL */}
         <section className="mb-12 md:mb-16 space-y-6">
-          <div className="flex items-center gap-3">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <Music className="w-6 h-6 text-[#d4af37]" />
-            <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              🎵 Por que o App Músico Pro é essencial para músicos?
-            </h3>
-          </div>
+            Por que o App Músico Pro é essencial para músicos?
+          </h3>
 
           <p className="text-lg font-semibold text-[#0c2461]">Porque músico não tem salário fixo — e a Receita não aceita bagunça.</p>
 
@@ -452,7 +448,7 @@ export default function Home() {
         {/* PARTE 2 */}
         <section id="parte2" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            💰 Parte 2: Gestão Fiscal
+            Parte 2: Gestão Fiscal
           </h2>
 
           {/* Seção 5 - GRATUITA */}
@@ -544,7 +540,7 @@ export default function Home() {
         {/* PARTE 3 - IMPLEMENTAÇÃO (GRATUITA) */}
         <section id="parte3" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
           <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ✅ Parte 3: Implementação (GRATUITA)
+            Parte 3: Implementação (GRATUITA)
           </h2>
 
           {/* Seção 9 - Checklist Prático */}
@@ -553,7 +549,7 @@ export default function Home() {
               onClick={() => toggleSection('sec9')}
               className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <span className="text-base md:text-lg">✅ 9. Checklist Prático</span>
+              <span className="text-base md:text-lg">9. Checklist Prático</span>
               {expandedSections['sec9'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections['sec9'] && (
@@ -580,7 +576,7 @@ export default function Home() {
               onClick={() => toggleSection('sec10')}
               className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <span className="text-base md:text-lg">🛠️ 10. Ferramentas Recomendadas</span>
+              <span className="text-base md:text-lg">10. Ferramentas Recomendadas</span>
               {expandedSections['sec10'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections['sec10'] && (
@@ -604,7 +600,7 @@ export default function Home() {
               onClick={() => toggleSection('sec11')}
               className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <span className="text-base md:text-lg">📞 11. Contatos Úteis</span>
+              <span className="text-base md:text-lg">11. Contatos Úteis</span>
               {expandedSections['sec11'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections['sec11'] && (
@@ -627,7 +623,7 @@ export default function Home() {
               onClick={() => toggleSection('sec12')}
               className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
             >
-              <span className="text-base md:text-lg">🌟 12. Conclusão e Próximos Passos</span>
+              <span className="text-base md:text-lg">12. Conclusão e Próximos Passos</span>
               {expandedSections['sec12'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             {expandedSections['sec12'] && (
