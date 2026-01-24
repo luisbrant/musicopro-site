@@ -679,29 +679,29 @@ export default function Home() {
           {/* Seção 9 - TEASER COM CADEADO */}
           <LockedTeaser
             title="9. Checklist Prático"
-            preview="Um passo a passo completo para organizar sua vida fiscal: abrir conta bancária separada, guardar recibos, registrar renda, pagar Carnê-Leão e fazer a declaração anual. No Premium, você tem checklists mensais prontos para imprimir e usar."
+            preview="Um passo a passo completo para organizar sua vida fiscal: abrir contas bancárias separadas para organização, guardar recibos, registrar renda, pagar Carnê-Leão e fazer a declaração anual. Use o App Músico Pro para automatizar esse processo. No Premium, você tem checklists mensais prontos para imprimir e usar."
             icon="✅"
           />
 
           {/* Seção 10 - TEASER COM CADEADO */}
           <LockedTeaser
             title="10. Ferramentas Recomendadas"
-            preview="Descubra as melhores ferramentas para organizar sua vida fiscal: planilhas, apps de banco, geradores de RPA e calculadoras de imposto. No Premium, você tem links diretos, tutoriais de uso e recomendações personalizadas."
+            preview="Descubra as melhores ferramentas para organizar sua vida fiscal: planilhas, apps de banco, geradores de RPA e calculadoras de imposto. O App Músico Pro integra todas essas funções em um único lugar. No Premium, você tem links diretos, tutoriais de uso e recomendações personalizadas."
             icon="🛠️"
           />
 
           {/* Seção 11 - TEASER COM CADEADO */}
           <LockedTeaser
             title="11. Contatos Úteis"
-            preview="Contatos da Receita Federal, sindicatos de músicos e recomendações de contadores especializados em atividades artísticas. No Premium, você tem uma lista completa com links e dicas de como escolher o profissional certo."
+            preview="Contatos da Receita Federal, sindicatos de músicos e recomendações de contadores especializados em atividades artísticas. Com o App Músico Pro, você terá documentação organizada para apresentar ao seu contador. No Premium, você tem uma lista completa com links e dicas de como escolher o profissional certo."
             icon="📞"
           />
 
           {/* Seção 12 - TEASER COM CADEADO */}
           <LockedTeaser
             title="12. Conclusão e Próximos Passos"
-            preview="Um resumo de tudo que você aprendeu e um plano de ação para os próximos 30 dias. No Premium, você tem um guia passo a passo para implementar tudo na sua rotina e evitar problemas com a Receita Federal."
-            icon="🎯"
+            preview="Um resumo de tudo que você aprendeu e um plano de ação para os próximos 30 dias. Implemente tudo com o App Músico Pro e tenha sua vida fiscal organizada. No Premium, você tem um guia passo a passo para implementar tudo na sua rotina e evitar problemas com a Receita Federal."
+            icon="🌟"
           />
         </section>
 
@@ -724,104 +724,6 @@ export default function Home() {
                 </button>
               </Link>
             </div>
-          </div>
-        </section>
-        {/* PARTE 3 - IMPLEMENTAÇÃO */}
-        <section id="parte3" className="space-y-6 md:space-y-8 mb-12 md:mb-16 scroll-mt-24">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ✅ Parte 3: Implementação
-          </h2>
-
-          {/* Seção 9 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec9')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">9. Checklist Prático</span>
-              {expandedSections['sec9'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec9'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <p className="font-semibold">Passos para organizar sua vida fiscal:</p>
-                <ul className="space-y-2 pl-4 list-disc">
-                  <li>☐ Abrir conta bancária separada para renda de música.</li>
-                  <li>☐ Guardar todos os recibos e notas fiscais.</li>
-                  <li>☐ Registrar a renda mensalmente (planilha ou app).</li>
-                  <li>☐ Pagar Carnê-Leão mensalmente.</li>
-                  <li>☐ Consultar um contador especializado.</li>
-                  <li>☐ Fazer a declaração anual de IR.</li>
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Seção 10 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec10')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">10. Ferramentas Recomendadas</span>
-              {expandedSections['sec10'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec10'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <ul className="space-y-2">
-                  <li><strong>📊 Planilhas:</strong> Google Sheets ou Excel para registrar renda.</li>
-                  <li><strong>💰 Apps:</strong> Nubank, Banco Inter (para separar renda).</li>
-                  <li><strong>📱 Nota Fiscal:</strong> Gerador de RPA online.</li>
-                  <li><strong>🧶 Calculadoras:</strong> Simule seu IR antes de declarar.</li>
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Seção 11 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec11')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">11. Contatos Úteis</span>
-              {expandedSections['sec11'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec11'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <ul className="space-y-2">
-                  <li><strong>🏰️ Receita Federal:</strong> www.gov.br/receitafederal.</li>
-                  <li><strong>💼 Sindicato dos Músicos:</strong> Consulte sua região.</li>
-                  <li><strong>📞 Contador Especializado:</strong> Busque profissionais com experiência em atividades artísticas.</li>
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {/* Seção 12 */}
-          <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-            <button
-              onClick={() => toggleSection('sec12')}
-              className="w-full bg-[#F9F7F4] hover:bg-[#E8E3DC] p-4 md:p-5 flex items-center justify-between transition font-semibold text-[#0c2461]"
-            >
-              <span className="text-base md:text-lg">12. Conclusão</span>
-              {expandedSections['sec12'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-            {expandedSections['sec12'] && (
-              <div className="p-4 md:p-5 space-y-3 text-sm md:text-base text-[#0c2461] border-t border-[#E8E3DC]">
-                <p>
-                  Organizar sua vida fiscal não precisa ser complicado. Com as informações certas e um pouco de disciplina, você consegue:
-                </p>
-                <ul className="space-y-2 pl-4 list-disc">
-                  <li>✓ Evitar problemas com a Receita Federal.</li>
-                  <li>✓ Aproveitar deduções e economizar impostos.</li>
-                  <li>✓ Ter clareza sobre sua renda.</li>
-                  <li>✓ Focar no que realmente importa: sua música.</li>
-                </ul>
-                <p className="mt-3 font-semibold text-[#0c2461]">
-                  O Músico Pro está aqui para ajudar você nessa jornada. 🎵
-                </p>
-              </div>
-            )}
           </div>
         </section>
 
