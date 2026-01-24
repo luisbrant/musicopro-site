@@ -10,7 +10,6 @@ import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
 import Premium from "./pages/Premium";
 import Obrigado from "./pages/Obrigado";
-import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 
 
 function Router() {
@@ -20,9 +19,8 @@ function Router() {
       <Route path="/pro" component={Vendas} />
       <Route path="/premium" component={Premium} />
       <Route path="/obrigado" component={Obrigado} />
-        <Route path="/demo" component={Demo} />
-      <Route path="/privacidade" component={PoliticaPrivacidade} />
-      <Route path="/404" component={NotFound} />
+      <Route path="/demo" component={Demo} />
+      <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

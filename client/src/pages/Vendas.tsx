@@ -1,5 +1,6 @@
 import { CheckCircle2, Star, Download, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
+import Footer from '@/components/Footer';
 
 export default function Vendas() {
   return (
@@ -199,11 +200,31 @@ export default function Vendas() {
                 </li>
               </ul>
 
+              {/* Trust Stack */}
+              <div className="bg-[#F0F8F5] rounded-lg p-4 mb-4 space-y-2 text-sm">
+                <div className="flex items-center gap-2 text-[#0c2461]">
+                  <CheckCircle2 size={16} className="text-[#6BA587]" />
+                  <span>Acesso imediato após a compra.</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#0c2461]">
+                  <CheckCircle2 size={16} className="text-[#6BA587]" />
+                  <span>Conteúdo atualizado para 2026.</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#0c2461]">
+                  <CheckCircle2 size={16} className="text-[#6BA587]" />
+                  <span>Compra segura via Hotmart.</span>
+                </div>
+                <div className="flex items-center gap-2 text-[#0c2461]">
+                  <CheckCircle2 size={16} className="text-[#6BA587]" />
+                  <span>Garantia conforme política da plataforma.</span>
+                </div>
+              </div>
+
               <a 
                 href="https://pay.hotmart.com/SEU_LINK_AQUI" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-[#E07856] hover:bg-[#D06846] text-white text-xl font-bold py-4 rounded-xl shadow-lg transform hover:-translate-y-1 transition mb-4"
+                className="block w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] text-xl font-bold py-4 rounded-xl shadow-lg transform hover:-translate-y-1 transition mb-4"
               >
                 Comprar Licença PRO
               </a>
@@ -226,12 +247,7 @@ export default function Vendas() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1B4965] text-white py-8 text-center text-sm opacity-90">
-        <div className="container mx-auto px-4">
-          <p>&copy; 2026 Guia IR para Músicos. Todos os direitos reservados.</p>
-          <p className="mt-2 text-xs opacity-70">Este site não possui vínculo com a Receita Federal.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
