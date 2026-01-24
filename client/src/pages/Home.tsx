@@ -157,52 +157,52 @@ export default function Home() {
         </section>
 
         {/* POR QUE O APP É ESSENCIAL */}
-        <section className="mb-12 md:mb-16 space-y-6">
-          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
+        <section className="mb-12 md:mb-16 space-y-6 bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12">
+          <h3 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <Music className="w-6 h-6 text-[#d4af37]" />
             Por que o App Músico Pro é essencial para músicos?
           </h3>
 
-          <p className="text-lg font-semibold text-[#0c2461]">Porque músico não tem salário fixo — e a Receita não aceita bagunça.</p>
+          <p className="text-lg font-semibold text-white">Porque músico não tem salário fixo — e a Receita não aceita bagunça.</p>
 
-          <div className="space-y-4 text-[#0c2461]">
-            <p>
+          <div className="space-y-4 text-white">
+            <p className="opacity-90">
               Músicos autônomos recebem de várias formas: PIX, cachê, aulas, eventos, bandas diferentes.
             </p>
-            <p>
+            <p className="opacity-90">
               Sem controle mensal, isso vira problema com o Imposto de Renda.
             </p>
-            <p className="font-semibold">
+            <p className="font-semibold opacity-95">
               O App Músico Pro foi criado para resolver exatamente isso: organizar receitas e despesas do jeito que a Receita Federal exige, sem planilhas complicadas.
             </p>
           </div>
 
-          <div className="bg-[#F9F7F4] rounded-lg p-6 md:p-8 space-y-4">
-            <h4 className="text-lg font-bold text-[#0c2461]">Benefícios do App:</h4>
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 md:p-8 space-y-4 border border-white/20">
+            <h4 className="text-lg font-bold text-white">Benefícios do App:</h4>
             <ul className="space-y-2">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Registre todas as receitas (PIX, cachê, aulas, eventos).</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Registre todas as receitas (PIX, cachê, aulas, eventos).</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Lance despesas dedutíveis (instrumentos, transporte, estudo).</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Lance despesas dedutíveis (instrumentos, transporte, estudo).</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Veja quanto imposto pagar no Carnê-Leão.</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Veja quanto imposto pagar no Carnê-Leão.</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Gere o valor correto do DARF mensal.</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Gere o valor correto do DARF mensal.</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Evite multas, juros e dor de cabeça no futuro.</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Evite multas, juros e dor de cabeça no futuro.</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#6ba587] flex-shrink-0 mt-0.5" />
-                <span className="text-[#0c2461]">Tenha tudo organizado se cair na malha fina.</span>
+                <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <span className="text-white">Tenha tudo organizado se cair na malha fina.</span>
               </li>
             </ul>
           </div>
