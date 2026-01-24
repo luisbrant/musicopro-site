@@ -7,7 +7,6 @@ import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
 import DeducoesDeepDive from '@/components/DeducoesDeepDive';
 import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
 import RPADeepDive from '@/components/RPADeepDive';
-import Footer from '@/components/Footer';
 
 export default function Premium() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -336,9 +335,6 @@ export default function Premium() {
           </>
         )}
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }
