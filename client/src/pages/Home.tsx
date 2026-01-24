@@ -85,7 +85,10 @@ export default function Home() {
             </div>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
             <p className="text-lg md:text-xl opacity-95 font-medium">
-              Organize receitas, despesas e impostos mês a mês — sem planilhas e sem medo da Receita.
+              Um app que organiza seus recebimentos, despesas e impostos automaticamente — e te avisa quando há imposto a pagar (ou não).
+            </p>
+            <p className="text-base md:text-lg opacity-90">
+              Ideal para músicos que recebem PIX, cachês e aulas de várias fontes.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <div className="text-sm opacity-75">
@@ -101,58 +104,134 @@ export default function Home() {
                   onClick={() => trackBuyClick()}
                   className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition w-full sm:w-auto text-lg shadow-lg hover:shadow-xl"
                 >
-                  Comprar Licença PRO
+                  👉 Começar a organizar meu imposto agora
                 </button>
               </Link>
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
               >
-                Baixar App Grátis
+                👉 Ver como o app funciona
               </button>
             </div>
           </div>
         </section>
 
-        {/* MINI-BLOCO DO APP */}
-        <section className="mb-12 md:mb-16 bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6 border-l-4 border-[#d4af37]">
-          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            <Music className="w-6 h-6 text-[#d4af37]" />
-            Use o App Músico Pro no dia a dia
-          </h3>
-          
-          <p className="text-lg text-[#0c2461] leading-relaxed">
-            Sempre que você receber um PIX, cachê ou pagamento por aula, o App Músico Pro te ajuda a registrar, organizar e saber exatamente quanto imposto pagar no mês.
-          </p>
-          
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Registre receitas em segundos</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Lance despesas dedutíveis</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Veja o imposto antes de virar multa</span>
-            </div>
+        {/* USE O MÚSICO PRO ONDE VOCÊ ESTIVER */}
+        <section className="mb-12 md:mb-16 space-y-8">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Use o Músico Pro onde você estiver
+            </h3>
+            <p className="text-lg text-[#0c2461] opacity-90">
+              O app se adapta automaticamente ao tamanho da sua tela.
+            </p>
           </div>
           
-          <div className="pt-4">
+          <div className="bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6">
+            <p className="text-lg text-[#0c2461] leading-relaxed">
+              O Músico Pro é otimizado para funcionar diretamente no navegador, sem instalação.
+            </p>
+            
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">📱</span>
+                <div>
+                  <p className="font-semibold text-[#0c2461]">Use no celular para registrar um PIX ou cachê na hora</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">📱💻</span>
+                <div>
+                  <p className="font-semibold text-[#0c2461]">Use no tablet para acompanhar seus lançamentos com mais conforto</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">💻</span>
+                <div>
+                  <p className="font-semibold text-[#0c2461]">Use no computador para revisar o mês, gerar relatórios e exportar dados</p>
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-lg text-[#0c2461] font-semibold">
+              A experiência é fluida em qualquer dispositivo.
+            </p>
+          </div>
+          
+          <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#d4af37]/5 border-2 border-[#d4af37] rounded-lg p-6 text-center">
+            <p className="text-lg text-[#0c2461] font-bold">
+              📱💻 Um único app. Todas as telas.
+            </p>
+          </div>
+          
+          <div className="text-center">
             <Link href="/pro">
               <button
                 onClick={() => trackBuyClick()}
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition shadow-md hover:shadow-lg"
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl"
               >
-                Comprar Licença PRO
+                👉 Começar a usar agora no meu dispositivo
               </button>
             </Link>
           </div>
         </section>
 
-        {/* COMO O APP FUNCIONA - 3 PASSOS */}
+                {/* O QUE MUDA NA SUA VIDA */}
+        <section className="mb-12 md:mb-16 bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6 border-l-4 border-[#d4af37]">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            O que muda na sua vida quando você usa o Músico Pro
+          </h3>
+          
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Você registra receitas e despesas em segundos</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">O app identifica automaticamente se há imposto no mês</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Você sabe o valor antes de virar multa</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Se não houver imposto, o app te mostra isso claramente</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Seus dados ficam só no seu navegador</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Você gera relatórios e recibos quando precisar</span>
+            </div>
+          </div>
+        </section>
+
+        {/* PROVA DE FUNCIONAMENTO REAL */}
+        <section className="mb-12 md:mb-16 bg-gradient-to-r from-[#f0f4f8] to-[#e8ecf2] rounded-lg p-8 md:p-10 space-y-6">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] text-center" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Isso não é teoria. É o app funcionando.
+          </h3>
+          
+          <div className="bg-white rounded-lg p-6 md:p-8 border-2 border-[#d4af37] text-center">
+            <div className="text-6xl mb-4">📊</div>
+            <p className="text-lg text-[#0c2461] font-semibold mb-4">
+              Dashboard do Músico Pro
+            </p>
+            <p className="text-[#0c2461] leading-relaxed">
+              O Músico Pro calcula automaticamente o resumo mensal e mostra quando há imposto a pagar.
+            </p>
+            <p className="text-[#0c2461] font-semibold mt-3">
+              Sem planilhas e sem adivinhação.
+            </p>
+          </div>
+        </section>
+
+                {/* COMO O APP FUNCIONA - 3 PASSOS */}
         <section className="mb-12 md:mb-16 space-y-8">
           <div className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
@@ -182,15 +261,73 @@ export default function Home() {
             {/* Passo 3 */}
             <div className="bg-white border-2 border-[#d4af37] rounded-lg p-6 space-y-4 hover:shadow-lg transition">
               <div className="text-4xl font-bold text-[#d4af37]">3️⃣</div>
-              <h4 className="text-xl font-bold text-[#0c2461]">Veja o imposto do mês</h4>
+              <h4 className="text-xl font-bold text-[#0c2461]">Veja o resultado do mês</h4>
               <p className="text-[#0c2461] leading-relaxed">
-                O app calcula o valor para o Carnê-Leão e te orienta sobre o DARF.
+                O app mostra se há imposto, quanto pagar e quando agir.
               </p>
             </div>
           </div>
         </section>
 
-        {/* GUIA RÁPIDO */}
+        {/* O QUE É PRO */}
+        <section className="mb-12 md:mb-16 bg-white border-2 border-[#d4af37] rounded-lg p-8 md:p-10 space-y-6">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            O que você libera na Licença PRO
+          </h3>
+          
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Valor exato do imposto (Carnê-Leão)</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Exportação para Excel/CSV</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Relatórios em PDF</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Gerador de recibos profissionais</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Evolução e histórico mensal</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Guia educacional completo (12 capítulos)</span>
+            </div>
+          </div>
+          
+          <div className="bg-[#f0f4f8] rounded-lg p-4 mt-6">
+            <p className="text-[#0c2461] font-medium">
+              O plano gratuito serve para organizar.<br/>
+              O PRO serve para declarar com segurança.
+            </p>
+          </div>
+        </section>
+
+                {/* PRIVACIDADE */}
+        <section className="mb-12 md:mb-16 bg-gradient-to-r from-[#f0f4f8] to-[#e8ecf2] rounded-lg p-8 md:p-10 space-y-4 border-l-4 border-[#d4af37]">
+          <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Seus dados são seus. Ponto.
+          </h3>
+          
+          <p className="text-lg text-[#0c2461] leading-relaxed">
+            O Músico Pro funciona localmente no seu navegador.
+          </p>
+          <p className="text-lg text-[#0c2461] leading-relaxed font-semibold">
+            Nenhuma receita ou despesa é enviada para servidores externos.
+          </p>
+          <p className="text-base text-[#0c2461] opacity-90 mt-4">
+            Isso reduz objeção imediatamente. Seus dados ficam protegidos e sob seu controle total.
+          </p>
+        </section>
+
+                {/* GUIA RÁPIDO */}
         <section className="mb-12 md:mb-16 space-y-6">
           <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] flex items-center gap-3" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <Zap className="w-6 h-6 text-[#d4af37]" />
@@ -342,8 +479,8 @@ export default function Home() {
         {/* CTA FINAL */}
         <section className="mb-12 md:mb-16 bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-center space-y-6">
           <div className="space-y-3">
-            <p className="text-white text-lg font-semibold">O imposto não espera.</p>
-            <p className="text-white text-xl font-bold">Organize sua vida fiscal como músico agora.</p>
+            <p className="text-white text-lg font-semibold">Você não precisa virar contador.</p>
+            <p className="text-white text-xl font-bold">Só precisa de organização.</p>
           </div>
           
           <Link href="/pro">
@@ -351,8 +488,14 @@ export default function Home() {
               onClick={() => trackBuyClick()}
               className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl"
             >
-              👉 Comprar Licença PRO
+              👉 Começar a usar o Músico Pro agora
             </button>
+          </Link>
+          
+          <Link href="/premium">
+            <p className="text-white/70 hover:text-white transition text-sm">
+              👉 Já tenho licença PRO
+            </p>
           </Link>
         </section>
 
