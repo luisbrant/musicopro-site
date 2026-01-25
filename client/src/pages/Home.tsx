@@ -116,7 +116,7 @@ export default function Home() {
             </div>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
             <p className="text-lg md:text-xl opacity-95 font-medium">
-              Organize receitas, despesas e saiba se precisa pagar imposto antes da multa.
+              Organize receitas, despesas e saiba com antecedência quanto e quando pagar imposto.
             </p>
             <p className="text-base md:text-lg opacity-90">
               Funciona direto no navegador — otimizado para celular, tablet e computador.
@@ -207,6 +207,13 @@ export default function Home() {
         </section>
 
         {/* PROVA SOCIAL LEVE */}
+        <section className="mb-12 md:mb-16 text-center space-y-4">
+          <p className="text-lg text-[#0c2461] font-semibold">
+            🎶 Musicos de diferentes estilos usam o Musico Pro para organizar receitas, despesas e impostos sem burocracia.
+          </p>
+        </section>
+
+        {/* SEÇÃO ANTERIOR */}
         <section className="mb-12 md:mb-16 text-center">
           <p className="text-lg text-[#0c2461] font-semibold opacity-85">
             🎵 Usado por músicos que vivem de PIX, cachês e aulas de várias fontes.
@@ -1012,29 +1019,29 @@ export default function Home() {
 
         {/* PARTE 4 - CTA FINAL */}
         <section className="space-y-6 md:space-y-8 mb-12 md:mb-16">
-          <div className="bg-gradient-to-r from-[#0c2461] to-[#6ba587] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold">Pronto para organizar sua vida fiscal?</h2>
-            <p className="text-sm md:text-base opacity-90">
-              Acesse a área premium com ferramentas, calculadoras e conteúdo completo.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+          <div className="bg-gradient-to-r from-[#0c2461] to-[#1a3a7a] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+              Você não precisa virar contador.
+              <br />
+              Só precisa de organização.
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-6">
               <Link href="/pro">
                 <button
                   onClick={() => trackBuyClick()}
-                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition w-full sm:w-auto"
+                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition w-full sm:w-auto text-lg shadow-lg hover:shadow-xl"
                 >
-                  Comprar Licença PRO
-                </button>
-              </Link>
-              <Link href="/premium">
-                <button
-                  onClick={() => trackPremiumClick()}
-                  className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition border border-white w-full sm:w-auto"
-                >
-                  Entrar no Premium (tenho código)
+                  👉 Começar a usar o Músico Pro agora
                 </button>
               </Link>
             </div>
+            <p className="text-sm opacity-75 pt-4">
+              <Link href="/premium">
+                <button className="text-white underline hover:opacity-80 transition">
+                  👉 Já tenho Licença PRO
+                </button>
+              </Link>
+            </p>
           </div>
         </section>
 
