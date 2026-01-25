@@ -207,10 +207,19 @@ export default function Home() {
         </section>
 
         {/* PROVA SOCIAL LEVE */}
-        <section className="mb-12 md:mb-16 text-center space-y-4">
+        <section className="mb-12 md:mb-16 text-center space-y-6">
           <p className="text-lg text-[#0c2461] font-semibold">
             🎶 Musicos de diferentes estilos usam o Musico Pro para organizar receitas, despesas e impostos sem burocracia.
           </p>
+          
+          <div className="bg-[#f0f4f8] rounded-lg p-6 md:p-8 border-l-4 border-[#d4af37] max-w-2xl mx-auto">
+            <p className="text-[#0c2461] italic font-medium mb-3">
+              Finalmente consegui organizar meus cachês e saber se tinha imposto no mês — sem planilhas.
+            </p>
+            <p className="text-[#0c2461] font-semibold text-sm">
+              — Músico autônomo
+            </p>
+          </div>
         </section>
 
         {/* SEÇÃO ANTERIOR */}
@@ -270,7 +279,7 @@ export default function Home() {
           <div className="bg-white rounded-lg p-6 md:p-8 border-2 border-[#d4af37] text-center space-y-4">
             <div className="text-6xl mb-4">🎵</div>
             <p className="text-lg text-[#0c2461] font-semibold">
-              Começe agora, sem cartão de crédito.
+              Começe grátis — sem cartão, sem compromisso.
             </p>
             <p className="text-[#0c2461] leading-relaxed">
               Registre suas receitas e despesas no app grátis e veja como o Músico Pro funciona na prática.
@@ -326,7 +335,10 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 space-y-4">
+            <p className="text-[#0c2461] font-medium text-lg">
+              Pronto para testar? Leva menos de 1 minuto para começar.
+            </p>
             <a href="/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
@@ -342,7 +354,7 @@ export default function Home() {
         <section className="mb-12 md:mb-16 space-y-6">
           <div className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              Grátis ou PRO: qual faz sentido para você?
+              Veja rapidamente o que você libera no PRO
             </h3>
           </div>
           
@@ -396,6 +408,9 @@ export default function Home() {
                 👉 Comprar Licença PRO
               </button>
             </Link>
+            <p className="text-sm text-[#0c2461] opacity-75 mt-3">
+              Você pode testar grátis antes de decidir.
+            </p>
           </div>
         </section>
 
@@ -812,6 +827,16 @@ export default function Home() {
               </div>
             )}
           </div>
+        </section>
+
+        {/* SINALIZAÇÃO DO GUIA */}
+        <section className="mb-12 md:mb-16 text-center py-8 border-t-2 border-b-2 border-[#d4af37]/30">
+          <h3 className="text-xl md:text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Continuar lendo o Guia Completo (educativo)
+          </h3>
+          <p className="text-[#0c2461] opacity-75 mt-2">
+            Aprofunde seu conhecimento sobre impostos, deduções e planejamento fiscal.
+          </p>
         </section>
 
         {/* PARTE 2 */}
