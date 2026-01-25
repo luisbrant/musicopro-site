@@ -112,14 +112,14 @@
         /* =========================================
            NAVEGAÇÃO (TABS)
            ========================================= */
-        .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; justify-content: center; }
+        .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; justify-content: center; align-items: center; }
         .nav-pills::-webkit-scrollbar { display: none; }
-        .nav-item { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-light); transition: 0.2s; cursor: pointer; flex: 0 0 auto; }
+        .nav-item { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-light); transition: 0.2s; cursor: pointer; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
         
         /* Mobile: Abas em 2 linhas sem scroll */
         @media (max-width: 520px) {
-            .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; overflow-x: visible !important; justify-content: center; }
-            .nav-item { flex: 0 0 auto; white-space: nowrap; }
+            .nav-pills { display: flex; flex-wrap: wrap; gap: 6px; overflow-x: visible !important; justify-content: center; align-items: center; padding: 8px 4px; }
+            .nav-item { flex: 0 0 calc(50% - 3px); white-space: nowrap; padding: 10px 12px; font-size: 12px; }
         }
         .nav-item.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(78, 67, 118, 0.3); }
 
