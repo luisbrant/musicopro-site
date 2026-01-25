@@ -6,11 +6,11 @@
     <title>Músico Pro - Organização fiscal para músicos</title>
     
     <!-- PWA Config -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/pwa/manifest.json">
     <meta name="theme-color" content="#4e4376">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/pwa/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -329,41 +329,11 @@
 
         textarea.form-control { min-height: 100px; resize: vertical; font-family: inherit; }
 
-
-        .pwa-install-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000; animation: fadeIn 0.3s; }
-        .pwa-install-modal.hidden { display: none; }
-        .pwa-install-content { background: var(--bg-card); border-radius: 16px; padding: 30px; max-width: 400px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.3); text-align: center; animation: slideUp 0.3s ease-out; position: relative; }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .pwa-install-icon { font-size: 48px; margin-bottom: 15px; display: block; }
-        .pwa-install-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
-        .pwa-install-text { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 25px; }
-        .pwa-install-buttons { display: flex; gap: 10px; flex-direction: column; }
-        .pwa-install-btn { padding: 12px 20px; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-        .pwa-install-btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 15px rgba(78,67,118,0.3); }
-        .pwa-install-btn-primary:active { transform: scale(0.98); }
-        .pwa-install-btn-secondary { background: var(--bg-body); color: var(--text-light); border: 1px solid var(--border); }
-        .pwa-install-btn-secondary:active { background: var(--border); }
-        .pwa-install-dismiss { font-size: 24px; position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: var(--text-light); }
-
     </style>
 </head>
 <body>
 
     <div id="toast" class="notification hidden"></div>
-
-    <div id="pwaInstallModal" class="pwa-install-modal hidden">
-        <div class="pwa-install-content">
-            <button class="pwa-install-dismiss" onclick="dismissPwaPrompt()">✕</button>
-            <span class="pwa-install-icon">📱</span>
-            <h2 class="pwa-install-title">Instale o Músico Pro</h2>
-            <p class="pwa-install-text">Acesse o app direto da sua tela inicial e use offline!</p>
-            <div class="pwa-install-buttons">
-                <button class="pwa-install-btn pwa-install-btn-primary" onclick="installPwa()">Instalar Agora</button>
-                <button class="pwa-install-btn pwa-install-btn-secondary" onclick="dismissPwaPrompt()">Agora Não</button>
-            </div>
-        </div>
-    </div>
-
 
     <div class="container">
         
@@ -1850,59 +1820,10 @@ IMPORTANTE:
         
         navTo('home');
 
-
-        // PWA Install Prompt Handler
-        let deferredPrompt = null;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            showPwaPrompt();
-        });
-
-        function showPwaPrompt() {
-            const modal = document.getElementById('pwaInstallModal');
-            const dismissed = localStorage.getItem('pwa_install_dismissed');
-            const dismissedTime = dismissed ? parseInt(dismissed) : 0;
-            const now = Date.now();
-            const dayInMs = 24 * 60 * 60 * 1000;
-            
-            if (!dismissed || (now - dismissedTime) > dayInMs) {
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function installPwa() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        toast('App instalado com sucesso!');
-                        localStorage.removeItem('pwa_install_dismissed');
-                    } else {
-                        toast('Instalação cancelada');
-                    }
-                    deferredPrompt = null;
-                    document.getElementById('pwaInstallModal').classList.add('hidden');
-                });
-            }
-        }
-
-        function dismissPwaPrompt() {
-            document.getElementById('pwaInstallModal').classList.add('hidden');
-            localStorage.setItem('pwa_install_dismissed', Date.now().toString());
-        }
-
-        window.addEventListener('appinstalled', () => {
-            toast('Músico Pro instalado!');
-            document.getElementById('pwaInstallModal').classList.add('hidden');
-            localStorage.removeItem('pwa_install_dismissed');
-        });
-
         // PWA Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/pwa/sw.js')
+                navigator.serviceWorker.register('/pwa/sw.js', { scope: '/pwa/' })
                     .then(reg => console.log('SW Registered:', reg.scope))
                     .catch(err => console.log('SW Fail:', err));
             });

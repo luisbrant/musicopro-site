@@ -1,83 +1,47 @@
-const CACHE_NAME = 'musico-pro-v1';
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+const CACHE_NAME = 'musicopro-safe-v1.1';
+const OFFLINE_PAGE = '/pwa/offline.html';
+
+const CORE_ASSETS = [
+  '/pwa/index.html',
+  '/pwa/manifest.json',
+  '/pwa/icons/icon-192.png',
+  '/pwa/icons/icon-512.png',
+  OFFLINE_PAGE
 ];
 
-// Install Event: Cache core assets (local only)
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      console.log('[Service Worker] Caching core assets');
-      try {
-        await cache.addAll(ASSETS_TO_CACHE);
-      } catch (e) {
-        // Don't block install if something fails (e.g., first load race)
-        console.warn('[Service Worker] Cache addAll failed:', e);
-      }
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(CORE_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
-return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
-});
-
-// Activate Event: Cleanup old caches
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
-        if (key !== CACHE_NAME) {
-          console.log('[Service Worker] Removing old cache', key);
-          return caches.delete(key);
-        }
-      }));
-    })
-  );
-  self.clients.claim();
+  event.waitUntil(self.clients.claim());
 });
 
-// Fetch Event: Cache First, then Network (for libs) or Network First (for logic updates)
-// Since index.html changes often during dev, we'll use Stale-While-Revalidate for it,
-// and Cache First for the immutable CDN libs.
 self.addEventListener('fetch', (event) => {
-  // Check if it's an external library
-  if (event.request.url.includes('cdn') || event.request.url.includes('cdnjs')) {
+  // Only control our scope (/pwa/)
+  if (!event.request.url.includes('/pwa/')) return;
+
+  // For navigation requests: network first, fallback to offline page
+  if (event.request.mode === 'navigate') {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(event.request).then((response) => {
-          // Cache new external requests dynamically
-          if (!response || response.status !== 200 || response.type !== 'basic' && response.type !== 'cors') {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-          return response;
-        });
-      })
+      fetch(event.request)
+        .then((resp) => {
+          // Update cached shell opportunistically
+          const copy = resp.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put('/pwa/index.html', copy)).catch(() => {});
+          return resp;
+        })
+        .catch(() => caches.match(OFFLINE_PAGE))
     );
-  } else {
-    // For local files (index.html), use Stale-While-Revalidate
-    event.respondWith(
-      caches.open(CACHE_NAME).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-          const fetchPromise = fetch(event.request).then((networkResponse) => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-          return cachedResponse || fetchPromise.catch(() => cachedResponse);
-        });
-      })
-    );
+    return;
   }
+
+  // For other requests: cache if available, else network
+  event.respondWith(
+    caches.match(event.request).then((resp) => resp || fetch(event.request))
+  );
 });
