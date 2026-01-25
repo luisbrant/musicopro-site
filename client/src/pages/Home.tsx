@@ -82,11 +82,11 @@ export default function Home() {
               Início
             </button>
           </Link>
-          <Link href="/premium">
+          <a href="/app.html" target="_blank" rel="noopener noreferrer">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
               Ver o App Grátis
             </button>
-          </Link>
+          </a>
           <Link href="/pro">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
               Comprar Licença PRO
@@ -138,14 +138,14 @@ export default function Home() {
                   👉 Comprar Licença PRO
                 </button>
               </Link>
-              <Link href="/premium">
+              <a href="/app.html" target="_blank" rel="noopener noreferrer">
                 <button
                   onClick={() => trackDownloadAppClick()}
                   className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
                 >
                   👉 Usar App Grátis
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -195,14 +195,14 @@ export default function Home() {
             <p className="text-lg text-[#0c2461] font-bold">
               📱💻 Um único app. Todas as telas.
             </p>
-            <Link href="/premium">
+            <a href="/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
               >
                 👉 Usar App Grátis
               </button>
-            </Link>
+            </a>
           </div>
         </section>
 
@@ -253,14 +253,14 @@ export default function Home() {
             <p className="text-[#0c2461] font-medium mt-4">
               Você vai entender em minutos como organizar seus impostos mês a mês.
             </p>
-            <Link href="/premium">
+            <a href="/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block mt-4"
               >
                 👉 Testar App Grátis Agora
               </button>
-            </Link>
+            </a>
           </div>
         </section>
 
@@ -302,14 +302,14 @@ export default function Home() {
           </div>
           
           <div className="text-center mt-8">
-            <Link href="/premium">
+            <a href="/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
               >
                 👉 Começar agora no App
               </button>
-            </Link>
+            </a>
           </div>
         </section>
 
