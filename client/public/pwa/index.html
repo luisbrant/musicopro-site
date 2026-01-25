@@ -1830,5 +1830,118 @@ IMPORTANTE:
         }
 
     </script>
+
+    <!-- Onboarding v1.1 SAFE (Inline) -->
+    <div id="onboarding-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg,#4e4376 0%,#2b5876 100%); z-index:9999; animation:fadeIn 0.3s ease-in; overflow-y:auto;">
+        <div style="display:flex; align-items:center; justify-content:center; min-height:100%; padding:20px;">
+            <div style="background:white; border-radius:24px; padding:40px 24px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:slideUp 0.4s ease-out;">
+                <!-- Etapa 1 -->
+                <div id="onboarding-step-1" style="display:flex; flex-direction:column;">
+                    <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
+                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                    </div>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">🎵</div>
+                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Bem-vindo ao Músico Pro</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Organize seus cachês, despesas e impostos em um só lugar. Simples e rápido.</p>
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
+                        <button onclick="musicoproOnboarding.nextStep()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Continuar →</button>
+                        <button onclick="musicoproOnboarding.skipOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                    </div>
+                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                </div>
+                <!-- Etapa 2 -->
+                <div id="onboarding-step-2" style="display:none; flex-direction:column;">
+                    <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                    </div>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">🔒</div>
+                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Seus dados ficam com você</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Nenhuma informação sai do seu dispositivo. Sem nuvem, sem servidor, sem rastreamento.</p>
+                    <div style="text-align:left; background:#f9f7f4; padding:16px; border-radius:12px; margin-bottom:24px;">
+                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Dados salvos apenas no seu celular</div>
+                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Você tem controle total</div>
+                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Funciona offline</div>
+                        <div style="font-size:14px; color:#0c2461; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Sem publicidade</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
+                        <button onclick="musicoproOnboarding.nextStep()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Entendi, continuar →</button>
+                        <button onclick="musicoproOnboarding.skipOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                    </div>
+                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                </div>
+                <!-- Etapa 3 -->
+                <div id="onboarding-step-3" style="display:none; flex-direction:column;">
+                    <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
+                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                    </div>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">📊</div>
+                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Comece agora</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Clique em <strong>"+ RECEITA"</strong> para adicionar seu primeiro ganho. Leva 10 segundos.</p>
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
+                        <button onclick="musicoproOnboarding.completeOnboarding()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Adicionar receita agora</button>
+                        <button onclick="musicoproOnboarding.completeOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                    </div>
+                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes bounce { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    </style>
+
+    <script>
+        const musicoproOnboarding = {
+            currentStep: 1,
+            ONBOARDING_KEY: 'musicopro_onboarding_completed_v1_1',
+
+            init: function() {
+                const completed = localStorage.getItem(this.ONBOARDING_KEY);
+                if (completed !== 'true') {
+                    document.getElementById('onboarding-modal').style.display = 'flex';
+                }
+            },
+
+            nextStep: function() {
+                if (this.currentStep < 3) {
+                    document.getElementById('onboarding-step-' + this.currentStep).style.display = 'none';
+                    this.currentStep++;
+                    document.getElementById('onboarding-step-' + this.currentStep).style.display = 'flex';
+                } else {
+                    this.completeOnboarding();
+                }
+            },
+
+            skipOnboarding: function() {
+                this.completeOnboarding();
+            },
+
+            completeOnboarding: function() {
+                localStorage.setItem(this.ONBOARDING_KEY, 'true');
+                document.getElementById('onboarding-modal').style.display = 'none';
+                console.log('✓ Onboarding v1.1 SAFE completo!');
+            },
+
+            reopen: function() {
+                localStorage.removeItem(this.ONBOARDING_KEY);
+                this.currentStep = 1;
+                this.init();
+            }
+        };
+
+        // Inicializar ao carregar
+        window.addEventListener('load', function() {
+            setTimeout(() => musicoproOnboarding.init(), 100);
+        });
+    </script>
 </body>
 </html>

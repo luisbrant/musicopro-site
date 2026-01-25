@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo ao Músico Pro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f5f5f5;
+      overflow: hidden;
+    }
+
+    .onboarding-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #4e4376 0%, #2b5876 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease-in;
+      opacity: 1;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .onboarding-modal.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .onboarding-card {
+      background: white;
+      border-radius: 24px;
+      padding: 40px 24px;
+      max-width: 420px;
+      width: 90%;
+      max-height: 85vh;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      animation: slideUp 0.4s ease-out;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .onboarding-progress {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: all 0.3s ease;
+    }
+
+    .progress-dot.active {
+      background: #4e4376;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .onboarding-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      animation: bounce 0.6s ease-out;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .onboarding-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0c2461;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .onboarding-description {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .onboarding-checklist {
+      text-align: left;
+      background: #f9f7f4;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .checklist-item {
+      font-size: 14px;
+      color: #0c2461;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+
+    .checklist-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .checklist-check {
+      color: #6ba587;
+      font-weight: bold;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .onboarding-screenshot {
+      width: 100%;
+      max-width: 300px;
+      margin: 16px auto;
+      border-radius: 12px;
+      border: 2px solid #e0e0e0;
+      background: #f9f7f4;
+      padding: 12px;
+      font-size: 12px;
+      color: #999;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .onboarding-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      background: #4e4376;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(78, 67, 118, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: #3d3360;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(78, 67, 118, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #666;
+      border: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      color: #0c2461;
+    }
+
+    .onboarding-footer {
+      font-size: 11px;
+      color: #999;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    .onboarding-footer strong {
+      color: #4e4376;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .onboarding-card {
+        padding: 32px 20px;
+        border-radius: 20px;
+      }
+
+      .onboarding-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+      }
+
+      .onboarding-title {
+        font-size: 22px;
+      }
+
+      .onboarding-description {
+        font-size: 15px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 12px 20px;
+        font-size: 15px;
+      }
+    }
+
+    @media (max-height: 600px) {
+      .onboarding-card {
+        padding: 24px 16px;
+      }
+
+      .onboarding-icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+      }
+
+      .onboarding-title {
+        font-size: 20px;
+      }
+
+      .onboarding-description {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Etapa 1: Bem-vindo -->
+  <div class="onboarding-modal" id="onboarding-step-1" data-step="1">
+    <div class="onboarding-card">
+      <div class="onboarding-progress">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+      </div>
+
+      <div class="onboarding-icon">🎵</div>
+      <h1 class="onboarding-title">Bem-vindo ao Músico Pro</h1>
+      <p class="onboarding-description">
+        Organize seus cachês, despesas e impostos em um só lugar. Simples e rápido.
+      </p>
+
+      <div class="onboarding-buttons">
+        <button class="btn-primary" onclick="nextStep()">Continuar →</button>
+        <button class="btn-secondary" onclick="skipOnboarding()">Pular por agora</button>
+      </div>
+
+      <div class="onboarding-footer">
+        <strong>v1.1 SAFE</strong> — Seus dados, sua privacidade.
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 2: Privacidade -->
+  <div class="onboarding-modal hidden" id="onboarding-step-2" data-step="2">
+    <div class="onboarding-card">
+      <div class="onboarding-progress">
+        <div class="progress-dot"></div>
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+      </div>
+
+      <div class="onboarding-icon">🔒</div>
+      <h1 class="onboarding-title">Seus dados ficam com você</h1>
+      <p class="onboarding-description">
+        Nenhuma informação sai do seu dispositivo. Sem nuvem, sem servidor, sem rastreamento.
+      </p>
+
+      <div class="onboarding-checklist">
+        <div class="checklist-item">
+          <span class="checklist-check">✓</span>
+          <span>Dados salvos apenas no seu celular</span>
+        </div>
+        <div class="checklist-item">
+          <span class="checklist-check">✓</span>
+          <span>Você tem controle total</span>
+        </div>
+        <div class="checklist-item">
+          <span class="checklist-check">✓</span>
+          <span>Funciona offline</span>
+        </div>
+        <div class="checklist-item">
+          <span class="checklist-check">✓</span>
+          <span>Sem publicidade</span>
+        </div>
+      </div>
+
+      <div class="onboarding-buttons">
+        <button class="btn-primary" onclick="nextStep()">Entendi, continuar →</button>
+        <button class="btn-secondary" onclick="skipOnboarding()">Pular por agora</button>
+      </div>
+
+      <div class="onboarding-footer">
+        <strong>v1.1 SAFE</strong> — Seus dados, sua privacidade.
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 3: Próximo Passo -->
+  <div class="onboarding-modal hidden" id="onboarding-step-3" data-step="3">
+    <div class="onboarding-card">
+      <div class="onboarding-progress">
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot active"></div>
+      </div>
+
+      <div class="onboarding-icon">📊</div>
+      <h1 class="onboarding-title">Comece agora</h1>
+      <p class="onboarding-description">
+        Clique em <strong>"+ RECEITA"</strong> para adicionar seu primeiro ganho. Leva 10 segundos.
+      </p>
+
+      <div class="onboarding-screenshot">
+        [Botão "+ RECEITA" no topo do app]<br>
+        <small style="display: block; margin-top: 8px; color: #bbb;">Screenshot real será adicionado aqui</small>
+      </div>
+
+      <div class="onboarding-buttons">
+        <button class="btn-primary" onclick="completeOnboarding()">Adicionar receita agora</button>
+        <button class="btn-secondary" onclick="completeOnboarding()">Pular por agora</button>
+      </div>
+
+      <div class="onboarding-footer">
+        <strong>v1.1 SAFE</strong> — Seus dados, sua privacidade.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const ONBOARDING_KEY = 'musicopro_onboarding_completed_v1_1';
+    const ONBOARDING_SHOW_HELP_KEY = 'musicopro_show_onboarding_help';
+
+    /**
+     * Inicializar onboarding
+     */
+    function initOnboarding() {
+      const completed = localStorage.getItem(ONBOARDING_KEY);
+      
+      // Se já foi completo, esconder
+      if (completed === 'true') {
+        hideAllModals();
+        return;
+      }
+
+      // Mostrar primeira etapa
+      showStep(1);
+    }
+
+    /**
+     * Ir para próxima etapa
+     */
+    function nextStep() {
+      if (currentStep < 3) {
+        showStep(currentStep + 1);
+      } else {
+        completeOnboarding();
+      }
+    }
+
+    /**
+     * Mostrar etapa específica
+     */
+    function showStep(stepNumber) {
+      // Esconder todas
+      hideAllModals();
+
+      // Mostrar a solicitada
+      const stepElement = document.getElementById(`onboarding-step-${stepNumber}`);
+      if (stepElement) {
+        stepElement.classList.remove('hidden');
+        currentStep = stepNumber;
+
+        // Scroll to top (mobile)
+        window.scrollTo(0, 0);
+      }
+    }
+
+    /**
+     * Esconder todos os modais
+     */
+    function hideAllModals() {
+      document.querySelectorAll('.onboarding-modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+    }
+
+    /**
+     * Pular onboarding
+     */
+    function skipOnboarding() {
+      completeOnboarding();
+    }
+
+    /**
+     * Completar onboarding
+     */
+    function completeOnboarding() {
+      // Marcar como completo
+      localStorage.setItem(ONBOARDING_KEY, 'true');
+
+      // Esconder com fade
+      hideAllModals();
+
+      // Disparar evento customizado (para integração com app)
+      window.dispatchEvent(new CustomEvent('onboarding-complete'));
+
+      console.log('✓ Onboarding v1.1 SAFE completo!');
+    }
+
+    /**
+     * Reabrir onboarding (para menu "Como funciona")
+     */
+    function reopenOnboarding() {
+      localStorage.removeItem(ONBOARDING_KEY);
+      showStep(1);
+    }
+
+    /**
+     * Reset onboarding (apenas para testes/desenvolvimento)
+     */
+    function resetOnboarding() {
+      localStorage.removeItem(ONBOARDING_KEY);
+      console.log('Onboarding resetado. Recarregue a página.');
+    }
+
+    /**
+     * Verificar se deve mostrar onboarding ao carregar
+     */
+    window.addEventListener('load', function() {
+      // Pequeno delay para garantir que o DOM está pronto
+      setTimeout(initOnboarding, 100);
+    });
+
+    /**
+     * Suporte a teclado (ESC para pular)
+     */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        skipOnboarding();
+      }
+    });
+
+    // Expor funções globais para integração
+    window.musicoproOnboarding = {
+      reopen: reopenOnboarding,
+      reset: resetOnboarding,
+      complete: completeOnboarding,
+      nextStep: nextStep,
+      skipOnboarding: skipOnboarding,
+    };
+  </script>
+</body>
+</html>
