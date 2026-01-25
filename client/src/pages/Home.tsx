@@ -116,7 +116,7 @@ export default function Home() {
             </div>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
             <p className="text-lg md:text-xl opacity-95 font-medium">
-              Organize receitas, despesas e veja o resultado do mês automaticamente — saiba se precisa pagar imposto antes da multa.
+              Organize receitas, despesas e saiba se precisa pagar imposto antes da multa.
             </p>
             <p className="text-base md:text-lg opacity-90">
               Funciona direto no navegador — otimizado para celular, tablet e computador.
@@ -206,6 +206,13 @@ export default function Home() {
           </div>
         </section>
 
+        {/* PROVA SOCIAL LEVE */}
+        <section className="mb-12 md:mb-16 text-center">
+          <p className="text-lg text-[#0c2461] font-semibold opacity-85">
+            🎵 Usado por músicos que vivem de PIX, cachês e aulas de várias fontes.
+          </p>
+        </section>
+
         {/* O QUE MUDA NA SUA VIDA */}
         <section className="mb-12 md:mb-16 bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6 border-l-4 border-[#d4af37]">
           <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
@@ -233,6 +240,17 @@ export default function Home() {
               <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
               <span className="text-[#0c2461] font-medium">Seus dados ficam apenas no seu navegador</span>
             </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <a href="/app.html" target="_blank" rel="noopener noreferrer">
+              <button
+                onClick={() => trackDownloadAppClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
+              >
+                👉 Quero organizar meus impostos agora
+              </button>
+            </a>
           </div>
         </section>
 
@@ -313,8 +331,69 @@ export default function Home() {
           </div>
         </section>
 
+        {/* TABELA GRÁTIS × PRO */}
+        <section className="mb-12 md:mb-16 space-y-6">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Grátis ou PRO: qual faz sentido para você?
+            </h3>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-[#0c2461]">
+              <thead>
+                <tr className="bg-[#0c2461] text-white">
+                  <th className="border border-[#d4af37] p-4 text-left font-bold">Grátis</th>
+                  <th className="border border-[#d4af37] p-4 text-left font-bold">PRO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">Registrar receitas e despesas</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Valor exato do imposto (Carnê-Leão)</td>
+                </tr>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">Ver resumo mensal</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Exportação Excel / CSV</td>
+                </tr>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">Organização local</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Relatórios em PDF</td>
+                </tr>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">Uso livre do app</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Gerador de recibos</td>
+                </tr>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">—</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Histórico ampliado</td>
+                </tr>
+                <tr className="hover:bg-[#f0f4f8]">
+                  <td className="border border-[#d4af37]/30 p-4">—</td>
+                  <td className="border border-[#d4af37]/30 p-4 font-semibold text-[#d4af37]">Guia educacional completo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div className="bg-[#f0f4f8] rounded-lg p-6 text-center space-y-4">
+            <p className="text-[#0c2461] font-medium text-lg">
+              O Grátis ajuda a organizar.<br/>
+              O PRO traz segurança para declarar.
+            </p>
+            <Link href="/pro">
+              <button
+                onClick={() => trackBuyClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
+              >
+                👉 Comprar Licença PRO
+              </button>
+            </Link>
+          </div>
+        </section>
+
         {/* O QUE É PRO */}
-        <section className="mb-12 md:mb-16 bg-white border-2 border-[#d4af37] rounded-lg p-8 md:p-10 space-y-6">
+        <section className="mb-12 md:mb-16 bg-white border-2 border-[#d4af37] rounded-lg p-8 md:p-10 space-y-6 hidden">
           <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
             O que você libera na Licença PRO
           </h3>
@@ -369,6 +448,21 @@ export default function Home() {
           <p className="text-base text-[#0c2461] opacity-90 mt-4">
             Isso reduz objeção imediatamente. Seus dados ficam protegidos e sob seu controle total.
           </p>
+          
+          <div className="space-y-3 mt-6 pt-6 border-t border-[#d4af37]/30">
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Funciona sem login obrigatório</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Compatível com navegadores modernos</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
+              <span className="text-[#0c2461] font-medium">Pode ser usado mesmo em conexões lentas</span>
+            </div>
+          </div>
         </section>
 
                 {/* GUIA RÁPIDO */}
