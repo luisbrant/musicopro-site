@@ -36,7 +36,7 @@ export default function Vendas() {
             <a href="#comprar" className="bg-[#d4af37] text-[#0c2461] px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#c99a2e] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
               Comprar Licença PRO <ArrowRight size={20} />
             </a>
-            <a href="/app-musico-pro.html" download className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
+            <a href="/pwa/index.html" download className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
               <Download size={20} /> Baixar App Grátis
             </a>
           </div>
@@ -229,7 +229,7 @@ export default function Vendas() {
                 Comprar Licença PRO
               </a>
               <a 
-                href="/app-musico-pro.html" 
+                href="/pwa/index.html" 
                 download
                 className="block w-full bg-white border-2 border-[#1B4965] text-[#1B4965] hover:bg-gray-50 text-lg font-bold py-3 rounded-xl transition"
               >
