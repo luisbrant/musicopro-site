@@ -30,6 +30,12 @@ function Router() {
         <Route path="/demo" component={Demo} />
         <Route path="/privacidade" component={Privacidade} />
         <Route path="/termos" component={Termos} />
+        {/* PWA Route - Served as static files from public/pwa */}
+        <Route path="/pwa/*" component={() => {
+          // Redirect to index.html of PWA
+          window.location.href = '/pwa/';
+          return null;
+        }} />
         <Route path="/404" component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
