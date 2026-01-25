@@ -25,11 +25,11 @@ export default function Footer() {
             <div className="space-y-2 text-sm">
               <p className="opacity-80">Dúvidas sobre acesso ou conteúdo?</p>
               <a 
-                href="mailto:contato@musicopro.app.br"
+                href="mailto:suporte@musicopro.app.br"
                 className="flex items-center gap-2 text-[#d4af37] hover:text-[#e5c158] transition font-semibold"
               >
                 <Mail size={16} />
-                contato@musicopro.app.br
+                suporte@musicopro.app.br
               </a>
             </div>
           </div>
