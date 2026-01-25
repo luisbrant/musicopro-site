@@ -236,27 +236,35 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROVA DE FUNCIONAMENTO REAL */}
+        {/* TESTE O APP GRÁTIS */}
         <section className="mb-12 md:mb-16 bg-gradient-to-r from-[#f0f4f8] to-[#e8ecf2] rounded-lg p-8 md:p-10 space-y-6">
           <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461] text-center" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            Isso não é teoria. É o app funcionando.
+            Teste o app grátis e veja como funciona.
           </h3>
           
-          <div className="bg-white rounded-lg p-6 md:p-8 border-2 border-[#d4af37] text-center">
-            <div className="text-6xl mb-4">📊</div>
-            <p className="text-lg text-[#0c2461] font-semibold mb-4">
-              Dashboard do Músico Pro
+          <div className="bg-white rounded-lg p-6 md:p-8 border-2 border-[#d4af37] text-center space-y-4">
+            <div className="text-6xl mb-4">🎵</div>
+            <p className="text-lg text-[#0c2461] font-semibold">
+              Começe agora, sem cartão de crédito.
             </p>
             <p className="text-[#0c2461] leading-relaxed">
-              O Músico Pro calcula automaticamente o resumo mensal e mostra quando há imposto a pagar.
+              Registre suas receitas e despesas no app grátis e veja como o Músico Pro funciona na prática.
             </p>
-            <p className="text-[#0c2461] font-semibold mt-3">
-              Sem planilhas e sem adivinhação.
+            <p className="text-[#0c2461] font-medium mt-4">
+              Você vai entender em minutos como organizar seus impostos mês a mês.
             </p>
+            <Link href="/premium">
+              <button
+                onClick={() => trackDownloadAppClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block mt-4"
+              >
+                👉 Testar App Grátis Agora
+              </button>
+            </Link>
           </div>
         </section>
 
-                {/* COMO O APP FUNCIONA - 3 PASSOS */}
+        {/* COMO O APP FUNCIONA - 3 PASSOS */}
         <section className="mb-12 md:mb-16 space-y-8">
           <div className="text-center space-y-2">
             <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
