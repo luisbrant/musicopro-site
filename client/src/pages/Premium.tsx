@@ -178,9 +178,12 @@ export default function Premium() {
           <div className="space-y-8 py-12">
             <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a5c] rounded-lg p-6 md:p-8 text-white space-y-4 text-center">
               <Lock size={48} className="mx-auto text-[#d4af37]" />
-              <h2 className="text-2xl md:text-3xl font-bold">Área Premium</h2>
-              <p className="text-sm md:text-base opacity-90">
-                Digite seu código de acesso para acessar ferramentas, explicações e conteúdo exclusivo.
+              <h2 className="text-2xl md:text-3xl font-bold">Licença PRO — Kit Músico Pro</h2>
+              <p className="text-base md:text-lg opacity-95 font-medium">
+                Organize sua vida fiscal, saiba exatamente quando agir e tenha segurança para declarar.
+              </p>
+              <p className="text-sm opacity-85">
+                Funciona direto no navegador — no celular, tablet ou computador.
               </p>
             </div>
 
@@ -225,6 +228,36 @@ export default function Premium() {
                 </div>
               </div>
 
+              {/* Bloco: O que você recebe */}
+              <div className="bg-white rounded-lg p-6 border border-[#E8E3DC] space-y-4">
+                <h3 className="text-lg font-bold text-[#0c2461] flex items-center gap-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                  <CheckCircle2 size={22} className="text-[#d4af37]" />
+                  Ao adquirir a Licença PRO, você recebe:
+                </h3>
+                <ul className="space-y-3 ml-2">
+                  <li className="flex items-start gap-3 text-[#0c2461]">
+                    <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                    <span className="text-sm">Acesso completo ao App Músico Pro</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-[#0c2461]">
+                    <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                    <span className="text-sm">Cálculo mensal do imposto (Carnê-Leão)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-[#0c2461]">
+                    <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                    <span className="text-sm">Relatórios e documentos para declarar</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-[#0c2461]">
+                    <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                    <span className="text-sm">Guia educacional completo e atualizado</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-[#0c2461]">
+                    <span className="text-[#d4af37] font-bold mt-0.5">✔</span>
+                    <span className="text-sm">Uso anual, sem mensalidade</span>
+                  </li>
+                </ul>
+              </div>
+
               {/* Formulário de Acesso */}
               <form onSubmit={handleAccessCode} className="space-y-4">
                 <div>
@@ -244,10 +277,16 @@ export default function Premium() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#0c2461] hover:bg-[#1a3a5c] text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"
+                  className="w-full bg-[#d4af37] hover:bg-[#c9a02e] text-[#0c2461] font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"
                 >
-                  <Zap size={18} /> Desbloquear Conteúdo
+                  Comprar Licença PRO
                 </button>
+                <p className="text-xs text-[#6ba587] text-center mt-2">
+                  Acesso imediato após a confirmação da compra.
+                </p>
+                <p className="text-xs text-[#6ba587] text-center">
+                  Você pode testar o app grátis antes de decidir.
+                </p>
               </form>
 
               {/* Bloco: O que você libera */}
@@ -279,6 +318,17 @@ export default function Premium() {
                     <span className="text-sm text-[#0c2461]">Conteúdos aprofundados e atualizados</span>
                   </li>
                 </ul>
+              </div>
+
+              {/* Bloco: Garantia */}
+              <div className="bg-white rounded-lg p-6 border border-[#E8E3DC] space-y-4">
+                <h3 className="text-lg font-bold text-[#0c2461] flex items-center gap-2">
+                  <Lock size={22} className="text-[#d4af37]" />
+                  Garantia de 7 dias
+                </h3>
+                <p className="text-sm text-[#0c2461]">
+                  Se não ficar satisfeito, você pode solicitar o reembolso conforme a política da plataforma de pagamento.
+                </p>
               </div>
 
               {/* Links auxiliares */}
