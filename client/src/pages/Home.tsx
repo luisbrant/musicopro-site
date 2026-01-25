@@ -116,10 +116,10 @@ export default function Home() {
             </div>
             <h2 className="text-3xl md:text-5xl font-bold leading-tight">Imposto sem medo, do jeito certo.</h2>
             <p className="text-lg md:text-xl opacity-95 font-medium">
-              Um app que organiza seus recebimentos, despesas e impostos automaticamente — e te avisa quando há imposto a pagar (ou não).
+              Organize receitas, despesas e veja o resultado do mês automaticamente — saiba se precisa pagar imposto antes da multa.
             </p>
             <p className="text-base md:text-lg opacity-90">
-              Ideal para músicos que recebem PIX, cachês e aulas de várias fontes.
+              Funciona direto no navegador — otimizado para celular, tablet e computador.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <div className="text-sm opacity-75">
@@ -135,7 +135,7 @@ export default function Home() {
                   onClick={() => trackBuyClick()}
                   className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition w-full sm:w-auto text-lg shadow-lg hover:shadow-xl"
                 >
-                  👉 Começar a organizar meu imposto agora
+                  👉 Comprar Licença PRO
                 </button>
               </Link>
               <Link href="/premium">
@@ -143,7 +143,7 @@ export default function Home() {
                   onClick={() => trackDownloadAppClick()}
                   className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
                 >
-                  👉 Ver como o app funciona
+                  👉 Usar App Grátis
                 </button>
               </Link>
             </div>
@@ -191,26 +191,22 @@ export default function Home() {
               A experiência é fluida em qualquer dispositivo.
             </p>
           </div>
-          
-          <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#d4af37]/5 border-2 border-[#d4af37] rounded-lg p-6 text-center">
+                <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#d4af37]/5 border-2 border-[#d4af37] rounded-lg p-6 text-center space-y-4">
             <p className="text-lg text-[#0c2461] font-bold">
               📱💻 Um único app. Todas as telas.
             </p>
-          </div>
-          
-          <div className="text-center">
-            <Link href="/pro">
+            <Link href="/premium">
               <button
-                onClick={() => trackBuyClick()}
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl"
+                onClick={() => trackDownloadAppClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
               >
-                👉 Começar a usar agora no meu dispositivo
+                👉 Usar App Grátis
               </button>
             </Link>
           </div>
         </section>
 
-                {/* O QUE MUDA NA SUA VIDA */}
+        {/* O QUE MUDA NA SUA VIDA */}
         <section className="mb-12 md:mb-16 bg-[#f0f4f8] rounded-lg p-8 md:p-10 space-y-6 border-l-4 border-[#d4af37]">
           <h3 className="text-2xl md:text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
             O que muda na sua vida quando você usa o Músico Pro
@@ -231,15 +227,11 @@ export default function Home() {
             </div>
             <div className="flex items-start gap-3">
               <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Se não houver imposto, o app te mostra isso claramente</span>
+              <span className="text-[#0c2461] font-medium">Quando não há imposto, o app deixa isso claro</span>
             </div>
             <div className="flex items-start gap-3">
               <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Seus dados ficam só no seu navegador</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#d4af37] font-bold text-lg mt-1">✔</span>
-              <span className="text-[#0c2461] font-medium">Você gera relatórios e recibos quando precisar</span>
+              <span className="text-[#0c2461] font-medium">Seus dados ficam apenas no seu navegador</span>
             </div>
           </div>
         </section>
@@ -299,6 +291,17 @@ export default function Home() {
                 O app mostra se há imposto, quanto pagar e quando agir.
               </p>
             </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <Link href="/premium">
+              <button
+                onClick={() => trackDownloadAppClick()}
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
+              >
+                👉 Começar agora no App
+              </button>
+            </Link>
           </div>
         </section>
 
