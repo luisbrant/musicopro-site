@@ -82,7 +82,7 @@ export default function Home() {
               Início
             </button>
           </Link>
-          <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+          <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
               Ver o App Grátis
             </button>
@@ -138,7 +138,7 @@ export default function Home() {
                   👉 Comprar Licença PRO
                 </button>
               </Link>
-              <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
                 <button
                   onClick={() => trackDownloadAppClick()}
                   className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
@@ -195,7 +195,7 @@ export default function Home() {
             <p className="text-lg text-[#0c2461] font-bold">
               📱💻 Um único app. Todas as telas.
             </p>
-            <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+            <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
@@ -259,7 +259,7 @@ export default function Home() {
           </div>
           
           <div className="text-center mt-8">
-            <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+            <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
@@ -287,7 +287,7 @@ export default function Home() {
             <p className="text-[#0c2461] font-medium mt-4">
               Você vai entender em minutos como organizar seus impostos mês a mês.
             </p>
-            <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+            <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block mt-4"
@@ -339,7 +339,7 @@ export default function Home() {
             <p className="text-[#0c2461] font-medium text-lg">
               Pronto para testar? Leva menos de 1 minuto para começar.
             </p>
-            <a href="/pwa/index.html" target="_blank" rel="noopener noreferrer">
+            <a href="https://app.musicopro.app.br/app.html" target="_blank" rel="noopener noreferrer">
               <button
                 onClick={() => trackDownloadAppClick()}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-lg transition inline-block"
