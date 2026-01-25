@@ -5,6 +5,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import { useAttribution } from "./hooks/useAttribution";
+import { AttributionBanner } from "./components/AttributionBanner";
 
 import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
@@ -15,19 +17,24 @@ import Termos from "./pages/Termos";
 
 
 function Router() {
-  return (
-    <Switch>      <Route path={"//"} component={Home} />
+  const { showBanner, closeBanner } = useAttribution();
 
-      <Route path="/pro" component={Vendas} />
-      <Route path="/premium" component={Premium} />
-      <Route path="/obrigado" component={Obrigado} />
+  return (
+    <>
+      <AttributionBanner isVisible={showBanner} onClose={closeBanner} />
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path="/pro" component={Vendas} />
+        <Route path="/premium" component={Premium} />
+        <Route path="/obrigado" component={Obrigado} />
         <Route path="/demo" component={Demo} />
-      <Route path="/privacidade" component={Privacidade} />
-      <Route path="/termos" component={Termos} />
-      <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+        <Route path="/privacidade" component={Privacidade} />
+        <Route path="/termos" component={Termos} />
+        <Route path="/404" component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 
