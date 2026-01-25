@@ -747,11 +747,11 @@
                             <p style="font-size:13px; margin-bottom:15px;">Acesso rápido aos sistemas do governo para emissão de guias:</p>
                             
                             <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
-                                <a href="https://sicalc.receita.fazenda.gov.br/sicalc-web/" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                <a href="https://sicalc.receita.fazenda.gov.br/sicalc-web/principal.asp" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
                                     📄 SicalcWeb (Gerar DARF)
                                 </a>
-                                <a href="http://sal.receita.fazenda.gov.br/PortalSalInternet/faces/pages/index.xhtml" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
-                                    🛡️ SAL (Gerar Guia INSS)
+                                <a href="https://meu.inss.gov.br/" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                    🛡️ Meu INSS (Gerar Guia)
                                 </a>
                                 <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold;">
                                     🦁 Carnê-Leão Web (e-CAC)
@@ -801,7 +801,7 @@
         let registros = JSON.parse(localStorage.getItem('musico_db') || '[]');
         let isPro = localStorage.getItem('musico_pro_status') === 'true';
         let proDate = localStorage.getItem('musico_pro_date');
-        let anoFiscal = localStorage.getItem('musico_ano') || '2024';
+        let anoFiscal = localStorage.getItem('musico_ano') || '2026';
         let currentType = 'receita';
         let idEdicao = null;
 
@@ -1633,7 +1633,7 @@ IMPORTANTE:
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
 
-            const dataFormatada = data ? new Date(data).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+            const dataFormatada = data ? new Date(data + 'T00:00').toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
 
             if (tipo === 'simples') {
                 pdf.setFontSize(22);
@@ -1657,24 +1657,29 @@ IMPORTANTE:
                 try {
                     const qrText = `Recibo Simples\nDe: ${pagador}\nValor: R$ ${valorRaw}\nData: ${dataFormatada}\nAutenticidade: ${Date.now().toString(36)}`;
                     const qrContainer = document.createElement('div');
+                    qrContainer.style.display = 'none';
+                    document.body.appendChild(qrContainer);
                     new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
                     
-                    let qrImg = null;
-                    const canvas = qrContainer.querySelector('canvas');
-                    if (canvas) {
-                        qrImg = canvas.toDataURL("image/png");
-                    } else {
-                        qrImg = qrContainer.querySelector('img').src;
-                    }
+                    setTimeout(() => {
+                        let qrImg = null;
+                        const canvas = qrContainer.querySelector('canvas');
+                        if (canvas) {
+                            qrImg = canvas.toDataURL("image/png");
+                        } else {
+                            const img = qrContainer.querySelector('img');
+                            if (img) qrImg = img.src;
+                        }
 
-                    if(qrImg) {
-                        pdf.addImage(qrImg, 'PNG', 160, 20, 30, 30);
-                        pdf.setFontSize(8);
-                        pdf.text("Validação", 175, 52, null, null, "center");
-                    }
-                } catch(e) { console.log('Erro QR', e); }
-
-                pdf.save('recibo_simples.pdf');
+                        if(qrImg) {
+                            pdf.addImage(qrImg, 'PNG', 160, 20, 30, 30);
+                            pdf.setFontSize(8);
+                            pdf.text("Validação", 175, 52, null, null, "center");
+                        }
+                        document.body.removeChild(qrContainer);
+                        pdf.save('recibo_simples.pdf');
+                    }, 100);
+                } catch(e) { console.log('Erro QR', e); pdf.save('recibo_simples.pdf'); }
             } else {
                 const inssRaw = document.getElementById('recINSS').value || "0,00";
                 const irrfRaw = document.getElementById('recIRRF').value || "0,00";
@@ -1741,23 +1746,28 @@ IMPORTANTE:
                 try {
                     const qrText = `RPA\nDe: ${pagador}\nBruto: R$ ${valorRaw}\nLiquido: R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\nData: ${dataFormatada}\nAuth: ${Date.now().toString(36)}`;
                     const qrContainer = document.createElement('div');
+                    qrContainer.style.display = 'none';
+                    document.body.appendChild(qrContainer);
                     new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
                     
-                    let qrImg = null;
-                    const canvas = qrContainer.querySelector('canvas');
-                    if (canvas) {
-                        qrImg = canvas.toDataURL("image/png");
-                    } else {
-                        qrImg = qrContainer.querySelector('img').src;
-                    }
+                    setTimeout(() => {
+                        let qrImg = null;
+                        const canvas = qrContainer.querySelector('canvas');
+                        if (canvas) {
+                            qrImg = canvas.toDataURL("image/png");
+                        } else {
+                            const img = qrContainer.querySelector('img');
+                            if (img) qrImg = img.src;
+                        }
 
-                    if(qrImg) {
-                        // Position adjusted to bottom-right to avoid overlapping with data box
-                        pdf.addImage(qrImg, 'PNG', 170, 250, 20, 20);
-                    }
-                } catch(e) { console.log('Erro QR', e); }
-
-                pdf.save('recibo_rpa.pdf');
+                        if(qrImg) {
+                            // Position adjusted to bottom-right to avoid overlapping with data box
+                            pdf.addImage(qrImg, 'PNG', 170, 250, 20, 20);
+                        }
+                        document.body.removeChild(qrContainer);
+                        pdf.save('recibo_rpa.pdf');
+                    }, 100);
+                } catch(e) { console.log('Erro QR', e); pdf.save('recibo_rpa.pdf'); }
             }
             toast('Recibo Gerado!');
         }
