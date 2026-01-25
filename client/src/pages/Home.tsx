@@ -74,6 +74,37 @@ export default function Home() {
           </button>
         </div>
       </header>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <nav className="md:hidden bg-[#0c2461] text-white p-4 space-y-2">
+          <Link href="/">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
+              Início
+            </button>
+          </Link>
+          <Link href="/premium">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
+              Ver o App Grátis
+            </button>
+          </Link>
+          <Link href="/pro">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
+              Comprar Licença PRO
+            </button>
+          </Link>
+          <Link href="/privacidade">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
+              Política de Privacidade
+            </button>
+          </Link>
+          <Link href="/termos">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
+              Termos de Uso
+            </button>
+          </Link>
+        </nav>
+      )}
+      
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
@@ -107,12 +138,14 @@ export default function Home() {
                   👉 Começar a organizar meu imposto agora
                 </button>
               </Link>
-              <button
-                onClick={() => trackDownloadAppClick()}
-                className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
-              >
-                👉 Ver como o app funciona
-              </button>
+              <Link href="/premium">
+                <button
+                  onClick={() => trackDownloadAppClick()}
+                  className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 w-full sm:w-auto"
+                >
+                  👉 Ver como o app funciona
+                </button>
+              </Link>
             </div>
           </div>
         </section>
