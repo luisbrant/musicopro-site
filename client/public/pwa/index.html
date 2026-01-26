@@ -636,6 +636,52 @@
             </div>
         </section>
 
+        <section id="view-contrato" class="view-section">
+            <h2 style="margin-bottom: 20px;">📜 Gerador de Contratos</h2>
+            
+            <div class="input-group">
+                <label>Dados do Contratante</label>
+                <input type="text" id="conNome" class="form-control" placeholder="Nome ou Razão Social">
+                <input type="text" id="conDoc" class="form-control" placeholder="CPF ou CNPJ" style="margin-top:10px">
+                <input type="text" id="conEnd" class="form-control" placeholder="Endereço Completo" style="margin-top:10px">
+            </div>
+
+            <div class="input-group">
+                <label>Dados do Evento</label>
+                <input type="text" id="conEvento" class="form-control" placeholder="Nome do Evento (ex: Casamento)">
+                <input type="date" id="conData" class="form-control" style="margin-top:10px">
+                <div class="form-grid-2" style="margin-top:10px">
+                    <input type="time" id="conInicio" class="form-control" placeholder="Início">
+                    <input type="time" id="conFim" class="form-control" placeholder="Fim">
+                </div>
+                <input type="text" id="conLocal" class="form-control" placeholder="Local do Evento" style="margin-top:10px">
+                <input type="text" id="conCidade" class="form-control" placeholder="Cidade/UF" style="margin-top:10px">
+            </div>
+
+            <div class="input-group">
+                <label>Dados Financeiros</label>
+                <input type="text" id="conValor" class="form-control" placeholder="Valor do Cachê (R$)" oninput="mascaraMoeda(this)">
+                <select id="conPagamento" class="form-control" style="margin-top:10px">
+                    <option value="PIX">PIX</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Transferência Bancária">Transferência Bancária</option>
+                </select>
+                <label style="margin-top:10px; font-size:12px; color:var(--text-light)">Data Limite Pagamento</label>
+                <input type="date" id="conDataPag" class="form-control">
+            </div>
+
+            <div class="input-group">
+                <label>Dados do Músico (Contratado)</label>
+                <input type="text" id="conMusico" class="form-control" placeholder="Seu Nome Completo">
+                <input type="text" id="conMusicoDoc" class="form-control" placeholder="Seu CPF" style="margin-top:10px">
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('ajuda')">Voltar</button>
+                <button class="btn" style="background:var(--primary); color:white; flex:2;" onclick="gerarContratoPDF()">📄 GERAR CONTRATO</button>
+            </div>
+        </section>
+
         <section id="view-recibo" class="view-section">
             <h2 style="margin-bottom: 20px;">🧾 Gerador de Recibos</h2>
             
@@ -724,7 +770,8 @@
                         <div class="help-summary" style="background: rgba(78, 67, 118, 0.1); color: var(--primary);">🛠️ Ferramentas PRO</div>
                         <div class="help-content" style="display:block;">
                             <p style="margin-bottom:10px; font-size:13px;">Gere recibos profissionais para seus contratantes.</p>
-                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
+                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;" onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
+                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="navTo('contrato')">📜 Abrir Gerador de Contratos</button>
                         </div>
                     </div>
 
@@ -1617,6 +1664,112 @@ IMPORTANTE:
 
             doc.save('relatorio_musico.pdf');
             toast('PDF Gerado!');
+        }
+
+        function gerarContratoPDF() {
+            const nome = document.getElementById('conNome').value;
+            const doc = document.getElementById('conDoc').value;
+            const end = document.getElementById('conEnd').value;
+            const evento = document.getElementById('conEvento').value;
+            const data = document.getElementById('conData').value;
+            const inicio = document.getElementById('conInicio').value;
+            const fim = document.getElementById('conFim').value;
+            const local = document.getElementById('conLocal').value;
+            const cidade = document.getElementById('conCidade').value;
+            const valor = document.getElementById('conValor').value;
+            const pag = document.getElementById('conPagamento').value;
+            const dataPag = document.getElementById('conDataPag').value;
+            const musico = document.getElementById('conMusico').value;
+            const musicoDoc = document.getElementById('conMusicoDoc').value;
+
+            if(!nome || !evento || !valor || !musico) return toast('Preencha os campos obrigatórios', 'erro');
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            const dataFmt = data ? new Date(data + 'T00:00').toLocaleDateString('pt-BR') : 'DATA A DEFINIR';
+            const dataPagFmt = dataPag ? new Date(dataPag + 'T00:00').toLocaleDateString('pt-BR') : 'DATA A DEFINIR';
+            const hoje = new Date().toLocaleDateString('pt-BR');
+
+            pdf.setFontSize(16);
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CONTRATO DE PRESTAÇÃO DE SERVIÇOS MUSICAIS", 105, 20, null, null, "center");
+            
+            pdf.setFontSize(11);
+            pdf.setFont(undefined, 'normal');
+            
+            let y = 35;
+            const lh = 6; // line height
+
+            // Identificação
+            const textoIntro = `CONTRATANTE: ${nome}, inscrito(a) no CPF/CNPJ sob o nº ${doc}, residente/sediado em ${end}.\n\nCONTRATADO: ${musico}, inscrito(a) no CPF sob o nº ${musicoDoc}, doravante denominado MÚSICO/BANDA.\n\nAs partes acima identificadas têm, entre si, justo e acertado o presente Contrato de Prestação de Serviços Musicais, que se regerá pelas cláusulas seguintes:`;
+            
+            const splitIntro = pdf.splitTextToSize(textoIntro, 170);
+            pdf.text(splitIntro, 20, y);
+            y += (splitIntro.length * lh) + 5;
+
+            // Cláusula 1
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CLÁUSULA 1ª - DO OBJETO", 20, y);
+            y += lh;
+            pdf.setFont(undefined, 'normal');
+            const textoObj = `O presente contrato tem como objeto a realização de apresentação musical (Show) pelo CONTRATADO, conforme especificações abaixo:\n• Evento: ${evento}\n• Data: ${dataFmt}\n• Horário: Das ${inicio} às ${fim}\n• Local: ${local} - ${cidade}`;
+            const splitObj = pdf.splitTextToSize(textoObj, 170);
+            pdf.text(splitObj, 20, y);
+            y += (splitObj.length * lh) + 5;
+
+            // Cláusula 2
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CLÁUSULA 2ª - DO PREÇO E FORMA DE PAGAMENTO", 20, y);
+            y += lh;
+            pdf.setFont(undefined, 'normal');
+            const textoPag = `Pela prestação dos serviços, o CONTRATANTE pagará ao CONTRATADO a quantia de R$ ${valor}, a ser paga via ${pag} até a data de ${dataPagFmt}.`;
+            const splitPag = pdf.splitTextToSize(textoPag, 170);
+            pdf.text(splitPag, 20, y);
+            y += (splitPag.length * lh) + 5;
+
+            // Cláusula 3
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CLÁUSULA 3ª - DAS OBRIGAÇÕES", 20, y);
+            y += lh;
+            pdf.setFont(undefined, 'normal');
+            const textoObr = `I. O CONTRATADO compromete-se a comparecer ao local com antecedência mínima de 30 minutos.\nII. O CONTRATANTE compromete-se a fornecer estrutura de som (PA) adequada e pontos de energia, salvo combinado contrário.\nIII. O CONTRATANTE fornecerá água e alimentação adequada aos músicos.`;
+            const splitObr = pdf.splitTextToSize(textoObr, 170);
+            pdf.text(splitObr, 20, y);
+            y += (splitObr.length * lh) + 5;
+
+            // Cláusula 4
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CLÁUSULA 4ª - DO CANCELAMENTO", 20, y);
+            y += lh;
+            pdf.setFont(undefined, 'normal');
+            const textoCanc = `O cancelamento deve ser comunicado por escrito.\nI. Mais de 7 dias de antecedência: Isento de multa.\nII. Menos de 7 dias: Multa de 50% do valor.\nIII. No dia do evento: Multa de 100% do valor.`;
+            const splitCanc = pdf.splitTextToSize(textoCanc, 170);
+            pdf.text(splitCanc, 20, y);
+            y += (splitCanc.length * lh) + 5;
+
+            // Cláusula 5
+            pdf.setFont(undefined, 'bold');
+            pdf.text("CLÁUSULA 5ª - DO FORO", 20, y);
+            y += lh;
+            pdf.setFont(undefined, 'normal');
+            pdf.text(`Para dirimir controvérsias, elegem o foro da comarca de ${cidade}.`, 20, y);
+            y += lh + 10;
+
+            // Assinaturas
+            if (y > 250) { pdf.addPage(); y = 40; }
+            
+            pdf.text(`${cidade}, ${hoje}.`, 105, y, null, null, "center");
+            y += 30;
+            
+            pdf.line(30, y, 90, y);
+            pdf.line(120, y, 180, y);
+            y += 5;
+            pdf.text("CONTRATANTE", 60, y, null, null, "center");
+            pdf.text("CONTRATADO", 150, y, null, null, "center");
+
+            pdf.save('contrato_musico.pdf');
+            toast('Contrato Gerado!');
         }
 
         function gerarReciboPDF() {
