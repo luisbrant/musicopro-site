@@ -21,19 +21,21 @@ export default function Home() {
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <a href="/guia" className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
-              Guia Gratuito
-            </a>
+            <Link href="/guia">
+              <span className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
+                Guia Gratuito
+              </span>
+            </Link>
             <Link href="/pro">
               <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
                 Licença PRO
               </button>
             </Link>
-            <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer">
+            <Link href="/app">
               <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition">
                 Abrir App
               </button>
-            </a>
+            </Link>
           </nav>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -47,21 +49,21 @@ export default function Home() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <nav className="md:hidden bg-[#0c2461] text-white p-4 space-y-2">
-          <a href="/guia">
+          <Link href="/guia">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
               Guia Gratuito
             </button>
-          </a>
+          </Link>
           <Link href="/pro">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
               Licença PRO
             </button>
           </Link>
-          <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer">
+          <Link href="/app">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold">
               Abrir App
             </button>
-          </a>
+          </Link>
         </nav>
       )}
 
@@ -80,14 +82,14 @@ export default function Home() {
               Funciona direto no navegador — otimizado para celular, tablet e computador.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer">
+              <Link href="/app">
                 <button
                   onClick={() => trackDownloadAppClick()}
                   className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition w-full sm:w-auto text-lg shadow-lg hover:shadow-xl"
                 >
                   👉 Usar App Grátis
                 </button>
-              </a>
+              </Link>
               <Link href="/pro">
                 <button
                   onClick={() => trackBuyClick()}
@@ -318,16 +320,16 @@ export default function Home() {
             Você também pode acessar nosso Guia Fiscal em formato de site. Ele explica a teoria e os casos comuns — e complementa o uso do app.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="/guia">
+            <Link href="/guia">
               <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
                 📖 Ler Guia Gratuito
               </button>
-            </a>
-            <a href="/guia#desbloquear">
+            </Link>
+            <Link href="/guia#desbloquear">
               <button className="bg-transparent hover:bg-[#d4af37]/20 text-[#0c2461] font-bold px-6 py-3 rounded-lg transition border-2 border-[#d4af37]">
                 🔓 Desbloquear com código
               </button>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -336,14 +338,14 @@ export default function Home() {
           <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
             Pronto para organizar sua vida fiscal?
           </h3>
-          <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer">
+          <Link href="/app">
             <button
               onClick={() => trackDownloadAppClick()}
               className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl"
             >
               👉 Começar a usar o app agora
             </button>
-          </a>
+          </Link>
         </section>
       </main>
 
