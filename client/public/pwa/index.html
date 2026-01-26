@@ -640,6 +640,16 @@
             <h2 style="margin-bottom: 20px;">📜 Gerador de Contratos</h2>
             
             <div class="input-group">
+                <label>Selecione um Template (Opcional)</label>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
+                    <button class="btn" style="background:#e8f4f8; color:#2b5876; border:2px solid #2b5876; padding:12px;" onclick="carregarTemplate('casamento')">💒 Casamento</button>
+                    <button class="btn" style="background:#fff4e6; color:#d97706; border:2px solid #d97706; padding:12px;" onclick="carregarTemplate('bar')">🍺 Show em Bar</button>
+                    <button class="btn" style="background:#f0e6ff; color:#7c3aed; border:2px solid #7c3aed; padding:12px;" onclick="carregarTemplate('aula')">🎓 Aula Particular</button>
+                    <button class="btn" style="background:#e6f4e6; color:#059669; border:2px solid #059669; padding:12px;" onclick="carregarTemplate('corporativo')">🏢 Evento Corp.</button>
+                </div>
+            </div>
+            
+            <div class="input-group" id="grupoContratante">
                 <label>Dados do Contratante</label>
                 <input type="text" id="conNome" class="form-control" placeholder="Nome ou Razão Social">
                 <input type="text" id="conDoc" class="form-control" placeholder="CPF ou CNPJ" style="margin-top:10px">
@@ -1664,6 +1674,60 @@ IMPORTANTE:
 
             doc.save('relatorio_musico.pdf');
             toast('PDF Gerado!');
+        }
+
+        function carregarTemplate(tipo) {
+            const hoje = new Date();
+            const dataProxima = new Date(hoje.getTime() + 7*24*60*60*1000).toISOString().split('T')[0];
+            
+            const templates = {
+                casamento: {
+                    evento: 'Casamento',
+                    inicio: '20:00',
+                    fim: '23:00',
+                    local: 'Salão de Festas',
+                    valor: '1500,00',
+                    pagamento: 'PIX'
+                },
+                bar: {
+                    evento: 'Show em Bar',
+                    inicio: '21:00',
+                    fim: '23:30',
+                    local: 'Bar/Boate',
+                    valor: '800,00',
+                    pagamento: 'Dinheiro'
+                },
+                aula: {
+                    evento: 'Aula Particular',
+                    inicio: '14:00',
+                    fim: '15:00',
+                    local: 'Local do Aluno',
+                    valor: '150,00',
+                    pagamento: 'PIX'
+                },
+                corporativo: {
+                    evento: 'Evento Corporativo',
+                    inicio: '18:00',
+                    fim: '22:00',
+                    local: 'Auditório/Salão',
+                    valor: '2500,00',
+                    pagamento: 'Transferência Bancária'
+                }
+            };
+            
+            const t = templates[tipo];
+            if (!t) return;
+            
+            document.getElementById('conEvento').value = t.evento;
+            document.getElementById('conData').value = dataProxima;
+            document.getElementById('conInicio').value = t.inicio;
+            document.getElementById('conFim').value = t.fim;
+            document.getElementById('conLocal').value = t.local;
+            document.getElementById('conValor').value = t.valor;
+            document.getElementById('conPagamento').value = t.pagamento;
+            document.getElementById('conDataPag').value = dataProxima;
+            
+            toast(`Template "${t.evento}" carregado! Ajuste os dados conforme necessário.`);
         }
 
         function gerarContratoPDF() {
