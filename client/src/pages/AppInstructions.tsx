@@ -1,8 +1,38 @@
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 import { ChevronRight, Smartphone, Globe, Lock } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function AppInstructions() {
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallBtn, setShowInstallBtn] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallBtn(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) {
+      alert('Para instalar no iPhone, use o botão Compartilhar e escolha "Adicionar à Tela de Início".');
+      return;
+    }
+
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    setDeferredPrompt(null);
+    setShowInstallBtn(false);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -41,12 +71,22 @@ export default function AppInstructions() {
               <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                 🚀 Abrir o App
               </a>
+              {showInstallBtn && (
+                <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+                  📲 Instalar no dispositivo
+                </button>
+              )}
               <Link href="/pro#comprar">
                 <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 text-lg">
                   💳 Comprar Licença PRO
                 </button>
               </Link>
             </div>
+            {showInstallBtn && (
+              <p className="text-sm opacity-90 pt-2">
+                Crie um atalho no seu celular ou computador para abrir o app como aplicativo.
+              </p>
+            )}
           </div>
         </section>
 
@@ -150,7 +190,11 @@ export default function AppInstructions() {
             </div>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-[#0c2461] font-semibold">💡 Nota:</p>
-              <p className="text-[#0c2461] opacity-85 text-sm mt-1">No iPhone, isso funciona melhor pelo Safari (não pelo navegador do Instagram).</p>
+              <p className="text-[#0c2461] opacity-85 text-sm mt-1">No iPhone, isso funciona melhor pelo Safari (nao pelo navegador do Instagram).</p>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <p className="text-[#0c2461] font-semibold">i Instalacao no iPhone:</p>
+              <p className="text-[#0c2461] opacity-85 text-sm mt-1">Abra este site no Safari, toque em Compartilhar e escolha Adicionar a Tela de Inicio.</p>
             </div>
           </div>
         </section>
@@ -272,12 +316,17 @@ export default function AppInstructions() {
               Pronto para começar?
             </h3>
             <p className="text-lg opacity-90">
-              Se você quer começar agora, abra o app e faça seu primeiro lançamento.
+              Abra ou instale o app e faça seu primeiro lançamento agora.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                 🚀 Abrir o App
               </a>
+              {showInstallBtn && (
+                <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+                  📲 Instalar no dispositivo
+                </button>
+              )}
               <Link href="/">
                 <button className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 text-lg">
                   ← Voltar para a Página Inicial
