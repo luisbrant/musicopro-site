@@ -6,15 +6,42 @@ import { useState, useEffect } from 'react';
 export default function AppInstructions() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallBtn, setShowInstallBtn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  const LS_KEY = 'mp_install_prompt_dismissed_until';
+  const DAYS_30 = 30 * 24 * 60 * 60 * 1000;
+
+  const shouldShowModal = () => {
+    const until = Number(localStorage.getItem(LS_KEY) || 0);
+    return Date.now() > until;
+  };
+
+  const closeModal = (remindLater: boolean = false) => {
+    setShowModal(false);
+    if (remindLater) {
+      localStorage.setItem(LS_KEY, String(Date.now() + DAYS_30));
+    }
+  };
 
   useEffect(() => {
+    const isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    setIsIOS(isIOSDevice);
+
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallBtn(true);
+      if (shouldShowModal()) {
+        setShowModal(true);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    if (isIOSDevice && shouldShowModal()) {
+      setShowModal(true);
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -22,8 +49,12 @@ export default function AppInstructions() {
   }, []);
 
   const handleInstallApp = async () => {
+    if (isIOS) {
+      closeModal(false);
+      return;
+    }
     if (!deferredPrompt) {
-      alert('Para instalar no iPhone, use o botão Compartilhar e escolha "Adicionar à Tela de Início".');
+      alert('Para instalar, abra no Chrome ou Edge e tente novamente.');
       return;
     }
 
@@ -31,6 +62,7 @@ export default function AppInstructions() {
     await deferredPrompt.userChoice;
     setDeferredPrompt(null);
     setShowInstallBtn(false);
+    closeModal(true);
   };
 
   return (
@@ -336,6 +368,55 @@ export default function AppInstructions() {
           </div>
         </section>
       </main>
+
+      {/* Modal de Instalacao */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md space-y-4">
+            <h2 className="text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Instale o atalho do Músico Pro
+            </h2>
+            <p className="text-[#0c2461] opacity-90">
+              {isIOS
+                ? 'No iPhone, a instalação é feita pelo menu de compartilhamento do Safari.'
+                : 'Instale para abrir como aplicativo e acessar mais rápido.'}
+            </p>
+
+            {isIOS && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-3">
+                <p className="font-semibold text-[#0c2461]">No iPhone (Safari):</p>
+                <ol className="list-decimal list-inside space-y-2 text-[#0c2461] text-sm">
+                  <li>Toque em <b>Compartilhar</b></li>
+                  <li>Selecione <b>Adicionar à Tela de Início</b></li>
+                  <li>Toque em <b>Adicionar</b></li>
+                </ol>
+                <p className="text-xs opacity-75 pt-2">
+                  Dica: se você abriu pelo Instagram/WhatsApp, toque em "Abrir no Safari".
+                </p>
+              </div>
+            )}
+
+            <div className="flex gap-3 pt-4">
+              <button
+                onClick={handleInstallApp}
+                className="flex-1 bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold py-3 rounded-lg transition"
+              >
+                {isIOS ? '✓ Entendi' : '📲 Instalar agora'}
+              </button>
+              <button
+                onClick={() => closeModal(true)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-[#0c2461] font-bold py-3 rounded-lg transition"
+              >
+                Continuar sem instalar
+              </button>
+            </div>
+
+            <p className="text-xs text-[#0c2461] opacity-75 text-center">
+              Você pode instalar depois a qualquer momento nesta página.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <Footer />
