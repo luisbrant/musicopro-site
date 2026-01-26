@@ -1,252 +1,307 @@
-import { CheckCircle2, Star, Download, ShieldCheck, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Star, Download, ShieldCheck, ArrowRight, Music } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
 export default function Vendas() {
   return (
-    <div className="min-h-screen bg-[#F9F7F4] font-['Poppins',_sans-serif]">
-      {/* Header Simples */}
-      <header className="bg-white border-b border-[#E8E3DC] sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC]">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="text-lg font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              Músico Pro
-            </h1>
+            <Music className="w-8 h-8 text-[#d4af37]" />
+            <h1 className="font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</h1>
           </Link>
-            <a href="#comprar" className="bg-[#d4af37] text-[#0c2461] px-4 py-2 rounded-full text-sm font-bold hover:bg-[#c99a2e] transition">
+          <a href="#comprar" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] px-6 py-2 rounded-lg font-bold transition">
             Comprar Licença PRO
-            </a>
+          </a>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-[#0c2461] text-white py-16 md:py-24 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center"></div>
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
-          <span className="bg-[#E07856] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block">
-            Oferta Especial de Lançamento
-          </span>
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 font-['Lexend',_sans-serif] leading-tight">
-            Licença PRO + Guia Completo
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Desbloqueie todo o potencial do App MusicoPro, baixe o E-book em PDF e acesse checklists exclusivos.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <a href="#comprar" className="bg-[#d4af37] text-[#0c2461] px-8 py-4 rounded-lg text-lg font-bold hover:bg-[#c99a2e] transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
-              Comprar Licença PRO <ArrowRight size={20} />
-            </a>
-            <a href="https://app.musicopro.app.br/app-landing.html" target="_blank" rel="noopener noreferrer" className="bg-white/10 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-lg text-lg font-bold hover:bg-white/20 transition flex items-center justify-center gap-2">
-              <Download size={20} /> Baixar App Grátis
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* O Problema */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#0c2461] text-center mb-12 font-['Lexend',_sans-serif]">
-            Você vive essa realidade?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
-              <div className="text-4xl mb-4">😰</div>
-              <h3 className="font-bold text-[#0c2461] mb-2">Medo da Malha Fina</h3>
-              <p className="text-[#0c2461] text-sm">Recebe PIX de cachês e alunos, mas não sabe se deve declarar ou como fazer isso corretamente.</p>
-            </div>
-            <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
-              <div className="text-4xl mb-4">💸</div>
-              <h3 className="font-bold text-[#0c2461] mb-2">Imposto Alto Demais</h3>
-              <p className="text-[#0c2461] text-sm">Sente que paga muito imposto ou tem medo de pagar uma fortuna de uma vez só no ajuste anual.</p>
-            </div>
-            <div className="bg-[#F9F7F4] p-6 rounded-xl border border-[#E8E3DC]">
-              <div className="text-4xl mb-4">📉</div>
-              <h3 className="font-bold text-[#0c2461] mb-2">Desorganização Total</h3>
-              <p className="text-[#0c2461] text-sm">Mistura dinheiro pessoal com profissional, perde recibos e não sabe quanto realmente lucra.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* A Solução: O Kit */}
-      <section id="demo" className="py-16 bg-[#0c2461] text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4 font-['Lexend',_sans-serif]">
-              Apresentando o Kit Músico Pro
+      {/* Main Content */}
+      <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        {/* HERO */}
+        <section className="mb-16 md:mb-20">
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-6">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Licença PRO
             </h2>
-            <p className="text-gray-300">
-              Não é apenas um e-book. É um sistema completo de gestão para sua carreira.
+            <p className="text-xl md:text-2xl opacity-95 font-medium">
+              Desbloqueie recursos avançados + acesso completo ao Guia Fiscal.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-            <div className="space-y-8">
-              <div className="flex gap-4">
-                <div className="bg-[#E07856] w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xl">1</div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2">E-book Guia Definitivo (PDF + Web)</h3>
-                  <p className="text-gray-300 text-sm">O manual completo com 15 capítulos, atualizado para 2026. Aprenda sobre Carnê-Leão, RPA, Deduções e muito mais em linguagem simples.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="bg-[#6BA587] w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xl">2</div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2">Ferramenta MusicoPro (App)</h3>
-                  <p className="text-gray-300 text-sm">Aplicativo exclusivo para controle financeiro. Lance cachês, despesas e gere recibos profissionais na palma da mão.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="bg-[#D4A574] w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
-                <div>
-                  <h3 className="text-xl font-bold mb-2">Pack de Checklists & Modelos</h3>
-                  <p className="text-gray-300 text-sm">Arquivos prontos para usar: Checklist Mensal de Obrigações, Planilha de Cálculo de Preço de Show e Modelo de Contrato.</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-2 transform rotate-2 hover:rotate-0 transition duration-500 shadow-2xl">
-              {/* Placeholder para imagem do produto */}
-              <div className="bg-gray-100 rounded-lg h-80 flex items-center justify-center text-gray-400">
-                <div className="text-center">
-                  <span className="text-6xl">📱 + 📘</span>
-                  <p className="mt-4 font-bold text-gray-500">Preview do App + E-book</p>
-                </div>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <a href="#comprar" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+                👉 Comprar Agora
+              </a>
+              <Link href="/guia">
+                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 text-lg">
+                  📖 Ver Guia Gratuito
+                </button>
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Detalhes da Ferramenta */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="flex flex-col-reverse md:flex-row gap-12 items-center">
-            <div className="flex-1 bg-[#F9F7F4] p-8 rounded-2xl border border-[#E8E3DC] w-full">
-              <h3 className="text-xl font-bold text-[#1B4965] mb-4 flex items-center gap-2">
-                <Star className="text-[#E07856] fill-current" />
-                O que o App Músico Pro faz por você:
-              </h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
-                  <span className="text-[#2C3E50]"><strong>Gestão de Cachês:</strong> Registre cada show, aula ou gravação.</span>
+        {/* O QUE INCLUI */}
+        <section className="mb-16 md:mb-20 space-y-8">
+          <div className="text-center space-y-2">
+            <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              O que inclui a Licença PRO
+            </h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4 border-l-4 border-[#d4af37]">
+              <h4 className="text-2xl font-bold text-[#0c2461]">🚀 App Completo</h4>
+              <ul className="space-y-3 text-[#0c2461] opacity-90">
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Registrar receitas e despesas ilimitadas</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
-                  <span className="text-[#2C3E50]"><strong>Gerador de Recibos:</strong> Crie recibos profissionais em PDF em segundos.</span>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Calcular Carnê-Leão automaticamente</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
-                  <span className="text-[#2C3E50]"><strong>Relatórios Visuais:</strong> Veja gráficos de faturamento mensal e anual.</span>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Gerar recibos profissionais em PDF</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] flex-shrink-0 mt-1" />
-                  <span className="text-[#2C3E50]"><strong>Funciona Offline:</strong> Baixe e use no celular, tablet ou computador, sem precisar de internet.</span>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Gerar contratos de prestação de serviços</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Consultor IA para dúvidas fiscais</span>
                 </li>
               </ul>
             </div>
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-3xl font-bold text-[#1B4965] mb-4 font-['Lexend',_sans-serif]">
-                Seu Assistente Financeiro de Bolso
-              </h2>
-              <p className="text-[#2C3E50] mb-6 leading-relaxed">
-                Chega de planilhas complicadas ou anotações em caderno. O MusicoPro foi desenvolvido especificamente para a realidade do músico brasileiro. Simples, direto e poderoso.
-              </p>
-              <div className="inline-block bg-[#E8F5E9] text-[#6BA587] px-4 py-2 rounded-lg font-bold text-sm">
-                🎁 Bônus exclusivo desta oferta
+
+            <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4 border-l-4 border-[#d4af37]">
+              <h4 className="text-2xl font-bold text-[#0c2461]">📘 Guia Fiscal Completo</h4>
+              <ul className="space-y-3 text-[#0c2461] opacity-90">
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>10 capítulos avançados (PRO)</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>5 casos práticos reais</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Rotina mensal passo a passo</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Checklist de documentação</span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                  <span>Atualizações para 2026</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* BENEFÍCIOS */}
+        <section className="mb-16 md:mb-20 bg-[#f0f4f8] rounded-lg p-8 md:p-12 space-y-8">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Benefícios da Licença PRO
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Recibos Profissionais</h4>
+                <p className="text-[#0c2461] opacity-85">Gere recibos em PDF para seus clientes com um clique.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Contratos Automatizados</h4>
+                <p className="text-[#0c2461] opacity-85">Crie contratos de prestação de serviços em segundos.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Consultor IA</h4>
+                <p className="text-[#0c2461] opacity-85">Faça perguntas sobre impostos e receba respostas personalizadas.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Guia Completo Desbloqueado</h4>
+                <p className="text-[#0c2461] opacity-85">Acesso a todos os 10 capítulos avançados do Guia Fiscal.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Suporte Prioritário</h4>
+                <p className="text-[#0c2461] opacity-85">Dúvidas? Receba respostas rápidas do nosso time.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Star className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-bold text-[#0c2461] mb-1">Atualizações Garantidas</h4>
+                <p className="text-[#0c2461] opacity-85">Receba novas funcionalidades e conteúdo atualizado.</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Preço e CTA */}
-      <section id="comprar" className="py-20 bg-[#F9F7F4]">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1B4965] mb-12 font-['Lexend',_sans-serif]">
-            Comece a Profissionalizar sua Carreira Hoje
-          </h2>
-          
-          <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E8E3DC] relative">
-            <div className="absolute top-0 right-0 bg-[#E07856] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-              MAIS VENDIDO
+        {/* PREÇO E CTA */}
+        <section id="comprar" className="mb-16 md:mb-20">
+          <div className="max-w-md mx-auto bg-white rounded-lg border-2 border-[#d4af37] shadow-xl overflow-hidden">
+            <div className="bg-[#d4af37] text-[#0c2461] px-6 py-4 text-center">
+              <p className="font-bold text-lg">Licença PRO Anual</p>
+              <p className="text-sm opacity-90">Acesso completo por 12 meses</p>
             </div>
-            <div className="p-8">
-              <h3 className="text-xl font-bold text-[#2C3E50] mb-2">Kit Músico Pro Completo</h3>
-              <p className="text-gray-500 text-sm mb-6">Acesso anual a todo o conteúdo.</p>
-              
-              <div className="flex justify-center items-baseline gap-1 mb-8">
-                <span className="text-gray-400 text-lg line-through">R$ 197,00</span>
-                <span className="text-4xl font-bold text-[#1B4965]">R$ 97,00</span>
+
+            <div className="p-8 space-y-6">
+              <div className="text-center">
+                <p className="text-gray-400 line-through mb-2">R$ 197,00</p>
+                <p className="text-5xl font-bold text-[#0c2461]">R$ 97,00</p>
+                <p className="text-sm text-[#0c2461] opacity-75 mt-2">Acesso imediato após compra</p>
               </div>
 
-              <ul className="space-y-4 mb-8 text-left">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
-                  <span><strong>Licença PRO Anual:</strong> Desbloqueie todas as funções do App.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
-                  <span><strong>E-book PDF (Download):</strong> Guia completo para ler offline.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
-                  <span><strong>Pacote de Checklists:</strong> Organização fiscal mês a mês.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="text-[#6BA587] shrink-0 mt-1" />
-                  <span><strong>Atualizações Garantidas:</strong> Acesso às novas versões do App.</span>
-                </li>
-              </ul>
-
-              {/* Trust Stack */}
-              <div className="bg-[#F0F8F5] rounded-lg p-4 mb-4 space-y-2 text-sm">
-                <div className="flex items-center gap-2 text-[#0c2461]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" />
-                  <span>Acesso imediato após a compra.</span>
+              <div className="space-y-3 text-sm text-[#0c2461]">
+                <div className="flex gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                  <span>App completo com todas as funções</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#0c2461]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" />
-                  <span>Conteúdo atualizado para 2026.</span>
+                <div className="flex gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                  <span>Guia Fiscal com 10 capítulos PRO</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#0c2461]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" />
-                  <span>Compra segura via Hotmart.</span>
+                <div className="flex gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                  <span>Recibos e contratos profissionais</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#0c2461]">
-                  <CheckCircle2 size={16} className="text-[#6BA587]" />
-                  <span>Garantia conforme política da plataforma.</span>
+                <div className="flex gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                  <span>Consultor IA incluído</span>
+                </div>
+                <div className="flex gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                  <span>Suporte prioritário</span>
                 </div>
               </div>
 
-              <a 
-                href="https://pay.hotmart.com/SEU_LINK_AQUI" 
+              <a
+                href="https://pay.hotmart.com/SEU_LINK_AQUI"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] text-xl font-bold py-4 rounded-xl shadow-lg transform hover:-translate-y-1 transition mb-4"
+                className="block w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold py-4 rounded-lg transition text-center text-lg shadow-lg hover:shadow-xl"
               >
                 Comprar Licença PRO
               </a>
-              <a 
-                href="https://app.musicopro.app.br/app-landing.html"
-                target="_blank"
-                rel="noopener noreferrer" 
-                download
-                className="block w-full bg-white border-2 border-[#1B4965] text-[#1B4965] hover:bg-gray-50 text-lg font-bold py-3 rounded-xl transition"
-              >
-                Baixar App Grátis
-              </a>
-              <p className="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
-                <ShieldCheck size={12} /> Pagamento 100% seguro via Hotmart.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-4 text-xs text-gray-500 border-t border-gray-100">
-              Garantia incondicional de 7 dias. Se não gostar, devolvemos seu dinheiro.
+
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center text-sm text-green-800">
+                <p className="font-semibold">✅ Garantia de 7 dias</p>
+                <p>Se não gostar, devolvemos seu dinheiro.</p>
+              </div>
+
+              <div className="text-center text-xs text-[#0c2461] opacity-75 flex items-center justify-center gap-1">
+                <ShieldCheck size={14} /> Pagamento 100% seguro via Hotmart
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* FAQ */}
+        <section className="mb-16 md:mb-20 space-y-8">
+          <div className="text-center space-y-2">
+            <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              Perguntas frequentes
+            </h3>
+          </div>
+
+          <div className="space-y-4 max-w-3xl mx-auto">
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                Qual é a diferença entre Grátis e PRO?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                A versão Grátis permite registrar receitas e despesas, calcular imposto e usar o app básico. A versão PRO adiciona recibos profissionais, contratos, consultor IA e acesso ao Guia Fiscal completo.
+              </p>
+            </details>
+
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                Como recebo o código do Guia PRO?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                Após a compra, você receberá um e-mail com seu código de desbloqueio. Use esse código na página do Guia Fiscal para liberar o conteúdo PRO.
+              </p>
+            </details>
+
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                Posso usar em múltiplos dispositivos?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                Sim. O app funciona em qualquer navegador. Seus dados são locais de cada dispositivo, mas você pode fazer backup e sincronizar entre eles.
+              </p>
+            </details>
+
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                Há limite de tempo para usar?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                A Licença PRO é válida por 12 meses. Você pode renovar a qualquer momento. Mesmo após expirar, seus dados no app permanecem intactos.
+              </p>
+            </details>
+
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                Posso cancelar?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                Sim. Você tem 7 dias de garantia. Se não gostar, devolvemos seu dinheiro sem perguntas. Após esse período, não há reembolso, mas você pode deixar expirar.
+              </p>
+            </details>
+
+            <details className="bg-[#f0f4f8] rounded-lg p-6 cursor-pointer group">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg">
+                O app substitui um contador?
+                <span className="group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-85 mt-4">
+                Não. O Músico Pro ajuda você a organizar dados e entender seu resultado fiscal. Para declaração oficial, consulte um contador.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        {/* CTA FINAL */}
+        <section className="text-center space-y-6 mb-16">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+            Pronto para profissionalizar sua carreira?
+          </h3>
+          <a href="#comprar" className="inline-block bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+            👉 Comprar Licença PRO Agora
+          </a>
+        </section>
+      </main>
 
       {/* Footer */}
       <Footer />

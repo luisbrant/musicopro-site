@@ -15,6 +15,7 @@ import Obrigado from "./pages/Obrigado";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
 import PWA from "./pages/PWA";
+import Guide from "./pages/Guide";
 
 
 function Router() {
@@ -25,6 +26,7 @@ function Router() {
       <AttributionBanner isVisible={showBanner} onClose={closeBanner} />
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path="/guia" component={Guide} />
         <Route path="/pro" component={Vendas} />
         <Route path="/premium" component={Premium} />
         <Route path="/obrigado" component={Obrigado} />

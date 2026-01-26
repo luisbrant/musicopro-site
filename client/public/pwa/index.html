@@ -781,7 +781,21 @@
                         <div class="help-content" style="display:block;">
                             <p style="margin-bottom:10px; font-size:13px;">Gere recibos profissionais para seus contratantes.</p>
                             <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;" onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
-                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="navTo('contrato')">📜 Abrir Gerador de Contratos</button>
+                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;" onclick="navTo('contrato')">📜 Abrir Gerador de Contratos</button>
+                            <a href="../guia" target="_blank" class="btn-outline" style="display:block; text-align:center; border-color:var(--primary); color:var(--primary); font-weight:bold; text-decoration:none; padding:10px;">📖 Ler Guia Fiscal</a>
+                        </div>
+                    </div>
+
+                    <div class="help-card full-width-desktop" style="border: 2px solid #d4af37;">
+                        <div class="help-summary" style="background: rgba(212, 175, 55, 0.1); color: #d4af37;">📘 Guia Completo + Licença PRO</div>
+                        <div class="help-content" style="display:block;">
+                            <p style="margin-bottom:10px; font-size:13px;"><strong>Acesso ao Guia Fiscal Completo</strong> com 10 capítulos avançados, casos práticos e rotina mensal.</p>
+                            <a href="../pro" target="_blank" class="btn-outline" style="display:block; text-align:center; border-color: #d4af37; color: #d4af37; font-weight:bold; text-decoration:none; padding:10px; margin-bottom:10px;">🚀 Comprar Licença PRO</a>
+                            <p style="font-size:12px; color:var(--text-light); margin-bottom:10px;">Já tem o código? Use o campo abaixo para desbloquear.</p>
+                            <div style="display:flex; gap:8px;">
+                                <input type="text" id="proCode" placeholder="Código do Guia" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; font-size:12px;">
+                                <button class="btn" style="flex:0 0 auto; padding:8px 15px; font-size:12px;" onclick="ativarProCode()">🔓 Ativar</button>
+                            </div>
                         </div>
                     </div>
 
