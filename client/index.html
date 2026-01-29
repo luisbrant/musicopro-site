@@ -1,81 +1,80 @@
 <!doctype html>
 <html lang="pt-BR">
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    
+
     <!-- Primary Meta Tags -->
     <title>Músico Pro – Guia e App para organizar impostos de músicos</title>
     <meta name="title" content="Músico Pro – Guia e App para organizar impostos de músicos" />
-    <meta name="description" content="Guia prático para músicos autônomos organizarem cachês, PIX e Carnê-Leão sem complicação. App + E-book + Checklists." />
-    <meta name="keywords" content="IR músicos, Carnê-Leão, imposto de renda, MEI, PF, gestão fiscal, deduções, RPA, músico autônomo, cachê, PIX" />
+    <meta
+      name="description"
+      content="Guia prático para músicos autônomos organizarem cachês, PIX e Carnê-Leão sem complicação. App + E-book + Checklists."
+    />
+    <meta
+      name="keywords"
+      content="IR músicos, Carnê-Leão, imposto de renda, MEI, PF, gestão fiscal, deduções, RPA, músico autônomo, cachê, PIX"
+    />
     <meta name="author" content="Músico Pro" />
     <meta name="language" content="Portuguese" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://musicopro.app.br" />
-    
-    <!-- Open Graph / Facebook -->
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://musicopro.app.br" />
     <meta property="og:title" content="Músico Pro – Guia e App para organizar impostos" />
-    <meta property="og:description" content="Guia prático para músicos autônomos organizarem cachês, PIX e Carnê-Leão sem complicação." />
+    <meta
+      property="og:description"
+      content="Guia prático para músicos autônomos organizarem cachês, PIX e Carnê-Leão sem complicação."
+    />
     <meta property="og:image" content="https://musicopro.app.br/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://musicopro.app.br" />
     <meta property="twitter:title" content="Músico Pro – Guia e App para organizar impostos" />
-    <meta property="twitter:description" content="Imposto sem medo, do jeito certo. Guia + App para músicos autônomos." />
+    <meta
+      property="twitter:description"
+      content="Imposto sem medo, do jeito certo. Guia + App para músicos autônomos."
+    />
     <meta property="twitter:image" content="https://musicopro.app.br/og-image.png" />
-    
-    <!-- Favicon -->
+
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
     <div id="root"></div>
+
+    <!-- Vite entry -->
     <script type="module" src="/src/main.tsx"></script>
-    
+
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFMX9DJDJS"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QFMX9DJDJS', {
-        'page_path': window.location.pathname,
-        'anonymize_ip': true
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-QFMX9DJDJS", {
+        page_path: window.location.pathname,
+        anonymize_ip: true,
       });
     </script>
-    
-    <!-- Hotmart Pixel -->
-    <script>
-      (function(h,o,t,m,a,r,k){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:0,hjsv:0};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+m+h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    
-    <!-- Umami Analytics -->
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
   </body>
-
 </html>
