@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 export default function PWA() {
   useEffect(() => {
-    // Redireciona para /pwa/index.html (o app PWA)
-    window.location.href = '/pwa/index.html';
+    // Redireciona para 'https://app.musicopro.app.br/' (o app PWA)
+    window.location.href = 'https://app.musicopro.app.br/';
   }, []);
 
   return (
