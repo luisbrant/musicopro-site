@@ -75,22 +75,21 @@ export default function AppInstructions() {
   			🚀 Abrir o App
 		</a>
 
-              {showInstallBtn && (
-                <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+              <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
-                </button>
-              )}
+              </button>
+              
               <Link href="/pro#comprar">
                 <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 text-lg">
                   💳 Comprar Licença PRO
                 </button>
               </Link>
             </div>
-            {showInstallBtn && (
+           
               <p className="text-sm opacity-90 pt-2">
                 Crie um atalho no seu celular ou computador para abrir o app como aplicativo.
               </p>
-            )}
+          
           </div>
         </section>
 
@@ -326,12 +325,11 @@ export default function AppInstructions() {
              <a href={APP_URL} target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
   			🚀 Abrir o App
   		  </a>
-
-              {showInstallBtn && (
+            
                 <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
                 </button>
-              )}
+              
               <Link href="/">
                 <button className="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-lg transition border border-white/50 text-lg">
                   ← Voltar para a Página Inicial
