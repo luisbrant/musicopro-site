@@ -79,9 +79,10 @@ export default function AppInstructions() {
               Você não precisa instalar. O app funciona direto no navegador — e você pode adicionar um atalho na tela inicial.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <a href={APP_URL} target="_blank" rel="noopener noreferrer" ...>
+           <a href={APP_URL} target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
   			🚀 Abrir o App
 		</a>
+
               {showInstallBtn && (
                 <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
@@ -330,8 +331,10 @@ export default function AppInstructions() {
               Abra ou instale o app e faça seu primeiro lançamento agora.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <a href={APP_URL} target="_blank" rel="noopener noreferrer" ...>
-  			🚀 Abrir o App</a>
+             <a href={APP_URL} target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
+  			🚀 Abrir o App
+  		  </a>
+
               {showInstallBtn && (
                 <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
