@@ -1,17 +1,15 @@
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
-import { ChevronRight, Smartphone, Globe, Lock } from 'lucide-react';
+import { Smartphone, Globe, Lock } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function AppInstructions() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [showInstallBtn, setShowInstallBtn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
 
+  const APP_URL = 'https://app.musicopro.app.br/';
   const LS_KEY = 'mp_install_prompt_dismissed_until';
   const DAYS_30 = 30 * 24 * 60 * 60 * 1000;
-  const APP_URL = 'https://app.musicopro.app.br/';
 
   const shouldShowModal = () => {
     const until = Number(localStorage.getItem(LS_KEY) || 0);
@@ -29,40 +27,21 @@ export default function AppInstructions() {
     const isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     setIsIOS(isIOSDevice);
 
-    const handleBeforeInstallPrompt = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowInstallBtn(true);
-      if (shouldShowModal()) {
-        setShowModal(true);
-      }
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    if (isIOSDevice && shouldShowModal()) {
+    if (shouldShowModal()) {
       setShowModal(true);
     }
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
   }, []);
 
   const handleInstallApp = () => {
-  window.location.href = APP_URL;
-};
+    window.location.href = APP_URL;
+  };
 
       if (!deferredPrompt) {
       alert('Para instalar, abra no Chrome ou Edge e tente novamente.');
       return;
     }
 
-    await deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    setDeferredPrompt(null);
-    setShowInstallBtn(false);
-    closeModal(true);
+      closeModal(true);
   };
 
   return (
