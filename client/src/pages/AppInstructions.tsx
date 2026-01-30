@@ -36,14 +36,6 @@ export default function AppInstructions() {
     window.location.href = APP_URL;
   };
 
-      if (!deferredPrompt) {
-      alert('Para instalar, abra no Chrome ou Edge e tente novamente.');
-      return;
-    }
-
-      closeModal(true);
-  };
-
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
