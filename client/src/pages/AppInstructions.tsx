@@ -11,6 +11,7 @@ export default function AppInstructions() {
 
   const LS_KEY = 'mp_install_prompt_dismissed_until';
   const DAYS_30 = 30 * 24 * 60 * 60 * 1000;
+  const APP_URL = 'https://app.musicopro.app.br/';
 
   const shouldShowModal = () => {
     const until = Number(localStorage.getItem(LS_KEY) || 0);
@@ -48,12 +49,11 @@ export default function AppInstructions() {
     };
   }, []);
 
-  const handleInstallApp = async () => {
-    if (isIOS) {
-      closeModal(false);
-      return;
-    }
-    if (!deferredPrompt) {
+  const handleInstallApp = () => {
+  window.location.href = APP_URL;
+};
+
+      if (!deferredPrompt) {
       alert('Para instalar, abra no Chrome ou Edge e tente novamente.');
       return;
     }
@@ -100,9 +100,9 @@ export default function AppInstructions() {
               Você não precisa instalar. O app funciona direto no navegador — e você pode adicionar um atalho na tela inicial.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
-                🚀 Abrir o App
-              </a>
+            <a href={APP_URL} target="_blank" rel="noopener noreferrer" ...>
+  			🚀 Abrir o App
+		</a>
               {showInstallBtn && (
                 <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
@@ -351,9 +351,8 @@ export default function AppInstructions() {
               Abra ou instale o app e faça seu primeiro lançamento agora.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <a href="https://app.musicopro.app.br/pwa/index.html" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
-                🚀 Abrir o App
-              </a>
+              <a href={APP_URL} target="_blank" rel="noopener noreferrer" ...>
+  			🚀 Abrir o App</a>
               {showInstallBtn && (
                 <button onClick={handleInstallApp} className="bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold px-8 py-4 rounded-lg transition text-lg shadow-lg hover:shadow-xl">
                   📲 Instalar no dispositivo
