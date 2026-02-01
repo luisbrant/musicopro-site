@@ -201,7 +201,7 @@ export default function Vendas() {
               </div>
 
               <a
-                href="https://pay.hotmart.com/SEU_LINK_AQUI"
+                href="https://pay.hotmart.com/J104095456E?bid=1769979069812"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold py-4 rounded-lg transition text-center text-lg shadow-lg hover:shadow-xl"
