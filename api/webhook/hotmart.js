@@ -1,5 +1,3 @@
-import { Redis } from "@upstash/redis";
-
 export const config = { runtime: "nodejs" };
 
 function generateLicenseKey() {
@@ -13,27 +11,27 @@ function generateLicenseKey() {
   return key;
 }
 
+async function getRedis() {
+  // carrega a lib só quando precisa (evita crash no load)
+  const mod = await import("@upstash/redis");
+  const Redis = mod.Redis;
+  return Redis.fromEnv();
+}
+
 export default async function handler(req, res) {
-  // Inicializa dentro do handler pra não crashar no load
-  let redis;
-  try {
-    redis = Redis.fromEnv();
-  } catch (err) {
-    console.error("Redis init failed:", err);
-    return res.status(500).json({ ok: false, error: "redis_init_failed" });
-  }
-
+  // ✅ TESTE DA ROTA (não encosta em Redis)
   if (req.method !== "POST") {
-    return res.status(405).json({ ok: false });
+    return res.status(405).json({ ok: false, error: "method_not_allowed" });
   }
 
+  // ✅ Segurança Hotmart antes de qualquer coisa
   const hottok = req.headers["x-hotmart-hottok"];
   if (!hottok || hottok !== process.env.HOTMART_HOTTOK) {
     return res.status(401).json({ ok: false, error: "unauthorized" });
   }
 
   const payload = req.body || {};
-  const event = payload.event || payload.name || payload.type || "";
+  const event = String(payload.event || payload.name || payload.type || "");
 
   const buyerEmail =
     payload?.data?.buyer?.email ||
@@ -51,16 +49,28 @@ export default async function handler(req, res) {
   const isCanceled =
     event.includes("CANCELED") || event.includes("REFUND") || event.includes("CHARGEBACK");
 
+  // Eventos que não mexem em licença
+  if (!isApproved && !isCanceled) {
+    return res.status(200).json({ ok: true, ignored: true, event });
+  }
+
+  // ✅ Só aqui a gente tenta Redis
+  let redis;
+  try {
+    redis = await getRedis();
+  } catch (err) {
+    console.error("Redis load/init failed:", err);
+    return res.status(500).json({ ok: false, error: "redis_init_failed" });
+  }
+
   if (isApproved) {
     let licenseKey = await redis.get(emailKey);
-
     if (!licenseKey) {
       licenseKey = generateLicenseKey();
       await redis.set(emailKey, licenseKey);
     }
 
     const now = Date.now();
-
     await redis.set(`license:${licenseKey}`, {
       status: "active",
       email,
@@ -74,18 +84,16 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  if (isCanceled) {
-    const licenseKey = await redis.get(emailKey);
-    if (licenseKey) {
-      const lic = await redis.get(`license:${licenseKey}`);
-      if (lic) {
-        lic.status = "revoked";
-        lic.updatedAt = Date.now();
-        await redis.set(`license:${licenseKey}`, lic);
-      }
+  // isCanceled
+  const licenseKey = await redis.get(emailKey);
+  if (licenseKey) {
+    const lic = await redis.get(`license:${licenseKey}`);
+    if (lic) {
+      lic.status = "revoked";
+      lic.updatedAt = Date.now();
+      await redis.set(`license:${licenseKey}`, lic);
     }
-    return res.status(200).json({ ok: true });
   }
 
-  return res.status(200).json({ ok: true, ignored: true, event });
+  return res.status(200).json({ ok: true });
 }
