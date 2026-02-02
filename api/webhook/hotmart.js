@@ -1,129 +1,158 @@
-import { Redis } from "@upstash/redis";
+// api/webhook/hotmart.js
 
-const redis = Redis.fromEnv();
+const { Redis } = require("@upstash/redis");
 
-// Helpers
+// ✅ Upstash via REST (recomendado para serverless)
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+// ===== Helpers =====
 function normalizeEmail(email) {
   return String(email || "").trim().toLowerCase();
 }
 
-function now() {
-  return Date.now();
-}
-
-// Gere um código curto e legível pro Guia Premium (uma vez por e-mail)
-function generateGuideCode() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sem I/O/1/0 pra evitar confusão
-  let s = "MP-GUIA-";
-  for (let i = 0; i < 6; i++) s += chars[Math.floor(Math.random() * chars.length)];
-  return s;
+function json(res, status, body) {
+  return res.status(status).json(body);
 }
 
 /**
- * Regra simples para Assinatura:
- * - Active quando evento de compra aprovada/completa OU subscription.status ACTIVE
- * - Inactive quando cancelado/refund/chargeback/suspenso
+ * Mapeia eventos Hotmart → status de licença
+ * Ajuste os nomes conforme seus eventos reais (vou cobrir os principais).
  */
-function computeStatus(event, payload) {
-  const subStatus = payload?.data?.subscription?.status; // ACTIVE, CANCELED, etc. (quando vier)
+function mapHotmartEventToActive(event) {
   const e = String(event || "").toUpperCase();
 
-  const NEGATIVE = new Set([
-    "PURCHASE_CANCELED",
-    "PURCHASE_REFUNDED",
-    "CHARGEBACK",
-    "SUBSCRIPTION_CANCELED",
-    "SUBSCRIPTION_SUSPENDED",
-    "SUBSCRIPTION_EXPIRED",
-  ]);
-
-  const POSITIVE = new Set([
+  // ✅ eventos que ativam
+  const activates = new Set([
     "PURCHASE_APPROVED",
     "PURCHASE_COMPLETE",
+    "PURCHASE_COMPLETED",
+    "SUBSCRIPTION_PURCHASED",
+    "SUBSCRIPTION_REACTIVATED",
     "SUBSCRIPTION_ACTIVE",
   ]);
 
-  if (NEGATIVE.has(e)) return "inactive";
-  if (POSITIVE.has(e)) return "active";
+  // ❌ eventos que desativam
+  const deactivates = new Set([
+    "PURCHASE_CANCELED",
+    "PURCHASE_CANCELLED",
+    "PURCHASE_REFUNDED",
+    "REFUND",
+    "CHARGEBACK",
+    "SUBSCRIPTION_CANCELED",
+    "SUBSCRIPTION_CANCELLED",
+    "SUBSCRIPTION_EXPIRED",
+    "SUBSCRIPTION_SUSPENDED",
+    "SUBSCRIPTION_OVERDUE",
+  ]);
 
-  // fallback: se veio subscription.status, ele manda
-  if (String(subStatus || "").toUpperCase() === "ACTIVE") return "active";
-  if (subStatus) return "inactive"; // qualquer status diferente de ACTIVE -> bloqueia
+  if (activates.has(e)) return true;
+  if (deactivates.has(e)) return false;
 
-  return "ignored";
+  // Evento desconhecido → não muda status (mas registra)
+  return null;
 }
 
-export default async function handler(req, res) {
-  try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ ok: false, error: "method_not_allowed" });
-    }
+async function upsertLicenseByEmail({ namespace, email, active, payload }) {
+  const emailKey = `${namespace}:email:${email}`;
 
-    const payload = req.body;
+  const nowIso = new Date().toISOString();
 
-    // 1) Validação do HOTTOK (segurança básica)
-    const expectedHottok = process.env.HOTMART_HOTTOK;
-    const receivedHottok = payload?.hottok;
+  // Carrega estado atual (pra não “voltar” status sem querer)
+  const currentRaw = await redis.get(emailKey);
+  const current = currentRaw ? safeJsonParse(currentRaw) : null;
 
-    if (!expectedHottok) {
-      // Se faltar env, melhor falhar para você perceber (e Hotmart retentar)
-      return res.status(500).json({ ok: false, error: "missing_env_hottok" });
-    }
-    if (!receivedHottok || receivedHottok !== expectedHottok) {
-      return res.status(401).json({ ok: false, error: "invalid_hottok" });
-    }
+  const next = {
+    email,
+    active: typeof active === "boolean" ? active : (current?.active ?? false),
+    plan: current?.plan ?? "premium",
+    source: "hotmart",
+    lastEvent: payload?.event ?? current?.lastEvent ?? null,
+    transaction: payload?.data?.purchase?.transaction ?? current?.transaction ?? null,
+    productUcode: payload?.data?.product?.ucode ?? current?.productUcode ?? null,
+    updatedAt: nowIso,
+    createdAt: current?.createdAt ?? nowIso,
+  };
 
-    // 2) Extrair dados principais
-    const event = payload?.event;
-    const email = normalizeEmail(payload?.data?.buyer?.email);
+  // Salva documento principal (email como chave)
+  await redis.set(emailKey, JSON.stringify(next));
 
-    if (!email) {
-      // Sem email não dá pra vincular licença
-      return res.status(200).json({ ok: true, ignored: true, reason: "missing_email" });
-    }
-
-    const status = computeStatus(event, payload);
-    if (status === "ignored") {
-      // Não é erro. Só não interessa para licença
-      return res.status(200).json({ ok: true, ignored: true, event });
-    }
-
-    const key = `license:${email}`;
-
-    // 3) Buscar licença atual (pra reaproveitar guideCode)
-    const existing = await redis.get(key);
-
-    const transaction = payload?.data?.purchase?.transaction || null;
-    const planName = payload?.data?.subscription?.plan?.name || "pro_anual";
-    const planId = payload?.data?.subscription?.plan?.id || null;
-    const subscriberCode = payload?.data?.subscription?.subscriber?.code || null;
-
-    const next = {
-      email,
-      source: "hotmart",
-      status, // active | inactive
-      plan: planName,
-      planId,
-      subscriberCode,
-      hotmartTransaction: transaction,
-      updatedAt: now(),
-      createdAt: existing?.createdAt || now(),
-      // Assinatura: melhor NÃO inventar expiresAt. O status é a verdade.
-      // Se quiser no futuro, você cria "gracePeriodUntil" etc.
-      expiresAt: existing?.expiresAt || null,
-      guideCode: existing?.guideCode || generateGuideCode(),
-      lastEvent: String(event || ""),
-      lastPayloadId: payload?.id || null,
-    };
-
-    // 4) Salvar
-    await redis.set(key, next);
-
-    // 5) Responder rápido (Hotmart gosta de rapidez)
-    return res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error("hotmart webhook error:", err);
-    // Para Hotmart retentar, devolva 500.
-    return res.status(500).json({ ok: false, error: "internal_error" });
+  // Índices recomendados (não atrapalham, só ajudam)
+  // 1) Index por transaction → email
+  const tx = next.transaction ? String(next.transaction) : null;
+  if (tx) {
+    await redis.set(`${namespace}:tx:${tx}`, email);
   }
+
+  // 2) Index por product ucode → (opcional) email set
+  // Se quiser listar compradores de um produto depois:
+  // await redis.sadd(`${namespace}:product:${next.productUcode}`, email);
+
+  return next;
 }
+
+function safeJsonParse(s) {
+  try { return JSON.parse(s); } catch { return null; }
+}
+
+// ===== Handler =====
+module.exports = async function handler(req, res) {
+  // CORS básico (Hotmart não precisa, mas não atrapalha)
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") return res.status(204).end();
+  if (req.method !== "POST") return json(res, 405, { ok: false, error: "method_not_allowed" });
+
+  try {
+    // 1) Segurança: valida HOTTOK
+    const expected = process.env.HOTMART_HOTTOK;
+    const received = req.body?.hottok;
+
+    if (!expected) {
+      // Melhor falhar explícito pra você configurar
+      return json(res, 500, { ok: false, error: "missing_env_hotmart_hottok" });
+    }
+    if (!received || received !== expected) {
+      return json(res, 401, { ok: false, error: "invalid_hottok" });
+    }
+
+    // 2) Extrai email do comprador (no seu payload é buyer.email)
+    const email = normalizeEmail(req.body?.data?.buyer?.email);
+    if (!email) return json(res, 400, { ok: false, error: "missing_buyer_email" });
+
+    // 3) Decide ativo/desativo
+    const event = req.body?.event;
+    const activeMapped = mapHotmartEventToActive(event);
+
+    // 4) Namespace (pra separar licenças do app vs guia, se quiser)
+    // Aqui vou gravar em "license". Se quiser também o "guide", dá pra duplicar.
+    const namespaces = ["license", "guide"];
+
+// grava nos dois
+const results = [];
+for (const ns of namespaces) {
+  const saved = await upsertLicenseByEmail({
+    namespace: ns,
+    email,
+    active: activeMapped,   // se null, mantém o atual
+    payload: req.body,
+  });
+  results.push({ namespace: ns, active: saved.active });
+}
+
+return json(res, 200, {
+  ok: true,
+  email,
+  event,
+  results, // [{namespace:"license", active:true}, {namespace:"guide", active:true}]
+});
+
+    // Log útil no Vercel
+    console.error("hotmart webhook error:", err);
+    return json(res, 500, { ok: false, error: "internal_error" });
+  }
+};
