@@ -1,24 +1,23 @@
-import { Redis } from "@upstash/redis";
+const { Redis } = require("@upstash/redis");
 
 function generateLicenseKey() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let key = "MP-";
   for (let i = 0; i < 4; i++) {
     let part = "";
-    for (let j = 0; j < 4; j++) {
-      part += chars[Math.floor(Math.random() * chars.length)];
-    }
+    for (let j = 0; j < 4; j++) part += chars[Math.floor(Math.random() * chars.length)];
     key += part + (i < 3 ? "-" : "");
   }
   return key;
 }
 
-export const config = {
+// Força runtime Node (evita edge)
+module.exports.config = {
   runtime: "nodejs",
 };
 
-export default async function handler(req, res) {
-  // 🔒 Nunca inicialize Redis fora do handler
+module.exports = async function handler(req, res) {
+  // Inicializa Redis dentro do handler (evita crash no load)
   let redis;
   try {
     redis = Redis.fromEnv();
@@ -27,12 +26,10 @@ export default async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "redis_init_failed" });
   }
 
-  // Hotmart sempre envia POST
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false });
   }
 
-  // Segurança Hotmart
   const hottok = req.headers["x-hotmart-hottok"];
   if (!hottok || hottok !== process.env.HOTMART_HOTTOK) {
     return res.status(401).json({ ok: false, error: "unauthorized" });
@@ -53,15 +50,10 @@ export default async function handler(req, res) {
   const email = String(buyerEmail).toLowerCase().trim();
   const emailKey = `email:${email}`;
 
-  const isApproved =
-    event.includes("APPROVED") || event.includes("COMPLETE");
-
+  const isApproved = event.includes("APPROVED") || event.includes("COMPLETE");
   const isCanceled =
-    event.includes("CANCELED") ||
-    event.includes("REFUND") ||
-    event.includes("CHARGEBACK");
+    event.includes("CANCELED") || event.includes("REFUND") || event.includes("CHARGEBACK");
 
-  // ✅ Compra aprovada
   if (isApproved) {
     let licenseKey = await redis.get(emailKey);
 
@@ -85,7 +77,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  // ❌ Cancelamento / reembolso
   if (isCanceled) {
     const licenseKey = await redis.get(emailKey);
     if (licenseKey) {
@@ -100,4 +91,4 @@ export default async function handler(req, res) {
   }
 
   return res.status(200).json({ ok: true, ignored: true, event });
-}
+};
