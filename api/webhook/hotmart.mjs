@@ -1,4 +1,4 @@
-const { Redis } = require("@upstash/redis");
+import { Redis } from "@upstash/redis";
 
 function generateLicenseKey() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -11,7 +11,9 @@ function generateLicenseKey() {
   return key;
 }
 
-async function handler(req, res) {
+export const config = { runtime: "nodejs" };
+
+export default async function handler(req, res) {
   let redis;
   try {
     redis = Redis.fromEnv();
@@ -20,9 +22,7 @@ async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "redis_init_failed" });
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false });
-  }
+  if (req.method !== "POST") return res.status(405).json({ ok: false });
 
   const hottok = req.headers["x-hotmart-hottok"];
   if (!hottok || hottok !== process.env.HOTMART_HOTTOK) {
@@ -37,27 +37,22 @@ async function handler(req, res) {
     payload?.buyer?.email ||
     payload?.data?.purchase?.buyer?.email;
 
-  if (!buyerEmail) {
-    return res.status(200).json({ ok: true, ignored: "no_email" });
-  }
+  if (!buyerEmail) return res.status(200).json({ ok: true, ignored: "no_email" });
 
   const email = String(buyerEmail).toLowerCase().trim();
   const emailKey = `email:${email}`;
 
   const isApproved = event.includes("APPROVED") || event.includes("COMPLETE");
-  const isCanceled =
-    event.includes("CANCELED") || event.includes("REFUND") || event.includes("CHARGEBACK");
+  const isCanceled = event.includes("CANCELED") || event.includes("REFUND") || event.includes("CHARGEBACK");
 
   if (isApproved) {
     let licenseKey = await redis.get(emailKey);
-
     if (!licenseKey) {
       licenseKey = generateLicenseKey();
       await redis.set(emailKey, licenseKey);
     }
 
     const now = Date.now();
-
     await redis.set(`license:${licenseKey}`, {
       status: "active",
       email,
@@ -86,6 +81,3 @@ async function handler(req, res) {
 
   return res.status(200).json({ ok: true, ignored: true, event });
 }
-
-module.exports = handler;
-module.exports.config = { runtime: "nodejs" };
