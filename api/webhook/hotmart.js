@@ -1,19 +1,56 @@
-export const config = { runtime: "nodejs" };
+import { Redis } from "@upstash/redis";
 
-function generateLicenseKey() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let key = "MP-";
-  for (let i = 0; i < 4; i++) {
-    let part = "";
-    for (let j = 0; j < 4; j++) part += chars[Math.floor(Math.random() * chars.length)];
-    key += part + (i < 3 ? "-" : "");
-  }
-  return key;
+const redis = Redis.fromEnv();
+
+// Helpers
+function normalizeEmail(email) {
+  return String(email || "").trim().toLowerCase();
 }
 
-async function getRedis() {
-  const { Redis } = await import("@upstash/redis");
-  return Redis.fromEnv();
+function now() {
+  return Date.now();
+}
+
+// Gere um código curto e legível pro Guia Premium (uma vez por e-mail)
+function generateGuideCode() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sem I/O/1/0 pra evitar confusão
+  let s = "MP-GUIA-";
+  for (let i = 0; i < 6; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
+}
+
+/**
+ * Regra simples para Assinatura:
+ * - Active quando evento de compra aprovada/completa OU subscription.status ACTIVE
+ * - Inactive quando cancelado/refund/chargeback/suspenso
+ */
+function computeStatus(event, payload) {
+  const subStatus = payload?.data?.subscription?.status; // ACTIVE, CANCELED, etc. (quando vier)
+  const e = String(event || "").toUpperCase();
+
+  const NEGATIVE = new Set([
+    "PURCHASE_CANCELED",
+    "PURCHASE_REFUNDED",
+    "CHARGEBACK",
+    "SUBSCRIPTION_CANCELED",
+    "SUBSCRIPTION_SUSPENDED",
+    "SUBSCRIPTION_EXPIRED",
+  ]);
+
+  const POSITIVE = new Set([
+    "PURCHASE_APPROVED",
+    "PURCHASE_COMPLETE",
+    "SUBSCRIPTION_ACTIVE",
+  ]);
+
+  if (NEGATIVE.has(e)) return "inactive";
+  if (POSITIVE.has(e)) return "active";
+
+  // fallback: se veio subscription.status, ele manda
+  if (String(subStatus || "").toUpperCase() === "ACTIVE") return "active";
+  if (subStatus) return "inactive"; // qualquer status diferente de ACTIVE -> bloqueia
+
+  return "ignored";
 }
 
 export default async function handler(req, res) {
@@ -22,86 +59,71 @@ export default async function handler(req, res) {
       return res.status(405).json({ ok: false, error: "method_not_allowed" });
     }
 
-    // ✅ Hotmart pode mandar hottok no header OU no body
-    const payload = req.body || {};
-    const hottok =
-      req.headers["x-hotmart-hottok"] ||
-      req.headers["x-hotmart-hottok-signature"] ||
-      payload?.hottok;
+    const payload = req.body;
 
-    if (!hottok || hottok !== process.env.HOTMART_HOTTOK) {
-      console.error("HOTTOK inválido", { hottokReceived: hottok ? "present" : "missing" });
-      return res.status(401).json({ ok: false, error: "unauthorized" });
+    // 1) Validação do HOTTOK (segurança básica)
+    const expectedHottok = process.env.HOTMART_HOTTOK;
+    const receivedHottok = payload?.hottok;
+
+    if (!expectedHottok) {
+      // Se faltar env, melhor falhar para você perceber (e Hotmart retentar)
+      return res.status(500).json({ ok: false, error: "missing_env_hottok" });
+    }
+    if (!receivedHottok || receivedHottok !== expectedHottok) {
+      return res.status(401).json({ ok: false, error: "invalid_hottok" });
     }
 
-    const event = String(payload.event || payload.name || payload.type || "");
-    const buyerEmail = payload?.data?.buyer?.email;
+    // 2) Extrair dados principais
+    const event = payload?.event;
+    const email = normalizeEmail(payload?.data?.buyer?.email);
 
-    if (!buyerEmail) {
-      console.warn("Sem buyer email no payload");
-      return res.status(200).json({ ok: true, ignored: "no_email" });
+    if (!email) {
+      // Sem email não dá pra vincular licença
+      return res.status(200).json({ ok: true, ignored: true, reason: "missing_email" });
     }
 
-    const email = buyerEmail.toLowerCase().trim();
-    const emailKey = `email:${email}`;
-
-    const isApproved = event.includes("APPROVED") || event.includes("COMPLETE");
-    const isCanceled = event.includes("CANCELED") || event.includes("REFUND") || event.includes("CHARGEBACK");
-
-    if (!isApproved && !isCanceled) {
+    const status = computeStatus(event, payload);
+    if (status === "ignored") {
+      // Não é erro. Só não interessa para licença
       return res.status(200).json({ ok: true, ignored: true, event });
     }
 
-    // ✅ Redis com erro claro
-    let redis;
-    try {
-      redis = await getRedis();
-    } catch (e) {
-      console.error("Redis import/fromEnv failed:", e);
-      return res.status(500).json({ ok: false, error: "redis_init_failed" });
-    }
+    const key = `license:${email}`;
 
-    try {
-      if (isApproved) {
-        let licenseKey = await redis.get(emailKey);
+    // 3) Buscar licença atual (pra reaproveitar guideCode)
+    const existing = await redis.get(key);
 
-        if (!licenseKey) {
-          licenseKey = generateLicenseKey();
-          await redis.set(emailKey, licenseKey);
-        }
+    const transaction = payload?.data?.purchase?.transaction || null;
+    const planName = payload?.data?.subscription?.plan?.name || "pro_anual";
+    const planId = payload?.data?.subscription?.plan?.id || null;
+    const subscriberCode = payload?.data?.subscription?.subscriber?.code || null;
 
-        const now = Date.now();
-        await redis.set(`license:${licenseKey}`, {
-          status: "active",
-          email,
-          expiresAt: now + 365 * 24 * 60 * 60 * 1000,
-          maxActivations: 2,
-          devices: [],
-          createdAt: now,
-          updatedAt: now,
-        });
+    const next = {
+      email,
+      source: "hotmart",
+      status, // active | inactive
+      plan: planName,
+      planId,
+      subscriberCode,
+      hotmartTransaction: transaction,
+      updatedAt: now(),
+      createdAt: existing?.createdAt || now(),
+      // Assinatura: melhor NÃO inventar expiresAt. O status é a verdade.
+      // Se quiser no futuro, você cria "gracePeriodUntil" etc.
+      expiresAt: existing?.expiresAt || null,
+      guideCode: existing?.guideCode || generateGuideCode(),
+      lastEvent: String(event || ""),
+      lastPayloadId: payload?.id || null,
+    };
 
-        return res.status(200).json({ ok: true });
-      }
+    // 4) Salvar
+    await redis.set(key, next);
 
-      // isCanceled
-      const licenseKey = await redis.get(emailKey);
-      if (licenseKey) {
-        const lic = await redis.get(`license:${licenseKey}`);
-        if (lic) {
-          lic.status = "revoked";
-          lic.updatedAt = Date.now();
-          await redis.set(`license:${licenseKey}`, lic);
-        }
-      }
-
-      return res.status(200).json({ ok: true });
-    } catch (e) {
-      console.error("Redis command failed:", e);
-      return res.status(500).json({ ok: false, error: "redis_command_failed" });
-    }
+    // 5) Responder rápido (Hotmart gosta de rapidez)
+    return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Webhook general error:", err);
+    console.error("hotmart webhook error:", err);
+    // Para Hotmart retentar, devolva 500.
     return res.status(500).json({ ok: false, error: "internal_error" });
   }
 }
