@@ -1,16 +1,5 @@
 import { Redis } from "@upstash/redis";
 
-/**
- * Inicializa o Redis usando as env vars:
- * UPSTASH_REDIS_REST_URL
- * UPSTASH_REDIS_REST_TOKEN
- */
-const redis = Redis.fromEnv();
-
-/**
- * Gera um código de licença no formato:
- * MP-XXXX-XXXX-XXXX-XXXX
- */
 function generateLicenseKey() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let key = "MP-";
@@ -24,14 +13,26 @@ function generateLicenseKey() {
   return key;
 }
 
+export const config = {
+  runtime: "nodejs",
+};
+
 export default async function handler(req, res) {
-  // A Hotmart sempre envia POST
+  // 🔒 Nunca inicialize Redis fora do handler
+  let redis;
+  try {
+    redis = Redis.fromEnv();
+  } catch (err) {
+    console.error("Redis init failed:", err);
+    return res.status(500).json({ ok: false, error: "redis_init_failed" });
+  }
+
+  // Hotmart sempre envia POST
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false });
   }
 
-  // 🔐 Validação de segurança do webhook Hotmart
-  // Header: X-HOTMART-HOTTOK
+  // Segurança Hotmart
   const hottok = req.headers["x-hotmart-hottok"];
   if (!hottok || hottok !== process.env.HOTMART_HOTTOK) {
     return res.status(401).json({ ok: false, error: "unauthorized" });
@@ -40,13 +41,11 @@ export default async function handler(req, res) {
   const payload = req.body || {};
   const event = payload.event || payload.name || payload.type || "";
 
-  // Email do comprador (varia conforme o evento)
   const buyerEmail =
     payload?.data?.buyer?.email ||
     payload?.buyer?.email ||
     payload?.data?.purchase?.buyer?.email;
 
-  // Sem email, não dá pra licenciar → ignora
   if (!buyerEmail) {
     return res.status(200).json({ ok: true, ignored: "no_email" });
   }
@@ -54,24 +53,16 @@ export default async function handler(req, res) {
   const email = String(buyerEmail).toLowerCase().trim();
   const emailKey = `email:${email}`;
 
-  // Eventos de aprovação
   const isApproved =
-    String(event).includes("APPROVED") ||
-    String(event).includes("COMPLETE");
+    event.includes("APPROVED") || event.includes("COMPLETE");
 
-  // Eventos de cancelamento / reembolso
   const isCanceled =
-    String(event).includes("CANCELED") ||
-    String(event).includes("REFUND") ||
-    String(event).includes("CHARGEBACK");
+    event.includes("CANCELED") ||
+    event.includes("REFUND") ||
+    event.includes("CHARGEBACK");
 
-  /**
-   * ✅ COMPRA APROVADA
-   * - Cria (ou reutiliza) uma licença para o email
-   * - Validade: 1 ano
-   */
+  // ✅ Compra aprovada
   if (isApproved) {
-    // Reutiliza a licença se o email já tiver comprado antes
     let licenseKey = await redis.get(emailKey);
 
     if (!licenseKey) {
@@ -84,7 +75,7 @@ export default async function handler(req, res) {
     await redis.set(`license:${licenseKey}`, {
       status: "active",
       email,
-      expiresAt: now + 365 * 24 * 60 * 60 * 1000, // 1 ano
+      expiresAt: now + 365 * 24 * 60 * 60 * 1000,
       maxActivations: 2,
       devices: [],
       createdAt: now,
@@ -94,25 +85,19 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  /**
-   * ❌ CANCELAMENTO / REEMBOLSO / CHARGEBACK
-   * - Revoga a licença
-   */
+  // ❌ Cancelamento / reembolso
   if (isCanceled) {
     const licenseKey = await redis.get(emailKey);
-
     if (licenseKey) {
-      const license = await redis.get(`license:${licenseKey}`);
-      if (license) {
-        license.status = "revoked";
-        license.updatedAt = Date.now();
-        await redis.set(`license:${licenseKey}`, license);
+      const lic = await redis.get(`license:${licenseKey}`);
+      if (lic) {
+        lic.status = "revoked";
+        lic.updatedAt = Date.now();
+        await redis.set(`license:${licenseKey}`, lic);
       }
     }
-
     return res.status(200).json({ ok: true });
   }
 
-  // Eventos que não afetam licença
   return res.status(200).json({ ok: true, ignored: true, event });
 }
