@@ -11,13 +11,7 @@ function generateLicenseKey() {
   return key;
 }
 
-// Força runtime Node (evita edge)
-module.exports.config = {
-  runtime: "nodejs",
-};
-
-module.exports = async function handler(req, res) {
-  // Inicializa Redis dentro do handler (evita crash no load)
+async function handler(req, res) {
   let redis;
   try {
     redis = Redis.fromEnv();
@@ -91,4 +85,7 @@ module.exports = async function handler(req, res) {
   }
 
   return res.status(200).json({ ok: true, ignored: true, event });
-};
+}
+
+module.exports = handler;
+module.exports.config = { runtime: "nodejs" };
