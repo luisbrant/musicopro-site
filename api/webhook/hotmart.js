@@ -68,7 +68,7 @@ async function upsertLicenseByEmail({ redis, namespace, email, active, payload }
 
   const next = {
     email,
-    active: typeof active === "boolean" ? active : (current?.active ?? false),
+    active: typeof active === "boolean" ? active : current?.active ?? false,
     plan: current?.plan ?? "premium",
     source: "hotmart",
     lastEvent: payload?.event ?? current?.lastEvent ?? null,
@@ -84,6 +84,20 @@ async function upsertLicenseByEmail({ redis, namespace, email, active, payload }
   if (tx) await redis.set(`${namespace}:tx:${tx}`, email);
 
   return next;
+}
+
+function getReceivedHottok(req, body) {
+  // Pode vir no body…
+  const hottokBody = body?.hottok;
+
+  // …ou em headers (variações comuns)
+  const hottokHeader =
+    req.headers["x-hotmart-hottok"] ||
+    req.headers["hotmart-hottok"] ||
+    req.headers["hottok"] ||
+    req.headers["x-hottok"];
+
+  return { received: hottokBody || hottokHeader, hottokBody, hottokHeader };
 }
 
 // ===== Handler =====
@@ -106,10 +120,23 @@ export default async function handler(req, res) {
 
     // 2) Garante body objeto
     const body = typeof req.body === "string" ? safeJsonParse(req.body) : req.body;
-    if (!body) return json(res, 400, { ok: false, error: "invalid_json_body" });
+    if (!body || typeof body !== "object") {
+      return json(res, 400, { ok: false, error: "invalid_json_body" });
+    }
 
-    // 3) Segurança: valida HOTTOK
-    const received = body?.hottok;
+    // 3) Segurança: valida HOTTOK (body OU header)
+    const { received, hottokBody, hottokHeader } = getReceivedHottok(req, body);
+
+    // Log seguro (não vaza tokens)
+    console.log("hotmart_hottok_debug", {
+      hasExpected: Boolean(expected),
+      expectedLen: expected ? String(expected).length : 0,
+      hasBody: Boolean(hottokBody),
+      bodyLen: hottokBody ? String(hottokBody).length : 0,
+      hasHeader: Boolean(hottokHeader),
+      headerLen: hottokHeader ? String(hottokHeader).length : 0,
+    });
+
     if (!received || received !== expected) {
       return json(res, 401, { ok: false, error: "invalid_hottok" });
     }
