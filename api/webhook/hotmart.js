@@ -126,17 +126,7 @@ export default async function handler(req, res) {
 
     // 3) Segurança: valida HOTTOK (body OU header)
     const { received, hottokBody, hottokHeader } = getReceivedHottok(req, body);
-
-    // Log seguro (não vaza tokens)
-    console.log("hotmart_hottok_debug", {
-      hasExpected: Boolean(expected),
-      expectedLen: expected ? String(expected).length : 0,
-      hasBody: Boolean(hottokBody),
-      bodyLen: hottokBody ? String(hottokBody).length : 0,
-      hasHeader: Boolean(hottokHeader),
-      headerLen: hottokHeader ? String(hottokHeader).length : 0,
-    });
-
+    
     if (!received || received !== expected) {
       return json(res, 401, { ok: false, error: "invalid_hottok" });
     }
