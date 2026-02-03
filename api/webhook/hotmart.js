@@ -1,12 +1,6 @@
 // api/webhook/hotmart.js
 import { Redis } from "@upstash/redis";
 
-// ✅ Upstash via REST (recomendado para serverless)
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
-
 // ===== Helpers =====
 function normalizeEmail(email) {
   return String(email || "").trim().toLowerCase();
@@ -24,14 +18,19 @@ function safeJsonParse(s) {
   }
 }
 
+function getRedis() {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
+
 /**
  * Mapeia eventos Hotmart → status de licença
- * Ajuste os nomes conforme seus eventos reais.
  */
 function mapHotmartEventToActive(event) {
   const e = String(event || "").toUpperCase();
 
-  // ✅ eventos que ativam
   const activates = new Set([
     "PURCHASE_APPROVED",
     "PURCHASE_COMPLETE",
@@ -41,7 +40,6 @@ function mapHotmartEventToActive(event) {
     "SUBSCRIPTION_ACTIVE",
   ]);
 
-  // ❌ eventos que desativam
   const deactivates = new Set([
     "PURCHASE_CANCELED",
     "PURCHASE_CANCELLED",
@@ -58,15 +56,13 @@ function mapHotmartEventToActive(event) {
   if (activates.has(e)) return true;
   if (deactivates.has(e)) return false;
 
-  // Evento desconhecido → não muda status (mas registra)
-  return null;
+  return null; // desconhecido → não altera status
 }
 
-async function upsertLicenseByEmail({ namespace, email, active, payload }) {
+async function upsertLicenseByEmail({ redis, namespace, email, active, payload }) {
   const emailKey = `${namespace}:email:${email}`;
   const nowIso = new Date().toISOString();
 
-  // Carrega estado atual (pra não “voltar” status sem querer)
   const currentRaw = await redis.get(emailKey);
   const current = currentRaw ? safeJsonParse(currentRaw) : null;
 
@@ -82,21 +78,17 @@ async function upsertLicenseByEmail({ namespace, email, active, payload }) {
     createdAt: current?.createdAt ?? nowIso,
   };
 
-  // Salva documento principal (email como chave)
   await redis.set(emailKey, JSON.stringify(next));
 
-  // Índice por transaction → email
   const tx = next.transaction ? String(next.transaction) : null;
-  if (tx) {
-    await redis.set(`${namespace}:tx:${tx}`, email);
-  }
+  if (tx) await redis.set(`${namespace}:tx:${tx}`, email);
 
   return next;
 }
 
 // ===== Handler =====
 export default async function handler(req, res) {
-  // CORS básico (Hotmart não precisa, mas não atrapalha)
+  // CORS básico
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -105,40 +97,42 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return json(res, 405, { ok: false, error: "method_not_allowed" });
 
   try {
-    // 0) valida envs principais (pra não crashar silencioso)
-    if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-      return json(res, 500, { ok: false, error: "missing_env_upstash" });
-    }
-
-    // 1) Segurança: valida HOTTOK
+    // 1) Valida envs
     const expected = process.env.HOTMART_HOTTOK;
-    const received = req.body?.hottok;
+    if (!expected) return json(res, 500, { ok: false, error: "missing_env_hotmart_hottok" });
 
-    if (!expected) {
-      return json(res, 500, { ok: false, error: "missing_env_hotmart_hottok" });
-    }
+    const redis = getRedis();
+    if (!redis) return json(res, 500, { ok: false, error: "missing_env_upstash" });
+
+    // 2) Garante body objeto
+    const body = typeof req.body === "string" ? safeJsonParse(req.body) : req.body;
+    if (!body) return json(res, 400, { ok: false, error: "invalid_json_body" });
+
+    // 3) Segurança: valida HOTTOK
+    const received = body?.hottok;
     if (!received || received !== expected) {
       return json(res, 401, { ok: false, error: "invalid_hottok" });
     }
 
-    // 2) Extrai email do comprador (no seu payload é buyer.email)
-    const email = normalizeEmail(req.body?.data?.buyer?.email);
+    // 4) Email
+    const email = normalizeEmail(body?.data?.buyer?.email);
     if (!email) return json(res, 400, { ok: false, error: "missing_buyer_email" });
 
-    // 3) Decide ativo/desativo
-    const event = req.body?.event;
+    // 5) Evento → status
+    const event = body?.event;
     const activeMapped = mapHotmartEventToActive(event);
 
-    // 4) Grava nos dois namespaces: license e guide
+    // 6) Grava nos namespaces
     const namespaces = ["license", "guide"];
     const results = [];
 
     for (const ns of namespaces) {
       const saved = await upsertLicenseByEmail({
+        redis,
         namespace: ns,
         email,
-        active: activeMapped, // se null, mantém o atual
-        payload: req.body,
+        active: activeMapped,
+        payload: body,
       });
       results.push({ namespace: ns, active: saved.active });
     }

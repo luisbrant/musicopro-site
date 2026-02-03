@@ -1,40 +1,65 @@
+// api/guide/check.js
 import { Redis } from "@upstash/redis";
-const redis = Redis.fromEnv();
 
 function normalizeEmail(email) {
   return String(email || "").trim().toLowerCase();
 }
 
+function safeJsonParse(s) {
+  try { return JSON.parse(s); } catch { return null; }
+}
+
+function json(res, status, body) {
+  return res.status(status).json(body);
+}
+
+function getRedis() {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
+
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") return res.status(204).end();
+
+  if (req.method !== "GET" && req.method !== "POST") {
+    return json(res, 405, { ok: false, error: "method_not_allowed" });
+  }
+
+  const redis = getRedis();
+  if (!redis) return json(res, 500, { ok: false, error: "missing_env_upstash" });
+
+  const body = typeof req.body === "string" ? safeJsonParse(req.body) : req.body;
+
+  const emailRaw = req.method === "GET" ? req.query?.email : body?.email;
+  const email = normalizeEmail(emailRaw);
+
+  if (!email) return json(res, 400, { ok: false, error: "missing_email" });
+
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ ok: false, error: "method_not_allowed" });
-    }
+    const key = `guide:email:${email}`;
+    const raw = await redis.get(key);
 
-    const email = normalizeEmail(req.body?.email);
-    const guideCode = String(req.body?.guideCode || "").trim().toUpperCase();
+    const doc =
+      typeof raw === "string" ? safeJsonParse(raw) :
+      (raw && typeof raw === "object" ? raw : null);
 
-    if (!email && !guideCode) {
-      return res.status(400).json({ ok: false, error: "missing_email_or_code" });
-    }
+    const active = Boolean(doc?.active);
 
-    // Caminho A (forte): por e-mail
-    if (email) {
-      const key = `license:${email}`;
-      const data = await redis.get(key);
-      const unlocked = !!data && data.status === "active";
-      return res.status(200).json({
-        ok: true,
-        unlocked,
-        guideCode: data?.guideCode || null,
-      });
-    }
-
-    // Caminho B (fallback): por guideCode (varre não dá; então não recomendo sem índice)
-    // Se você quiser 100% por código, me fale que eu te passo o índice por guideCode.
-    return res.status(501).json({ ok: false, error: "code_only_requires_index" });
+    return json(res, 200, {
+      ok: true,
+      email,
+      active,
+      lastEvent: doc?.lastEvent ?? null,
+      updatedAt: doc?.updatedAt ?? null,
+    });
   } catch (err) {
     console.error("guide check error:", err);
-    return res.status(500).json({ ok: false, error: "internal_error" });
+    return json(res, 500, { ok: false, error: "internal_error" });
   }
 }
