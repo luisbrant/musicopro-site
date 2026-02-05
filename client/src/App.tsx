@@ -10,7 +10,7 @@ import { AttributionBanner } from "./components/AttributionBanner";
 
 import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
-import Premium from "./pages/Premium";
+// Premium removido pois agora usamos GuidePro
 import Obrigado from "./pages/Obrigado";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
@@ -21,7 +21,7 @@ import AppInstructions from "./pages/AppInstructions";
 // ✅ Página dedicada do App
 import AppOnly from "./pages/AppOnly";
 
-// ✅ Página dedicada do Guia PRO completo
+// ✅ Página dedicada do Guia PRO completo (Área VIP)
 import GuidePro from "./pages/GuidePro";
 
 function Router() {
@@ -43,19 +43,24 @@ function Router() {
         {/* ✅ Guia (conteúdo grátis + ativação do pacote) */}
         <Route path="/guia" component={Guide} />
 
-        {/* ✅ Guia PRO completo */}
+        {/* ✅ Guia PRO completo (Área do Aluno) */}
         <Route path="/guia-pro" component={GuidePro} />
 
+        {/* ✅ CORREÇÃO: Rota de Vendas atualizada para /vendas */}
+        <Route path="/vendas" component={Vendas} />
+        
+        {/* Mantendo /pro redirecionando para vendas ou como alias, se desejar. 
+            Mas para corrigir o 404 do print, a linha acima é a essencial. */}
         <Route path="/pro" component={Vendas} />
-        <Route path="/premium" component={Premium} />
+
         <Route path="/obrigado" component={Obrigado} />
         <Route path="/demo" component={Demo} />
         <Route path="/privacidade" component={Privacidade} />
         <Route path="/termos" component={Termos} />
         <Route path="/pwa/*" component={PWA} />
+        
+        {/* Rota 404 e Fallback */}
         <Route path="/404" component={NotFound} />
-
-        {/* Final fallback route */}
         <Route component={NotFound} />
       </Switch>
     </>
