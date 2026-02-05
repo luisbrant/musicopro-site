@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Music, Menu, X, ShieldCheck, CheckCircle2, Loader2, ExternalLink } from 'lucide-react';
+import { Music, Menu, X, CheckCircle2, Loader2, ExternalLink } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
@@ -15,62 +15,53 @@ async function verificarLicencaPorEmail(email: string): Promise<boolean> {
 
 type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
+// Conteúdo atualizado com base no "Funil de Harmonização"
 const GUIDE_FREE_HTML =
-  "<h1>PARTE 1: FUNDAMENTOS</h1>\
-  <h2>1. O Conceito de Renda para o Músico</h2>\
-  <p>Para a Receita Federal, <strong>renda</strong> é todo valor recebido que aumenta seu patrimônio e não possui caráter de devolução.</p>\
-  <h3>💰 Renda tributável na música:</h3>\
+  "<h1>Guia do Músico Autônomo</h1>\
+  <p>Bem-vindo à parte teórica. Aqui você entende a lógica; no app <strong>MusicoPro</strong> você aplica.</p>\
+  <h2>4 Passos Simples para Organização</h2>\
+  <h3>1. Entradas (Receita)</h3>\
+  <p>Você deve somar tudo: cachês de shows, aulas, gravações, direitos autorais e vendas de produtos. <strong>Tudo conta</strong>, seja recebido em Pix, dinheiro ou nota.</p>\
+  <h3>2. Despesas (Deduções)</h3>\
+  <p>Liste tudo o que é essencial para trabalhar: transporte (Uber/combustível), manutenção de instrumentos, cordas, baquetas, internet e telefone profissional.</p>\
+  <h3>3. Impostos (O Leão)</h3>\
+  <p>Existem dois cenários:</p>\
   <ul>\
-    <li><strong>Cachês</strong> de shows (ao vivo/online)</li>\
-    <li><strong>Direitos autorais</strong> e conexos</li>\
-    <li><strong>Aulas</strong> particulares ou online</li>\
-    <li><strong>Vendas</strong> de merchandising/produtos digitais</li>\
-    <li><strong>Plataformas digitais</strong> (YouTube, Spotify)</li>\
-    <li><strong>Participações</strong> em eventos</li>\
-    <li><strong>Produções musicais</strong> para terceiros</li>\
+    <li><strong>Retidos na Fonte:</strong> Quando você recebe via RPA e o contratante já descontou o imposto.</li>\
+    <li><strong>Carnê-Leão:</strong> Quando você recebe de pessoas físicas (aulas, shows particulares). Esse você mesmo calcula.</li>\
   </ul>\
+  <h3>4. Resumo (Sobra Real)</h3>\
+  <p>A conta mágica é: <code>Entradas - Saídas - Reserva de Imposto = Sua Renda Real</code>.</p>\
   <div class='box'>\
-    <h4>🎯 Regra de Ouro</h4>\
-    <p><strong>Cachês são SEMPRE renda tributável</strong>, independentemente de frequência, meio de pagamento, quem pagou ou valor individual.</p>\
+    <h4>💡 Exemplo de Mês Típico</h4>\
+    <p>Imagine que você faturou <strong>R$ 4.000</strong>.</p>\
+    <ul>\
+      <li>Gastou <strong>R$ 500</strong> de Uber e cordas.</li>\
+      <li>Reservou <strong>R$ 200</strong> para eventual imposto.</li>\
+    </ul>\
+    <p>Sua renda real para gastar em casa é <strong>R$ 3.300</strong>. O erro é gastar os R$ 4.000 achando que é tudo seu.</p>\
   </div>\
-  <h2>2. Obrigatoriedade da Declaração</h2>\
-  <p><strong>Você DEVE declarar se:</strong></p>\
-  <ol>\
-    <li>Recebeu rendimentos tributáveis acima de R$ 30.639,90</li>\
-    <li>Recebeu rendimentos isentos acima de R$ 200.000,00</li>\
-    <li>Possui bens acima de R$ 800.000,00</li>\
-    <li>Teve imposto retido na fonte (RPA)</li>\
-    <li>Obteve ganho de capital na venda de bens</li>\
-  </ol>\
-  <div class='box'>\
-    <p>A maioria dos músicos que buscam profissionalização precisa declarar. Declarar não significa pagar imposto — significa informar.</p>\
-  </div>\
-  <h2>3. Pix, Dinheiro e Transferência</h2>\
-  <h3>❌ O MITO DO PIX</h3>\
-  <p><strong>Não existe “imposto sobre Pix”.</strong> Pix é meio de pagamento. O imposto incide sobre a origem/natureza da renda.</p>\
-  <div class='box'>\
-    <p>A Receita cruza dados bancários, Pix, cartões e notas fiscais. O problema não é o Pix — é omitir renda.</p>\
-  </div>";
+  <h2>Como o app MusicoPro ajuda?</h2>\
+  <p>Fazer essa conta no papel cansa. O <strong>MusicoPro</strong> automatiza esse fluxo: você lança o cachê, lança o Uber, e ele te diz quanto sobrou.</p>";
 
 const CONTENT_STYLE = `
-  .guide-content h1 { font-size: 1.7rem; font-weight: 800; margin: 1.8rem 0 1rem; color: #0c2461; }
-  .guide-content h2 { font-size: 1.25rem; font-weight: 800; margin: 1.4rem 0 .75rem; color: #0c2461; border-bottom: 1px solid #E8E3DC; padding-bottom: .35rem; }
-  .guide-content h3 { font-size: 1.05rem; font-weight: 750; margin: 1.15rem 0 .5rem; color: #0c2461; }
-  .guide-content h4 { font-size: 1rem; font-weight: 700; margin: .9rem 0 .4rem; color: #0c2461; }
-  .guide-content p { line-height: 1.75; color: #0c2461; opacity: .92; margin: .55rem 0; }
-  .guide-content ul, .guide-content ol { margin: .5rem 0 .9rem 1.1rem; color: #0c2461; opacity: .92; }
-  .guide-content li { margin: .35rem 0; line-height: 1.65; }
-  .guide-content .box { border: 1px solid #e8e3dc; border-left: 4px solid #d4af37; background: #fff; border-radius: 12px; padding: 14px; margin: 14px 0; }
+  .guide-content h1 { font-size: 2rem; font-weight: 800; margin: 1.5rem 0 1rem; color: #0c2461; line-height: 1.1; }
+  .guide-content h2 { font-size: 1.5rem; font-weight: 800; margin: 2rem 0 1rem; color: #0c2461; border-bottom: 2px solid #E8E3DC; padding-bottom: .5rem; }
+  .guide-content h3 { font-size: 1.2rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: #0c2461; }
+  .guide-content h4 { font-size: 1rem; font-weight: 700; margin: .5rem 0 .4rem; color: #0c2461; }
+  .guide-content p { line-height: 1.75; color: #334155; margin: .75rem 0; font-size: 1.05rem; }
+  .guide-content ul { margin: .5rem 0 1rem 1.2rem; color: #334155; list-style-type: disc; }
+  .guide-content li { margin: .35rem 0; line-height: 1.6; }
+  .guide-content code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #0c2461; font-weight: 600; }
+  .guide-content .box { border: 1px solid #e2e8f0; border-left: 4px solid #d4af37; background: #f8fafc; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
 `;
 
 export default function Guide() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
   const [isPro, setIsPro] = useState(false);
-
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const appActivationLink = useMemo(() => {
@@ -87,34 +78,29 @@ export default function Guide() {
   const validate = async () => {
     const normalized = email.trim().toLowerCase();
     setEmail(normalized);
-
     if (!normalized) {
       setStatus('error');
-      setMsg('Digite o e-mail usado na compra para validar.');
+      setMsg('Digite o e-mail usado na compra.');
       scrollToValidate(true);
       return;
     }
-
     try {
       setStatus('checking');
-      setMsg('Validando sua licença…');
+      setMsg('Validando…');
       setProEmail(normalized);
-
       const ok = await verificarLicencaPorEmail(normalized);
       setIsPro(ok);
-
       if (ok) {
         setStatus('success');
-        setMsg('✅ Licença ativa! O pacote PRO libera Guia aprofundado + App PRO.');
+        setMsg('✅ Pacote Músico Pro ativo! Guia PRO + App PRO liberados.');
       } else {
         setStatus('inactive');
-        setMsg('Licença não ativa para este e-mail. Verifique se é o mesmo e-mail da compra.');
+        setMsg('Licença não encontrada. Verifique se é o mesmo e-mail da compra.');
       }
     } catch (e) {
-      console.error(e);
       setIsPro(false);
       setStatus('error');
-      setMsg('Não foi possível validar agora. Tente novamente em instantes.');
+      setMsg('Erro ao validar. Tente novamente.');
     }
   };
 
@@ -124,7 +110,7 @@ export default function Guide() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans text-[#0c2461]">
       <style>{CONTENT_STYLE}</style>
 
       <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC]">
@@ -132,25 +118,20 @@ export default function Guide() {
           <div className="flex items-center gap-2">
             <Music className="w-8 h-8 text-[#d4af37]" />
             <div>
-              <h1 className="font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>
                 Músico Pro
               </h1>
-              <p className="text-xs text-[#6ba587]">Guia</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#6ba587] font-bold">Guia</p>
             </div>
           </div>
-
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/"><button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">Home</button></Link>
-            <Link href="/app"><button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">App</button></Link>
-            <button
-              onClick={() => scrollToValidate(!email)}
-              className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition"
-            >
-              Ativar pacote
+            <Link href="/"><button className="hover:text-[#d4af37] transition font-medium">Home</button></Link>
+            <Link href="/app"><button className="hover:text-[#d4af37] transition font-medium">MusicoPro</button></Link>
+            <button onClick={() => scrollToValidate(!email)} className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition">
+              Ativar Pacote
             </button>
           </nav>
-
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-[#0c2461]">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -159,140 +140,86 @@ export default function Guide() {
       {mobileMenuOpen && (
         <nav className="md:hidden bg-[#0c2461] text-white p-4 space-y-2">
           <Link href="/"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Home</button></Link>
-          <Link href="/app"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">App</button></Link>
-          <button
-            onClick={() => { setMobileMenuOpen(false); scrollToValidate(true); }}
-            className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold"
-          >
-            Ativar pacote
-          </button>
+          <Link href="/app"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">MusicoPro</button></Link>
+          <button onClick={() => { setMobileMenuOpen(false); scrollToValidate(true); }} className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold text-[#d4af37]">Ativar Pacote</button>
         </nav>
       )}
 
-      {/* ✅ mais largo no notebook */}
-      <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+      <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+        {/* HERO CONTENT */}
         <section className="mb-10 space-y-5">
-          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-5">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">Guia do Músico Autônomo</h2>
+           <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-xl p-8 md:p-12 text-white space-y-5 shadow-xl">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">Guia do Músico Autônomo</h2>
             <p className="text-lg opacity-90">
-              Aqui fica o <strong>conteúdo grátis</strong>. O PRO é um pacote completo:
-              <strong> Guia aprofundado + App com todas as funções PRO</strong>.
+              Abaixo está o <strong>conteúdo grátis</strong> para você começar. 
+              <br/>O <strong>Pacote Músico Pro</strong> desbloqueia o Guia Aprofundado + App Completo.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <button
-                onClick={() => scrollToValidate(!email)}
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
-              >
-                🔓 Ativar pacote PRO
-              </button>
-
-              <Link href="/guia-pro">
-                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  Ver Guia PRO completo
-                </button>
-              </Link>
-
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <Link href="/app">
-                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  Ir para o App
+                <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
+                  Ver MusicoPro em ação
                 </button>
               </Link>
+              <button onClick={() => scrollToValidate(!email)} className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/20">
+                Já tenho o Pacote
+              </button>
             </div>
           </div>
         </section>
 
-        {/* Ativação */}
-        <section id="validar-guia-pro" className="mb-12 space-y-4">
-          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar pacote PRO (Guia + App)</h3>
+        {/* CONTEÚDO GRÁTIS */}
+        <section className="mb-14">
+          <div className="guide-content" dangerouslySetInnerHTML={{ __html: GUIDE_FREE_HTML }} />
+        </section>
 
-          <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-6 space-y-4">
-            <p className="text-[#0c2461] opacity-90">
-              Digite o <strong>mesmo e-mail usado na compra</strong>. O PRO libera:
-              <strong> Guia aprofundado</strong> + <strong>App com todas as funções PRO</strong>.
-            </p>
+        {/* SEÇÃO DE ATIVAÇÃO */}
+        <section id="validar-guia-pro" className="mb-12 pt-8 border-t border-[#E8E3DC]">
+          <h3 className="text-2xl font-bold mb-6">Ativar Pacote Músico Pro</h3>
+          
+          <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 md:p-8 space-y-6 shadow-sm">
+            <div className="space-y-2">
+              <p className="text-[#0c2461] font-medium">Digite o e-mail usado na compra.</p>
+              <p className="text-sm opacity-75">Isso libera o <strong>Guia PRO</strong> e o <strong>MusicoPro (App)</strong>.</p>
+            </div>
 
             {status !== 'idle' && (
-              <div
-                className={[
-                  'rounded-lg p-4 border flex gap-3 items-start',
-                  status === 'success'
-                    ? 'bg-[#e8fff2] border-[#36b37e]'
-                    : status === 'inactive'
-                      ? 'bg-[#fff4e6] border-[#d4af37]'
-                      : status === 'checking'
-                        ? 'bg-[#eef6ff] border-[#2f6fed]'
-                        : 'bg-[#fff1f2] border-[#ef4444]',
-                ].join(' ')}
-              >
-                {status === 'checking' ? (
-                  <Loader2 className="w-5 h-5 flex-shrink-0 mt-0.5 animate-spin text-[#0c2461]" />
-                ) : (
-                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
-                )}
-
+              <div className={`rounded-lg p-4 border flex gap-3 items-start ${
+                status === 'success' ? 'bg-green-50 border-green-200' : 
+                status === 'error' ? 'bg-red-50 border-red-200' : 'bg-blue-50 border-blue-200'
+              }`}>
+                {status === 'checking' ? <Loader2 className="animate-spin w-5 h-5 text-[#0c2461]"/> : <CheckCircle2 className="w-5 h-5 text-[#0c2461]"/>}
                 <div>
-                  <p className="font-semibold text-[#0c2461]">
-                    {status === 'checking'
-                      ? 'Validando…'
-                      : status === 'success'
-                        ? 'Acesso PRO confirmado'
-                        : status === 'inactive'
-                          ? 'Licença não ativa'
-                          : 'Falha na validação'}
-                  </p>
-                  <p className="text-sm text-[#0c2461] opacity-80">{msg}</p>
+                  <p className="font-bold text-sm">{status === 'checking' ? 'Validando...' : status === 'success' ? 'Sucesso!' : 'Atenção'}</p>
+                  <p className="text-sm opacity-90">{msg}</p>
                 </div>
               </div>
             )}
 
             <div className="grid md:grid-cols-[1fr_auto] gap-3">
-              <input
-                ref={emailRef}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Seu e-mail (usado na compra)"
-                className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-                type="email"
-                autoComplete="email"
-              />
-
-              <button
-                onClick={validate}
-                disabled={status === 'checking'}
-                className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-60 text-white font-bold px-6 py-3 rounded-lg transition"
-              >
-                {status === 'checking' ? 'Validando…' : 'Validar licença'}
+              <input ref={emailRef} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="seu@email.com" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="email" />
+              <button onClick={validate} disabled={status === 'checking'} className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-50 text-white font-bold px-6 py-3 rounded-lg transition">
+                {status === 'checking' ? '...' : 'Validar Licença'}
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <Link href="/guia-pro">
-                <button className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition flex items-center justify-center gap-2">
-                  Abrir Guia PRO completo <ExternalLink className="w-4 h-4" />
-                </button>
-              </Link>
-
-              <Link href={appActivationLink}>
-                <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
-                  Ativar no App
-                </button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Conteúdo grátis */}
-        <section className="mb-14 space-y-4">
-          <h3 className="text-3xl font-bold text-[#0c2461]">Conteúdo grátis</h3>
-
-          <div className="bg-[#f0f4f8] rounded-lg p-6 md:p-8">
-            <div className="guide-content" dangerouslySetInnerHTML={{ __html: GUIDE_FREE_HTML }} />
+            {isPro && (
+              <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                <Link href="/guia-pro">
+                  <button className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition flex items-center justify-center gap-2">
+                    Abrir Guia PRO <ExternalLink size={16}/>
+                  </button>
+                </Link>
+                <Link href={appActivationLink}>
+                  <button className="w-full bg-white border border-[#E8E3DC] hover:bg-gray-50 text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
+                    Ir para MusicoPro
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       </main>
 
-      {/* ✅ Footer fora do main */}
       <Footer />
     </div>
   );

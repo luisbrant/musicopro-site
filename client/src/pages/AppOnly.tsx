@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Music, Menu, X, Check, ShieldCheck, Lock, ExternalLink, CheckCircle2, Loader2 } from 'lucide-react';
+import { Music, Menu, X, Check, ShieldCheck, Lock, ExternalLink, CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
-
-// PWA (App grátis)
 const PWA_URL = 'https://app.musicopro.app.br';
 const PWA_FALLBACK_URL = 'https://app.musicopro.app.br/pwa/index.html';
 
@@ -22,14 +20,10 @@ type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
 export default function AppOnly() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
   const [isPro, setIsPro] = useState(false);
-
-  const [toast, setToast] = useState('');
-
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const pwaUrlWithEmail = useMemo(() => {
@@ -37,323 +31,138 @@ export default function AppOnly() {
     return e ? `${PWA_URL}?email=${encodeURIComponent(e)}` : PWA_URL;
   }, [email]);
 
-  const openPwa = () => {
-    window.open(pwaUrlWithEmail, '_blank', 'noopener,noreferrer');
-  };
-
-  const goToGuideActivation = () => {
-    // “centro” do pacote fica no Guia
-    const target = '/guia#validar-guia-pro';
-    window.location.href = target;
-  };
-
-  const goToGuidePro = () => {
-    const target = '/guia#guia-pro';
-    window.location.href = target;
-  };
-
+  const openPwa = () => window.open(pwaUrlWithEmail, '_blank', 'noopener,noreferrer');
+  
   const validate = async () => {
     const normalized = email.trim().toLowerCase();
     setEmail(normalized);
-
-    if (!normalized) {
-      setStatus('error');
-      setMsg('Digite o e-mail usado na compra para validar.');
-      emailRef.current?.focus();
-      return;
-    }
+    if (!normalized) { setStatus('error'); setMsg('Digite o e-mail da compra.'); emailRef.current?.focus(); return; }
 
     try {
-      setStatus('checking');
-      setMsg('Validando sua licença…');
-
-      setSavedEmail(normalized);
-
+      setStatus('checking'); setMsg('Verificando...'); setSavedEmail(normalized);
       const ok = await verificarLicencaPorEmail(normalized);
       setIsPro(ok);
-
       if (ok) {
-        setStatus('success');
-        setMsg('✅ Licença ativa! Este é um pacote completo: Guia PRO + App PRO.');
-        setToast('✅ Pacote PRO confirmado');
-        setTimeout(() => setToast(''), 5200);
+        setStatus('success'); setMsg('✅ Licença confirmada! MusicoPro PRO liberado.');
       } else {
-        setStatus('inactive');
-        setMsg('Licença não ativa para este e-mail. Verifique se usou o mesmo e-mail da compra.');
+        setStatus('inactive'); setMsg('E-mail não encontrado no sistema.');
       }
     } catch (e) {
-      console.error(e);
-      setIsPro(false);
-      setStatus('error');
-      setMsg('Não foi possível validar agora. Tente novamente em instantes.');
+      setStatus('error'); setMsg('Erro de conexão. Tente novamente.');
     }
   };
 
   useEffect(() => {
     const saved = getSavedEmail().trim().toLowerCase();
     if (saved) setEmail(saved);
-
-    // Se chegou com ?email=..., pré-preenche (vindo do Guia)
-    try {
-      const url = new URL(window.location.href);
-      const qEmail = (url.searchParams.get('email') || '').trim().toLowerCase();
-      if (qEmail) {
-        setEmail(qEmail);
-        setSavedEmail(qEmail);
-      }
-    } catch {
-      // ignore
-    }
+    const url = new URL(window.location.href);
+    const qEmail = (url.searchParams.get('email') || '').trim().toLowerCase();
+    if (qEmail) { setEmail(qEmail); setSavedEmail(qEmail); }
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
+    <div className="min-h-screen bg-white font-sans text-[#0c2461]">
       <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC]">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Music className="w-8 h-8 text-[#d4af37]" />
             <div>
-              <h1 className="font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-                Músico Pro
-              </h1>
-              <p className="text-xs text-[#6ba587]">App (ferramenta prática)</p>
+              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</h1>
+              <p className="text-[10px] uppercase tracking-wider text-[#6ba587] font-bold">App</p>
             </div>
           </div>
-
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/">
-              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">Home</button>
-            </Link>
-
-            <Link href="/guia">
-              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">Guia</button>
-            </Link>
-
-            <Link href="/app">
-              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">App</button>
-            </Link>
-
-            <Link href="/guia#validar-guia-pro">
-              <button
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition"
-              >
-                Ativar pacote
-              </button>
-            </Link>
+            <Link href="/"><button className="hover:text-[#d4af37] transition font-medium">Home</button></Link>
+            <Link href="/guia"><button className="hover:text-[#d4af37] transition font-medium">Guia</button></Link>
+            <Link href="/guia#validar-guia-pro"><button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition">Ativar Pacote</button></Link>
           </nav>
-
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-[#0c2461]">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </header>
 
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <nav className="md:hidden bg-[#0c2461] text-white p-4 space-y-2">
-          <Link href="/">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Home</button>
-          </Link>
-          <Link href="/guia">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Guia</button>
-          </Link>
-          <Link href="/app">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">App</button>
-          </Link>
-          <Link href="/guia#validar-guia-pro">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold">
-              Ativar pacote
-            </button>
-          </Link>
+          <Link href="/"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Home</button></Link>
+          <Link href="/guia"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Guia</button></Link>
         </nav>
       )}
 
       <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        {toast && (
-          <div className="mb-6 bg-[#e8fff2] border border-[#36b37e] rounded-lg p-4">
-            <p className="text-[#0c2461] font-semibold">{toast}</p>
-            <p className="text-sm text-[#0c2461] opacity-80">
-              Dica: se trocar de celular/navegador, valide novamente com o mesmo e-mail.
-            </p>
-          </div>
-        )}
-
-        {/* Hero */}
+        {/* HERO */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-5">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">App do Músico Pro</h2>
-            <p className="text-lg opacity-90">
-              Ferramenta prática para registrar receitas/despesas e manter sua rotina organizada.
-              <br />
-              <span className="opacity-90">
-                O <strong>PRO</strong> é um pacote: <strong>Guia aprofundado</strong> + <strong>App com funções PRO</strong>.
-              </span>
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-xl p-8 md:p-12 text-white space-y-6 shadow-xl">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">MusicoPro</h2>
+            <p className="text-lg opacity-90 max-w-2xl">
+              A ferramenta prática para registrar receitas, despesas e manter a rotina organizada.
+              <br/><span className="text-sm opacity-75 block mt-2">Versão Web (funciona no celular e PC)</span>
             </p>
-
+            
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button
-                onClick={openPwa}
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
-              >
-                📲 Abrir App grátis
+              <button onClick={openPwa} className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition flex items-center justify-center gap-2">
+                📲 Abrir App MusicoPro
               </button>
-
               <Link href="/guia">
-                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  📖 Ler o Guia
-                </button>
-              </Link>
-
-              <Link href="/guia#validar-guia-pro">
-                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  🔓 Ativar pacote
+                <button className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/20">
+                  Voltar ao Guia
                 </button>
               </Link>
             </div>
-
-            <p className="text-xs opacity-80">
-              Se o app não abrir, use o link alternativo:{' '}
-              <a className="underline" href={PWA_FALLBACK_URL} target="_blank" rel="noopener noreferrer">
-                abrir pelo caminho antigo
-              </a>
-              .
-            </p>
+            <p className="text-xs opacity-60">Se não abrir, <a href={PWA_FALLBACK_URL} target="_blank" className="underline">clique aqui</a>.</p>
           </div>
         </section>
 
-        {/* O que o app faz */}
-        <section className="mb-12 space-y-4">
-          <h3 className="text-2xl font-bold text-[#0c2461]">O que o app faz</h3>
+        {/* FUNCIONALIDADES */}
+        <section className="mb-12">
+          <h3 className="text-2xl font-bold mb-6">O que o MusicoPro faz?</h3>
           <div className="grid md:grid-cols-2 gap-4">
-            {[
-              'Registrar recebimentos (PIX, cachês, aulas)',
-              'Registrar despesas (instrumentos, transporte, etc.)',
-              'Organizar mês a mês (rotina simples)',
-              'Evitar esquecimentos no fim do ano',
-            ].map((t) => (
-              <div key={t} className="flex gap-3 bg-[#f0f4f8] p-4 rounded-lg">
-                <Check className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
-                <p className="text-[#0c2461]">{t}</p>
+            {['Registra cachês e PIX recebidos', 'Controla despesas de transporte/equipamento', 'Resumo mensal automático', 'Prepara dados para o IR'].map(f => (
+              <div key={f} className="bg-[#f8fafc] p-4 rounded-lg flex gap-3 items-center border border-[#E8E3DC]">
+                <Check className="w-5 h-5 text-[#d4af37]"/> <span className="font-medium">{f}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Ativação PRO do App */}
-        <section id="ativar-app-pro" className="mb-12 space-y-4">
-          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar pacote PRO (Guia + App)</h3>
-
-          <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-6 space-y-4">
-            <p className="text-[#0c2461] opacity-90">
-              Digite o <strong>mesmo e-mail usado na compra</strong>. Se estiver ativo, você libera:
-              <br />
-              <strong>✅ Guia PRO (aprofundado)</strong> + <strong>✅ App PRO (todas as funções)</strong>.
-            </p>
+        {/* ATIVAÇÃO PRO */}
+        <section id="ativar-app-pro" className="mb-12 pt-8 border-t border-[#E8E3DC]">
+           <div className="bg-white border-2 border-[#d4af37] rounded-xl p-6 md:p-8 space-y-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-[#d4af37] text-[#0c2461] text-xs font-bold px-3 py-1 rounded-bl-lg">ÁREA PRO</div>
+            
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold">Liberar Funções PRO</h3>
+              <p className="text-[#0c2461] opacity-80">
+                Se você comprou o <strong>Pacote Músico Pro</strong>, digite seu e-mail para desbloquear todas as funções do app.
+              </p>
+            </div>
 
             {status !== 'idle' && (
-              <div
-                className={[
-                  'rounded-lg p-4 border flex gap-3 items-start',
-                  status === 'success'
-                    ? 'bg-[#e8fff2] border-[#36b37e]'
-                    : status === 'inactive'
-                      ? 'bg-[#fff4e6] border-[#d4af37]'
-                      : status === 'checking'
-                        ? 'bg-[#eef6ff] border-[#2f6fed]'
-                        : 'bg-[#fff1f2] border-[#ef4444]',
-                ].join(' ')}
-              >
-                {status === 'checking' ? (
-                  <Loader2 className="w-5 h-5 flex-shrink-0 mt-0.5 animate-spin text-[#0c2461]" />
-                ) : status === 'success' ? (
-                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
-                ) : (
-                  <ShieldCheck className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
-                )}
-
-                <div>
-                  <p className="font-semibold text-[#0c2461]">
-                    {status === 'checking'
-                      ? 'Validando…'
-                      : status === 'success'
-                        ? 'Acesso PRO confirmado'
-                        : status === 'inactive'
-                          ? 'Licença não ativa'
-                          : 'Falha na validação'}
-                  </p>
-                  <p className="text-sm text-[#0c2461] opacity-80">{msg}</p>
-                </div>
+              <div className={`rounded-lg p-4 border flex gap-3 items-start ${status === 'success' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                {status === 'success' ? <CheckCircle2 className="w-5 h-5 text-green-700"/> : <ShieldCheck className="w-5 h-5 text-red-700"/>}
+                <p className="font-medium text-sm pt-0.5">{msg}</p>
               </div>
             )}
 
             <div className="grid md:grid-cols-[1fr_auto] gap-3">
-              <input
-                ref={emailRef}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Seu e-mail (usado na compra)"
-                className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-                type="email"
-                autoComplete="email"
-              />
-
-              <button
-                onClick={validate}
-                disabled={status === 'checking'}
-                className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-60 text-white font-bold px-6 py-3 rounded-lg transition"
-              >
-                {status === 'checking' ? 'Validando…' : 'Validar licença'}
+              <input ref={emailRef} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail da compra" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="email" />
+              <button onClick={validate} disabled={status === 'checking'} className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-50 text-white font-bold px-6 py-3 rounded-lg transition">
+                {status === 'checking' ? '...' : 'Liberar PRO'}
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-1 items-center">
-              {isPro ? (
-                <>
-                  <button
-                    onClick={openPwa}
-                    className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition flex items-center justify-center gap-2"
-                  >
-                    🚀 Abrir App PRO agora <ExternalLink className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={goToGuidePro}
-                    className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition"
-                  >
-                    Ver Guia PRO (aprofundado)
-                  </button>
-                </>
-              ) : (
-                <>
-                  <div className="flex gap-2 items-center text-sm text-[#0c2461] opacity-80">
-                    <Lock className="w-4 h-4" />
-                    <span>Valide a licença para liberar o PRO.</span>
-                  </div>
-
-                  <button
-                    onClick={goToGuideActivation}
-                    className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition"
-                  >
-                    Ir para ativação (Guia)
-                  </button>
-                </>
-              )}
-
-              <Link href="/instalar">
-                <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
-                  Como instalar no celular
-                </button>
-              </Link>
-            </div>
-
-            <p className="text-xs text-[#0c2461] opacity-70">
-              Importante: a licença PRO é <strong>um pacote completo</strong> — guia aprofundado + app com todas as funções PRO.
-            </p>
+            {isPro ? (
+              <button onClick={openPwa} className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-4 rounded-lg transition flex items-center justify-center gap-2 shadow-md">
+                🚀 Abrir App MusicoPro (PRO Ativo) <ExternalLink size={18}/>
+              </button>
+            ) : (
+              <div className="flex gap-2 items-center justify-center text-sm opacity-70 mt-4">
+                <Lock size={14}/> Valide para liberar relatórios avançados e backup.
+              </div>
+            )}
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
