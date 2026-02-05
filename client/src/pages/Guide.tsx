@@ -8,6 +8,11 @@ import Footer from '@/components/Footer';
 ===================================================== */
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 
+// App grátis (PWA)
+// Preferência: URL "limpa". Fallback: caminho antigo.
+const APP_URL = 'https://app.musicopro.app.br';
+const APP_FALLBACK_URL = 'https://app.musicopro.app.br/pwa/index.html';
+
 const getProEmail = () => localStorage.getItem('musicopro_email') || '';
 const setProActive = (active: boolean) =>
   localStorage.setItem('musicopro_pro', active ? 'true' : 'false');
@@ -24,6 +29,8 @@ export default function Guide() {
   const [email, setEmail] = useState('');
   const [checkedLicense, setCheckedLicense] = useState(false);
   const [justActivated, setJustActivated] = useState(false);
+  const [checkingNow, setCheckingNow] = useState(false);
+  const [checkError, setCheckError] = useState('');
 
   const validate = async (savedEmail: string) => {
     if (!savedEmail) {
@@ -33,6 +40,7 @@ export default function Guide() {
     }
 
     try {
+      setCheckError('');
       const ok = await verificarLicencaPorEmail(savedEmail);
       setProActive(ok);
 
@@ -48,6 +56,7 @@ export default function Guide() {
       console.error('Erro ao validar licença no Guia:', e);
       setIsPro(false);
       setCheckedLicense(true);
+      setCheckError('Não foi possível validar agora. Tente novamente em instantes.');
     }
   };
 
@@ -83,6 +92,24 @@ export default function Guide() {
     ? `/pro?email=${encodeURIComponent(email)}&focus=1`
     : '/pro?focus=1';
 
+  const handleValidateNow = async () => {
+    const normalized = email.trim().toLowerCase();
+    setEmail(normalized);
+
+    if (!normalized) {
+      setCheckError('Digite seu e-mail para validar a licença.');
+      return;
+    }
+
+    localStorage.setItem('musicopro_email', normalized);
+    setCheckingNow(true);
+    try {
+      await validate(normalized);
+    } finally {
+      setCheckingNow(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* HEADER */}
@@ -111,13 +138,9 @@ export default function Guide() {
               </button>
             </Link>
 
-            <a
-              href="https://app.musicopro.app.br/pwa/index.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={APP_URL} target="_blank" rel="noopener noreferrer">
               <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition">
-                Abrir App
+                App grátis
               </button>
             </a>
           </nav>
@@ -146,13 +169,9 @@ export default function Guide() {
             </button>
           </Link>
 
-          <a
-            href="https://app.musicopro.app.br/pwa/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={APP_URL} target="_blank" rel="noopener noreferrer">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold">
-              Abrir App
+              App grátis
             </button>
           </a>
         </nav>
@@ -160,7 +179,6 @@ export default function Guide() {
 
       {/* MAIN */}
       <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        {/* ✅ Toast/aviso após retorno do /pro */}
         {justActivated && (
           <div className="mb-6 bg-[#e8fff2] border border-[#36b37e] rounded-lg p-4">
             <p className="text-[#0c2461] font-semibold">✅ Ativação concluída — conferindo sua licença…</p>
@@ -193,16 +211,60 @@ export default function Guide() {
                 </button>
               </Link>
 
-              <a
-                href="https://app.musicopro.app.br/pwa/index.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={APP_URL} target="_blank" rel="noopener noreferrer">
                 <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  Abrir o App (próximo passo)
+                  Abrir App grátis
                 </button>
               </a>
             </div>
+
+            <p className="text-xs opacity-80">
+              Se o app não abrir, use o link alternativo:{' '}
+              <a className="underline" href={APP_FALLBACK_URL} target="_blank" rel="noopener noreferrer">
+                abrir pelo caminho antigo
+              </a>
+              .
+            </p>
+          </div>
+        </section>
+
+        {/* VALIDAR LICENÇA */}
+        <section className="mb-16 space-y-4">
+          <h3 className="text-2xl font-bold text-[#0c2461]">Já comprou? Valide sua licença PRO</h3>
+
+          <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-6 space-y-4">
+            <p className="text-[#0c2461] opacity-90">
+              Digite o <strong>mesmo e-mail usado na compra</strong>. Se estiver ativo, o conteúdo PRO libera
+              automaticamente neste navegador.
+            </p>
+
+            <div className="grid md:grid-cols-[1fr_auto] gap-3">
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Seu e-mail (usado na compra)"
+                className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                type="email"
+                autoComplete="email"
+              />
+
+              <button
+                onClick={handleValidateNow}
+                disabled={checkingNow}
+                className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-60 text-white font-bold px-6 py-3 rounded-lg transition"
+              >
+                {checkingNow ? 'Validando…' : 'Validar licença'}
+              </button>
+            </div>
+
+            {checkError && <p className="text-sm text-red-600">{checkError}</p>}
+
+            {checkedLicense && email && !isPro && !checkError && (
+              <p className="text-sm text-[#0c2461] opacity-80">
+                Licença não ativa para <strong>{email}</strong>. Se você comprou com outro e-mail, use “Corrigir e-mail”
+                mais abaixo.
+              </p>
+            )}
           </div>
         </section>
 
@@ -230,7 +292,6 @@ export default function Guide() {
         <section className="mb-16 space-y-8">
           <h3 className="text-3xl font-bold text-[#0c2461]">Conteúdo Gratuito</h3>
 
-          {/* Capítulo 1 */}
           <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4">
             <h4 className="text-2xl font-bold text-[#0c2461]">Capítulo 1: Visão Geral</h4>
             <p className="text-[#0c2461] leading-relaxed">
@@ -245,15 +306,8 @@ export default function Guide() {
               Regra prática: se você recebeu dinheiro (ou PIX, ou transferência) em troca de um serviço
               musical, isso é rendimento.
             </p>
-            <div className="bg-white border border-[#E8E3DC] rounded-lg p-4">
-              <p className="text-sm text-[#0c2461] opacity-80">
-                Dica: no App, registre os recebimentos no dia que acontecerem. No fim do mês, você só
-                confere e fecha.
-              </p>
-            </div>
           </div>
 
-          {/* Capítulo 2 */}
           <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4">
             <h4 className="text-2xl font-bold text-[#0c2461]">Capítulo 2: Vida Pessoal vs Trabalho</h4>
             <p className="text-[#0c2461] leading-relaxed">
@@ -263,31 +317,12 @@ export default function Guide() {
               Você só considera como despesa (para fins de imposto) o que está diretamente ligado ao
               trabalho como músico.
             </p>
-            <ul className="space-y-2 text-[#0c2461] opacity-90">
-              <li>
-                ✅ <strong>Geralmente faz sentido:</strong> instrumentos, acessórios, manutenção,
-                transporte para show
-              </li>
-              <li>
-                ✅ <strong>Também pode entrar:</strong> hospedagem em viagem para apresentação,
-                alimentação durante evento
-              </li>
-              <li>
-                ❌ <strong>Normalmente não entra:</strong> gastos pessoais do dia a dia (mercado,
-                internet da casa, aluguel), salvo casos específicos
-              </li>
-            </ul>
           </div>
 
-          {/* Capítulo 3 */}
           <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4">
             <h4 className="text-2xl font-bold text-[#0c2461]">Capítulo 3: Recebimentos</h4>
             <p className="text-[#0c2461] leading-relaxed">
               <strong>PIX, cachê, aulas, eventos — como registrar?</strong>
-            </p>
-            <p className="text-[#0c2461] opacity-90 leading-relaxed">
-              Todos os tipos de recebimento devem ser registrados. Não importa se foi PIX, dinheiro em
-              mão, transferência ou cheque.
             </p>
             <p className="text-[#0c2461] opacity-90 leading-relaxed">
               O que importa é: <strong>registro consistente</strong>. Depois, o app organiza e ajuda a
@@ -295,36 +330,18 @@ export default function Guide() {
             </p>
           </div>
 
-          {/* Capítulo 4 */}
           <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4">
             <h4 className="text-2xl font-bold text-[#0c2461]">Capítulo 4: Despesas Dedutíveis</h4>
             <p className="text-[#0c2461] leading-relaxed">
               <strong>O que costuma ser comum para músico?</strong>
             </p>
-            <ul className="space-y-2 text-[#0c2461] opacity-90">
-              <li>🎸 Instrumentos e acessórios (cordas, palhetas, afinador)</li>
-              <li>🎤 Equipamento de som (microfone, amplificador, caixa)</li>
-              <li>🚗 Transporte (Uber, combustível, estacionamento para show)</li>
-              <li>🏨 Hospedagem em viagem para apresentação</li>
-              <li>📚 Cursos e aulas de música</li>
-              <li>💾 Software de produção musical</li>
-            </ul>
           </div>
 
-          {/* Capítulo 5 */}
           <div className="bg-[#f0f4f8] rounded-lg p-8 space-y-4">
             <h4 className="text-2xl font-bold text-[#0c2461]">Capítulo 5: Checklist Mensal</h4>
             <p className="text-[#0c2461] leading-relaxed">
               <strong>Rotina de 15 minutos</strong>
             </p>
-            <ol className="space-y-2 text-[#0c2461] opacity-90">
-              <li>1. Abra o app no último dia do mês</li>
-              <li>2. Revise todos os recebimentos (PIX, cachês, aulas)</li>
-              <li>3. Adicione as despesas do mês</li>
-              <li>4. Vá na aba &quot;Carnê-Leão&quot; para ver o resultado</li>
-              <li>5. Se houver imposto, anote a data de pagamento</li>
-              <li>6. Faça um backup dos dados</li>
-            </ol>
           </div>
         </section>
 
@@ -343,19 +360,13 @@ export default function Guide() {
                 <h4 className="text-2xl font-bold text-[#0c2461]">Capítulos avançados (PRO)</h4>
                 <p className="text-[#0c2461] opacity-90 leading-relaxed">
                   Você está com acesso liberado. Se quiser, agora é só abrir o app para aplicar na
-                  prática (cálculos, guias e rotina mensal).
+                  prática.
                 </p>
-                <div className="space-y-3">
-                  <a
-                    href="https://app.musicopro.app.br/pwa/index.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <button className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
-                      🚀 Abrir App agora
-                    </button>
-                  </a>
-                </div>
+                <a href={APP_URL} target="_blank" rel="noopener noreferrer">
+                  <button className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition">
+                    🚀 Abrir App
+                  </button>
+                </a>
               </div>
             </>
           ) : (
@@ -374,9 +385,6 @@ export default function Guide() {
                 <div className="bg-white border border-[#E8E3DC] rounded-lg p-4">
                   <p className="text-sm text-[#0c2461] opacity-80">
                     Detectei o e-mail <strong>{email}</strong>, mas a licença não está ativa.
-                  </p>
-                  <p className="text-sm text-[#0c2461] opacity-80 mt-1">
-                    Se você comprou com outro e-mail, corrija abaixo:
                   </p>
 
                   <Link href={fixEmailLink}>
