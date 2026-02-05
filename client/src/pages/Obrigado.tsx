@@ -1,13 +1,14 @@
-import { useLocation } from 'wouter';
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Copy, ArrowRight, Mail, BookOpen, Smartphone } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { useLocation, Link } from 'wouter';
+import { Music, CheckCircle2, Copy, ArrowRight, BookOpen, Smartphone, ShieldCheck, Mail, Zap } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 export default function Obrigado() {
   const [, setLocation] = useLocation();
+  const [email, setEmail] = useState('');
   const [copied, setCopied] = useState(false);
-  const [email, setEmail] = useState<string>('');
 
+  // Lógica para recuperar o e-mail da compra (URL ou LocalStorage)
   const resolvedEmail = useMemo(() => {
     try {
       const url = new URL(window.location.href);
@@ -24,207 +25,154 @@ export default function Obrigado() {
   useEffect(() => {
     if (resolvedEmail) {
       setEmail(resolvedEmail);
-      // garante consistência com o fluxo do PWA
       localStorage.setItem('musicopro_email', resolvedEmail);
     }
   }, [resolvedEmail]);
 
   const copyToClipboard = async () => {
+    if (!email) return;
     try {
-      if (!email) return;
       await navigator.clipboard.writeText(email);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // silencioso (sem travar UX)
+    } catch {}
+  };
+
+  const handleGoToVip = () => {
+    if (email) {
+      // Redireciona já passando o e-mail para facilitar
+      window.location.href = `/guia-pro?email=${encodeURIComponent(email)}`;
+    } else {
+      setLocation('/guia-pro');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0c2461] via-[#1a3a7a] to-[#0c2461] text-white">
-      {/* Header */}
-      <header className="border-b border-[#d4af37]/20 bg-[#0c2461]/80 backdrop-blur">
+    <div className="min-h-screen bg-white font-sans text-[#0c2461]">
+      {/* HEADER SIMPLIFICADO */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC]">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-white">Músico Pro</h1>
-            <p className="text-sm text-[#6ba587]">Pacote Guia + App (método completo)</p>
-          </div>
-          <button
-            onClick={() => setLocation('/')}
-            className="text-sm text-[#d4af37] hover:text-white transition"
-          >
-            ← Voltar
-          </button>
+          <Link href="/" className="flex items-center gap-2">
+            <Music className="w-8 h-8 text-[#d4af37]" />
+            <div>
+              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                Músico Pro
+              </h1>
+              <p className="text-[10px] uppercase tracking-wider text-[#d4af37] font-bold">Compra Confirmada</p>
+            </div>
+          </Link>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-2xl mx-auto px-4 py-16">
-        {/* Success Card */}
-        <div className="bg-white/10 backdrop-blur border border-[#d4af37]/30 rounded-2xl p-8 mb-8">
-          <div className="flex justify-center mb-6">
-            <CheckCircle className="w-16 h-16 text-[#d4af37]" />
+      <main className="max-w-4xl mx-auto px-4 py-10 md:py-16">
+        
+        {/* HERO DE SUCESSO */}
+        <section className="mb-12 text-center">
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-2xl p-10 md:p-14 text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#d4af37] opacity-20 rounded-full blur-3xl"></div>
+            
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="bg-white rounded-full p-4 mb-6 shadow-lg">
+                <CheckCircle2 className="w-12 h-12 text-[#0c2461]" />
+              </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
+                Pagamento Confirmado!
+              </h2>
+              <p className="text-xl opacity-90 max-w-2xl">
+                Parabéns, você agora faz parte da elite dos músicos profissionais. <br/>
+                Seu acesso ao <strong>Pacote Músico Pro</strong> já está liberado.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <h2 className="text-4xl font-bold text-center mb-4">Compra confirmada! 🎉</h2>
+        {/* DADOS DE ACESSO */}
+        <section className="mb-16">
+          <div className="max-w-2xl mx-auto bg-[#f8fafc] border-2 border-[#d4af37] rounded-xl p-8 shadow-sm">
+            <h3 className="text-xl font-bold text-[#0c2461] mb-6 flex items-center gap-2">
+              <Zap className="text-[#d4af37]" /> Seu passaporte de acesso
+            </h3>
 
-          <p className="text-center text-lg text-gray-200 mb-8">
-            Você acabou de garantir o <strong>Pacote Músico Pro</strong>: Guia + App.
-            <br />
-            Agora é só seguir os passos abaixo.
-          </p>
-
-          {/* Email Box */}
-          <div className="bg-[#0c2461]/50 border border-[#d4af37]/20 rounded-xl p-6 mb-8">
-            <div className="flex items-start gap-3">
-              <Mail className="w-5 h-5 text-[#d4af37] mt-1" />
-              <div className="w-full">
-                <h3 className="text-lg font-bold text-[#d4af37] mb-2">Seu e-mail de ativação</h3>
-
+            <div className="bg-white border border-[#E8E3DC] rounded-lg p-6 space-y-4">
+              <div>
+                <p className="text-sm font-bold text-[#0c2461] mb-2 uppercase tracking-wide">E-mail Cadastrado</p>
                 {email ? (
-                  <div className="flex gap-2">
-                    <input
-                      type="email"
-                      value={email}
-                      readOnly
-                      className="flex-1 bg-white/10 border border-[#d4af37]/30 rounded-lg px-4 py-2 text-white font-mono text-sm"
-                    />
-                    <button
+                  <div className="flex items-center gap-2 bg-gray-50 p-3 rounded border border-gray-200">
+                    <Mail className="w-5 h-5 text-gray-400" />
+                    <span className="flex-1 font-mono text-[#0c2461] font-medium">{email}</span>
+                    <button 
                       onClick={copyToClipboard}
-                      className="bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] px-4 py-2 rounded-lg font-semibold flex items-center gap-2 transition"
+                      className="text-xs bg-[#0c2461] text-white px-3 py-1.5 rounded hover:bg-[#1a3a7a] transition flex items-center gap-1"
                     >
-                      <Copy className="w-4 h-4" />
-                      {copied ? 'Copiado!' : 'Copiar'}
+                      {copied ? <CheckCircle2 size={12}/> : <Copy size={12}/>}
+                      {copied ? 'Copiado' : 'Copiar'}
                     </button>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-200">
-                    Não detectei seu e-mail automaticamente.
-                    <br />
-                    Sem problema: você pode ativar usando o <strong>mesmo e-mail da compra</strong>.
-                  </p>
+                  <div className="bg-yellow-50 p-3 rounded border border-yellow-100 text-yellow-800 text-sm">
+                    ⚠️ Não identificamos seu e-mail automaticamente. Use o <strong>mesmo e-mail da compra</strong> para acessar.
+                  </div>
                 )}
-
-                <p className="text-xs text-gray-300 mt-3">
-                  A ativação é feita por <strong>e-mail</strong> (não por código).
-                </p>
               </div>
+              <p className="text-sm text-gray-500">
+                Você usará este e-mail para desbloquear tanto o <strong>Guia PRO</strong> quanto o <strong>App</strong>.
+              </p>
             </div>
           </div>
+        </section>
 
-          {/* Access Instructions */}
-          <div className="bg-[#0c2461]/50 border border-[#d4af37]/20 rounded-xl p-6 mb-8">
-            <h3 className="text-xl font-bold text-[#d4af37] mb-4">✓ Próximos passos (ordem recomendada)</h3>
-
-            <div className="space-y-4">
-              {/* Step 1 */}
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 bg-[#d4af37] rounded-full flex items-center justify-center font-bold text-[#0c2461]">
-                  1
-                </div>
-                <div className="flex items-start gap-3">
-                  <BookOpen className="w-5 h-5 text-[#d4af37] mt-1" />
-                  <div>
-                    <p className="font-semibold text-white mb-1">Comece pelo Guia (método)</p>
-                    <p className="text-sm text-gray-200">
-                      Ele é o primeiro passo obrigatório para usar o app do jeito certo.
-                    </p>
-                    <button
-                      onClick={() => setLocation('/guia')}
-                      className="mt-2 text-[#d4af37] hover:text-white transition underline text-sm"
-                    >
-                      Abrir Guia
-                    </button>
-                  </div>
-                </div>
+        {/* PRÓXIMOS PASSOS */}
+        <section className="mb-20">
+          <h3 className="text-2xl font-bold text-[#0c2461] text-center mb-8">Por onde começar?</h3>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* CARD 1: ÁREA VIP */}
+            <div className="bg-white border border-[#E8E3DC] rounded-xl p-8 hover:shadow-lg transition group">
+              <div className="bg-blue-50 w-12 h-12 rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#0c2461] transition duration-300">
+                <BookOpen className="text-[#0c2461] w-6 h-6 group-hover:text-[#d4af37]" />
               </div>
+              <h4 className="text-xl font-bold text-[#0c2461] mb-2">1. Acesse a Área VIP</h4>
+              <p className="text-[#0c2461] opacity-70 mb-6 min-h-[48px]">
+                Desbloqueie os módulos avançados de dedução, aposentadoria e contratos.
+              </p>
+              <button 
+                onClick={handleGoToVip}
+                className="w-full bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"
+              >
+                Entrar na Área VIP <ArrowRight size={18}/>
+              </button>
+            </div>
 
-              {/* Step 2 */}
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 bg-[#d4af37] rounded-full flex items-center justify-center font-bold text-[#0c2461]">
-                  2
-                </div>
-                <div className="flex items-start gap-3">
-                  <Smartphone className="w-5 h-5 text-[#d4af37] mt-1" />
-                  <div>
-                    <p className="font-semibold text-white mb-1">Abra o App (execução)</p>
-                    <p className="text-sm text-gray-200">
-                      O app existe para operacionalizar o que você aprendeu no guia.
-                    </p>
-                    <a
-                      href="https://app.musicopro.app.br/pwa/index.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-block text-[#d4af37] hover:text-white transition underline text-sm"
-                    >
-                      Abrir App
-                    </a>
-                  </div>
-                </div>
+            {/* CARD 2: APP */}
+            <div className="bg-white border border-[#E8E3DC] rounded-xl p-8 hover:shadow-lg transition group">
+              <div className="bg-yellow-50 w-12 h-12 rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#d4af37] transition duration-300">
+                <Smartphone className="text-[#d4af37] w-6 h-6 group-hover:text-[#0c2461]" />
               </div>
-
-              {/* Step 3 */}
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 bg-[#d4af37] rounded-full flex items-center justify-center font-bold text-[#0c2461]">
-                  3
-                </div>
-                <div>
-                  <p className="font-semibold text-white mb-1">Ative o acesso Premium com seu e-mail</p>
-                  <p className="text-sm text-gray-200">
-                    Entre na página do pacote e valide usando o <strong>mesmo e-mail da compra</strong>.
-                  </p>
-                </div>
-              </div>
+              <h4 className="text-xl font-bold text-[#0c2461] mb-2">2. Use o App PRO</h4>
+              <p className="text-[#0c2461] opacity-70 mb-6 min-h-[48px]">
+                Gere seus primeiros recibos profissionais e organize sua vida financeira.
+              </p>
+              <Link href="/app">
+                <button className="w-full bg-white border-2 border-[#0c2461] hover:bg-gray-50 text-[#0c2461] font-bold py-3 rounded-lg transition flex items-center justify-center gap-2">
+                  Abrir App MusicoPro
+                </button>
+              </Link>
             </div>
           </div>
+        </section>
 
-          {/* What's Included */}
-          <div className="bg-[#6ba587]/20 border border-[#6ba587]/30 rounded-xl p-6 mb-8">
-            <h4 className="font-bold text-white mb-4">O que está incluso no pacote:</h4>
-            <ul className="space-y-2 text-gray-200">
-              <li className="flex items-center gap-2">
-                <span className="text-[#d4af37]">✓</span>
-                Guia educacional (método fiscal)
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#d4af37]">✓</span>
-                App Músico Pro (execução prática)
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-[#d4af37]">✓</span>
-                Conteúdos aprofundados (Premium)
-              </li>
-            </ul>
-          </div>
-
-          {/* CTA */}
-          <Button
-  onClick={() => {
-    if (email) {
-      setLocation(`/pro?email=${encodeURIComponent(email)}`);
-    } else {
-      setLocation('/pro');
-    }
-  }}
-  className="w-full bg-[#d4af37] hover:bg-[#e5c158] text-[#0c2461] font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition"
->
-  Ativar agora com este e-mail
-  <ArrowRight className="w-5 h-5" />
-</Button>
-
-          <p className="text-xs text-gray-300 text-center mt-3">
-            Dica: se a ativação não aparecer de primeira, confirme se está usando o <strong>mesmo e-mail da compra</strong>.
-          </p>
-        </div>
-
-        {/* Support Info */}
-        <div className="text-center text-gray-300 text-sm">
+        {/* SUPORTE */}
+        <section className="text-center text-[#0c2461] opacity-70 text-sm max-w-md mx-auto">
+          <div className="flex justify-center mb-2"><ShieldCheck className="w-6 h-6"/></div>
           <p className="mb-2">
-            Dúvidas? Confira o e-mail de confirmação da compra ou fale com o suporte.
+            Precisa de ajuda? Verifique também sua caixa de entrada (e spam) para o e-mail de confirmação da Hotmart.
           </p>
-          <p className="text-gray-400">Obrigado por escolher o Músico Pro! 🎵</p>
-        </div>
+          <p>Obrigado pela confiança! 🎵</p>
+        </section>
+
       </main>
+      
+      <Footer />
     </div>
   );
 }
