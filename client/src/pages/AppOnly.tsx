@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Music, Menu, X, Check, ShieldCheck, Lock } from 'lucide-react';
+import { Music, Menu, X, Check, ShieldCheck, Lock, ExternalLink, CheckCircle2, Loader2 } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
@@ -28,6 +28,8 @@ export default function AppOnly() {
   const [msg, setMsg] = useState('');
   const [isPro, setIsPro] = useState(false);
 
+  const [toast, setToast] = useState('');
+
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const pwaUrlWithEmail = useMemo(() => {
@@ -37,6 +39,17 @@ export default function AppOnly() {
 
   const openPwa = () => {
     window.open(pwaUrlWithEmail, '_blank', 'noopener,noreferrer');
+  };
+
+  const goToGuideActivation = () => {
+    // “centro” do pacote fica no Guia
+    const target = '/guia#validar-guia-pro';
+    window.location.href = target;
+  };
+
+  const goToGuidePro = () => {
+    const target = '/guia#guia-pro';
+    window.location.href = target;
   };
 
   const validate = async () => {
@@ -61,7 +74,9 @@ export default function AppOnly() {
 
       if (ok) {
         setStatus('success');
-        setMsg('✅ Licença ativa! Ao abrir o app, ele já entra em modo PRO.');
+        setMsg('✅ Licença ativa! Este é um pacote completo: Guia PRO + App PRO.');
+        setToast('✅ Pacote PRO confirmado');
+        setTimeout(() => setToast(''), 5200);
       } else {
         setStatus('inactive');
         setMsg('Licença não ativa para este e-mail. Verifique se usou o mesmo e-mail da compra.');
@@ -108,21 +123,24 @@ export default function AppOnly() {
 
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/">
-              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
-                Home
-              </button>
+              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">Home</button>
             </Link>
+
             <Link href="/guia">
-              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
-                Guia
+              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">Guia</button>
+            </Link>
+
+            <Link href="/app">
+              <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">App</button>
+            </Link>
+
+            <Link href="/guia#validar-guia-pro">
+              <button
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition"
+              >
+                Ativar pacote
               </button>
             </Link>
-            <button
-              onClick={openPwa}
-              className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition"
-            >
-              Abrir App grátis
-            </button>
           </nav>
 
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-[#0c2461]">
@@ -135,31 +153,42 @@ export default function AppOnly() {
       {mobileMenuOpen && (
         <nav className="md:hidden bg-[#0c2461] text-white p-4 space-y-2">
           <Link href="/">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
-              Home
-            </button>
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Home</button>
           </Link>
           <Link href="/guia">
-            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
-              Guia
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Guia</button>
+          </Link>
+          <Link href="/app">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">App</button>
+          </Link>
+          <Link href="/guia#validar-guia-pro">
+            <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold">
+              Ativar pacote
             </button>
           </Link>
-          <button
-            onClick={openPwa}
-            className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold"
-          >
-            Abrir App grátis
-          </button>
         </nav>
       )}
 
       <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
+        {toast && (
+          <div className="mb-6 bg-[#e8fff2] border border-[#36b37e] rounded-lg p-4">
+            <p className="text-[#0c2461] font-semibold">{toast}</p>
+            <p className="text-sm text-[#0c2461] opacity-80">
+              Dica: se trocar de celular/navegador, valide novamente com o mesmo e-mail.
+            </p>
+          </div>
+        )}
+
         {/* Hero */}
         <section className="mb-10">
           <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-5">
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">App do Músico Pro</h2>
             <p className="text-lg opacity-90">
-              A ferramenta prática para registrar receitas/despesas e manter sua rotina organizada.
+              Ferramenta prática para registrar receitas/despesas e manter sua rotina organizada.
+              <br />
+              <span className="opacity-90">
+                O <strong>PRO</strong> é um pacote: <strong>Guia aprofundado</strong> + <strong>App com funções PRO</strong>.
+              </span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
@@ -173,6 +202,12 @@ export default function AppOnly() {
               <Link href="/guia">
                 <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
                   📖 Ler o Guia
+                </button>
+              </Link>
+
+              <Link href="/guia#validar-guia-pro">
+                <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
+                  🔓 Ativar pacote
                 </button>
               </Link>
             </div>
@@ -195,7 +230,7 @@ export default function AppOnly() {
               'Registrar recebimentos (PIX, cachês, aulas)',
               'Registrar despesas (instrumentos, transporte, etc.)',
               'Organizar mês a mês (rotina simples)',
-              'Evitar esquecimentos no fim do ano'
+              'Evitar esquecimentos no fim do ano',
             ].map((t) => (
               <div key={t} className="flex gap-3 bg-[#f0f4f8] p-4 rounded-lg">
                 <Check className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
@@ -207,11 +242,13 @@ export default function AppOnly() {
 
         {/* Ativação PRO do App */}
         <section id="ativar-app-pro" className="mb-12 space-y-4">
-          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar App PRO</h3>
+          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar pacote PRO (Guia + App)</h3>
 
           <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-6 space-y-4">
             <p className="text-[#0c2461] opacity-90">
-              Digite o <strong>mesmo e-mail usado na compra</strong>. Se estiver ativo, ao abrir o app ele já entra em modo PRO.
+              Digite o <strong>mesmo e-mail usado na compra</strong>. Se estiver ativo, você libera:
+              <br />
+              <strong>✅ Guia PRO (aprofundado)</strong> + <strong>✅ App PRO (todas as funções)</strong>.
             </p>
 
             {status !== 'idle' && (
@@ -224,10 +261,17 @@ export default function AppOnly() {
                       ? 'bg-[#fff4e6] border-[#d4af37]'
                       : status === 'checking'
                         ? 'bg-[#eef6ff] border-[#2f6fed]'
-                        : 'bg-[#fff1f2] border-[#ef4444]'
+                        : 'bg-[#fff1f2] border-[#ef4444]',
                 ].join(' ')}
               >
-                <ShieldCheck className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
+                {status === 'checking' ? (
+                  <Loader2 className="w-5 h-5 flex-shrink-0 mt-0.5 animate-spin text-[#0c2461]" />
+                ) : status === 'success' ? (
+                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
+                ) : (
+                  <ShieldCheck className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#0c2461]" />
+                )}
+
                 <div>
                   <p className="font-semibold text-[#0c2461]">
                     {status === 'checking'
@@ -265,24 +309,36 @@ export default function AppOnly() {
 
             <div className="flex flex-col sm:flex-row gap-3 pt-1 items-center">
               {isPro ? (
-                <button
-                  onClick={openPwa}
-                  className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
-                >
-                  🚀 Abrir App PRO agora
-                </button>
-              ) : (
-                <div className="flex gap-2 items-center text-sm text-[#0c2461] opacity-80">
-                  <Lock className="w-4 h-4" />
-                  <span>Valide a licença para liberar o PRO.</span>
-                </div>
-              )}
+                <>
+                  <button
+                    onClick={openPwa}
+                    className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition flex items-center justify-center gap-2"
+                  >
+                    🚀 Abrir App PRO agora <ExternalLink className="w-4 h-4" />
+                  </button>
 
-              <Link href="/pro">
-                <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
-                  Comprar / Gerenciar
-                </button>
-              </Link>
+                  <button
+                    onClick={goToGuidePro}
+                    className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition"
+                  >
+                    Ver Guia PRO (aprofundado)
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="flex gap-2 items-center text-sm text-[#0c2461] opacity-80">
+                    <Lock className="w-4 h-4" />
+                    <span>Valide a licença para liberar o PRO.</span>
+                  </div>
+
+                  <button
+                    onClick={goToGuideActivation}
+                    className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition"
+                  >
+                    Ir para ativação (Guia)
+                  </button>
+                </>
+              )}
 
               <Link href="/instalar">
                 <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
@@ -290,6 +346,10 @@ export default function AppOnly() {
                 </button>
               </Link>
             </div>
+
+            <p className="text-xs text-[#0c2461] opacity-70">
+              Importante: a licença PRO é <strong>um pacote completo</strong> — guia aprofundado + app com todas as funções PRO.
+            </p>
           </div>
         </section>
       </main>
