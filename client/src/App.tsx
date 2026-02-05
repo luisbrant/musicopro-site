@@ -69,3 +69,30 @@ function App() {
 }
 
 export default App;
+
+// ... seus imports
+import Guide from "./pages/Guide";
+import AppOnly from "./pages/AppOnly";
+
+// ✅ NOVO
+import GuidePro from "./pages/GuidePro";
+
+function Router() {
+  // ...
+  return (
+    <>
+      {/* ... */}
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path="/app" component={AppOnly} />
+        <Route path="/guia" component={Guide} />
+
+        {/* ✅ Guia PRO completo */}
+        <Route path="/guia-pro" component={GuidePro} />
+
+        {/* ... resto */}
+        <Route component={NotFound} />
+      </Switch>
+    </>
+  );
+}
