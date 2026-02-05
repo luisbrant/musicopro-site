@@ -18,8 +18,11 @@ import PWA from "./pages/PWA";
 import Guide from "./pages/Guide";
 import AppInstructions from "./pages/AppInstructions";
 
-// ✅ NOVA PÁGINA (SÓ APP)
+// ✅ Página dedicada do App
 import AppOnly from "./pages/AppOnly";
+
+// ✅ Página dedicada do Guia PRO completo
+import GuidePro from "./pages/GuidePro";
 
 function Router() {
   const { showBanner, closeBanner } = useAttribution();
@@ -27,17 +30,21 @@ function Router() {
   return (
     <>
       <AttributionBanner isVisible={showBanner} onClose={closeBanner} />
+
       <Switch>
-        <Route path={"/"} component={Home} />
+        <Route path="/" component={Home} />
 
         {/* ✅ App (página dedicada) */}
         <Route path="/app" component={AppOnly} />
 
-        {/* ✅ Instruções de instalação (mantida separada) */}
+        {/* ✅ Instruções de instalação */}
         <Route path="/instalar" component={AppInstructions} />
 
-        {/* ✅ Guia (página dedicada) */}
+        {/* ✅ Guia (conteúdo grátis + ativação do pacote) */}
         <Route path="/guia" component={Guide} />
+
+        {/* ✅ Guia PRO completo */}
+        <Route path="/guia-pro" component={GuidePro} />
 
         <Route path="/pro" component={Vendas} />
         <Route path="/premium" component={Premium} />
@@ -69,30 +76,3 @@ function App() {
 }
 
 export default App;
-
-// ... seus imports
-import Guide from "./pages/Guide";
-import AppOnly from "./pages/AppOnly";
-
-// ✅ NOVO
-import GuidePro from "./pages/GuidePro";
-
-function Router() {
-  // ...
-  return (
-    <>
-      {/* ... */}
-      <Switch>
-        <Route path={"/"} component={Home} />
-        <Route path="/app" component={AppOnly} />
-        <Route path="/guia" component={Guide} />
-
-        {/* ✅ Guia PRO completo */}
-        <Route path="/guia-pro" component={GuidePro} />
-
-        {/* ... resto */}
-        <Route component={NotFound} />
-      </Switch>
-    </>
-  );
-}
