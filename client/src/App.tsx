@@ -18,6 +18,8 @@ import PWA from "./pages/PWA";
 import Guide from "./pages/Guide";
 import AppInstructions from "./pages/AppInstructions";
 
+// ✅ NOVA PÁGINA (SÓ APP)
+import AppOnly from "./pages/AppOnly";
 
 function Router() {
   const { showBanner, closeBanner } = useAttribution();
@@ -27,8 +29,16 @@ function Router() {
       <AttributionBanner isVisible={showBanner} onClose={closeBanner} />
       <Switch>
         <Route path={"/"} component={Home} />
-        <Route path="/app" component={AppInstructions} />
+
+        {/* ✅ App (página dedicada) */}
+        <Route path="/app" component={AppOnly} />
+
+        {/* ✅ Instruções de instalação (mantida separada) */}
+        <Route path="/instalar" component={AppInstructions} />
+
+        {/* ✅ Guia (página dedicada) */}
         <Route path="/guia" component={Guide} />
+
         <Route path="/pro" component={Vendas} />
         <Route path="/premium" component={Premium} />
         <Route path="/obrigado" component={Obrigado} />
@@ -37,6 +47,7 @@ function Router() {
         <Route path="/termos" component={Termos} />
         <Route path="/pwa/*" component={PWA} />
         <Route path="/404" component={NotFound} />
+
         {/* Final fallback route */}
         <Route component={NotFound} />
       </Switch>
@@ -44,18 +55,10 @@ function Router() {
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />

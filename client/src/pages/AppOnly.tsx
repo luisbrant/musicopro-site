@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
-import { Music, Menu, X, Lock, Check, ShieldCheck } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Music, Menu, X, Check, ShieldCheck, Lock } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 
-const getProEmail = () => localStorage.getItem('musicopro_email') || '';
-const setProEmail = (email: string) => localStorage.setItem('musicopro_email', email);
+// PWA (App grátis)
+const PWA_URL = 'https://app.musicopro.app.br';
+const PWA_FALLBACK_URL = 'https://app.musicopro.app.br/pwa/index.html';
+
+const getSavedEmail = () => localStorage.getItem('musicopro_email') || '';
+const setSavedEmail = (email: string) => localStorage.setItem('musicopro_email', email);
 
 async function verificarLicencaPorEmail(email: string): Promise<boolean> {
   const res = await fetch(`${PRO_API}?email=${encodeURIComponent(email)}`);
@@ -16,25 +20,27 @@ async function verificarLicencaPorEmail(email: string): Promise<boolean> {
 
 type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
-export default function Guide() {
+export default function AppOnly() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
   const [isPro, setIsPro] = useState(false);
-  const [toast, setToast] = useState('');
 
   const emailRef = useRef<HTMLInputElement | null>(null);
 
-  const scrollToValidate = (focus = false) => {
-    const el = document.getElementById('validar-guia-pro');
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (focus) setTimeout(() => emailRef.current?.focus(), 250);
+  const pwaUrlWithEmail = useMemo(() => {
+    const e = email.trim().toLowerCase();
+    return e ? `${PWA_URL}?email=${encodeURIComponent(e)}` : PWA_URL;
+  }, [email]);
+
+  const openPwa = () => {
+    window.open(pwaUrlWithEmail, '_blank', 'noopener,noreferrer');
   };
 
-  const validate = async (prefill?: string) => {
-    const normalized = (prefill ?? email).trim().toLowerCase();
+  const validate = async () => {
+    const normalized = email.trim().toLowerCase();
     setEmail(normalized);
 
     if (!normalized) {
@@ -48,16 +54,14 @@ export default function Guide() {
       setStatus('checking');
       setMsg('Validando sua licença…');
 
-      setProEmail(normalized);
+      setSavedEmail(normalized);
 
       const ok = await verificarLicencaPorEmail(normalized);
       setIsPro(ok);
 
       if (ok) {
         setStatus('success');
-        setMsg('✅ Licença ativa! Guia PRO liberado neste navegador.');
-        setToast('✅ Guia PRO liberado neste navegador');
-        setTimeout(() => setToast(''), 5000);
+        setMsg('✅ Licença ativa! Ao abrir o app, ele já entra em modo PRO.');
       } else {
         setStatus('inactive');
         setMsg('Licença não ativa para este e-mail. Verifique se usou o mesmo e-mail da compra.');
@@ -71,19 +75,21 @@ export default function Guide() {
   };
 
   useEffect(() => {
-    const saved = getProEmail().trim().toLowerCase();
-    if (saved) {
-      setEmail(saved);
-      validate(saved);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const saved = getSavedEmail().trim().toLowerCase();
+    if (saved) setEmail(saved);
 
-  const goToAppActivation = () => {
-    const e = email.trim().toLowerCase();
-    const url = e ? `/app?email=${encodeURIComponent(e)}#ativar-app-pro` : '/app#ativar-app-pro';
-    window.location.href = url;
-  };
+    // Se chegou com ?email=..., pré-preenche (vindo do Guia)
+    try {
+      const url = new URL(window.location.href);
+      const qEmail = (url.searchParams.get('email') || '').trim().toLowerCase();
+      if (qEmail) {
+        setEmail(qEmail);
+        setSavedEmail(qEmail);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -96,7 +102,7 @@ export default function Guide() {
               <h1 className="font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
                 Músico Pro
               </h1>
-              <p className="text-xs text-[#6ba587]">Guia (conhecimento)</p>
+              <p className="text-xs text-[#6ba587]">App (ferramenta prática)</p>
             </div>
           </div>
 
@@ -106,18 +112,16 @@ export default function Guide() {
                 Home
               </button>
             </Link>
-
-            <Link href="/app">
+            <Link href="/guia">
               <button className="text-[#0c2461] hover:text-[#d4af37] transition font-medium">
-                App
+                Guia
               </button>
             </Link>
-
             <button
-              onClick={() => scrollToValidate(!email)}
+              onClick={openPwa}
               className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-2 rounded-lg transition"
             >
-              Ativar Guia PRO
+              Abrir App grátis
             </button>
           </nav>
 
@@ -135,61 +139,79 @@ export default function Guide() {
               Home
             </button>
           </Link>
-
-          <Link href="/app">
+          <Link href="/guia">
             <button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">
-              App
+              Guia
             </button>
           </Link>
-
           <button
-            onClick={() => scrollToValidate(true)}
+            onClick={openPwa}
             className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition font-bold"
           >
-            Ativar Guia PRO
+            Abrir App grátis
           </button>
         </nav>
       )}
 
       <main className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-        {toast && (
-          <div className="mb-6 bg-[#e8fff2] border border-[#36b37e] rounded-lg p-4">
-            <p className="text-[#0c2461] font-semibold">{toast}</p>
-          </div>
-        )}
-
         {/* Hero */}
-        <section className="mb-12 space-y-6">
-          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">Guia do Músico Autônomo</h2>
+        <section className="mb-10">
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-lg p-8 md:p-12 text-white space-y-5">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">App do Músico Pro</h2>
             <p className="text-lg opacity-90">
-              Aqui você entende as regras. No App você aplica na prática.
+              A ferramenta prática para registrar receitas/despesas e manter sua rotina organizada.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
-                onClick={() => scrollToValidate(!email)}
+                onClick={openPwa}
                 className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
               >
-                👉 Ativar Guia PRO
+                📲 Abrir App grátis
               </button>
 
-              <Link href="/app">
+              <Link href="/guia">
                 <button className="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition border border-white/50">
-                  Ver o App
+                  📖 Ler o Guia
                 </button>
               </Link>
             </div>
+
+            <p className="text-xs opacity-80">
+              Se o app não abrir, use o link alternativo:{' '}
+              <a className="underline" href={PWA_FALLBACK_URL} target="_blank" rel="noopener noreferrer">
+                abrir pelo caminho antigo
+              </a>
+              .
+            </p>
           </div>
         </section>
 
-        {/* Ativação Guia PRO */}
-        <section id="validar-guia-pro" className="mb-12 space-y-4">
-          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar Guia PRO</h3>
+        {/* O que o app faz */}
+        <section className="mb-12 space-y-4">
+          <h3 className="text-2xl font-bold text-[#0c2461]">O que o app faz</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              'Registrar recebimentos (PIX, cachês, aulas)',
+              'Registrar despesas (instrumentos, transporte, etc.)',
+              'Organizar mês a mês (rotina simples)',
+              'Evitar esquecimentos no fim do ano'
+            ].map((t) => (
+              <div key={t} className="flex gap-3 bg-[#f0f4f8] p-4 rounded-lg">
+                <Check className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                <p className="text-[#0c2461]">{t}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Ativação PRO do App */}
+        <section id="ativar-app-pro" className="mb-12 space-y-4">
+          <h3 className="text-2xl font-bold text-[#0c2461]">Ativar App PRO</h3>
 
           <div className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-6 space-y-4">
             <p className="text-[#0c2461] opacity-90">
-              Digite o <strong>mesmo e-mail usado na compra</strong>.
+              Digite o <strong>mesmo e-mail usado na compra</strong>. Se estiver ativo, ao abrir o app ele já entra em modo PRO.
             </p>
 
             {status !== 'idle' && (
@@ -211,7 +233,7 @@ export default function Guide() {
                     {status === 'checking'
                       ? 'Validando…'
                       : status === 'success'
-                        ? 'Guia PRO liberado'
+                        ? 'Acesso PRO confirmado'
                         : status === 'inactive'
                           ? 'Licença não ativa'
                           : 'Falha na validação'}
@@ -231,8 +253,9 @@ export default function Guide() {
                 type="email"
                 autoComplete="email"
               />
+
               <button
-                onClick={() => validate()}
+                onClick={validate}
                 disabled={status === 'checking'}
                 className="bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-60 text-white font-bold px-6 py-3 rounded-lg transition"
               >
@@ -240,64 +263,34 @@ export default function Guide() {
               </button>
             </div>
 
-            {/* ✅ Ativação do App a partir do Guia */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button
-                onClick={goToAppActivation}
-                className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
-              >
-                Continuar no App (ativar)
-              </button>
+            <div className="flex flex-col sm:flex-row gap-3 pt-1 items-center">
+              {isPro ? (
+                <button
+                  onClick={openPwa}
+                  className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-6 py-3 rounded-lg transition"
+                >
+                  🚀 Abrir App PRO agora
+                </button>
+              ) : (
+                <div className="flex gap-2 items-center text-sm text-[#0c2461] opacity-80">
+                  <Lock className="w-4 h-4" />
+                  <span>Valide a licença para liberar o PRO.</span>
+                </div>
+              )}
 
               <Link href="/pro">
                 <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
                   Comprar / Gerenciar
                 </button>
               </Link>
+
+              <Link href="/instalar">
+                <button className="w-full sm:w-auto bg-white border border-[#E8E3DC] hover:bg-[#f0f4f8] text-[#0c2461] font-semibold px-6 py-3 rounded-lg transition">
+                  Como instalar no celular
+                </button>
+              </Link>
             </div>
           </div>
-        </section>
-
-        {/* Conteúdo grátis (guia-only) */}
-        <section className="mb-16 space-y-8">
-          <h3 className="text-3xl font-bold text-[#0c2461]">Conteúdo Gratuito</h3>
-
-          {[
-            { t: 'Capítulo 1: Visão geral', d: 'O que entra como renda e por que registrar tudo.' },
-            { t: 'Capítulo 2: Pessoal vs trabalho', d: 'Como separar despesas e reduzir risco.' },
-            { t: 'Capítulo 3: Recebimentos', d: 'PIX, cachê, aulas, eventos — organização simples.' },
-            { t: 'Capítulo 4: Despesas', d: 'O que normalmente faz sentido registrar e guardar.' },
-            { t: 'Capítulo 5: Checklist mensal', d: 'Rotina de 15 minutos para manter tudo em dia.' }
-          ].map((c) => (
-            <div key={c.t} className="bg-[#f0f4f8] rounded-lg p-8 space-y-3">
-              <h4 className="text-2xl font-bold text-[#0c2461]">{c.t}</h4>
-              <p className="text-[#0c2461] opacity-90">{c.d}</p>
-              <div className="flex gap-3 items-center text-sm text-[#0c2461] opacity-80">
-                <Check className="w-4 h-4 text-[#d4af37]" />
-                <span>Leia mais no Guia PRO após ativação.</span>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* Status PRO do Guia */}
-        <section className="mb-16 space-y-6">
-          {isPro ? (
-            <div className="bg-[#e8fff2] border-2 border-[#36b37e] rounded-lg p-6">
-              <p className="font-bold text-[#0c2461]">✅ Guia PRO liberado</p>
-              <p className="text-sm text-[#0c2461] opacity-80">Conteúdo completo disponível neste navegador.</p>
-            </div>
-          ) : (
-            <div className="bg-[#fff4e6] border-2 border-[#d4af37] rounded-lg p-6">
-              <div className="flex gap-3">
-                <Lock className="w-6 h-6 text-[#d4af37] flex-shrink-0 mt-1" />
-                <div>
-                  <p className="font-bold text-[#0c2461]">Conteúdo avançado (Guia PRO)</p>
-                  <p className="text-sm text-[#0c2461] opacity-80">Valide sua licença para liberar.</p>
-                </div>
-              </div>
-            </div>
-          )}
         </section>
       </main>
 
