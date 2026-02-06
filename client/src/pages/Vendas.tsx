@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Music, Menu, X, CheckCircle2, Star, ShieldCheck, ArrowRight, Zap, FileText, Smartphone, BookOpen, Download } from 'lucide-react';
+import { Music, Menu, X, CheckCircle2, Star, ShieldCheck, ArrowRight, Zap, Smartphone, BookOpen, Lock, Database } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 
@@ -46,10 +46,9 @@ export default function Vendas() {
 
       <main className="max-w-6xl mx-auto px-4 py-10 md:py-16">
         
-        {/* HERO SECTION DE ALTA CONVERSÃO */}
+        {/* HERO SECTION */}
         <section className="mb-20">
           <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-2xl p-8 md:p-14 text-white shadow-2xl relative overflow-hidden">
-            {/* Elemento decorativo de fundo */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#d4af37] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
             
             <div className="relative z-10 max-w-3xl">
@@ -60,7 +59,7 @@ export default function Vendas() {
                 Profissionalize sua carreira por menos de <span className="text-[#d4af37]">R$ 0,30 por dia</span>.
               </h2>
               <p className="text-xl opacity-90 mb-8 max-w-2xl">
-                O único pacote que une a <strong>ferramenta</strong> que você precisa (App) com o <strong>conhecimento</strong> que te economiza milhares de reais (Guia PRO).
+                O único pacote que une a <strong>ferramenta segura</strong> (App Local) com o <strong>conhecimento</strong> que te economiza milhares de reais.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -75,11 +74,11 @@ export default function Vendas() {
           </div>
         </section>
 
-        {/* A SOLUÇÃO COMPLETA (VALUE STACK) */}
+        {/* VALUE STACK */}
         <section className="mb-20">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-[#0c2461]">O que você leva no Pacote?</h3>
-            <p className="opacity-70 mt-2">Não é só um app, é um escritório completo.</p>
+            <p className="opacity-70 mt-2">Privacidade total e organização completa.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -89,15 +88,15 @@ export default function Vendas() {
                 <div className="bg-[#0c2461] p-3 rounded-lg text-white"><Smartphone size={24}/></div>
                 <div>
                   <h4 className="font-bold text-xl text-[#0c2461]">App MusicoPro (Anual)</h4>
-                  <p className="text-sm opacity-70">Acesso ilimitado à ferramenta.</p>
+                  <p className="text-sm opacity-70">Acesso ilimitado e offline.</p>
                 </div>
               </div>
               <div className="p-8 space-y-4">
                 <ul className="space-y-3">
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span><strong>Gerador de Recibos</strong> e Contratos PDF</span></li>
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Cálculo automático de <strong>Carnê-Leão</strong></span></li>
-                  <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Exportação para Contador (CSV/PDF)</span></li>
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Consultor <strong>IA Fiscal 24h</strong></span></li>
+                  <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span><strong>Segurança:</strong> Dados salvos no seu aparelho</span></li>
                 </ul>
               </div>
             </div>
@@ -123,24 +122,37 @@ export default function Vendas() {
           </div>
         </section>
 
-        {/* PROVA SOCIAL */}
-        <section className="mb-20 bg-[#f8fafc] border border-[#E8E3DC] rounded-2xl p-8 md:p-12 text-center">
-          <Star className="w-10 h-10 text-[#d4af37] mx-auto mb-6 fill-current" />
-          <h3 className="text-2xl font-bold text-[#0c2461] mb-4">
-            "Eu pagava R$ 400 de imposto todo mês sem saber. Com o Guia aprendi a deduzir e o App faz a conta certa. Hoje pago menos de R$ 100."
-          </h3>
-          <div className="flex items-center justify-center gap-3">
-             <div className="w-10 h-10 bg-[#0c2461] rounded-full flex items-center justify-center text-white font-bold">R</div>
-             <div className="text-left">
-                <p className="font-bold text-[#0c2461] text-sm">Ricardo S.</p>
-                <p className="text-xs opacity-70">Baterista Profissional</p>
-             </div>
-          </div>
+        {/* BENEFÍCIOS LIST (Com LGPD em destaque) */}
+        <section className="mb-20 bg-[#f8fafc] border border-[#E8E3DC] rounded-2xl p-8 md:p-12">
+           <h3 className="text-2xl font-bold text-[#0c2461] mb-8 text-center">Privacidade em Primeiro Lugar</h3>
+           <div className="grid md:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center gap-3">
+                 <div className="bg-white p-3 rounded-full shadow-sm"><Lock className="w-8 h-8 text-[#d4af37]"/></div>
+                 <h4 className="font-bold text-[#0c2461]">LGPD e Segurança</h4>
+                 <p className="text-sm text-gray-600">Nada vai para a nuvem. Seus dados financeiros ficam criptografados no navegador do seu dispositivo.</p>
+              </div>
+              <div className="flex flex-col items-center text-center gap-3">
+                 <div className="bg-white p-3 rounded-full shadow-sm"><Zap className="w-8 h-8 text-[#d4af37]"/></div>
+                 <h4 className="font-bold text-[#0c2461]">Funciona Offline</h4>
+                 <p className="text-sm text-gray-600">Sem internet? Sem problema. O app funciona em qualquer lugar e seus dados estão sempre com você.</p>
+              </div>
+              <div className="flex flex-col items-center text-center gap-3">
+                 <div className="bg-white p-3 rounded-full shadow-sm"><Database className="w-8 h-8 text-[#d4af37]"/></div>
+                 <h4 className="font-bold text-[#0c2461]">Backup Manual</h4>
+                 <p className="text-sm text-gray-600">Como não temos acesso aos seus dados, você tem controle total. Exporte seu backup quando quiser.</p>
+              </div>
+           </div>
         </section>
 
-        {/* PRICING CARD (OFERTA IRRESISTÍVEL) */}
+        {/* PRICING CARD */}
         <section id="comprar" className="mb-20 scroll-mt-24">
-          <div className="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#d4af37] shadow-2xl overflow-hidden transform hover:-translate-y-1 transition duration-300">
+          <div className="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#d4af37] shadow-2xl overflow-hidden transform hover:-translate-y-1 transition duration-300 relative">
+            
+            {/* SELO FLUTUANTE DE SEGURANÇA */}
+            <div className="absolute top-4 right-4 bg-white border border-green-500 text-green-700 text-[10px] font-bold px-2 py-1 rounded shadow-sm flex items-center gap-1">
+               <ShieldCheck size={12}/> 100% Seguro
+            </div>
+
             <div className="bg-[#d4af37] text-[#0c2461] px-6 py-4 text-center">
               <p className="font-bold text-xl flex items-center justify-center gap-2"><Zap size={20} fill="currentColor"/> ACESSO TOTAL</p>
             </div>
@@ -158,7 +170,7 @@ export default function Vendas() {
 
               <div className="space-y-4 pt-4 border-t border-gray-100">
                  <div className="flex justify-between items-center text-sm">
-                    <span className="opacity-70">App MusicoPro</span>
+                    <span className="opacity-70">App MusicoPro (Privado)</span>
                     <span className="font-bold">Incluso ✅</span>
                  </div>
                  <div className="flex justify-between items-center text-sm">
@@ -166,7 +178,7 @@ export default function Vendas() {
                     <span className="font-bold">Incluso ✅</span>
                  </div>
                  <div className="flex justify-between items-center text-sm">
-                    <span className="opacity-70">Atualizações 2026</span>
+                    <span className="opacity-70">Suporte a Backup</span>
                     <span className="font-bold">Incluso ✅</span>
                  </div>
               </div>
@@ -190,29 +202,54 @@ export default function Vendas() {
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* FAQ - Com a nova pergunta sobre login */}
         <section className="mb-20 max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <h3 className="text-3xl font-bold text-[#0c2461]">Perguntas Frequentes</h3>
           </div>
           
           <div className="space-y-4">
-             {[
-               { q: "O app substitui um contador?", a: "Não. O Músico Pro é uma ferramenta de organização e pré-contabilidade. Ele deixa tudo pronto para o seu contador (ou você) declarar, evitando erros e multas." },
-               { q: "Posso usar no celular e no computador?", a: "Sim! O MusicoPro é um PWA (Web App). Você acessa pelo navegador de qualquer dispositivo e seus dados estão sempre sincronizados na nuvem." },
-               { q: "Como acesso o Guia PRO?", a: "Assim que o pagamento for confirmado, você recebe um e-mail com o acesso. Basta validar seu e-mail na área 'Guia' do site para desbloquear." },
-               { q: "Serve para banda ou só carreira solo?", a: "O foco principal é o músico autônomo (CPF). Se você tem banda, pode usar para controlar sua parte dos ganhos. Para CNPJ de banda, consulte um contador específico." }
-             ].map((item, idx) => (
-                <details key={idx} className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-5 cursor-pointer group hover:bg-white transition">
+             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-5 cursor-pointer group hover:bg-white transition">
                   <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
-                    {item.q}
+                    Por que não tem login e senha?
                     <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
                   </summary>
                   <p className="text-[#0c2461] opacity-80 mt-3 leading-relaxed">
-                    {item.a}
+                    Porque <strong>sua segurança vem em primeiro lugar</strong>. Quando um site pede senha, é para salvar seus dados na nuvem deles (o que traz risco de vazamento). 
+                    <br/><br/>
+                    O MusicoPro usa tecnologia <strong>Local-First</strong>: seus dados ficam salvos criptografados apenas no seu celular/computador. Nós não temos acesso. O e-mail serve apenas para validar que você comprou a licença.
                   </p>
-                </details>
-             ))}
+             </details>
+
+             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-5 cursor-pointer group hover:bg-white transition">
+                  <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                    E se eu perder o celular?
+                    <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+                  </summary>
+                  <p className="text-[#0c2461] opacity-80 mt-3 leading-relaxed">
+                    Como não guardamos seus dados, você é o responsável pelo backup. O App tem uma função simples: <strong>"Exportar Dados"</strong>. Recomendamos que você faça isso uma vez por mês e salve no seu e-mail ou Google Drive.
+                  </p>
+             </details>
+
+             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-5 cursor-pointer group hover:bg-white transition">
+                  <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                    O app substitui um contador?
+                    <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+                  </summary>
+                  <p className="text-[#0c2461] opacity-80 mt-3 leading-relaxed">
+                    Não. O Músico Pro é uma ferramenta de organização. Ele deixa tudo pronto para o seu contador declarar, evitando erros.
+                  </p>
+             </details>
+
+             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-lg p-5 cursor-pointer group hover:bg-white transition">
+                  <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                    Como acesso o Guia PRO?
+                    <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+                  </summary>
+                  <p className="text-[#0c2461] opacity-80 mt-3 leading-relaxed">
+                    Assim que o pagamento for confirmado, você recebe um e-mail com o acesso. Basta validar seu e-mail na área 'Guia' do site para desbloquear.
+                  </p>
+             </details>
           </div>
         </section>
         

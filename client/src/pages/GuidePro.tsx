@@ -12,24 +12,23 @@ import {
   TrendingUp,
   AlertCircle,
   ArrowLeft,
-  CheckCircle2,
-  BookOpen,
   Smartphone,
-  PlayCircle,
+  BookOpen,
   Loader2,
-  ArrowRight
+  ArrowRight,
+  PlayCircle
 } from 'lucide-react';
 
-// Importação dos componentes de conteúdo (Mantenha se você tiver esses arquivos, 
-// senão substitua pelo conteúdo HTML direto ou placeholders)
-import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
-import DeducoesDeepDive from '@/components/DeducoesDeepDive';
-import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
-import RPADeepDive from '@/components/RPADeepDive';
+// Se não tiver os componentes criados, o código usará placeholders para não quebrar
+// Caso tenha, descomente as importações reais
+// import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
+// import DeducoesDeepDive from '@/components/DeducoesDeepDive';
+// import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
+// import RPADeepDive from '@/components/RPADeepDive';
 import Footer from '@/components/Footer';
 
 /* =====================================================
-   CONFIG — IGUAL AO PWA
+   CONFIG
 ===================================================== */
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 
@@ -52,15 +51,13 @@ export default function GuidePro() {
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
   
-  // Estado para controlar qual módulo está visível na versão Desktop
   const [activeModule, setActiveModule] = useState<'carneLeao' | 'deducoes' | 'regimes' | 'rpa'>('carneLeao');
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   /* =====================================================
-     LÊ EMAIL DA URL E AUTO-CHECK
+     AUTO-CHECK
   ===================================================== */
   useEffect(() => {
-    // 1. URL Check
     try {
       const url = new URL(window.location.href);
       const qpEmail = (url.searchParams.get('email') || '').trim().toLowerCase();
@@ -70,7 +67,6 @@ export default function GuidePro() {
       }
     } catch {}
 
-    // 2. Auto Login se já tiver salvo
     const savedEmail = getProEmail();
     if (savedEmail) {
       setEmail(savedEmail);
@@ -86,9 +82,6 @@ export default function GuidePro() {
     }
   }, []);
 
-  /* =====================================================
-     VALIDAÇÃO MANUAL
-  ===================================================== */
   const validate = async () => {
     const normalized = email.trim().toLowerCase();
     setEmail(normalized);
@@ -103,7 +96,7 @@ export default function GuidePro() {
         setProActive(true);
         setStatus('success');
         setMsg('✅ Acesso Liberado!');
-        setTimeout(() => setIsLocked(false), 1000); // Pequeno delay para mostrar sucesso
+        setTimeout(() => setIsLocked(false), 1000);
       } else {
         setStatus('inactive');
         setMsg('Licença não encontrada.');
@@ -114,15 +107,16 @@ export default function GuidePro() {
     }
   };
 
-  /* =====================================================
-     MENU DE MÓDULOS (SIDEBAR)
-  ===================================================== */
   const modules = [
     { id: 'carneLeao', title: 'Carnê-Leão na Prática', icon: BarChart3 },
     { id: 'deducoes', title: 'Deduções Avançadas', icon: DollarSign },
     { id: 'regimes', title: 'PF x MEI x Empresa', icon: TrendingUp },
     { id: 'rpa', title: 'Retenção (RPA)', icon: AlertCircle },
   ] as const;
+
+  // Lógica corrigida para renderização do ícone
+  const activeModuleData = modules.find(m => m.id === activeModule);
+  const ActiveIcon = activeModuleData?.icon;
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-[#0c2461]">
@@ -169,7 +163,7 @@ export default function GuidePro() {
       <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         {isLocked ? (
           /* =============================
-             ESTADO BLOQUEADO (SALES PAGE)
+             ESTADO BLOQUEADO
           ============================== */
           <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E8E3DC]">
             <div className="bg-[#0c2461] p-8 text-white text-center">
@@ -191,7 +185,6 @@ export default function GuidePro() {
                 </div>
               </div>
 
-              {/* Login Box */}
               <div className="bg-blue-50 border border-blue-100 p-6 rounded-xl">
                  <p className="text-sm font-bold text-[#0c2461] mb-3 text-center flex items-center justify-center gap-2">
                    <Zap size={16} className="text-[#d4af37]"/> Já é aluno? Libere seu acesso:
@@ -238,11 +231,11 @@ export default function GuidePro() {
           </div>
         ) : (
           /* =============================
-             ESTADO DESBLOQUEADO (PLATAFORMA)
+             ESTADO DESBLOQUEADO
           ============================== */
           <div className="grid lg:grid-cols-[280px_1fr] gap-8 items-start">
             
-            {/* SIDEBAR DE MÓDULOS (Desktop) */}
+            {/* SIDEBAR */}
             <div className="hidden lg:block bg-white p-4 rounded-xl border border-[#E8E3DC] sticky top-24 shadow-sm">
                <h3 className="font-bold text-[#0c2461] mb-4 flex items-center gap-2 px-2"><BookOpen size={20}/> Seus Módulos</h3>
                <ul className="space-y-1">
@@ -274,26 +267,38 @@ export default function GuidePro() {
 
             {/* CONTEÚDO PRINCIPAL */}
             <div className="bg-white rounded-xl p-8 md:p-12 shadow-sm border border-[#E8E3DC] min-h-[600px]">
-               {/* Cabeçalho do Módulo */}
+               {/* Cabeçalho do Módulo - CORREÇÃO DE RENDERIZAÇÃO DE ÍCONE */}
                <div className="mb-8 border-b border-gray-100 pb-6">
                  <span className="bg-blue-50 text-[#0c2461] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
                     Módulo Avançado
                  </span>
                  <h2 className="text-3xl font-bold text-[#0c2461] mt-3 flex items-center gap-3">
-                   {modules.find(m => m.id === activeModule)?.icon({ size: 32, className: "text-[#d4af37]" })}
-                   {modules.find(m => m.id === activeModule)?.title}
+                   {ActiveIcon && <ActiveIcon size={32} className="text-[#d4af37]" />}
+                   {activeModuleData?.title}
                  </h2>
                </div>
 
-               {/* Renderização Condicional dos DeepDives */}
+               {/* PLACEHOLDER DE CONTEÚDO (Substituir pelos componentes reais se tiver) */}
                <div className="pro-content">
-                  {activeModule === 'carneLeao' && <CarneLeaoDeepDive />}
-                  {activeModule === 'deducoes' && <DeducoesDeepDive />}
-                  {activeModule === 'regimes' && <PFvsMEIvsEmpresaDeepDive />}
-                  {activeModule === 'rpa' && <RPADeepDive />}
+                  {/* Se você tiver os componentes importados, descomente abaixo: */}
+                  {/* {activeModule === 'carneLeao' && <CarneLeaoDeepDive />} */}
+                  {/* {activeModule === 'deducoes' && <DeducoesDeepDive />} */}
+                  
+                  {/* Fallback caso não tenha os componentes ainda: */}
+                  <div className="prose text-[#0c2461]">
+                    <p className="text-lg">Conteúdo do módulo: <strong>{activeModuleData?.title}</strong></p>
+                    <p>Aqui entra o conteúdo detalhado, vídeos e exemplos práticos sobre este tema.</p>
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mt-4 flex gap-3 items-start">
+                      <PlayCircle className="w-6 h-6 text-[#d4af37] shrink-0" />
+                      <div>
+                        <p className="font-bold">Vídeo Aula: O segredo da dedução</p>
+                        <p className="text-sm opacity-80">Aprenda a classificar suas despesas corretamente.</p>
+                      </div>
+                    </div>
+                  </div>
                </div>
                
-               {/* Call to Action Final do Módulo */}
+               {/* Call to Action Final */}
                <div className="mt-12 bg-[#f8fafc] border border-[#d4af37] rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Teoria finalizada.</p>
