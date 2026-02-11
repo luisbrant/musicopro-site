@@ -44,23 +44,39 @@ export default function Vendas() {
         )}
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+      <main className="max-w-6xl mx-auto px-4 py-10 md:py-16 pb-24 md:pb-16">
         
         {/* HERO SECTION */}
-        <section className="mb-20">
-          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-2xl p-8 md:p-14 text-white shadow-2xl relative overflow-hidden">
+        <section className="mb-14 md:mb-20">
+          <div className="bg-gradient-to-br from-[#0c2461] to-[#1a3a7a] rounded-2xl p-6 sm:p-8 md:p-14 text-white shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#d4af37] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
             
             <div className="relative z-10 max-w-3xl">
               <div className="inline-block bg-[#d4af37] text-[#0c2461] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
                 Oferta por Tempo Limitado
               </div>
-              <h2 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight mb-5 sm:mb-6">
                 Profissionalize sua carreira por menos de <span className="text-[#d4af37]">R$ 0,30 por dia</span>.
               </h2>
               <p className="text-xl opacity-90 mb-8 max-w-2xl">
-                O único pacote que une a <strong>ferramenta segura</strong> (App Local) com o <strong>conhecimento</strong> que te economiza milhares de reais.
+                Um sistema completo para você <strong>pagar menos imposto com segurança</strong>: combine um <strong>guia de conhecimento fiscal</strong> (pra você entender o jogo) com <strong>ferramentas práticas</strong> para o dia a dia — recibos, contratos e orçamentos — tudo em um só lugar.
               </p>
+
+              <ul className="mb-8 grid gap-3 sm:grid-cols-3 text-sm sm:text-[15px]">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0 mt-0.5" />
+                  <span><strong>Pague menos imposto</strong> com clareza mensal</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0 mt-0.5" />
+                  <span><strong>Documentos prontos</strong>: recibos, contratos e orçamentos</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0 mt-0.5" />
+                  <span><strong>Guia Fiscal PRO</strong> para você não depender de “achismo”</span>
+                </li>
+              </ul>
+
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <a href="#comprar" className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-xl transition text-lg shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
@@ -68,6 +84,88 @@ export default function Vendas() {
                 </a>
                 <div className="flex items-center gap-2 text-sm opacity-80 justify-center sm:justify-start px-4">
                    <ShieldCheck size={18} className="text-[#d4af37]"/> Garantia de 7 dias
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        {/* DOR -> SOLUÇÃO */}
+        <section className="mb-16 md:mb-20">
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="text-center mb-10">
+              <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]">Pare de improvisar. Comece a profissionalizar.</h3>
+              <p className="opacity-70 mt-3 text-base md:text-lg">
+                Se você vive de música, precisa de um sistema: clareza fiscal + documentos profissionais + organização.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* DOR */}
+              <div className="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-[#fff7e6] text-[#d4af37] p-3 rounded-xl">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-xl font-bold text-[#0c2461]">A realidade do músico autônomo</h4>
+                </div>
+
+                <ul className="space-y-3 text-[15px] md:text-base">
+                  <li className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Não saber quanto vai pagar de imposto e descobrir “no susto”.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Fechar serviços sem contrato e ficar vulnerável a cancelamentos.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Emitir recibos no improviso e perder credibilidade com contratantes.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>Depender de terceiros para cada passo e travar a rotina.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* SOLUÇÃO */}
+              <div className="bg-[#0c2461] text-white rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-white/10 p-3 rounded-xl">
+                    <CheckCircle2 className="w-6 h-6 text-[#d4af37]" />
+                  </div>
+                  <h4 className="text-xl font-bold">O que muda com o MúsicoPro</h4>
+                </div>
+
+                <ul className="space-y-3 text-[15px] md:text-base">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
+                    <span><strong>Clareza mensal</strong> para pagar menos imposto com segurança.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
+                    <span><strong>Ferramentas prontas</strong> para recibos, contratos e orçamentos profissionais.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
+                    <span><strong>Guia de conhecimento fiscal</strong> para você entender e não depender sempre de contador.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
+                    <span><strong>Tudo organizado</strong> em um único lugar, pronto para o seu dia a dia.</span>
+                  </li>
+                </ul>
+
+                <div className="mt-6">
+                  <a
+                    href="#comprar"
+                    className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 rounded-xl bg-[#d4af37] text-[#0c2461] font-bold hover:opacity-90 transition"
+                  >
+                    Ver planos <ArrowRight className="ml-2 w-5 h-5" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -91,7 +189,7 @@ export default function Vendas() {
                   <p className="text-sm opacity-70">Acesso ilimitado e offline.</p>
                 </div>
               </div>
-              <div className="p-8 space-y-4">
+              <div className="p-6 sm:p-8 space-y-4">
                 <ul className="space-y-3">
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span><strong>Gerador de Recibos</strong> e Contratos PDF</span></li>
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Cálculo automático de <strong>Carnê-Leão</strong></span></li>
@@ -110,7 +208,7 @@ export default function Vendas() {
                   <p className="text-sm opacity-70">Estratégia para pagar menos.</p>
                 </div>
               </div>
-              <div className="p-8 space-y-4">
+              <div className="p-6 sm:p-8 space-y-4">
                 <ul className="space-y-3">
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Módulo: <strong>Deduções Avançadas</strong> (O segredo)</span></li>
                   <li className="flex gap-3 text-[#0c2461]"><CheckCircle2 className="text-[#d4af37] w-5 h-5 shrink-0"/> <span>Módulo: Aposentadoria do Músico</span></li>
@@ -123,20 +221,20 @@ export default function Vendas() {
         </section>
 
         {/* BENEFÍCIOS LIST (Com LGPD em destaque) */}
-        <section className="mb-20 bg-[#f8fafc] border border-[#E8E3DC] rounded-2xl p-8 md:p-12">
+        <section className="mb-20 bg-[#f8fafc] border border-[#E8E3DC] rounded-2xl p-6 sm:p-8 md:p-12">
            <h3 className="text-2xl font-bold text-[#0c2461] mb-8 text-center">Privacidade em Primeiro Lugar</h3>
            <div className="grid md:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center text-center gap-3 bg-white rounded-2xl p-5 border border-[#E8E3DC] shadow-sm">
                  <div className="bg-white p-3 rounded-full shadow-sm"><Lock className="w-8 h-8 text-[#d4af37]"/></div>
                  <h4 className="font-bold text-[#0c2461]">LGPD e Segurança</h4>
                  <p className="text-sm text-gray-600">Nada vai para a nuvem. Seus dados financeiros ficam criptografados no navegador do seu dispositivo.</p>
               </div>
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center text-center gap-3 bg-white rounded-2xl p-5 border border-[#E8E3DC] shadow-sm">
                  <div className="bg-white p-3 rounded-full shadow-sm"><Zap className="w-8 h-8 text-[#d4af37]"/></div>
                  <h4 className="font-bold text-[#0c2461]">Funciona Offline</h4>
                  <p className="text-sm text-gray-600">Sem internet? Sem problema. O app funciona em qualquer lugar e seus dados estão sempre com você.</p>
               </div>
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center text-center gap-3 bg-white rounded-2xl p-5 border border-[#E8E3DC] shadow-sm">
                  <div className="bg-white p-3 rounded-full shadow-sm"><Database className="w-8 h-8 text-[#d4af37]"/></div>
                  <h4 className="font-bold text-[#0c2461]">Backup Manual</h4>
                  <p className="text-sm text-gray-600">Como não temos acesso aos seus dados, você tem controle total. Exporte seu backup quando quiser.</p>
@@ -144,7 +242,67 @@ export default function Vendas() {
            </div>
         </section>
 
-        {/* PRICING CARD */}
+        
+        {/* COMO FUNCIONA (3 PASSOS) */}
+        <section className="mb-16 md:mb-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h3 className="text-3xl md:text-4xl font-bold text-[#0c2461]">Como funciona na prática</h3>
+              <p className="opacity-70 mt-3 text-base md:text-lg">
+                Você começa em minutos. Sem complicação.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#fff7e6] text-[#d4af37] flex items-center justify-center font-extrabold">
+                    1
+                  </div>
+                  <h4 className="text-lg font-bold text-[#0c2461]">Ative e entre no App</h4>
+                </div>
+                <p className="text-[15px] text-gray-700 leading-relaxed">
+                  Após a compra, você recebe as instruções para liberar o acesso e usar no celular ou computador.
+                </p>
+              </div>
+
+              <div className="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#fff7e6] text-[#d4af37] flex items-center justify-center font-extrabold">
+                    2
+                  </div>
+                  <h4 className="text-lg font-bold text-[#0c2461]">Registre seus recebimentos</h4>
+                </div>
+                <p className="text-[15px] text-gray-700 leading-relaxed">
+                  Lance seus ganhos do mês e tenha clareza: quanto guardar, quanto pagar e o que fazer em seguida.
+                </p>
+              </div>
+
+              <div className="bg-white border border-[#E8E3DC] rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#fff7e6] text-[#d4af37] flex items-center justify-center font-extrabold">
+                    3
+                  </div>
+                  <h4 className="text-lg font-bold text-[#0c2461]">Gere documentos profissionais</h4>
+                </div>
+                <p className="text-[15px] text-gray-700 leading-relaxed">
+                  Emita recibos, contratos e orçamentos quando precisar — e mantenha tudo organizado para trabalhar com segurança.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a href="#comprar" className="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-4 rounded-xl transition shadow-lg text-center">
+                Ver oferta e ativar agora
+              </a>
+              <div className="flex items-center gap-2 text-sm opacity-80">
+                <ShieldCheck size={18} className="text-[#d4af37]" /> Garantia de 7 dias
+              </div>
+            </div>
+          </div>
+        </section>
+
+{/* PRICING CARD */}
         <section id="comprar" className="mb-20 scroll-mt-24">
           <div className="max-w-md mx-auto bg-white rounded-2xl border-2 border-[#d4af37] shadow-2xl overflow-hidden transform hover:-translate-y-1 transition duration-300 relative">
             
@@ -252,6 +410,23 @@ export default function Vendas() {
              </details>
           </div>
         </section>
+
+      {/* MOBILE STICKY CTA */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[#E8E3DC] bg-white/95 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+          <div className="flex-1">
+            <p className="text-xs text-[#0c2461] opacity-75 leading-tight">Acesso anual • Guia + Ferramentas</p>
+            <p className="text-sm font-bold text-[#0c2461] leading-tight">Comece hoje e organize tudo</p>
+          </div>
+          <a
+            href="#comprar"
+            className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-4 py-3 rounded-xl transition shadow-sm flex items-center justify-center gap-2 whitespace-nowrap"
+          >
+            Ativar agora <ArrowRight size={18} />
+          </a>
+        </div>
+      </div>
+
         
         <Footer />
       </main>
