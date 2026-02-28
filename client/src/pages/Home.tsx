@@ -8,13 +8,19 @@ import Footer from '../components/Footer'
 
 export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
-  const [headlineVariant, setHeadlineVariant] = useState<'A' | 'B' | 'C'>('A')
+  const [headlineVariant, setHeadlineVariant] = useState<'A' | 'B' | 'C' | null>(null)
   const [isAbResolved, setIsAbResolved] = useState(false)
   const [showBottomBar, setShowBottomBar] = useState(false)
 
-  const { trackBuyClick, trackFreeClick, trackVariantExposed, trackFaqOpen, trackViewPlans } = useAnalytics()
+  const {
+    trackBuyClick,
+    trackFreeClick,
+    trackVariantExposed,
+    trackFaqOpen,
+    trackViewPlans
+  } = useAnalytics()
 
-  // A/B com persistência no localStorage
+  // A/B com persistência — sem CLS (não renderiza H1 antes de resolver)
   useEffect(() => {
     try {
       const saved = localStorage.getItem('musicopro_ab_headline') as 'A' | 'B' | 'C' | null
@@ -33,13 +39,22 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (isAbResolved) trackVariantExposed(headlineVariant)
+    if (isAbResolved && headlineVariant) trackVariantExposed(headlineVariant)
   }, [isAbResolved])
 
-  // Sticky bottom bar
+  // Scroll listener otimizado com requestAnimationFrame + passive
   useEffect(() => {
-    const handleScroll = () => setShowBottomBar(window.scrollY > 400)
-    window.addEventListener('scroll', handleScroll)
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setShowBottomBar(window.scrollY > 400)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -66,7 +81,7 @@ export default function Home() {
     },
     {
       question: 'O app calcula o imposto automaticamente?',
-      answer: 'O app estima os valores com base na sua organização de receitas e despesas dedutíveis, trazendo clareza sobre o que pagar. Mas não substitui a validação de um contador para o envio oficial à Receita.'
+      answer: 'O app estima os valores com base na sua organização de receitas e despesas dedutíveis, trazendo clareza sobre o que pagar. Não substitui a validação de um contador para o envio oficial à Receita.'
     },
     {
       question: 'Preciso de contador para usar?',
@@ -92,8 +107,13 @@ export default function Home() {
     if (isOpening) trackFaqOpen(faqs[index].question)
   }
 
-  const scrollToPlan = () => document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' })
-  const scrollToComoFunciona = () => document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToPlan = () =>
+    document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToComoFunciona = () =>
+    document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' })
+
+  // URL do checkout Hotmart — substituir pelo link real
+  const HOTMART_URL = 'https://pay.hotmart.com/SEU_PRODUTO_ID?checkoutMode=10'
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-sans text-[#0c2461] selection:bg-[#d4af37] selection:text-[#0c2461]">
@@ -101,20 +121,31 @@ export default function Home() {
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-[#E8E3DC] shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-            <Music className="w-6 h-6 text-[#d4af37]" />
-            <h1 className="font-bold text-lg leading-none tracking-tight" style={{ fontFamily: 'Lexend, sans-serif' }}>
+
+          {/* Logo — <span> em vez de <h1> para não duplicar o H1 da página */}
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            <Music className="w-6 h-6 text-[#d4af37]" aria-hidden="true" />
+            <span
+              className="font-bold text-lg leading-none tracking-tight"
+              style={{ fontFamily: 'Lexend, sans-serif' }}
+            >
               Músico Pro
-            </h1>
+            </span>
           </div>
+
           <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={() => window.location.href = '/app'}
               className="text-[#0c2461] hover:bg-gray-50 font-bold px-3 py-2 rounded-lg transition text-sm hidden sm:block"
             >
               Entrar
             </button>
             <button
+              type="button"
               onClick={() => { trackBuyClick('header'); scrollToPlan() }}
               className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-4 py-2 rounded-lg transition shadow flex items-center gap-2 text-sm"
             >
@@ -127,45 +158,66 @@ export default function Home() {
       <main className="pb-16">
 
         {/* HERO */}
-        <section className="bg-white pt-24 pb-20 px-4 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#d4af37]/10 rounded-full blur-[100px] -z-10 translate-x-12 -translate-y-12" />
+        <section
+          className="bg-white pt-24 pb-20 px-4 relative overflow-hidden"
+          aria-label="Apresentação principal"
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#d4af37]/10 rounded-full blur-[100px] -z-10 translate-x-12 -translate-y-12" aria-hidden="true" />
           <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
 
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full font-bold text-sm border border-green-200 mb-4 shadow-sm">
-              <ShieldCheck size={18} /> 100% offline e privado
+              <ShieldCheck size={18} aria-hidden="true" /> 100% offline e privado
             </div>
 
-            {headlineVariant === 'A' && (
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
-                Você toca.<br />
-                <span className="text-[#d4af37]">O app cuida do imposto,<br />das contas e dos documentos.</span>
-              </h1>
-            )}
-            {headlineVariant === 'B' && (
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
-                Pare de pagar imposto a mais.<br />
-                <span className="text-[#d4af37]">Seu estúdio, transporte e instrumento são dedutíveis.</span>
-              </h1>
-            )}
-            {headlineVariant === 'C' && (
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
-                Músico autônomo:<br />
-                <span className="text-[#d4af37]">pare de adivinhar o Carnê-Leão.</span>
-              </h1>
+            {/* H1 único — só renderiza após A/B resolver (evita CLS) */}
+            {!isAbResolved ? (
+              <div
+                className="h-32 w-full max-w-2xl mx-auto animate-pulse bg-gray-100 rounded-xl"
+                aria-hidden="true"
+              />
+            ) : (
+              <>
+                {headlineVariant === 'A' && (
+                  <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+                    Você toca.<br />
+                    <span className="text-[#d4af37]">
+                      O app cuida do imposto,<br />das contas e dos documentos.
+                    </span>
+                  </h1>
+                )}
+                {headlineVariant === 'B' && (
+                  <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+                    Pare de pagar imposto a mais.<br />
+                    <span className="text-[#d4af37]">
+                      Seu estúdio, internet e serviços contratados podem ser dedutíveis.
+                    </span>
+                  </h1>
+                )}
+                {headlineVariant === 'C' && (
+                  <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+                    Músico autônomo:<br />
+                    <span className="text-[#d4af37]">
+                      pare de adivinhar o Carnê-Leão.
+                    </span>
+                  </h1>
+                )}
+              </>
             )}
 
-            <p className="text-xl opacity-80 max-w-2xl mx-auto font-medium leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">
               Músico não tem tempo para planilha. O Músico Pro organiza suas finanças, estima o Carnê-Leão e gera recibos em PDF — tudo em menos de 10 minutos por mês.
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
+                type="button"
                 onClick={() => { trackFreeClick('hero'); window.location.href = '/app' }}
                 className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-black px-8 py-5 rounded-xl transition text-xl shadow-[0_10px_30px_rgba(12,36,97,0.3)] flex items-center justify-center gap-3 w-full sm:w-auto transform hover:-translate-y-1"
               >
-                Usar grátis agora
+                Calcular meu Carnê-Leão — grátis
               </button>
               <button
+                type="button"
                 onClick={scrollToComoFunciona}
                 className="bg-white hover:bg-gray-50 border-2 border-[#0c2461] text-[#0c2461] font-black px-8 py-5 rounded-xl transition text-xl flex items-center justify-center gap-3 w-full sm:w-auto"
               >
@@ -180,7 +232,10 @@ export default function Home() {
         </section>
 
         {/* AGITAÇÃO DA DOR */}
-        <section className="py-24 px-4 bg-white border-t border-gray-100">
+        <section
+          className="py-24 px-4 bg-white border-t border-gray-100"
+          aria-label="Identificação do problema"
+        >
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-4 text-[#0c2461] text-center md:text-left">
               Músico não estudou para fazer contabilidade.
@@ -192,7 +247,7 @@ export default function Home() {
               <p>"Quanto vou pagar de imposto esse mês? Nem ideia."</p>
               <p>"Será que estou declarando certo? E se a Receita me chamar?"</p>
               <p>"Tenho uma planilha que nunca está atualizada."</p>
-              <p>"Dedutível ou não dedutível? Transporte conta? Instrumento conta?"</p>
+              <p>"Dedutível ou não dedutível? Estúdio conta? Internet conta? O que posso abater?"</p>
               <p>"Perco horas em burocracia que poderiam ser de ensaio, aula ou produção."</p>
               <p>"Meu contador não entende de música, e eu não entendo de imposto."</p>
             </div>
@@ -203,36 +258,44 @@ export default function Home() {
         </section>
 
         {/* O QUE O APP FAZ — 4 PILARES */}
-        <section className="py-24 px-4 bg-[#0c2461] text-white">
+        <section
+          className="py-24 px-4 bg-[#0c2461] text-white"
+          aria-label="O que o Músico Pro faz"
+        >
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#d4af37]">O que o Músico Pro faz por você</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#d4af37]">
+                O que o Músico Pro faz por você
+              </h2>
               <p className="text-lg opacity-80">Quatro problemas resolvidos. Um único app.</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  icon: <DollarSign size={28} />,
-                  title: 'Economiza imposto',
-                  text: 'Aplica suas despesas dedutíveis — transporte, instrumento, estúdio, internet — e mostra o Carnê-Leão estimado real. Não o valor bruto.'
+                  icon: <DollarSign size={28} aria-hidden="true" />,
+                  title: 'Estima o imposto com precisão',
+                  text: 'Aplica suas despesas de custeio dedutíveis — como aluguel de estúdio, internet profissional e serviços contratados — e mostra o Carnê-Leão estimado real. Não o valor bruto.'
                 },
                 {
-                  icon: <BarChart2 size={28} />,
+                  icon: <BarChart2 size={28} aria-hidden="true" />,
                   title: 'Organiza suas finanças',
                   text: 'Registre cachês, aulas e qualquer entrada. Veja o saldo do mês, o histórico e saiba exatamente o que entrou e o que saiu.'
                 },
                 {
-                  icon: <FileText size={28} />,
+                  icon: <FileText size={28} aria-hidden="true" />,
                   title: 'Gera documentos profissionais',
                   text: 'Recibos, orçamentos e contratos em PDF em 1 clique. Envie para contratantes e tenha tudo documentado como um profissional.'
                 },
                 {
-                  icon: <Clock size={28} />,
+                  icon: <Clock size={28} aria-hidden="true" />,
                   title: 'Libera seu tempo',
                   text: 'Em menos de 10 minutos por mês você fecha a parte fiscal e volta para o que importa: a música.'
                 }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white/10 border border-white/20 rounded-2xl p-8 flex gap-6 items-start">
+                <div
+                  key={idx}
+                  className="bg-white/10 border border-white/20 rounded-2xl p-8 flex gap-6 items-start"
+                >
                   <div className="text-[#d4af37] shrink-0 mt-1">{item.icon}</div>
                   <div>
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
@@ -245,14 +308,20 @@ export default function Home() {
         </section>
 
         {/* COMO FUNCIONA */}
-        <section id="como-funciona" className="py-24 px-4 bg-slate-50">
+        <section
+          id="como-funciona"
+          aria-label="Como funciona"
+          className="py-24 px-4 bg-slate-50"
+        >
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Como funciona na prática</h2>
-              <p className="text-lg opacity-80">Você não precisa entender de imposto. Só precisa registrar o que recebeu e o que gastou.</p>
+              <p className="text-lg text-gray-600">
+                Você não precisa entender de imposto. Só precisa registrar o que recebeu e o que gastou.
+              </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 relative">
-              <div className="hidden md:block absolute top-12 left-16 right-16 h-1 bg-[#d4af37]/30 z-0" />
+              <div className="hidden md:block absolute top-12 left-16 right-16 h-1 bg-[#d4af37]/30 z-0" aria-hidden="true" />
               {[
                 {
                   n: '1',
@@ -262,7 +331,7 @@ export default function Home() {
                 {
                   n: '2',
                   title: 'Adicione o que gastou para trabalhar',
-                  text: 'Transporte, instrumento, estúdio, internet profissional. Essas despesas reduzem seu imposto e o app já sabe quais são dedutíveis.'
+                  text: 'Aluguel de estúdio, internet profissional, materiais e serviços contratados. O app já sabe quais despesas podem ser dedutíveis e aplica automaticamente.'
                 },
                 {
                   n: '3',
@@ -270,19 +339,23 @@ export default function Home() {
                   text: 'Você vê o imposto estimado do mês, o saldo real e pode gerar recibos, orçamentos e contratos em PDF em 1 clique.'
                 }
               ].map((step, idx) => (
-                <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center relative z-10 transition hover:-translate-y-1 hover:shadow-md">
+                <div
+                  key={idx}
+                  className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center relative z-10 transition hover:-translate-y-1 hover:shadow-md"
+                >
                   <div className="w-16 h-16 bg-[#0c2461] text-white rounded-full flex items-center justify-center text-2xl font-black mb-6 shadow-lg">
                     {step.n}
                   </div>
                   <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                  <p className="opacity-80 text-sm">{step.text}</p>
+                  <p className="text-gray-600 text-sm">{step.text}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-12 text-center flex justify-center">
+            <div className="mt-12 text-center">
               <button
+                type="button"
                 onClick={() => { trackFreeClick('como-funciona'); window.location.href = '/app' }}
-                className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-8 py-4 rounded-xl transition text-lg flex items-center justify-center gap-2"
+                className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-8 py-4 rounded-xl transition text-lg"
               >
                 Começar grátis agora
               </button>
@@ -291,32 +364,39 @@ export default function Home() {
         </section>
 
         {/* ANTES vs DEPOIS */}
-        <section className="py-24 px-4 bg-white border-t border-gray-100">
+        <section
+          className="py-24 px-4 bg-white border-t border-gray-100"
+          aria-label="Comparação antes e depois"
+        >
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">O que você para de fazer</h2>
-              <p className="text-lg opacity-80">Comparando sua vida antes e depois do Músico Pro.</p>
+              <p className="text-lg text-gray-600">Comparando sua rotina antes e depois do Músico Pro.</p>
             </div>
             <div className="rounded-3xl overflow-hidden border border-gray-200 shadow-sm">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="p-6 font-bold text-lg bg-red-50 text-red-700 w-1/2">❌ Sem o Músico Pro</th>
-                    <th className="p-6 font-bold text-lg bg-green-50 text-green-700 w-1/2">✅ Com o Músico Pro</th>
+                    <th className="p-6 font-bold text-lg bg-red-50 text-red-700 w-1/2">
+                      ❌ Sem o Músico Pro
+                    </th>
+                    <th className="p-6 font-bold text-lg bg-green-50 text-green-700 w-1/2">
+                      ✅ Com o Músico Pro
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="font-medium text-[15px]">
                   {[
                     ['Planilha desatualizada no Google Drive', 'Tudo registrado em segundos no celular'],
                     ['Adivinhar quanto vai pagar de imposto', 'Estimativa do Carnê-Leão mês a mês'],
-                    ['Pagar imposto sobre o valor bruto', 'Despesas dedutíveis aplicadas automaticamente'],
+                    ['Pagar imposto sobre o valor bruto', 'Despesas de custeio dedutíveis aplicadas automaticamente'],
                     ['Recibo feito no Word às 23h', 'PDF profissional gerado em 1 clique'],
                     ['Contrato pedido emprestado de alguém', 'Modelos prontos para enviar'],
                     ['Horas perdidas em burocracia', '10 minutos por mês e pronto'],
                   ].map(([before, after], idx) => (
                     <tr key={idx} className="border-b border-gray-100">
-                      <td className="p-5 opacity-80 bg-red-50/30">{before}</td>
-                      <td className="p-5 opacity-90 bg-green-50/30">{after}</td>
+                      <td className="p-5 text-gray-600 bg-red-50/30">{before}</td>
+                      <td className="p-5 text-gray-700 bg-green-50/30">{after}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -326,13 +406,16 @@ export default function Home() {
         </section>
 
         {/* PARA QUEM É / NÃO É */}
-        <section className="py-24 px-4 bg-slate-50 border-t border-gray-100">
+        <section
+          className="py-24 px-4 bg-slate-50 border-t border-gray-100"
+          aria-label="Para quem é o Músico Pro"
+        >
           <div className="max-w-5xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
               <div className="bg-green-50/50 p-8 rounded-2xl border border-green-100">
-                <h3 className="text-2xl font-bold text-[#0c2461] mb-6 flex items-center gap-2">
-                  <CheckCircle className="text-green-600" /> Para quem é
-                </h3>
+                <h2 className="text-2xl font-bold text-[#0c2461] mb-6 flex items-center gap-2">
+                  <CheckCircle className="text-green-600" aria-hidden="true" /> Para quem é
+                </h2>
                 <ul className="space-y-4 text-gray-700 font-medium">
                   {[
                     'Músico que recebe cachê como pessoa física',
@@ -342,15 +425,15 @@ export default function Home() {
                     'Quem quer parar de adivinhar o imposto',
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="text-green-600 font-bold">✓</span> {item}
+                      <span className="text-green-600 font-bold" aria-hidden="true">✓</span> {item}
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="bg-red-50/50 p-8 rounded-2xl border border-red-100">
-                <h3 className="text-2xl font-bold text-[#0c2461] mb-6 flex items-center gap-2">
-                  <div className="text-red-600 font-black text-xl">✕</div> Para quem NÃO é
-                </h3>
+                <h2 className="text-2xl font-bold text-[#0c2461] mb-6 flex items-center gap-2">
+                  <span className="text-red-600 font-black text-xl" aria-hidden="true">✕</span> Para quem NÃO é
+                </h2>
                 <ul className="space-y-4 text-gray-700 font-medium">
                   {[
                     'Quem já tem CNPJ e emite nota fiscal',
@@ -358,7 +441,7 @@ export default function Home() {
                     'Quem não atua como músico autônomo',
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="text-red-600 font-bold">✕</span> {item}
+                      <span className="text-red-600 font-bold" aria-hidden="true">✕</span> {item}
                     </li>
                   ))}
                 </ul>
@@ -368,9 +451,14 @@ export default function Home() {
         </section>
 
         {/* PROVA SOCIAL */}
-        <section className="py-20 px-4 max-w-5xl mx-auto">
+        <section
+          className="py-20 px-4 max-w-5xl mx-auto"
+          aria-label="Depoimentos de usuários"
+        >
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Quem já profissionalizou a carreira</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Quem já profissionalizou a carreira
+            </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -390,16 +478,26 @@ export default function Home() {
                 role: 'Produtor Musical · MG'
               },
             ].map((dep, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between">
+              <div
+                key={idx}
+                className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-between"
+              >
                 <div>
-                  <div className="flex gap-1 text-[#d4af37] mb-4">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="#d4af37" />)}
+                  <div className="flex gap-1 text-[#d4af37] mb-4" aria-label="5 estrelas">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={20} fill="#d4af37" aria-hidden="true" />
+                    ))}
                   </div>
-                  <p className="italic font-medium opacity-90 mb-6">"{dep.text}"</p>
+                  <p className="italic font-medium text-gray-700 mb-6">"{dep.text}"</p>
                 </div>
-                <div>
-                  <p className="font-bold text-lg">{dep.author}</p>
-                  <p className="text-sm opacity-70 font-semibold">{dep.role}</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#0c2461] flex items-center justify-center text-white font-black text-sm shrink-0" aria-hidden="true">
+                    {dep.author.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-bold text-lg">{dep.author}</p>
+                    <p className="text-sm text-gray-500 font-semibold">{dep.role}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -407,16 +505,21 @@ export default function Home() {
         </section>
 
         {/* GRÁTIS VS PRO */}
-        <section className="py-24 px-4 bg-white border-t border-[#E8E3DC]">
+        <section
+          className="py-24 px-4 bg-white border-t border-[#E8E3DC]"
+          aria-label="Comparação de planos"
+        >
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Tudo se adapta ao seu momento</h2>
-              <p className="text-lg opacity-80 mb-6">Compare e escolha a melhor ferramenta para o controle da sua carreira.</p>
+              <p className="text-lg text-gray-600 mb-6">
+                Compare e escolha a melhor ferramenta para o controle da sua carreira.
+              </p>
               <div className="inline-block bg-[#0c2461]/5 text-[#0c2461] px-6 py-2 rounded-lg font-semibold text-sm">
                 Comece grátis e já organize. Faça upgrade quando quiser gerar PDFs, exportar o Carnê-Leão e acessar a Academy.
               </div>
             </div>
-            <div className="bg-white border text-[#0c2461] border-gray-200 rounded-3xl overflow-hidden shadow-sm">
+            <div className="bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50 border-b border-gray-200">
@@ -427,23 +530,61 @@ export default function Home() {
                 </thead>
                 <tbody className="font-semibold text-[15px]">
                   {[
-                    ['Registrar receitas e despesas', 'Acesso livre', 'Acesso livre', false],
-                    ['Estimativa de imposto (Carnê-Leão)', 'Visão básica na tela', 'Carnê-Leão completo + exportação', true],
-                    ['Recibos em PDF', null, 'Ilimitado', true],
-                    ['Orçamentos em PDF', null, 'Ilimitado', true],
-                    ['Contratos (modelos prontos)', null, 'Incluído', true],
-                    ['Músico Pro Academy (guia fiscal)', null, 'Acesso exclusivo', true],
-                    ['Suporte prioritário', null, 'Incluído', true],
-                  ].map(([label, free, pro, highlight], idx) => (
+                    {
+                      label: 'Registrar receitas e despesas',
+                      free: 'Acesso livre',
+                      pro: 'Acesso livre',
+                      proIcon: false
+                    },
+                    {
+                      label: 'Estimativa de imposto (Carnê-Leão)',
+                      free: 'Visão básica na tela',
+                      pro: 'Carnê-Leão completo + exportação',
+                      proIcon: false
+                    },
+                    {
+                      label: 'Recibos em PDF',
+                      free: null,
+                      pro: 'Ilimitado',
+                      proIcon: true
+                    },
+                    {
+                      label: 'Orçamentos em PDF',
+                      free: null,
+                      pro: 'Ilimitado',
+                      proIcon: true
+                    },
+                    {
+                      label: 'Contratos (modelos prontos)',
+                      free: null,
+                      pro: 'Incluído',
+                      proIcon: true
+                    },
+                    {
+                      label: 'Músico Pro Academy (guia fiscal)',
+                      free: null,
+                      pro: 'Acesso exclusivo',
+                      proIcon: true
+                    },
+                    {
+                      label: 'Suporte prioritário',
+                      free: null,
+                      pro: 'Incluído',
+                      proIcon: true
+                    },
+                  ].map((row, idx) => (
                     <tr key={idx} className="border-b border-gray-100">
-                      <td className="p-6 opacity-90">{label as string}</td>
+                      <td className="p-6 text-gray-700">{row.label}</td>
                       <td className="p-6 text-center text-gray-500">
-                        {free ? free as string : <Minus className="mx-auto text-gray-300" size={20} />}
+                        {row.free
+                          ? row.free
+                          : <Minus className="mx-auto text-gray-300" size={20} aria-label="Não disponível" />
+                        }
                       </td>
                       <td className="p-6 text-center bg-[#f8fafe]">
-                        {highlight
-                          ? <CheckCircle className="mx-auto text-[#d4af37]" size={22} />
-                          : <span>{pro as string}</span>
+                        {row.proIcon
+                          ? <CheckCircle className="mx-auto text-[#d4af37]" size={22} aria-label="Incluído" />
+                          : <span className="text-[#0c2461] font-bold">{row.pro}</span>
                         }
                       </td>
                     </tr>
@@ -451,10 +592,11 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
-            <div className="mt-12 text-center flex justify-center">
+            <div className="mt-12 text-center">
               <button
+                type="button"
                 onClick={() => { trackBuyClick('table'); scrollToPlan() }}
-                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-4 rounded-xl shadow-[0_4px_20px_rgba(212,175,55,0.4)] transition text-xl flex items-center justify-center gap-2 transform hover:-translate-y-1"
+                className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-4 rounded-xl shadow-[0_4px_20px_rgba(212,175,55,0.4)] transition text-xl transform hover:-translate-y-1"
               >
                 Desbloquear PRO
               </button>
@@ -463,57 +605,86 @@ export default function Home() {
         </section>
 
         {/* OFERTA PRO */}
-        <section id="planos" className="py-24 px-4 bg-[#0c2461]">
+        <section
+          id="planos"
+          aria-label="Planos e preços"
+          className="py-24 px-4 bg-[#0c2461]"
+        >
           <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
             <div className="bg-white p-8 md:p-14 rounded-[2.5rem] shadow-2xl w-full relative">
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#d4af37] text-[#0c2461] font-black px-10 py-3 rounded-full uppercase tracking-wider shadow-lg text-xl whitespace-nowrap">
                 Acesso Anual PRO
               </div>
+
               <div className="text-xl font-bold text-[#0c2461] mb-2 mt-6">
                 Para o músico que quer parar de perder dinheiro e tempo com burocracia.
               </div>
-              <p className="text-sm font-semibold opacity-70 mb-8 max-w-sm mx-auto">
+              <p className="text-sm font-semibold text-gray-500 mb-8 max-w-sm mx-auto">
                 Economize no imposto, gere documentos profissionais e feche o mês fiscal em 10 minutos.
               </p>
+
               <div className="flex justify-center items-end gap-2 mb-2 text-[#0c2461]">
                 <span className="text-3xl font-bold mb-2">R$</span>
                 <span className="text-8xl font-black leading-none tracking-tighter">97</span>
                 <span className="text-xl font-bold mb-3">/ano</span>
               </div>
-              <div className="text-lg font-bold opacity-60 mb-8 pb-8 border-b border-[#E8E3DC]">
+              <div className="text-lg font-bold text-gray-400 mb-8 pb-8 border-b border-[#E8E3DC]">
                 Menos que uma hora de aula particular. Por um ano inteiro.
               </div>
+
               <div className="text-left max-w-sm mx-auto mb-10">
                 <ul className="space-y-4 font-semibold text-lg text-[#0c2461]">
                   {[
                     'Exportação completa Carnê-Leão',
                     'Recibos, contratos e orçamentos ilimitados',
-                    'Treinamento Academy Exclusiva',
+                    'Músico Pro Academy — guia fiscal exclusivo',
                     'Suporte prioritário e novidades',
                   ].map((f, idx) => (
                     <li key={idx} className="flex items-center gap-3">
-                      <CheckCircle size={24} className="text-[#d4af37] shrink-0" />
+                      <CheckCircle size={24} className="text-[#d4af37] shrink-0" aria-hidden="true" />
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+
+              {/* CTA direto para Hotmart — substituir SEU_PRODUTO_ID */}
               <button
-                onClick={() => { trackBuyClick('pricing'); window.location.href = '/vendas' }}
+                type="button"
+                onClick={() => {
+                  trackBuyClick('pricing')
+                  window.open(HOTMART_URL, '_blank')
+                }}
                 className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black py-6 rounded-2xl shadow-[0_10px_30px_rgba(212,175,55,0.4)] transition-all text-2xl md:text-3xl transform hover:scale-[1.02] active:scale-95 mb-6"
               >
                 Quero assinar o PRO
               </button>
+
               <div className="grid md:grid-cols-3 gap-4 text-center border-t border-gray-100 pt-6">
                 {[
-                  { icon: <ShieldCheck size={20} className="text-green-600" />, title: 'Garantia de 7 dias', text: 'Devolvemos 100% sem perguntas via Hotmart.' },
-                  { icon: <Info size={20} className="text-[#d4af37]" />, title: 'Pagamento seguro', text: 'Pix ou cartão — transação criptografada pela Hotmart.' },
-                  { icon: <Minus size={20} className="text-[#0c2461]" />, title: 'Sem fidelidade', text: 'Cancele antes do vencimento anual, sem burocracia.' },
+                  {
+                    icon: <ShieldCheck size={20} className="text-green-600" aria-hidden="true" />,
+                    title: 'Garantia de 7 dias',
+                    text: 'Devolvemos 100% sem perguntas via Hotmart.'
+                  },
+                  {
+                    icon: <Info size={20} className="text-[#d4af37]" aria-hidden="true" />,
+                    title: 'Pagamento seguro',
+                    text: 'Pix ou cartão — transação criptografada pela Hotmart.'
+                  },
+                  {
+                    icon: <Minus size={20} className="text-[#0c2461]" aria-hidden="true" />,
+                    title: 'Sem fidelidade',
+                    text: 'Cancele antes do vencimento anual, sem burocracia.'
+                  },
                 ].map((card, idx) => (
-                  <div key={idx} className="bg-slate-50 p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+                  <div
+                    key={idx}
+                    className="bg-slate-50 p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center"
+                  >
                     <div className="mb-1">{card.icon}</div>
                     <div className="font-bold text-sm text-[#0c2461] mb-1">{card.title}</div>
-                    <div className="text-xs opacity-70">{card.text}</div>
+                    <div className="text-xs text-gray-500">{card.text}</div>
                   </div>
                 ))}
               </div>
@@ -522,22 +693,42 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section className="py-20 px-4 max-w-3xl mx-auto border-b border-[#E8E3DC]">
+        <section
+          className="py-20 px-4 max-w-3xl mx-auto border-b border-[#E8E3DC]"
+          aria-label="Perguntas frequentes"
+        >
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold">Perguntas Frequentes</h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg bg-white overflow-hidden text-left">
+              <div
+                key={index}
+                className="border border-gray-200 rounded-lg bg-white overflow-hidden text-left"
+              >
                 <button
+                  type="button"
+                  id={`faq-btn-${index}`}
+                  aria-expanded={openFaqIndex === index}
+                  aria-controls={`faq-answer-${index}`}
                   className="w-full px-6 py-4 font-bold flex justify-between items-center text-[#0c2461] hover:bg-gray-50 transition"
                   onClick={() => toggleFaq(index)}
                 >
                   <span>{faq.question}</span>
-                  <span>{openFaqIndex === index ? <Minus size={24} /> : <Plus size={24} />}</span>
+                  <span aria-hidden="true">
+                    {openFaqIndex === index
+                      ? <Minus size={24} className="text-[#0c2461]" />
+                      : <Plus size={24} className="text-[#0c2461]" />
+                    }
+                  </span>
                 </button>
                 {openFaqIndex === index && (
-                  <div className="px-6 pb-4 pt-2 text-gray-700 leading-relaxed font-medium">
+                  <div
+                    id={`faq-answer-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-btn-${index}`}
+                    className="px-6 pb-4 pt-2 text-gray-700 leading-relaxed font-medium"
+                  >
                     {faq.answer}
                   </div>
                 )}
@@ -547,18 +738,22 @@ export default function Home() {
         </section>
 
         {/* ENCERRAMENTO */}
-        <section className="py-24 px-4 bg-slate-50 border-t border-gray-200">
+        <section
+          className="py-24 px-4 bg-slate-50 border-t border-gray-200"
+          aria-label="Chamada final para ação"
+        >
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-[#0c2461]">
               Você passou anos aprendendo música.
             </h2>
-            <p className="text-2xl opacity-80 text-gray-600 mb-4 font-medium">
+            <p className="text-2xl text-gray-600 mb-4 font-medium">
               Não precisa aprender contabilidade também.
             </p>
-            <p className="text-lg opacity-60 text-gray-500 mb-10 font-medium">
+            <p className="text-lg text-gray-500 mb-10 font-medium">
               O Músico Pro faz a parte chata. Você fica com a parte boa.
             </p>
             <button
+              type="button"
               onClick={() => { trackFreeClick('footer'); window.location.href = '/app' }}
               className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-12 py-5 rounded-xl transition text-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
@@ -569,27 +764,33 @@ export default function Home() {
 
       </main>
 
-      {/* DISCLAIMER */}
+      {/* DISCLAIMER FISCAL */}
       <p className="text-xs text-center text-gray-400 max-w-2xl mx-auto px-4 pb-8 leading-relaxed">
-        O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário. Para orientação formal,
-        declarações oficiais e casos específicos, consulte um contador registrado. Não nos responsabilizamos por
-        decisões tomadas exclusivamente com base nas estimativas do app.
+        O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
+        As despesas dedutíveis seguem as regras da Receita Federal para o Livro Caixa (Carnê-Leão).
+        Para orientação formal, declarações oficiais e casos específicos, consulte um contador registrado.
+        Não nos responsabilizamos por decisões tomadas exclusivamente com base nas estimativas do app.
       </p>
 
       <Footer />
 
       {/* MOBILE STICKY BOTTOM BAR */}
       <div
-        className={`fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 md:hidden transition-transform duration-300 ${showBottomBar ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 md:hidden transition-transform duration-300 ${
+          showBottomBar ? 'translate-y-0' : 'translate-y-full'
+        }`}
+        aria-hidden={!showBottomBar}
       >
         <div className="flex gap-2 max-w-sm mx-auto">
           <button
+            type="button"
             onClick={() => { trackFreeClick('bottom-bar'); window.location.href = '/app' }}
             className="flex-1 bg-[#0c2461] text-white font-bold py-3 rounded-xl text-sm"
           >
             Usar Grátis
           </button>
           <button
+            type="button"
             onClick={() => { trackBuyClick('bottom-bar'); scrollToPlan() }}
             className="flex-1 bg-[#d4af37] text-[#0c2461] font-bold py-3 rounded-xl text-sm"
           >
