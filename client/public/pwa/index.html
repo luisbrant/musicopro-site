@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Músico Pro - Organização fiscal para músicos</title>
-    
+
     <!-- PWA Config -->
     <link rel="manifest" href="/pwa/manifest.json">
     <meta name="theme-color" content="#4e4376">
@@ -21,50 +22,84 @@
            CORE VISUALS & THEME
            ========================================= */
         :root {
-            --primary: #4e4376; --accent: #2b5876;
-            --success: #00b894; --danger: #d63031; --warning: #fdcb6e;
-            --bg-body: #f4f7f6; --bg-card: #ffffff;
-            --text-main: #2d3436; --text-light: #636e72;
-            --border: #dfe6e9; --input-bg: #fdfdfd;
-            --shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        body.dark-mode {
-            --primary: #a29bfe; --accent: #74b9ff;
-            --bg-body: #1e1e1e; --bg-card: #2d3436;
-            --text-main: #dfe6e9; --text-light: #b2bec3;
-            --border: #444; --input-bg: #2d2d2d;
-            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --primary: #4e4376;
+            --accent: #2b5876;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --border: #dfe6e9;
+            --input-bg: #fdfdfd;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 90px; }
-        .container { max-width: 900px; margin: 0 auto; padding: 15px; }
+        body.dark-mode {
+            --primary: #a29bfe;
+            --accent: #74b9ff;
+            --bg-body: #1e1e1e;
+            --bg-card: #2d3436;
+            --text-main: #dfe6e9;
+            --text-light: #b2bec3;
+            --border: #444;
+            --input-bg: #2d2d2d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            padding-bottom: 90px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+        }
 
         /* =========================================
            BANNER PRO (COMANDO 1)
            ========================================= */
-        .pro-banner { 
-            background: linear-gradient(135deg, var(--primary), var(--accent)); 
-            color: white; 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+        .pro-banner {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 15px rgba(78, 67, 118, 0.2);
             animation: fadeIn 0.5s;
         }
-        .pro-banner p { margin: 0; font-size: 14px; line-height: 1.4; flex: 1; }
-        .pro-banner button { 
-            background: white; 
-            color: var(--primary); 
-            border: none; 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            font-size: 12px; 
-            cursor: pointer; 
+
+        .pro-banner p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .pro-banner button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
             margin-left: 15px;
             white-space: nowrap;
         }
@@ -72,104 +107,403 @@
         /* =========================================
            HEADER & CONTROLES
            ========================================= */
-        .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-        
-        .app-logo { display: flex; align-items: center; gap: 10px; }
-        
-        .app-logo h1 { 
-            font-size: 24px; font-weight: 800; 
-            background: linear-gradient(45deg, var(--primary), var(--accent)); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin: 0; line-height: 1.1;
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
+
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-logo h1 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1.1;
+        }
+
         .app-logo small {
-            display: block; font-size: 11px; color: var(--text-light); font-weight: 600; letter-spacing: 0.5px;
+            display: block;
+            font-size: 11px;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
-        
+
         /* Badge Grátis/Pro */
-        .license-badge { 
-            font-size: 11px; padding: 4px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; 
-            margin-left: 0; vertical-align: middle; color: #fff !important; 
-            background-color: #ff9f43; box-shadow: 0 2px 5px rgba(255, 159, 67, 0.3); letter-spacing: 0.5px;
+        .license-badge {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-left: 0;
+            vertical-align: middle;
+            color: #fff !important;
+            background-color: #ff9f43;
+            box-shadow: 0 2px 5px rgba(255, 159, 67, 0.3);
+            letter-spacing: 0.5px;
             -webkit-text-fill-color: #fff !important;
         }
-        .license-badge.pro { background-color: var(--success); box-shadow: 0 2px 5px rgba(0, 184, 148, 0.3); }
 
-        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .license-badge.pro {
+            background-color: var(--success);
+            box-shadow: 0 2px 5px rgba(0, 184, 148, 0.3);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         /* Seletor de Ano */
-        .year-selector-wrapper { position: relative; display: inline-block; }
-        .year-btn {
-            background: var(--bg-card); border: 2px solid var(--primary); color: var(--primary);
-            padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; gap: 5px; cursor: pointer;
+        .year-selector-wrapper {
+            position: relative;
+            display: inline-block;
         }
-        .year-select-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        
-        .theme-btn { background: none; border: none; font-size: 22px; cursor: pointer; }
+
+        .year-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .year-select-hidden {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
 
         /* =========================================
            NAVEGAÇÃO (TABS)
            ========================================= */
-        .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; justify-content: center; align-items: center; }
-        .nav-pills::-webkit-scrollbar { display: none; }
-        .nav-item { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-light); transition: 0.2s; cursor: pointer; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; }
-        
+        .nav-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-pills::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: 0.2s;
+            cursor: pointer;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Mobile: Abas em 2 linhas sem scroll */
         @media (max-width: 520px) {
-            .nav-pills { display: flex; flex-wrap: wrap; gap: 6px; overflow-x: visible !important; justify-content: center; align-items: center; padding: 8px 4px; }
-            .nav-item { flex: 0 0 calc(50% - 3px); white-space: nowrap; padding: 10px 12px; font-size: 12px; }
+            .nav-pills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                overflow-x: visible !important;
+                justify-content: center;
+                align-items: center;
+                padding: 8px 4px;
+            }
+
+            .nav-item {
+                flex: 0 0 calc(50% - 3px);
+                white-space: nowrap;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
         }
-        .nav-item.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(78, 67, 118, 0.3); }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(78, 67, 118, 0.3);
+        }
 
         /* =========================================
            CARDS & LAYOUT
            ========================================= */
-        .view-section { display: none; animation: fadeIn 0.2s ease-out; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .view-section {
+            display: none;
+            animation: fadeIn 0.2s ease-out;
+        }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .stat-card { background: var(--bg-card); padding: 15px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-        .stat-card.full { grid-column: span 2; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; }
-        .stat-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8; margin-bottom: 5px; }
-        .stat-card .value { font-size: 20px; font-weight: 800; }
-        .stat-card.full .value { font-size: 26px; }
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .stat-card.full {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+        }
+
+        .stat-card h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .stat-card.full .value {
+            font-size: 26px;
+        }
 
         /* Lista Histórico */
-        .transaction-list { display: flex; flex-direction: column; gap: 10px; }
-        .transaction-item { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .t-info { flex: 1; }
-        .t-date { font-size: 11px; color: var(--text-light); display: block; margin-bottom: 2px; }
-        .t-cat { font-size: 11px; font-weight: bold; color: var(--primary); background: rgba(78, 67, 118, 0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
-        .t-desc { font-size: 14px; font-weight: 500; color: var(--text-main); display: block; }
-        .t-value { font-size: 16px; font-weight: 800; text-align: right; }
-        
-        .t-actions { margin-left: 15px; display: flex; gap: 15px; }
-        .action-icon { cursor: pointer; font-size: 18px; opacity: 0.7; transition: 0.2s; }
-        .action-icon:hover { opacity: 1; transform: scale(1.1); }
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-        .val-plus { color: var(--success); }
-        .val-minus { color: var(--danger); }
+        .transaction-item {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .t-info {
+            flex: 1;
+        }
+
+        .t-date {
+            font-size: 11px;
+            color: var(--text-light);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .t-cat {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--primary);
+            background: rgba(78, 67, 118, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .t-desc {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .t-value {
+            font-size: 16px;
+            font-weight: 800;
+            text-align: right;
+        }
+
+        .t-actions {
+            margin-left: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-icon {
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.7;
+            transition: 0.2s;
+        }
+
+        .action-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .val-plus {
+            color: var(--success);
+        }
+
+        .val-minus {
+            color: var(--danger);
+        }
 
         /* FAB */
-        .fab-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; width: 90%; max-width: 400px; }
-        .fab-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 700; font-size: 15px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
-        .fab-btn:active { transform: scale(0.95); }
-        .fab-in { background: var(--success); }
-        .fab-out { background: var(--danger); }
+        .fab-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .fab-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.1s;
+        }
+
+        .fab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .fab-in {
+            background: var(--success);
+        }
+
+        .fab-out {
+            background: var(--danger);
+        }
 
         /* =========================================
            FORMULÁRIOS
            ========================================= */
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 5px; text-transform: uppercase; }
-        .form-control { width: 100%; padding: 12px; font-size: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--input-bg); color: var(--text-main); -webkit-appearance: none; }
-        .form-control:focus { outline: none; border-color: var(--primary); }
-        .big-money { font-size: 32px; font-weight: 800; text-align: center; border: none; border-bottom: 2px solid var(--border); border-radius: 0; background: transparent; padding: 10px 0; color: var(--text-main); width: 100%; }
-        .big-money:focus { outline: none; border-color: var(--primary); }
-        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text-main);
+            -webkit-appearance: none;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .big-money {
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid var(--border);
+            border-radius: 0;
+            background: transparent;
+            padding: 10px 0;
+            color: var(--text-main);
+            width: 100%;
+        }
+
+        .big-money:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
         /* =========================================
            CONSULTOR IA - ESTILOS NOVOS
@@ -182,8 +516,17 @@
             margin-bottom: 20px;
             box-shadow: var(--shadow);
         }
-        .intro-card h2 { font-size: 20px; margin-bottom: 8px; }
-        .intro-card p { opacity: 0.95; line-height: 1.5; font-size: 14px; }
+
+        .intro-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .intro-card p {
+            opacity: 0.95;
+            line-height: 1.5;
+            font-size: 14px;
+        }
 
         .form-section {
             background: var(--bg-card);
@@ -193,6 +536,7 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
         }
+
         .form-section h3 {
             color: var(--primary);
             margin-bottom: 15px;
@@ -215,25 +559,42 @@
             gap: 8px;
             justify-content: center;
         }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             box-shadow: 0 4px 15px rgba(78, 67, 118, 0.3);
         }
-        .btn-primary:hover { transform: translateY(-2px); }
-        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .btn-full { width: 100%; }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
 
         .loading-spinner {
             display: inline-block;
             width: 18px;
             height: 18px;
-            border: 3px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         .understanding-box {
             background: linear-gradient(135deg, rgba(41, 128, 185, 0.1), rgba(78, 67, 118, 0.1));
@@ -242,6 +603,7 @@
             border-radius: 12px;
             margin-bottom: 20px;
         }
+
         .understanding-box h4 {
             color: var(--primary);
             margin-bottom: 10px;
@@ -250,7 +612,12 @@
             align-items: center;
             gap: 8px;
         }
-        .understanding-box p { line-height: 1.6; color: var(--text-main); font-size: 14px; }
+
+        .understanding-box p {
+            line-height: 1.6;
+            color: var(--text-main);
+            font-size: 14px;
+        }
 
         .ideas-grid {
             display: grid;
@@ -267,28 +634,91 @@
             box-shadow: var(--shadow);
             transition: all 0.3s;
         }
-        .idea-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .idea-card h5 { color: var(--primary); margin-bottom: 10px; font-size: 16px; }
-        .idea-card p { color: var(--text-main); line-height: 1.5; margin-bottom: 12px; font-size: 14px; }
 
-        .idea-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+        .idea-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .idea-card h5 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .idea-card p {
+            color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .idea-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
         .badge {
             padding: 4px 8px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
         }
-        .badge-priority-alta, .badge-priority-high { background: rgba(214, 48, 49, 0.15); color: var(--danger); }
-        .badge-priority-média, .badge-priority-medium { background: rgba(253, 203, 110, 0.15); color: var(--warning); }
-        .badge-priority-baixa, .badge-priority-low { background: rgba(0, 184, 148, 0.15); color: var(--success); }
 
-        .badge-effort-alto, .badge-effort-high { background: rgba(155, 89, 182, 0.15); color: #9b59b6; }
-        .badge-effort-médio, .badge-effort-medium { background: rgba(52, 152, 219, 0.15); color: #3498db; }
-        .badge-effort-baixo, .badge-effort-low { background: rgba(26, 188, 156, 0.15); color: #1abc9c; }
+        .badge-priority-alta,
+        .badge-priority-high {
+            background: rgba(214, 48, 49, 0.15);
+            color: var(--danger);
+        }
 
-        .badge-impact-alto, .badge-impact-high { background: rgba(0, 184, 148, 0.15); color: var(--success); }
-        .badge-impact-médio, .badge-impact-medium { background: rgba(230, 126, 34, 0.15); color: #e67e22; }
-        .badge-impact-baixo, .badge-impact-low { background: rgba(149, 165, 166, 0.15); color: #95a5a6; }
+        .badge-priority-média,
+        .badge-priority-medium {
+            background: rgba(253, 203, 110, 0.15);
+            color: var(--warning);
+        }
+
+        .badge-priority-baixa,
+        .badge-priority-low {
+            background: rgba(0, 184, 148, 0.15);
+            color: var(--success);
+        }
+
+        .badge-effort-alto,
+        .badge-effort-high {
+            background: rgba(155, 89, 182, 0.15);
+            color: #9b59b6;
+        }
+
+        .badge-effort-médio,
+        .badge-effort-medium {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .badge-effort-baixo,
+        .badge-effort-low {
+            background: rgba(26, 188, 156, 0.15);
+            color: #1abc9c;
+        }
+
+        .badge-impact-alto,
+        .badge-impact-high {
+            background: rgba(0, 184, 148, 0.15);
+            color: var(--success);
+        }
+
+        .badge-impact-médio,
+        .badge-impact-medium {
+            background: rgba(230, 126, 34, 0.15);
+            color: #e67e22;
+        }
+
+        .badge-impact-baixo,
+        .badge-impact-low {
+            background: rgba(149, 165, 166, 0.15);
+            color: #95a5a6;
+        }
 
         .info-box {
             background: rgba(52, 152, 219, 0.1);
@@ -303,46 +733,230 @@
         /* =========================================
            HELP & PRO
            ========================================= */
-        .help-container { display: flex; flex-direction: column; gap: 15px; }
-        .pro-activation-card { background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78, 67, 118, 0.05) 100%); border: 2px dashed var(--primary); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 10px; }
-        
-        .help-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 768px) { .help-grid { grid-template-columns: 1fr 1fr; } .full-width-desktop { grid-column: span 2; } }
+        .help-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-        .help-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-        .help-summary { padding: 15px; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); background: rgba(0,0,0,0.02); }
-        .help-content { padding: 15px; font-size: 14px; color: var(--text-light); line-height: 1.6; border-top: 1px solid var(--border); }
-        
-        .code-badge { background: #eee; color: #333; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold; font-size: 12px; border: 1px solid #ccc; }
-        body.dark-mode .code-badge { background: #444; color: #fff; border-color: #555; }
-        
-        .tax-alert { background: var(--bg-card); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border); margin-top: 15px; position: relative; overflow: hidden; }
-        .blur-overlay { filter: blur(6px); user-select: none; pointer-events: none; opacity: 0.6; }
-        .pro-lock { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-align: center; width: 80%; }
-        .pro-btn { background: linear-gradient(45deg, #FFD700, #FFA500); border: none; color: #333; font-weight: bold; padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
+        .pro-activation-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78, 67, 118, 0.05) 100%);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .help-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .full-width-desktop {
+                grid-column: span 2;
+            }
+        }
+
+        .help-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .help-summary {
+            padding: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .help-content {
+            padding: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            border-top: 1px solid var(--border);
+        }
+
+        .code-badge {
+            background: #eee;
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #ccc;
+        }
+
+        body.dark-mode .code-badge {
+            background: #444;
+            color: #fff;
+            border-color: #555;
+        }
+
+        .tax-alert {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blur-overlay {
+            filter: blur(6px);
+            user-select: none;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .pro-lock {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 80%;
+        }
+
+        .pro-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: none;
+            color: #333;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
         /* Utils */
-        .hidden { display: none !important; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-light); padding: 10px 15px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 13px; width: 100%; text-decoration: none; display:block; box-sizing:border-box; }
-        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 600; z-index: 9999; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideDown 0.3s; }
-        @keyframes slideDown { from { transform: translate(-50%, -20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+        .hidden {
+            display: none !important;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 13px;
+            width: 100%;
+            text-decoration: none;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
 
         /* Fake File Upload */
-        .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; margin-top: 5px; }
-        .btn-upload { border: 2px dashed var(--border); color: var(--text-light); background: var(--bg-body); padding: 10px; border-radius: 8px; width: 100%; text-align: center; font-weight: 600; font-size: 13px; cursor: pointer; }
-        .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-top: 5px;
+        }
 
-        textarea.form-control { min-height: 100px; resize: vertical; font-family: inherit; }
+        .btn-upload {
+            border: 2px dashed var(--border);
+            color: var(--text-light);
+            background: var(--bg-body);
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
 
+        .file-upload-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
     </style>
 </head>
+
 <body>
 
     <div id="toast" class="notification hidden"></div>
 
     <div class="container">
-        
+
         <header class="app-header">
             <div class="app-logo">
                 <div>
@@ -352,7 +966,7 @@
                 <span id="badgePro" class="license-badge">GRÁTIS</span>
             </div>
             <div class="header-actions">
-                
+
                 <div class="year-selector-wrapper">
                     <div class="year-btn">
                         <span>📅</span> <span id="anoLabel">2024</span> <span>▼</span>
@@ -403,13 +1017,15 @@
                 <div id="chartEvolutionLock" class="pro-lock hidden">
                     <div style="font-size: 24px; margin-bottom:5px;">🔒</div>
                     <p style="font-size: 12px; margin-bottom:10px;">Upgrade para ver sua evolução</p>
-                    <button class="pro-btn" style="font-size:12px; padding:5px 15px;" onclick="navTo('ajuda')">VER PRO</button>
+                    <button class="pro-btn" style="font-size:12px; padding:5px 15px;" onclick="navTo('ajuda')">VER
+                        PRO</button>
                 </div>
             </div>
         </section>
 
         <section id="view-carne" class="view-section">
-            <div style="background: rgba(41, 128, 185, 0.1); color: var(--accent); padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; border: 1px solid rgba(41, 128, 185, 0.2);">
+            <div
+                style="background: rgba(41, 128, 185, 0.1); color: var(--accent); padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; border: 1px solid rgba(41, 128, 185, 0.2);">
                 ℹ️ <strong>Apuração Mensal:</strong> Apenas para receitas de Pessoa Física.
             </div>
 
@@ -430,10 +1046,11 @@
                     <div class="value" style="font-size: 32px; margin: 10px 0;" id="taxValueDisplay">R$ 0,00</div>
                     <div class="tax-detail" id="taxDetailText">-</div>
                 </div>
-                
+
                 <div id="taxLock" class="pro-lock hidden">
                     <div style="font-size: 30px;">🔒</div>
-                    <p style="font-size: 14px; margin: 5px 0 15px 0; color: var(--text-main); font-weight:600; background:var(--bg-card); padding:5px; border-radius:5px;">
+                    <p
+                        style="font-size: 14px; margin: 5px 0 15px 0; color: var(--text-main); font-weight:600; background:var(--bg-card); padding:5px; border-radius:5px;">
                         Imposto Detectado.<br>Libere o valor exato.
                     </p>
                     <button class="pro-btn" onclick="navTo('ajuda')">ATIVAR PRO</button>
@@ -446,7 +1063,7 @@
             <div class="intro-card">
                 <h2>💡 Estratégias IA para seu Negócio Musical</h2>
                 <p>
-                    Preencha o formulário e receba recomendações personalizadas para aumentar receita, 
+                    Preencha o formulário e receba recomendações personalizadas para aumentar receita,
                     reduzir impostos e profissionalizar sua carreira.
                 </p>
             </div>
@@ -454,7 +1071,7 @@
             <form id="advisorForm" onsubmit="event.preventDefault(); generateAdvice();">
                 <div class="form-section">
                     <h3>🎯 Seu Perfil Musical</h3>
-                    
+
                     <div class="form-grid-2">
                         <div class="input-group">
                             <label>Nome Artístico</label>
@@ -490,19 +1107,21 @@
 
                 <div class="form-section">
                     <h3>📊 Situação Atual</h3>
-                    
+
                     <div class="info-box">
                         💡 <strong>Dica:</strong> Seja específico para receber recomendações mais precisas.
                     </div>
 
                     <div class="input-group">
                         <label>Principais Desafios</label>
-                        <textarea id="challenges" class="form-control" placeholder="Ex: Receita irregular, muitos impostos, falta de organização..."></textarea>
+                        <textarea id="challenges" class="form-control"
+                            placeholder="Ex: Receita irregular, muitos impostos, falta de organização..."></textarea>
                     </div>
 
                     <div class="input-group">
                         <label>Objetivos (6-12 meses)</label>
-                        <textarea id="goals" class="form-control" placeholder="Ex: Aumentar receita em 30%, regularizar impostos, criar MEI..."></textarea>
+                        <textarea id="goals" class="form-control"
+                            placeholder="Ex: Aumentar receita em 30%, regularizar impostos, criar MEI..."></textarea>
                     </div>
 
                     <div class="input-group">
@@ -537,10 +1156,11 @@
 
         <section id="view-historico" class="view-section">
             <div class="input-group">
-                <input type="text" id="searchBox" class="form-control" placeholder="🔍 Buscar lançamentos..." onkeyup="renderHistorico()">
+                <input type="text" id="searchBox" class="form-control" placeholder="🔍 Buscar lançamentos..."
+                    onkeyup="renderHistorico()">
             </div>
             <div id="listaLancamentos" class="transaction-list"></div>
-            
+
             <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <button class="btn-outline" onclick="exportarCSV()">📥 Excel (PRO)</button>
                 <button class="btn-outline" onclick="gerarPDF()">📄 PDF (PRO)</button>
@@ -557,9 +1177,12 @@
 
             <div class="stat-card" style="text-align:center; padding: 30px 15px; margin-bottom: 20px;">
                 <h3 style="color:var(--text-light); margin-bottom:10px;">SEU LINK DE INDICAÇÃO</h3>
-                
-                <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px; display:flex; align-items:center; gap:10px; border:1px solid var(--border);">
-                    <input type="text" id="referralLinkInput" class="form-control" style="background:transparent; border:none; font-size:13px; color:var(--primary); font-weight:bold;" readonly>
+
+                <div
+                    style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px; display:flex; align-items:center; gap:10px; border:1px solid var(--border);">
+                    <input type="text" id="referralLinkInput" class="form-control"
+                        style="background:transparent; border:none; font-size:13px; color:var(--primary); font-weight:bold;"
+                        readonly>
                 </div>
 
                 <button class="btn btn-primary" style="width:100%;" onclick="copiarLinkIndicacao()">
@@ -581,8 +1204,10 @@
             <div class="stat-card" style="margin-bottom: 20px;">
                 <h3 style="color:var(--primary); margin-bottom:10px;">🎁 Resgatar Benefício</h3>
                 <div style="display:flex; gap:10px;">
-                    <input type="text" id="bonusInput" class="form-control" placeholder="Cole o cupom MPBONUS..." style="font-size:14px;">
-                    <button class="btn" style="background:var(--success); color:white; padding: 0 15px;" onclick="resgatarBonus()">OK</button>
+                    <input type="text" id="bonusInput" class="form-control" placeholder="Cole o cupom MPBONUS..."
+                        style="font-size:14px;">
+                    <button class="btn" style="background:var(--success); color:white; padding: 0 15px;"
+                        onclick="resgatarBonus()">OK</button>
                 </div>
                 <p style="font-size:11px; color:var(--text-light); margin-top:5px;">
                     Recebeu um cupom de um amigo que ativou o PRO? Cole acima.
@@ -595,12 +1220,14 @@
                     <ol style="padding-left: 20px; line-height: 1.6; font-size: 14px; color: var(--text-main);">
                         <li>Copie seu link exclusivo acima.</li>
                         <li>Envie para amigos músicos que precisam se organizar.</li>
-                        <li>Quando eles ativarem a <strong>Licença PRO</strong>, você ganha 1 mês extra ou desconto na renovação.</li>
+                        <li>Quando eles ativarem a <strong>Licença PRO</strong>, você ganha 1 mês extra ou desconto na
+                            renovação.</li>
                     </ol>
                 </div>
             </div>
 
-            <div style="font-size: 11px; color: var(--text-light); text-align: center; line-height: 1.5; padding: 0 20px;">
+            <div
+                style="font-size: 11px; color: var(--text-light); text-align: center; line-height: 1.5; padding: 0 20px;">
                 Este é um programa de recomendação entre músicos.<br>
                 Não é um sistema de renda ou promessa financeira.
             </div>
@@ -608,10 +1235,11 @@
 
         <section id="view-form" class="view-section">
             <h2 id="formTitle" style="margin-bottom: 20px;">Novo Lançamento</h2>
-            
+
             <div class="input-group">
                 <label>Valor (R$)</label>
-                <input type="text" id="inpValor" class="big-money" placeholder="0,00" inputmode="numeric" oninput="mascaraMoeda(this)">
+                <input type="text" id="inpValor" class="big-money" placeholder="0,00" inputmode="numeric"
+                    oninput="mascaraMoeda(this)">
             </div>
 
             <div class="form-grid-2">
@@ -631,29 +1259,39 @@
             </div>
 
             <div style="display:flex; gap:10px; margin-top:20px;">
-                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('home')">Cancelar</button>
+                <button class="btn" style="background:#ccc; color:#333; flex:1;"
+                    onclick="navTo('home')">Cancelar</button>
                 <button class="btn" id="btnSalvar" style="flex:2;" onclick="salvarLancamento()">SALVAR</button>
             </div>
         </section>
 
         <section id="view-contrato" class="view-section">
             <h2 style="margin-bottom: 20px;">📜 Gerador de Contratos</h2>
-            
+
             <div class="input-group">
                 <label>Selecione um Template (Opcional)</label>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
-                    <button class="btn" style="background:#e8f4f8; color:#2b5876; border:2px solid #2b5876; padding:12px;" onclick="carregarTemplate('casamento')">💒 Casamento</button>
-                    <button class="btn" style="background:#fff4e6; color:#d97706; border:2px solid #d97706; padding:12px;" onclick="carregarTemplate('bar')">🍺 Show em Bar</button>
-                    <button class="btn" style="background:#f0e6ff; color:#7c3aed; border:2px solid #7c3aed; padding:12px;" onclick="carregarTemplate('aula')">🎓 Aula Particular</button>
-                    <button class="btn" style="background:#e6f4e6; color:#059669; border:2px solid #059669; padding:12px;" onclick="carregarTemplate('corporativo')">🏢 Evento Corp.</button>
+                    <button class="btn"
+                        style="background:#e8f4f8; color:#2b5876; border:2px solid #2b5876; padding:12px;"
+                        onclick="carregarTemplate('casamento')">💒 Casamento</button>
+                    <button class="btn"
+                        style="background:#fff4e6; color:#d97706; border:2px solid #d97706; padding:12px;"
+                        onclick="carregarTemplate('bar')">🍺 Show em Bar</button>
+                    <button class="btn"
+                        style="background:#f0e6ff; color:#7c3aed; border:2px solid #7c3aed; padding:12px;"
+                        onclick="carregarTemplate('aula')">🎓 Aula Particular</button>
+                    <button class="btn"
+                        style="background:#e6f4e6; color:#059669; border:2px solid #059669; padding:12px;"
+                        onclick="carregarTemplate('corporativo')">🏢 Evento Corp.</button>
                 </div>
             </div>
-            
+
             <div class="input-group" id="grupoContratante">
                 <label>Dados do Contratante</label>
                 <input type="text" id="conNome" class="form-control" placeholder="Nome ou Razão Social">
                 <input type="text" id="conDoc" class="form-control" placeholder="CPF ou CNPJ" style="margin-top:10px">
-                <input type="text" id="conEnd" class="form-control" placeholder="Endereço Completo" style="margin-top:10px">
+                <input type="text" id="conEnd" class="form-control" placeholder="Endereço Completo"
+                    style="margin-top:10px">
             </div>
 
             <div class="input-group">
@@ -664,13 +1302,15 @@
                     <input type="time" id="conInicio" class="form-control" placeholder="Início">
                     <input type="time" id="conFim" class="form-control" placeholder="Fim">
                 </div>
-                <input type="text" id="conLocal" class="form-control" placeholder="Local do Evento" style="margin-top:10px">
+                <input type="text" id="conLocal" class="form-control" placeholder="Local do Evento"
+                    style="margin-top:10px">
                 <input type="text" id="conCidade" class="form-control" placeholder="Cidade/UF" style="margin-top:10px">
             </div>
 
             <div class="input-group">
                 <label>Dados Financeiros</label>
-                <input type="text" id="conValor" class="form-control" placeholder="Valor do Cachê (R$)" oninput="mascaraMoeda(this)">
+                <input type="text" id="conValor" class="form-control" placeholder="Valor do Cachê (R$)"
+                    oninput="mascaraMoeda(this)">
                 <select id="conPagamento" class="form-control" style="margin-top:10px">
                     <option value="PIX">PIX</option>
                     <option value="Dinheiro">Dinheiro</option>
@@ -687,14 +1327,16 @@
             </div>
 
             <div style="display:flex; gap:10px; margin-top:20px;">
-                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('ajuda')">Voltar</button>
-                <button class="btn" style="background:var(--primary); color:white; flex:2;" onclick="gerarContratoPDF()">📄 GERAR CONTRATO</button>
+                <button class="btn" style="background:#ccc; color:#333; flex:1;"
+                    onclick="navTo('ajuda')">Voltar</button>
+                <button class="btn" style="background:var(--primary); color:white; flex:2;"
+                    onclick="gerarContratoPDF()">📄 GERAR CONTRATO</button>
             </div>
         </section>
 
         <section id="view-recibo" class="view-section">
             <h2 style="margin-bottom: 20px;">🧾 Gerador de Recibos</h2>
-            
+
             <div style="display:flex; gap:10px; margin-bottom:20px;">
                 <label style="flex:1; cursor:pointer;">
                     <input type="radio" name="tipoRecibo" value="simples" onchange="toggleReciboTipo()" checked> Simples
@@ -715,27 +1357,32 @@
             <div class="form-grid-2">
                 <div class="input-group">
                     <label id="lblValor">Valor (R$)</label>
-                    <input type="text" id="recValor" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                    <input type="text" id="recValor" class="form-control" placeholder="0,00"
+                        oninput="mascaraMoeda(this); calcularLiquido()">
                 </div>
                 <div class="input-group">
                     <label>Data</label>
                     <input type="date" id="recData" class="form-control">
                 </div>
             </div>
-            
-            <div id="div-impostos" class="hidden" style="background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border);">
+
+            <div id="div-impostos" class="hidden"
+                style="background: rgba(0,0,0,0.03); padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border);">
                 <div class="form-grid-2">
                     <div class="input-group" style="margin-bottom:0;">
                         <label>INSS (R$)</label>
-                        <input type="text" id="recINSS" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                        <input type="text" id="recINSS" class="form-control" placeholder="0,00"
+                            oninput="mascaraMoeda(this); calcularLiquido()">
                     </div>
                     <div class="input-group" style="margin-bottom:0;">
                         <label>IRRF (R$)</label>
-                        <input type="text" id="recIRRF" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                        <input type="text" id="recIRRF" class="form-control" placeholder="0,00"
+                            oninput="mascaraMoeda(this); calcularLiquido()">
                     </div>
                     <div class="input-group" style="margin-bottom:0; grid-column: span 2;">
                         <label>ISS (R$)</label>
-                        <input type="text" id="recISS" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this); calcularLiquido()">
+                        <input type="text" id="recISS" class="form-control" placeholder="0,00"
+                            oninput="mascaraMoeda(this); calcularLiquido()">
                     </div>
                 </div>
                 <div style="margin-top:10px; text-align:right; font-weight:bold; color:var(--primary);">
@@ -752,22 +1399,28 @@
                 <input type="text" id="recCidade" class="form-control" placeholder="São Paulo">
             </div>
             <div style="display:flex; gap:10px; margin-top:20px;">
-                <button class="btn" style="background:#ccc; color:#333; flex:1;" onclick="navTo('ajuda')">Voltar</button>
-                <button class="btn" style="background:var(--primary); color:white; flex:2;" onclick="gerarReciboPDF()">📄 GERAR PDF</button>
+                <button class="btn" style="background:#ccc; color:#333; flex:1;"
+                    onclick="navTo('ajuda')">Voltar</button>
+                <button class="btn" style="background:var(--primary); color:white; flex:2;"
+                    onclick="gerarReciboPDF()">📄 GERAR PDF</button>
             </div>
         </section>
 
         <section id="view-ajuda" class="view-section">
             <div class="help-container">
-                
+
                 <div class="pro-activation-card">
-                    <h3 style="margin-bottom: 5px; color: var(--primary);">Licença PRO — Organização fiscal completa</h3>
+                    <h3 style="margin-bottom: 5px; color: var(--primary);">Licença PRO — Organização fiscal completa
+                    </h3>
                     <p style="font-size: 13px; color: var(--text-light); margin-bottom: 15px;">
                         App + Guia educacional para uso mensal, sem planilhas.
                     </p>
                     <div style="display: flex; gap: 8px; justify-content: center;">
-                        <input type="text" id="licencaKey" class="form-control" placeholder="Chave: CLM-XXXX..." style="text-transform:uppercase; text-align:center; max-width: 200px;">
-                        <button class="btn" style="background: var(--success); color: white; width: auto; padding: 0 20px;" onclick="ativarPro()">OK</button>
+                        <input type="text" id="licencaKey" class="form-control" placeholder="Chave: CLM-XXXX..."
+                            style="text-transform:uppercase; text-align:center; max-width: 200px;">
+                        <button class="btn"
+                            style="background: var(--success); color: white; width: auto; padding: 0 20px;"
+                            onclick="ativarPro()">OK</button>
                     </div>
                     <p style="font-size: 12px; color: var(--text-light); margin-top: 10px; font-style: italic;">
                         💡 Ideal para quem recebe PIX, cachês e aulas com frequência.
@@ -775,26 +1428,41 @@
                 </div>
 
                 <div class="help-grid">
-                    
+
                     <div class="help-card full-width-desktop" style="border: 2px solid var(--primary);">
-                        <div class="help-summary" style="background: rgba(78, 67, 118, 0.1); color: var(--primary);">🛠️ Ferramentas PRO</div>
+                        <div class="help-summary" style="background: rgba(78, 67, 118, 0.1); color: var(--primary);">🛠️
+                            Ferramentas PRO</div>
                         <div class="help-content" style="display:block;">
-                            <p style="margin-bottom:10px; font-size:13px;">Gere recibos profissionais para seus contratantes.</p>
-                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;" onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
-                            <button class="btn-outline" style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;" onclick="navTo('contrato')">📜 Abrir Gerador de Contratos</button>
-                            <a href="../guia" target="_blank" class="btn-outline" style="display:block; text-align:center; border-color:var(--primary); color:var(--primary); font-weight:bold; text-decoration:none; padding:10px;">📖 Ler Guia Fiscal</a>
+                            <p style="margin-bottom:10px; font-size:13px;">Gere recibos profissionais para seus
+                                contratantes.</p>
+                            <button class="btn-outline"
+                                style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;"
+                                onclick="abrirRecibo()">🧾 Abrir Gerador de Recibos</button>
+                            <button class="btn-outline"
+                                style="border-color:var(--primary); color:var(--primary); font-weight:bold; margin-bottom:10px;"
+                                onclick="navTo('contrato')">📜 Abrir Gerador de Contratos</button>
+                            <a href="../guia" target="_blank" class="btn-outline"
+                                style="display:block; text-align:center; border-color:var(--primary); color:var(--primary); font-weight:bold; text-decoration:none; padding:10px;">📖
+                                Ler Guia Fiscal</a>
                         </div>
                     </div>
 
                     <div class="help-card full-width-desktop" style="border: 2px solid #d4af37;">
-                        <div class="help-summary" style="background: rgba(212, 175, 55, 0.1); color: #d4af37;">📘 Guia Completo + Licença PRO</div>
+                        <div class="help-summary" style="background: rgba(212, 175, 55, 0.1); color: #d4af37;">📘 Guia
+                            Completo + Licença PRO</div>
                         <div class="help-content" style="display:block;">
-                            <p style="margin-bottom:10px; font-size:13px;"><strong>Acesso ao Guia Fiscal Completo</strong> com 10 capítulos avançados, casos práticos e rotina mensal.</p>
-                            <a href="../pro" target="_blank" class="btn-outline" style="display:block; text-align:center; border-color: #d4af37; color: #d4af37; font-weight:bold; text-decoration:none; padding:10px; margin-bottom:10px;">🚀 Comprar Licença PRO</a>
-                            <p style="font-size:12px; color:var(--text-light); margin-bottom:10px;">Já tem o código? Use o campo abaixo para desbloquear.</p>
+                            <p style="margin-bottom:10px; font-size:13px;"><strong>Acesso ao Guia Fiscal
+                                    Completo</strong> com 10 capítulos avançados, casos práticos e rotina mensal.</p>
+                            <a href="../pro" target="_blank" class="btn-outline"
+                                style="display:block; text-align:center; border-color: #d4af37; color: #d4af37; font-weight:bold; text-decoration:none; padding:10px; margin-bottom:10px;">🚀
+                                Comprar Licença PRO</a>
+                            <p style="font-size:12px; color:var(--text-light); margin-bottom:10px;">Já tem o código? Use
+                                o campo abaixo para desbloquear.</p>
                             <div style="display:flex; gap:8px;">
-                                <input type="text" id="proCode" placeholder="Código do Guia" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; font-size:12px;">
-                                <button class="btn" style="flex:0 0 auto; padding:8px 15px; font-size:12px;" onclick="ativarProCode()">🔓 Ativar</button>
+                                <input type="text" id="proCode" placeholder="Código do Guia"
+                                    style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; font-size:12px;">
+                                <button class="btn" style="flex:0 0 auto; padding:8px 15px; font-size:12px;"
+                                    onclick="ativarProCode()">🔓 Ativar</button>
                             </div>
                         </div>
                     </div>
@@ -803,11 +1471,17 @@
                         <div class="help-summary">📖 Manual do Sistema</div>
                         <div class="help-content">
                             <ol style="padding-left: 20px; line-height: 1.8; color: var(--text-main);">
-                                <li><strong>Lançamentos:</strong> Use os botões <strong>+ RECEITA</strong> e <strong>- DESPESA</strong> para registrar seus ganhos e gastos do mês.</li>
-                                <li><strong>Apuração:</strong> Vá na aba <strong>🦁 Carnê-Leão</strong> para ver o resultado. O sistema calculará se você está <em>Isento</em> ou se tem <em>Imposto a Pagar</em>.</li>
-                                <li><strong>Consultor IA:</strong> Use a aba <strong>🤖 Consultor IA</strong> para receber estratégias personalizadas para melhorar suas finanças.</li>
-                                <li><strong>Pagamento:</strong> Se houver imposto, use os links abaixo para gerar o DARF (Imposto de Renda) e a GPS (INSS).</li>
-                                <li><strong>Segurança:</strong> Seus dados ficam salvos apenas neste navegador. Faça <strong>Backup</strong> (abaixo) mensalmente para não perder nada.</li>
+                                <li><strong>Lançamentos:</strong> Use os botões <strong>+ RECEITA</strong> e <strong>-
+                                        DESPESA</strong> para registrar seus ganhos e gastos do mês.</li>
+                                <li><strong>Apuração:</strong> Vá na aba <strong>🦁 Carnê-Leão</strong> para ver o
+                                    resultado. O sistema calculará se você está <em>Isento</em> ou se tem <em>Imposto a
+                                        Pagar</em>.</li>
+                                <li><strong>Consultor IA:</strong> Use a aba <strong>🤖 Consultor IA</strong> para
+                                    receber estratégias personalizadas para melhorar suas finanças.</li>
+                                <li><strong>Pagamento:</strong> Se houver imposto, use os links abaixo para gerar o DARF
+                                    (Imposto de Renda) e a GPS (INSS).</li>
+                                <li><strong>Segurança:</strong> Seus dados ficam salvos apenas neste navegador. Faça
+                                    <strong>Backup</strong> (abaixo) mensalmente para não perder nada.</li>
                             </ol>
                         </div>
                     </div>
@@ -815,19 +1489,26 @@
                     <div class="help-card full-width-desktop">
                         <div class="help-summary">🔗 Links Oficiais (Receita Federal)</div>
                         <div class="help-content">
-                            <p style="font-size:13px; margin-bottom:15px;">Acesso rápido aos sistemas do governo para emissão de guias:</p>
-                            
+                            <p style="font-size:13px; margin-bottom:15px;">Acesso rápido aos sistemas do governo para
+                                emissão de guias:</p>
+
                             <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
-                                <a href="https://sicalc.receita.fazenda.gov.br/sicalc-web/principal.asp" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                <a href="https://sicalc.receita.fazenda.gov.br/sicalc-web/principal.asp" target="_blank"
+                                    class="btn-outline"
+                                    style="text-align:center; font-weight:bold; border-color: var(--primary);">
                                     📄 SicalcWeb (Gerar DARF)
                                 </a>
-                                <a href="https://meu.inss.gov.br/" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; border-color: var(--primary);">
+                                <a href="https://meu.inss.gov.br/" target="_blank" class="btn-outline"
+                                    style="text-align:center; font-weight:bold; border-color: var(--primary);">
                                     🛡️ Meu INSS (Gerar Guia)
                                 </a>
-                                <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold;">
+                                <a href="https://cav.receita.fazenda.gov.br/autenticacao/login" target="_blank"
+                                    class="btn-outline" style="text-align:center; font-weight:bold;">
                                     🦁 Carnê-Leão Web (e-CAC)
                                 </a>
-                                <a href="https://www.gov.br/governodigital/pt-br/assinatura-eletronica" target="_blank" class="btn-outline" style="text-align:center; font-weight:bold; grid-column: span 1; border-color: #00b894; color: #00b894;">
+                                <a href="https://www.gov.br/governodigital/pt-br/assinatura-eletronica" target="_blank"
+                                    class="btn-outline"
+                                    style="text-align:center; font-weight:bold; grid-column: span 1; border-color: #00b894; color: #00b894;">
                                     🖊️ Assinatura Eletrônica (GOV.BR)
                                 </a>
                             </div>
@@ -837,17 +1518,25 @@
                     <div class="help-card full-width-desktop">
                         <div class="help-summary">💾 Dados, Segurança e Backup</div>
                         <div class="help-content">
-                            <p style="margin-bottom:10px;">Este sistema é <strong>100% Privado</strong>. Seus dados financeiros ficam gravados <strong>apenas na memória do seu navegador</strong> (Local Storage) e nunca são enviados para a internet.</p>
-                            
-                            <div style="background:rgba(214, 48, 49, 0.1); border:1px solid rgba(214, 48, 49, 0.3); padding:10px; border-radius:8px; margin-bottom:15px; font-size:13px; color: var(--danger);">
-                                ⚠️ <strong>Atenção:</strong> Se você limpar o histórico/dados do navegador, desinstalar o app ou formatar o celular, <strong>VOCÊ PERDERÁ TUDO</strong> se não tiver um backup salvo.
+                            <p style="margin-bottom:10px;">Este sistema é <strong>100% Privado</strong>. Seus dados
+                                financeiros ficam gravados <strong>apenas na memória do seu navegador</strong> (Local
+                                Storage) e nunca são enviados para a internet.</p>
+
+                            <div
+                                style="background:rgba(214, 48, 49, 0.1); border:1px solid rgba(214, 48, 49, 0.3); padding:10px; border-radius:8px; margin-bottom:15px; font-size:13px; color: var(--danger);">
+                                ⚠️ <strong>Atenção:</strong> Se você limpar o histórico/dados do navegador, desinstalar
+                                o app ou formatar o celular, <strong>VOCÊ PERDERÁ TUDO</strong> se não tiver um backup
+                                salvo.
                             </div>
 
                             <p style="font-weight:bold; margin-bottom:5px;">Recomendação:</p>
-                            <p style="margin-bottom:10px;">Baixe o Backup mensalmente e salve em um local seguro (E-mail, Google Drive, etc).</p>
+                            <p style="margin-bottom:10px;">Baixe o Backup mensalmente e salve em um local seguro
+                                (E-mail, Google Drive, etc).</p>
 
                             <div style="display:flex; gap:10px; margin-top:10px;">
-                                <button class="btn-outline" style="flex:1; border-color:var(--primary); color:var(--primary); font-weight:bold;" onclick="baixarBackup()">⬇️ Baixar Backup</button>
+                                <button class="btn-outline"
+                                    style="flex:1; border-color:var(--primary); color:var(--primary); font-weight:bold;"
+                                    onclick="baixarBackup()">⬇️ Baixar Backup</button>
                                 <div class="file-upload-wrapper" style="flex:1; margin-top:5px;">
                                     <div class="btn-upload">📂 Restaurar Backup</div>
                                     <input type="file" onchange="restaurarBackup(this)">
@@ -895,7 +1584,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const refParam = urlParams.get('ref');
             const existingRef = localStorage.getItem('musico_referral');
-            
+
             // Regex para validar formato MP-XXXXXX (letras e números, 6 chars após MP-)
             const isValidFormat = refParam && /^MP-[A-Z0-9]{6}$/.test(refParam);
 
@@ -908,7 +1597,7 @@
                 } else {
                     console.log("Autoindicação bloqueada");
                 }
-                
+
                 // Limpar URL (UX)
                 const newUrl = window.location.pathname;
                 window.history.replaceState({}, document.title, newUrl);
@@ -917,9 +1606,9 @@
         initReferral();
 
         const TABLES = {
-            '2024': [ {ate:2259.20, aliq:0, ded:0}, {ate:2826.65, aliq:0.075, ded:169.44}, {ate:3751.05, aliq:0.15, ded:381.44}, {ate:4664.68, aliq:0.225, ded:662.77}, {ate:Infinity, aliq:0.275, ded:896.00} ],
-            '2025': [ {ate:2259.20, aliq:0, ded:0}, {ate:2826.65, aliq:0.075, ded:169.44}, {ate:3751.05, aliq:0.15, ded:381.44}, {ate:4664.68, aliq:0.225, ded:662.77}, {ate:Infinity, aliq:0.275, ded:896.00} ],
-            '2026': [ {ate:5000.00, aliq:0, ded:0}, {ate:7500.00, aliq:0.075, ded:375.00}, {ate:10000.00, aliq:0.15, ded:937.50}, {ate:Infinity, aliq:0.275, ded:2187.50} ]
+            '2024': [{ ate: 2259.20, aliq: 0, ded: 0 }, { ate: 2826.65, aliq: 0.075, ded: 169.44 }, { ate: 3751.05, aliq: 0.15, ded: 381.44 }, { ate: 4664.68, aliq: 0.225, ded: 662.77 }, { ate: Infinity, aliq: 0.275, ded: 896.00 }],
+            '2025': [{ ate: 2259.20, aliq: 0, ded: 0 }, { ate: 2826.65, aliq: 0.075, ded: 169.44 }, { ate: 3751.05, aliq: 0.15, ded: 381.44 }, { ate: 4664.68, aliq: 0.225, ded: 662.77 }, { ate: Infinity, aliq: 0.275, ded: 896.00 }],
+            '2026': [{ ate: 5000.00, aliq: 0, ded: 0 }, { ate: 7500.00, aliq: 0.075, ded: 375.00 }, { ate: 10000.00, aliq: 0.15, ded: 937.50 }, { ate: Infinity, aliq: 0.275, ded: 2187.50 }]
         };
 
         const CATS = {
@@ -934,9 +1623,9 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewId).classList.add('active');
-            
+
             const tabs = ['home', 'carne', 'consultor', 'historico', 'indique', 'ajuda'];
-            if(tabs.includes(viewId)) document.querySelectorAll('.nav-item')[tabs.indexOf(viewId)].classList.add('active');
+            if (tabs.includes(viewId)) document.querySelectorAll('.nav-item')[tabs.indexOf(viewId)].classList.add('active');
 
             const fab = document.getElementById('fabContainer');
             if (viewId === 'form' || viewId === 'ajuda' || viewId === 'recibo' || viewId === 'consultor' || viewId === 'indique') fab.style.display = 'none';
@@ -951,9 +1640,9 @@
         function renderIndique() {
             document.getElementById('referralLinkInput').value = `https://musicopro.app.br/?ref=${userRefCode}`;
             document.getElementById('refCountDisplay').textContent = referralCount;
-            
+
             if (proExtraDays > 0) {
-                document.getElementById('bonusStatusDisplay').textContent = `+${Math.round(proExtraDays/30)} meses`;
+                document.getElementById('bonusStatusDisplay').textContent = `+${Math.round(proExtraDays / 30)} meses`;
             } else {
                 document.getElementById('bonusStatusDisplay').textContent = "Nenhum";
             }
@@ -984,7 +1673,7 @@
             // Adicionar 6 meses (180 dias)
             proExtraDays += 180;
             localStorage.setItem('musico_pro_extra_days', proExtraDays);
-            
+
             // Incrementar contador de indicados
             referralCount++;
             localStorage.setItem('musico_ref_count', referralCount);
@@ -1006,12 +1695,12 @@
                 .then(() => toast('Link copiado! 📋'))
                 .catch(() => toast('Erro ao copiar', 'erro'));
         }
-        
+
         function abrirRecibo() {
-            if(!isPro) { 
-                toast('Este recurso faz parte da Licença PRO', 'erro'); 
+            if (!isPro) {
+                toast('Este recurso faz parte da Licença PRO', 'erro');
                 setTimeout(() => navTo('ajuda'), 1000);
-                return; 
+                return;
             }
             document.getElementById('recData').value = new Date().toISOString().split('T')[0];
             toggleReciboTipo();
@@ -1022,7 +1711,7 @@
             const tipo = document.querySelector('input[name="tipoRecibo"]:checked').value;
             const div = document.getElementById('div-impostos');
             const lbl = document.getElementById('lblValor');
-            
+
             if (tipo === 'rpa') {
                 div.classList.remove('hidden');
                 lbl.textContent = "Valor Bruto (R$)";
@@ -1039,15 +1728,15 @@
             const inss = parse(document.getElementById('recINSS').value);
             const irrf = parse(document.getElementById('recIRRF').value);
             const iss = parse(document.getElementById('recISS').value);
-            
+
             const liq = bruto - inss - irrf - iss;
-            document.getElementById('recLiquido').textContent = liq.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+            document.getElementById('recLiquido').textContent = liq.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
         function abrirForm(tipo, modoEdicao = false) {
             currentType = tipo;
             const btn = document.getElementById('btnSalvar');
-            
+
             if (modoEdicao) {
                 document.getElementById('formTitle').textContent = '📝 Editar Lançamento';
                 btn.textContent = 'ATUALIZAR';
@@ -1055,20 +1744,20 @@
                 idEdicao = null;
                 document.getElementById('formTitle').textContent = tipo === 'receita' ? '💰 Nova Receita' : '💸 Nova Despesa';
                 btn.textContent = 'SALVAR';
-                
+
                 document.getElementById('inpValor').value = '';
                 document.getElementById('inpDesc').value = '';
                 document.getElementById('inpData').value = new Date().toISOString().split('T')[0];
             }
 
             btn.style.background = tipo === 'receita' ? 'var(--success)' : 'var(--danger)';
-            
+
             const sel = document.getElementById('inpCat');
             sel.innerHTML = '';
             CATS[tipo].forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.text = c; sel.add(opt); });
 
             navTo('form');
-            if(!modoEdicao) document.getElementById('inpValor').focus();
+            if (!modoEdicao) document.getElementById('inpValor').focus();
         }
 
         // --- CONSULTOR IA ---
@@ -1089,7 +1778,7 @@
             const btn = document.getElementById('generateBtn');
             const btnText = document.getElementById('btnText');
             const btnLoading = document.getElementById('btnLoading');
-            
+
             btn.disabled = true;
             btnText.style.display = 'none';
             btnLoading.style.display = 'block';
@@ -1175,7 +1864,7 @@ IMPORTANTE:
                 const data = await response.json();
                 let responseText = data.content[0].text;
                 responseText = responseText.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-                
+
                 const results = JSON.parse(responseText);
                 displayResults(results);
 
@@ -1191,14 +1880,14 @@ IMPORTANTE:
 
         function displayResults(results) {
             document.getElementById('understandingText').textContent = results.analise;
-            
+
             const grid = document.getElementById('ideasGrid');
             grid.innerHTML = '';
 
             results.estrategias.forEach(estrategia => {
                 const card = document.createElement('div');
                 card.className = 'idea-card';
-                
+
                 const p = estrategia.prioridade.toLowerCase();
                 const e = estrategia.esforco.toLowerCase();
                 const i = estrategia.impacto.toLowerCase();
@@ -1212,7 +1901,7 @@ IMPORTANTE:
                         <span class="badge badge-impact-${i}">🎯 ${estrategia.impacto}</span>
                     </div>
                 `;
-                
+
                 grid.appendChild(card);
             });
 
@@ -1277,7 +1966,7 @@ IMPORTANTE:
             const valorRaw = document.getElementById('inpValor').value;
             if (!valorRaw) return toast('Digite um valor!', 'erro');
             const valor = parseFloat(valorRaw.replace(/\./g, '').replace(',', '.'));
-            
+
             const novoObj = {
                 id: idEdicao ? idEdicao : Date.now(),
                 tipo: currentType,
@@ -1308,10 +1997,10 @@ IMPORTANTE:
             if (!item) return;
 
             idEdicao = id;
-            
+
             abrirForm(item.tipo, true);
 
-            document.getElementById('inpValor').value = (item.valor / 100).toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            document.getElementById('inpValor').value = (item.valor / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
             document.getElementById('inpData').value = item.data;
             document.getElementById('inpCat').value = item.categoria;
             document.getElementById('inpDesc').value = item.desc;
@@ -1322,18 +2011,18 @@ IMPORTANTE:
                 const d = new Date(r.data + 'T00:00');
                 return d.getFullYear() === ano && d.getMonth() === mes;
             };
-            const rec = registros.filter(r => r.tipo === 'receita' && dFilter(r)).reduce((s,r) => s + r.valor, 0);
-            const des = registros.filter(r => r.tipo === 'despesa' && DEDUTIVEIS.includes(r.categoria) && dFilter(r)).reduce((s,r) => s + r.valor, 0);
-            const inss = registros.filter(r => r.tipo === 'despesa' && LEGAIS.includes(r.categoria) && dFilter(r)).reduce((s,r) => s + r.valor, 0);
+            const rec = registros.filter(r => r.tipo === 'receita' && dFilter(r)).reduce((s, r) => s + r.valor, 0);
+            const des = registros.filter(r => r.tipo === 'despesa' && DEDUTIVEIS.includes(r.categoria) && dFilter(r)).reduce((s, r) => s + r.valor, 0);
+            const inss = registros.filter(r => r.tipo === 'despesa' && LEGAIS.includes(r.categoria) && dFilter(r)).reduce((s, r) => s + r.valor, 0);
 
             let base = rec - des - inss;
-            if(base < 0) base = 0;
+            if (base < 0) base = 0;
 
             const baseReais = base / 100;
             const tab = TABLES[anoFiscal] || TABLES['2024'];
             const faixa = tab.find(f => baseReais <= f.ate);
             let imposto = (baseReais * faixa.aliq) - faixa.ded;
-            if(imposto < 0) imposto = 0;
+            if (imposto < 0) imposto = 0;
 
             return { rec, des, inss, base, imposto: imposto * 100, aliq: faixa.aliq };
         }
@@ -1342,7 +2031,7 @@ IMPORTANTE:
         function renderHome() {
             const hoje = new Date();
             const r = calcularMes(hoje.getFullYear(), hoje.getMonth());
-            
+
             const totalGasto = registros.filter(i => {
                 const d = new Date(i.data + 'T00:00');
                 return i.tipo === 'despesa' && d.getMonth() === hoje.getMonth();
@@ -1366,32 +2055,32 @@ IMPORTANTE:
             document.getElementById('dashDespesa').textContent = fmtMoeda(totalGasto);
             document.getElementById('dashSaldo').textContent = fmtMoeda(r.rec - totalGasto);
 
-            if(window.myChart) window.myChart.destroy();
+            if (window.myChart) window.myChart.destroy();
             const ctx = document.getElementById('chartHome').getContext('2d');
             window.myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Lucro', 'Custos', 'Imposto'],
-                    datasets: [{ data: [(r.rec-totalGasto-r.imposto)/100, totalGasto/100, r.imposto/100], backgroundColor: ['#00b894', '#d63031', '#fdcb6e'], borderWidth: 0 }]
+                    datasets: [{ data: [(r.rec - totalGasto - r.imposto) / 100, totalGasto / 100, r.imposto / 100], backgroundColor: ['#00b894', '#d63031', '#fdcb6e'], borderWidth: 0 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
             });
-            
+
             renderEvolutionChart();
         }
 
         function renderEvolutionChart() {
             const ctx = document.getElementById('chartEvolution');
             const lock = document.getElementById('chartEvolutionLock');
-            
-            if(!isPro) {
+
+            if (!isPro) {
                 ctx.style.filter = 'blur(5px)';
                 lock.classList.remove('hidden');
-                if(window.evoChart) window.evoChart.destroy();
+                if (window.evoChart) window.evoChart.destroy();
                 window.evoChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
                         datasets: [{ label: 'Receita', data: [100, 150, 120, 180, 200, 250], borderColor: '#00b894' }]
                     },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
@@ -1405,23 +2094,23 @@ IMPORTANTE:
             const labels = [];
             const dataRec = [];
             const dataDes = [];
-            
-            for(let i=5; i>=0; i--) {
+
+            for (let i = 5; i >= 0; i--) {
                 const d = new Date();
                 d.setMonth(d.getMonth() - i);
-                const mes = d.getMonth(); 
+                const mes = d.getMonth();
                 const ano = d.getFullYear();
-                
-                labels.push(`${mes+1}/${ano}`);
-                
-                const rec = registros.filter(r => r.tipo === 'receita' && new Date(r.data+'T00:00').getMonth() === mes && new Date(r.data+'T00:00').getFullYear() === ano).reduce((s,x) => s+x.valor, 0);
-                const des = registros.filter(r => r.tipo === 'despesa' && new Date(r.data+'T00:00').getMonth() === mes && new Date(r.data+'T00:00').getFullYear() === ano).reduce((s,x) => s+x.valor, 0);
-                
-                dataRec.push(rec/100);
-                dataDes.push(des/100);
+
+                labels.push(`${mes + 1}/${ano}`);
+
+                const rec = registros.filter(r => r.tipo === 'receita' && new Date(r.data + 'T00:00').getMonth() === mes && new Date(r.data + 'T00:00').getFullYear() === ano).reduce((s, x) => s + x.valor, 0);
+                const des = registros.filter(r => r.tipo === 'despesa' && new Date(r.data + 'T00:00').getMonth() === mes && new Date(r.data + 'T00:00').getFullYear() === ano).reduce((s, x) => s + x.valor, 0);
+
+                dataRec.push(rec / 100);
+                dataDes.push(des / 100);
             }
 
-            if(window.evoChart) window.evoChart.destroy();
+            if (window.evoChart) window.evoChart.destroy();
             window.evoChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -1468,20 +2157,20 @@ IMPORTANTE:
                     content.classList.remove('blur-overlay');
                     lock.classList.add('hidden');
                     valueDisplay.textContent = fmtMoeda(r.imposto);
-                    detailText.innerHTML = `Aliq. Efetiva: ${(r.aliq*100).toFixed(1)}%<br><strong>Gere o DARF Cód. 0190</strong>`;
+                    detailText.innerHTML = `Aliq. Efetiva: ${(r.aliq * 100).toFixed(1)}%<br><strong>Gere o DARF Cód. 0190</strong>`;
                 } else {
                     content.classList.add('blur-overlay');
                     lock.classList.remove('hidden');
                     valueDisplay.textContent = "R$ 9.999,99";
                     detailText.textContent = "Detalhes ocultos";
-                    
+
                     // COMANDO 5: Feedback inteligente
                     const lockMsg = lock.querySelector('p');
-                    if(lockMsg) {
+                    if (lockMsg) {
                         lockMsg.innerHTML = "💰 Imposto detectado neste mês<br>No PRO você vê o valor exato e evita erros no DARF.";
                     }
                     const lockBtn = lock.querySelector('button');
-                    if(lockBtn) {
+                    if (lockBtn) {
                         lockBtn.textContent = "Liberar Licença PRO"; // Toned down slightly from "ATIVAR PRO"
                     }
                 }
@@ -1492,10 +2181,10 @@ IMPORTANTE:
 
         function renderHistorico() {
             const lista = document.getElementById('listaLancamentos');
-            
+
             // Usage Counter (COMANDO 4)
             let usageCounter = document.getElementById('usageCounter');
-            if(!usageCounter) {
+            if (!usageCounter) {
                 const container = document.getElementById('view-historico');
                 usageCounter = document.createElement('div');
                 usageCounter.id = 'usageCounter';
@@ -1524,7 +2213,7 @@ IMPORTANTE:
             }
 
             let filtroMes = document.getElementById('filtroMes');
-            if(!filtroMes) {
+            if (!filtroMes) {
                 const container = document.getElementById('view-historico');
                 const divFiltro = document.createElement('div');
                 divFiltro.style.marginBottom = '15px';
@@ -1552,13 +2241,13 @@ IMPORTANTE:
             lista.innerHTML = '';
             const busca = document.getElementById('searchBox').value.toLowerCase();
             const mesSelecionado = filtroMes.value;
-            
+
             registros.filter(r => {
                 const matchTexto = r.desc.toLowerCase().includes(busca) || r.categoria.toLowerCase().includes(busca);
                 const matchMes = mesSelecionado === 'todos' || r.data.startsWith(mesSelecionado);
                 return matchTexto && matchMes;
             })
-                .sort((a,b) => new Date(b.data) - new Date(a.data))
+                .sort((a, b) => new Date(b.data) - new Date(a.data))
                 .forEach(r => {
                     const div = document.createElement('div');
                     div.className = 'transaction-item';
@@ -1581,71 +2270,71 @@ IMPORTANTE:
         }
 
         // --- UTILS ---
-        function removerItem(id) { if(confirm('Apagar?')) { registros = registros.filter(r => r.id !== id); localStorage.setItem('musico_db', JSON.stringify(registros)); renderHistorico(); toast('Apagado'); } }
-        function mascaraMoeda(i) { let v = i.value.replace(/\D/g,''); v = (v/100).toFixed(2) + ''; v = v.replace(".", ","); v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); i.value = v; }
-        function fmtMoeda(cents) { return (cents/100).toLocaleString('pt-BR', {style:'currency', currency:'BRL'}); }
+        function removerItem(id) { if (confirm('Apagar?')) { registros = registros.filter(r => r.id !== id); localStorage.setItem('musico_db', JSON.stringify(registros)); renderHistorico(); toast('Apagado'); } }
+        function mascaraMoeda(i) { let v = i.value.replace(/\D/g, ''); v = (v / 100).toFixed(2) + ''; v = v.replace(".", ","); v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); i.value = v; }
+        function fmtMoeda(cents) { return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
         function fmtData(d) { const p = d.split('-'); return `${p[2]}/${p[1]}`; }
         function toast(msg, tipo) { const t = document.getElementById('toast'); t.textContent = msg; t.style.background = tipo === 'erro' ? '#d63031' : '#333'; t.classList.remove('hidden'); setTimeout(() => t.classList.add('hidden'), 3000); }
         function toggleTheme() { document.body.classList.toggle('dark-mode'); localStorage.setItem('musico_dark', document.body.classList.contains('dark-mode')); }
-        
-        function mudarAno(novoAno) { 
-            anoFiscal = novoAno; 
-            localStorage.setItem('musico_ano', novoAno); 
+
+        function mudarAno(novoAno) {
+            anoFiscal = novoAno;
+            localStorage.setItem('musico_ano', novoAno);
             document.getElementById('anoLabel').textContent = novoAno;
             document.getElementById('anoSelect').value = novoAno;
-            navTo('home'); 
-            toast(`Ano Fiscal: ${novoAno}`); 
+            navTo('home');
+            toast(`Ano Fiscal: ${novoAno}`);
         }
-        
+
         function ativarPro() {
             const key = document.getElementById('licencaKey').value.toUpperCase();
             const match = key.match(/^CLM-(\d{4})-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
-            
-            if(match) {
-                isPro = true; 
+
+            if (match) {
+                isPro = true;
                 localStorage.setItem('musico_pro_status', 'true');
                 localStorage.setItem('musico_pro_date', new Date().toISOString());
-                
+
                 document.getElementById('badgePro').textContent = 'PRO';
                 document.getElementById('badgePro').className = 'license-badge pro';
-                
+
                 // --- REFERRAL CONVERSION LOGIC ---
                 const referral = localStorage.getItem('musico_referral');
                 const conversionDone = localStorage.getItem('referral_conversion_done');
-                
+
                 if (referral && referral !== userRefCode && !conversionDone) {
                     localStorage.setItem('referral_conversion_done', 'true');
                     localStorage.setItem('referral_conversion_at', Date.now());
-                    
-                    const dateStr = new Date().toISOString().slice(0,7).replace('-',''); // YYYYMM
-                    const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+
+                    const dateStr = new Date().toISOString().slice(0, 7).replace('-', ''); // YYYYMM
+                    const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
                     const token = `MPBONUS-${referral}-${dateStr}-${rand}`;
-                    
+
                     // Salvar token gerado para consulta local (opcional)
                     localStorage.setItem('generated_referral_bonus_token', token);
-                    
+
                     // Exibir Modal do Bonus
                     alert(`🎉 Indicação confirmada!\n\nVocê gerou um benefício para quem te indicou.\nEnvie este cupom para ele(a):\n\n${token}\n\n(Copie e envie agora)`);
                 }
-                
+
                 alert('🎉 Licença PRO ativada!\nAgora você tem controle completo da sua vida fiscal como músico.');
-                toast('PRO Ativado! 🚀'); 
+                toast('PRO Ativado! 🚀');
                 navTo('carne');
             } else { toast('Chave inválida', 'erro'); }
         }
 
-        function exportarCSV() { 
+        function exportarCSV() {
             if (!isPro) {
                 toast('Este recurso faz parte da Licença PRO', 'erro');
                 setTimeout(() => navTo('ajuda'), 1000);
                 return;
             }
-            let csv = "Data;Tipo;Categoria;Desc;Valor\n"; 
-            registros.forEach(r => csv += `${r.data};${r.tipo};${r.categoria};${r.desc};${r.valor}\n`); 
-            const a = document.createElement('a'); 
-            a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'})); 
-            a.download = 'musico.csv'; 
-            a.click(); 
+            let csv = "Data;Tipo;Categoria;Desc;Valor\n";
+            registros.forEach(r => csv += `${r.data};${r.tipo};${r.categoria};${r.desc};${r.valor}\n`);
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'musico.csv';
+            a.click();
         }
 
         function gerarPDF() {
@@ -1654,23 +2343,23 @@ IMPORTANTE:
                 setTimeout(() => navTo('ajuda'), 1000);
                 return;
             }
-            
+
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
+
             doc.setFontSize(18);
             doc.text("Relatório Financeiro - Músico Pro", 14, 22);
             doc.setFontSize(11);
             doc.text(`Gerado em: ${new Date().toLocaleDateString()}`, 14, 30);
 
-            const rec = registros.filter(r => r.tipo === 'receita').reduce((s,r) => s+r.valor, 0);
-            const des = registros.filter(r => r.tipo === 'despesa').reduce((s,r) => s+r.valor, 0);
-            
+            const rec = registros.filter(r => r.tipo === 'receita').reduce((s, r) => s + r.valor, 0);
+            const des = registros.filter(r => r.tipo === 'despesa').reduce((s, r) => s + r.valor, 0);
+
             doc.text(`Receita Total: ${fmtMoeda(rec)}`, 14, 40);
             doc.text(`Despesa Total: ${fmtMoeda(des)}`, 14, 46);
             doc.text(`Saldo Geral: ${fmtMoeda(rec - des)}`, 14, 52);
 
-            const tableData = registros.sort((a,b) => new Date(b.data) - new Date(a.data)).map(r => [
+            const tableData = registros.sort((a, b) => new Date(b.data) - new Date(a.data)).map(r => [
                 fmtData(r.data),
                 r.tipo.toUpperCase(),
                 r.categoria,
@@ -1692,8 +2381,8 @@ IMPORTANTE:
 
         function carregarTemplate(tipo) {
             const hoje = new Date();
-            const dataProxima = new Date(hoje.getTime() + 7*24*60*60*1000).toISOString().split('T')[0];
-            
+            const dataProxima = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
             const templates = {
                 casamento: {
                     evento: 'Casamento',
@@ -1728,10 +2417,10 @@ IMPORTANTE:
                     pagamento: 'Transferência Bancária'
                 }
             };
-            
+
             const t = templates[tipo];
             if (!t) return;
-            
+
             document.getElementById('conEvento').value = t.evento;
             document.getElementById('conData').value = dataProxima;
             document.getElementById('conInicio').value = t.inicio;
@@ -1740,7 +2429,7 @@ IMPORTANTE:
             document.getElementById('conValor').value = t.valor;
             document.getElementById('conPagamento').value = t.pagamento;
             document.getElementById('conDataPag').value = dataProxima;
-            
+
             toast(`Template "${t.evento}" carregado! Ajuste os dados conforme necessário.`);
         }
 
@@ -1760,11 +2449,11 @@ IMPORTANTE:
             const musico = document.getElementById('conMusico').value;
             const musicoDoc = document.getElementById('conMusicoDoc').value;
 
-            if(!nome || !evento || !valor || !musico) return toast('Preencha os campos obrigatórios', 'erro');
+            if (!nome || !evento || !valor || !musico) return toast('Preencha os campos obrigatórios', 'erro');
 
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
-            
+
             const dataFmt = data ? new Date(data + 'T00:00').toLocaleDateString('pt-BR') : 'DATA A DEFINIR';
             const dataPagFmt = dataPag ? new Date(dataPag + 'T00:00').toLocaleDateString('pt-BR') : 'DATA A DEFINIR';
             const hoje = new Date().toLocaleDateString('pt-BR');
@@ -1772,16 +2461,16 @@ IMPORTANTE:
             pdf.setFontSize(16);
             pdf.setFont(undefined, 'bold');
             pdf.text("CONTRATO DE PRESTAÇÃO DE SERVIÇOS MUSICAIS", 105, 20, null, null, "center");
-            
+
             pdf.setFontSize(11);
             pdf.setFont(undefined, 'normal');
-            
+
             let y = 35;
             const lh = 6; // line height
 
             // Identificação
             const textoIntro = `CONTRATANTE: ${nome}, inscrito(a) no CPF/CNPJ sob o nº ${doc}, residente/sediado em ${end}.\n\nCONTRATADO: ${musico}, inscrito(a) no CPF sob o nº ${musicoDoc}, doravante denominado MÚSICO/BANDA.\n\nAs partes acima identificadas têm, entre si, justo e acertado o presente Contrato de Prestação de Serviços Musicais, que se regerá pelas cláusulas seguintes:`;
-            
+
             const splitIntro = pdf.splitTextToSize(textoIntro, 170);
             pdf.text(splitIntro, 20, y);
             y += (splitIntro.length * lh) + 5;
@@ -1836,17 +2525,17 @@ IMPORTANTE:
 
             // Assinaturas
             if (y > 250) { pdf.addPage(); y = 40; }
-            
+
             pdf.text(`${cidade}, ${hoje}.`, 105, y, null, null, "center");
             y += 30;
-            
+
             pdf.line(30, y, 90, y);
             pdf.line(120, y, 180, y);
             y += 5;
             pdf.text("CONTRATANTE", 60, y, null, null, "center");
             pdf.text("CONTRATADO", 150, y, null, null, "center");
 
-            pdf.save('contrato_musico.pdf');
+            pdf.save(`Contrato - ${nome}.pdf`);
             toast('Contrato Gerado!');
         }
 
@@ -1859,7 +2548,7 @@ IMPORTANTE:
             const desc = document.getElementById('recDesc').value;
             const cidade = document.getElementById('recCidade').value;
 
-            if(!pagador || !valorRaw) return toast('Preencha os campos', 'erro');
+            if (!pagador || !valorRaw) return toast('Preencha os campos', 'erro');
 
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
@@ -1869,29 +2558,29 @@ IMPORTANTE:
             if (tipo === 'simples') {
                 pdf.setFontSize(22);
                 pdf.text("RECIBO DE PAGAMENTO", 105, 30, null, null, "center");
-                
+
                 pdf.setFontSize(16);
                 pdf.text(`Valor: R$ ${valorRaw}`, 105, 45, null, null, "center");
-                
+
                 pdf.setFontSize(12);
                 const texto = `Recebi(emos) de ${pagador}, inscrito(a) no CPF/CNPJ sob o nº ${docPagador}, a importância de R$ ${valorRaw}, referente a ${desc}.`;
-                
+
                 const splitText = pdf.splitTextToSize(texto, 170);
                 pdf.text(splitText, 20, 70);
-                
+
                 pdf.text(`Por ser verdade firmo(amos) o presente.`, 20, 100);
                 pdf.text(`${cidade}, ${dataFormatada}.`, 105, 120, null, null, "center");
-                
+
                 pdf.line(60, 150, 150, 150);
                 pdf.text("Assinatura", 105, 155, null, null, "center");
-                
+
                 try {
                     const qrText = `Recibo Simples\nDe: ${pagador}\nValor: R$ ${valorRaw}\nData: ${dataFormatada}\nAutenticidade: ${Date.now().toString(36)}`;
                     const qrContainer = document.createElement('div');
                     qrContainer.style.display = 'none';
                     document.body.appendChild(qrContainer);
                     new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
-                    
+
                     setTimeout(() => {
                         let qrImg = null;
                         const canvas = qrContainer.querySelector('canvas');
@@ -1902,20 +2591,20 @@ IMPORTANTE:
                             if (img) qrImg = img.src;
                         }
 
-                        if(qrImg) {
+                        if (qrImg) {
                             pdf.addImage(qrImg, 'PNG', 160, 20, 30, 30);
                             pdf.setFontSize(8);
                             pdf.text("Validação", 175, 52, null, null, "center");
                         }
                         document.body.removeChild(qrContainer);
-                        pdf.save('recibo_simples.pdf');
+                        pdf.save(`Recibo - ${pagador}.pdf`);
                     }, 100);
-                } catch(e) { console.log('Erro QR', e); pdf.save('recibo_simples.pdf'); }
+                } catch (e) { console.log('Erro QR', e); pdf.save(`Recibo - ${pagador}.pdf`); }
             } else {
                 const inssRaw = document.getElementById('recINSS').value || "0,00";
                 const irrfRaw = document.getElementById('recIRRF').value || "0,00";
                 const issRaw = document.getElementById('recISS').value || "0,00";
-                
+
                 const parseMoney = (v) => parseFloat(v.replace(/\./g, '').replace(',', '.') || 0);
                 const vBruto = parseMoney(valorRaw);
                 const vINSS = parseMoney(inssRaw);
@@ -1925,18 +2614,18 @@ IMPORTANTE:
 
                 pdf.setFontSize(18);
                 pdf.text("RECIBO DE PAGAMENTO AUTÔNOMO (RPA)", 105, 20, null, null, "center");
-                
+
                 pdf.setDrawColor(0);
                 pdf.setFillColor(240, 240, 240);
                 pdf.rect(20, 30, 170, 35, 'F');
-                
+
                 pdf.setFontSize(10);
                 pdf.text("VALOR BRUTO", 30, 40);
                 pdf.text(`R$ ${valorRaw}`, 30, 45);
-                
+
                 pdf.text("(-) INSS", 70, 40);
                 pdf.text(`R$ ${inssRaw}`, 70, 45);
-                
+
                 pdf.text("(-) IRRF", 110, 40);
                 pdf.text(`R$ ${irrfRaw}`, 110, 45);
 
@@ -1947,40 +2636,40 @@ IMPORTANTE:
                 pdf.setFont(undefined, 'bold');
                 pdf.text("VALOR LÍQUIDO", 105, 55, null, null, "center");
                 pdf.setFontSize(16);
-                pdf.text(`R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`, 105, 62, null, null, "center");
+                pdf.text(`R$ ${vLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`, 105, 62, null, null, "center");
                 pdf.setFont(undefined, 'normal');
 
                 pdf.setFontSize(11);
-                const texto = `Recebi(emos) de ${pagador}, inscrito(a) no CPF/CNPJ sob o nº ${docPagador}, a importância líquida de R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}, referente a serviços prestados de: ${desc}.`;
-                
+                const texto = `Recebi(emos) de ${pagador}, inscrito(a) no CPF/CNPJ sob o nº ${docPagador}, a importância líquida de R$ ${vLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}, referente a serviços prestados de: ${desc}.`;
+
                 const splitText = pdf.splitTextToSize(texto, 170);
                 pdf.text(splitText, 20, 80);
-                
+
                 let y = 110;
                 pdf.text("Discriminativo de Deduções:", 20, y);
                 y += 7;
-                if(vINSS > 0) { pdf.text(`• INSS Retido: R$ ${inssRaw}`, 25, y); y+=6; }
-                if(vIRRF > 0) { pdf.text(`• IRRF Retido: R$ ${irrfRaw}`, 25, y); y+=6; }
-                if(vISS > 0) { pdf.text(`• ISS Retido: R$ ${issRaw}`, 25, y); y+=6; }
-                
+                if (vINSS > 0) { pdf.text(`• INSS Retido: R$ ${inssRaw}`, 25, y); y += 6; }
+                if (vIRRF > 0) { pdf.text(`• IRRF Retido: R$ ${irrfRaw}`, 25, y); y += 6; }
+                if (vISS > 0) { pdf.text(`• ISS Retido: R$ ${issRaw}`, 25, y); y += 6; }
+
                 y += 15;
                 pdf.text(`${cidade}, ${dataFormatada}.`, 105, y, null, null, "center");
-                
+
                 y += 25;
                 pdf.line(60, y, 150, y);
                 pdf.text("Assinatura do Prestador", 105, y + 5, null, null, "center");
-                
+
                 pdf.setFontSize(9);
                 pdf.setTextColor(100);
                 pdf.text("Assinatura Eletrônica (Gov.br) disponível em: https://assinatura.gov.br", 105, y + 15, null, null, "center");
 
                 try {
-                    const qrText = `RPA\nDe: ${pagador}\nBruto: R$ ${valorRaw}\nLiquido: R$ ${vLiquido.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\nData: ${dataFormatada}\nAuth: ${Date.now().toString(36)}`;
+                    const qrText = `RPA\nDe: ${pagador}\nBruto: R$ ${valorRaw}\nLiquido: R$ ${vLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}\nData: ${dataFormatada}\nAuth: ${Date.now().toString(36)}`;
                     const qrContainer = document.createElement('div');
                     qrContainer.style.display = 'none';
                     document.body.appendChild(qrContainer);
                     new QRCode(qrContainer, { text: qrText, width: 100, height: 100 });
-                    
+
                     setTimeout(() => {
                         let qrImg = null;
                         const canvas = qrContainer.querySelector('canvas');
@@ -1991,51 +2680,51 @@ IMPORTANTE:
                             if (img) qrImg = img.src;
                         }
 
-                        if(qrImg) {
+                        if (qrImg) {
                             // Position adjusted to bottom-right to avoid overlapping with data box
                             pdf.addImage(qrImg, 'PNG', 170, 250, 20, 20);
                         }
                         document.body.removeChild(qrContainer);
-                        pdf.save('recibo_rpa.pdf');
+                        pdf.save(`RPA - ${pagador}.pdf`);
                     }, 100);
-                } catch(e) { console.log('Erro QR', e); pdf.save('recibo_rpa.pdf'); }
+                } catch (e) { console.log('Erro QR', e); pdf.save(`RPA - ${pagador}.pdf`); }
             }
             toast('Recibo Gerado!');
         }
 
-        function baixarBackup() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(registros)], {type:'application/json'})); a.download = 'backup_musico.json'; a.click(); }
-        function restaurarBackup(input) { 
-            const r = new FileReader(); 
-            r.onload = e => { 
+        function baixarBackup() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(registros)], { type: 'application/json' })); a.download = 'backup_musico.json'; a.click(); }
+        function restaurarBackup(input) {
+            const r = new FileReader();
+            r.onload = e => {
                 try {
-                    const dados = JSON.parse(e.target.result); 
-                    if(Array.isArray(dados)) {
-                        registros = dados; 
-                        localStorage.setItem('musico_db', JSON.stringify(registros)); 
-                        navTo('home'); 
-                        toast('Restaurado!'); 
+                    const dados = JSON.parse(e.target.result);
+                    if (Array.isArray(dados)) {
+                        registros = dados;
+                        localStorage.setItem('musico_db', JSON.stringify(registros));
+                        navTo('home');
+                        toast('Restaurado!');
                     } else {
                         toast('Arquivo inválido!', 'erro');
                     }
-                } catch(err) {
+                } catch (err) {
                     toast('Erro no arquivo', 'erro');
                 }
-            }; 
-            r.readAsText(input.files[0]); 
+            };
+            r.readAsText(input.files[0]);
         }
 
         // INIT
-        if(localStorage.getItem('musico_dark') === 'true') document.body.classList.add('dark-mode');
-        if(localStorage.getItem('musico_ano')) { mudarAno(localStorage.getItem('musico_ano')); }
-        
+        if (localStorage.getItem('musico_dark') === 'true') document.body.classList.add('dark-mode');
+        if (localStorage.getItem('musico_ano')) { mudarAno(localStorage.getItem('musico_ano')); }
+
         // Check PRO Expiration (1 Year + Bonus)
-        if(isPro) {
+        if (isPro) {
             if (proDate) {
                 const activation = new Date(proDate);
                 const now = new Date();
                 const diffTime = Math.abs(now - activation);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-                
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
                 // Base validity: 365 days + Extra Days from referrals
                 const validityDays = 365 + proExtraDays;
 
@@ -2051,20 +2740,20 @@ IMPORTANTE:
             }
         }
 
-        if(isPro) { 
-            document.getElementById('badgePro').textContent = 'PRO'; 
-            document.getElementById('badgePro').className = 'license-badge pro'; 
+        if (isPro) {
+            document.getElementById('badgePro').textContent = 'PRO';
+            document.getElementById('badgePro').className = 'license-badge pro';
         }
 
-        if(registros.length > 0 && !localStorage.getItem('musico_db_v2')) {
-            registros = registros.map(r => ({...r, valor: Math.round(r.valor * 100)}));
+        if (registros.length > 0 && !localStorage.getItem('musico_db_v2')) {
+            registros = registros.map(r => ({ ...r, valor: Math.round(r.valor * 100) }));
             localStorage.setItem('musico_db', JSON.stringify(registros));
             localStorage.setItem('musico_db_v2', 'true');
             toast('App atualizado (v2)');
         } else if (!localStorage.getItem('musico_db_v2')) {
             localStorage.setItem('musico_db_v2', 'true');
         }
-        
+
         navTo('home');
 
         // PWA Registration
@@ -2079,71 +2768,159 @@ IMPORTANTE:
     </script>
 
     <!-- Onboarding v1.1 SAFE (Inline) -->
-    <div id="onboarding-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg,#4e4376 0%,#2b5876 100%); z-index:9999; animation:fadeIn 0.3s ease-in; overflow-y:auto;">
+    <div id="onboarding-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:linear-gradient(135deg,#4e4376 0%,#2b5876 100%); z-index:9999; animation:fadeIn 0.3s ease-in; overflow-y:auto;">
         <div style="display:flex; align-items:center; justify-content:center; min-height:100%; padding:20px;">
-            <div style="background:white; border-radius:24px; padding:40px 24px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:slideUp 0.4s ease-out;">
+            <div
+                style="background:white; border-radius:24px; padding:40px 24px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:slideUp 0.4s ease-out;">
                 <!-- Etapa 1 -->
                 <div id="onboarding-step-1" style="display:flex; flex-direction:column;">
                     <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
-                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                        <div
+                            style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;">
+                        </div>
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
                     </div>
-                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">🎵</div>
-                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Bem-vindo ao Músico Pro</h1>
-                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Organize seus cachês, despesas e impostos em um só lugar. Simples e rápido.</p>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">
+                        🎵</div>
+                    <h1
+                        style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">
+                        Bem-vindo ao Músico Pro</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">
+                        Organize seus cachês, despesas e impostos em um só lugar. Simples e rápido.</p>
                     <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
-                        <button onclick="musicoproOnboarding.nextStep()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Continuar →</button>
-                        <button onclick="musicoproOnboarding.skipOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                        <button onclick="musicoproOnboarding.nextStep()"
+                            style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Continuar
+                            →</button>
+                        <button onclick="musicoproOnboarding.skipOnboarding()"
+                            style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular
+                            por agora</button>
                     </div>
-                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                    <div
+                        style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;">
+                        <strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua
+                        privacidade.</div>
                 </div>
                 <!-- Etapa 2 -->
                 <div id="onboarding-step-2" style="display:none; flex-direction:column;">
                     <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
-                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                        <div
+                            style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;">
+                        </div>
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
                     </div>
-                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">🔒</div>
-                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Seus dados ficam com você</h1>
-                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Nenhuma informação sai do seu dispositivo. Sem nuvem, sem servidor, sem rastreamento.</p>
-                    <div style="text-align:left; background:#f9f7f4; padding:16px; border-radius:12px; margin-bottom:24px;">
-                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Dados salvos apenas no seu celular</div>
-                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Você tem controle total</div>
-                        <div style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Funciona offline</div>
-                        <div style="font-size:14px; color:#0c2461; display:flex; align-items:center; gap:10px; font-weight:500;"><span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Sem publicidade</div>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">
+                        🔒</div>
+                    <h1
+                        style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">
+                        Seus dados ficam com você</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">
+                        Nenhuma informação sai do seu dispositivo. Sem nuvem, sem servidor, sem rastreamento.</p>
+                    <div
+                        style="text-align:left; background:#f9f7f4; padding:16px; border-radius:12px; margin-bottom:24px;">
+                        <div
+                            style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;">
+                            <span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Dados salvos apenas
+                            no seu celular</div>
+                        <div
+                            style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;">
+                            <span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Você tem controle
+                            total</div>
+                        <div
+                            style="font-size:14px; color:#0c2461; margin-bottom:10px; display:flex; align-items:center; gap:10px; font-weight:500;">
+                            <span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Funciona offline
+                        </div>
+                        <div
+                            style="font-size:14px; color:#0c2461; display:flex; align-items:center; gap:10px; font-weight:500;">
+                            <span style="color:#6ba587; font-weight:bold; font-size:18px;">✓</span> Sem publicidade
+                        </div>
                     </div>
                     <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
-                        <button onclick="musicoproOnboarding.nextStep()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Entendi, continuar →</button>
-                        <button onclick="musicoproOnboarding.skipOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                        <button onclick="musicoproOnboarding.nextStep()"
+                            style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Entendi,
+                            continuar →</button>
+                        <button onclick="musicoproOnboarding.skipOnboarding()"
+                            style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular
+                            por agora</button>
                     </div>
-                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                    <div
+                        style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;">
+                        <strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua
+                        privacidade.</div>
                 </div>
                 <!-- Etapa 3 -->
                 <div id="onboarding-step-3" style="display:none; flex-direction:column;">
                     <div style="display:flex; justify-content:center; gap:8px; margin-bottom:24px;">
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
                         <div style="width:8px; height:8px; border-radius:50%; background:#ddd;"></div>
-                        <div style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;"></div>
+                        <div
+                            style="width:8px; height:8px; border-radius:50%; background:#4e4376; width:24px; border-radius:4px;">
+                        </div>
                     </div>
-                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">📊</div>
-                    <h1 style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">Comece agora</h1>
-                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">Clique em <strong>"+ RECEITA"</strong> para adicionar seu primeiro ganho. Leva 10 segundos.</p>
+                    <div style="font-size:64px; margin-bottom:24px; text-align:center; animation:bounce 0.6s ease-out;">
+                        📊</div>
+                    <h1
+                        style="font-size:24px; font-weight:700; color:#0c2461; margin-bottom:12px; text-align:center; line-height:1.3;">
+                        Comece agora</h1>
+                    <p style="font-size:16px; color:#666; line-height:1.6; margin-bottom:24px; text-align:center;">
+                        Clique em <strong>"+ RECEITA"</strong> para adicionar seu primeiro ganho. Leva 10 segundos.</p>
                     <div style="display:flex; flex-direction:column; gap:12px; margin-top:auto;">
-                        <button onclick="musicoproOnboarding.completeOnboarding()" style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Adicionar receita agora</button>
-                        <button onclick="musicoproOnboarding.completeOnboarding()" style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular por agora</button>
+                        <button onclick="musicoproOnboarding.completeOnboarding()"
+                            style="background:#4e4376; color:white; border:none; padding:14px 24px; border-radius:12px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(78,67,118,0.2); transition:all 0.2s ease;">Adicionar
+                            receita agora</button>
+                        <button onclick="musicoproOnboarding.completeOnboarding()"
+                            style="background:transparent; color:#666; border:none; padding:12px 24px; font-size:14px; font-weight:500; cursor:pointer; transition:color 0.2s ease;">Pular
+                            por agora</button>
                     </div>
-                    <div style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;"><strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua privacidade.</div>
+                    <div
+                        style="font-size:11px; color:#999; margin-top:16px; padding-top:12px; border-top:1px solid #eee; text-align:center;">
+                        <strong style="color:#4e4376; font-weight:600;">v1.1 SAFE</strong> — Seus dados, sua
+                        privacidade.</div>
                 </div>
             </div>
         </div>
     </div>
 
     <style>
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes bounce { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 
     <script>
@@ -2151,14 +2928,14 @@ IMPORTANTE:
             currentStep: 1,
             ONBOARDING_KEY: 'musicopro_onboarding_completed_v1_1',
 
-            init: function() {
+            init: function () {
                 const completed = localStorage.getItem(this.ONBOARDING_KEY);
                 if (completed !== 'true') {
                     document.getElementById('onboarding-modal').style.display = 'flex';
                 }
             },
 
-            nextStep: function() {
+            nextStep: function () {
                 if (this.currentStep < 3) {
                     document.getElementById('onboarding-step-' + this.currentStep).style.display = 'none';
                     this.currentStep++;
@@ -2168,17 +2945,17 @@ IMPORTANTE:
                 }
             },
 
-            skipOnboarding: function() {
+            skipOnboarding: function () {
                 this.completeOnboarding();
             },
 
-            completeOnboarding: function() {
+            completeOnboarding: function () {
                 localStorage.setItem(this.ONBOARDING_KEY, 'true');
                 document.getElementById('onboarding-modal').style.display = 'none';
                 console.log('✓ Onboarding v1.1 SAFE completo!');
             },
 
-            reopen: function() {
+            reopen: function () {
                 localStorage.removeItem(this.ONBOARDING_KEY);
                 this.currentStep = 1;
                 this.init();
@@ -2186,9 +2963,10 @@ IMPORTANTE:
         };
 
         // Inicializar ao carregar
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             setTimeout(() => musicoproOnboarding.init(), 100);
         });
     </script>
 </body>
+
 </html>

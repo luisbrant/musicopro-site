@@ -23,7 +23,7 @@ export default function Privacidade() {
     },
     {
       title: "3. Dados Coletados",
-      content: "Coletamos os seguintes dados pessoais:\n\n• Email: Necessário para criar conta, enviar código de acesso e comunicações de suporte.\n• Código de Acesso: Utilizado para validar acesso ao conteúdo premium.\n• Dados de Navegação: Coletados via Google Analytics 4 (GA4) para análise de uso do site.\n• Cookies: Utilizados para melhorar sua experiência de navegação.\n\nTodos os dados são coletados com seu consentimento explícito."
+      content: "Coletamos os seguintes dados pessoais:\n\n• Email: Necessário para validar a compra, enviar os dados de acesso e comunicações de suporte.\n• Código de Acesso: Utilizado para validar acesso ao conteúdo premium.\n• Dados de Navegação: Coletados via Google Analytics 4 (GA4) para análise de uso do site.\n• Cookies: Utilizados para melhorar sua experiência de navegação.\n\nTodos os dados são coletados com seu consentimento explícito."
     },
     {
       title: "4. Finalidades do Tratamento",
@@ -100,9 +100,8 @@ export default function Privacidade() {
                 <h3 className="text-left font-semibold text-gray-800">{section.title}</h3>
                 <ChevronDown
                   size={20}
-                  className={`text-gray-600 flex-shrink-0 transition-transform ${
-                    expandedSections[index] ? 'rotate-180' : ''
-                  }`}
+                  className={`text-gray-600 flex-shrink-0 transition-transform ${expandedSections[index] ? 'rotate-180' : ''
+                    }`}
                 />
               </button>
 

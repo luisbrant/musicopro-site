@@ -10,7 +10,13 @@ import { AttributionBanner } from "./components/AttributionBanner";
 
 import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
-// Premium removido pois agora usamos GuidePro
+// Novas páginas institucionais
+import Funcionalidades from "./pages/Funcionalidades";
+import CarneLeao from "./pages/CarneLeao";
+import Planos from "./pages/Planos";
+import Sobre from "./pages/Sobre";
+import Contato from "./pages/Contato";
+
 import Obrigado from "./pages/Obrigado";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
@@ -34,10 +40,15 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
 
+        {/* Rotas Institucionais Novas */}
+        <Route path="/funcionalidades" component={Funcionalidades} />
+        <Route path="/carne-leao" component={CarneLeao} />
+        <Route path="/planos" component={Planos} />
+        <Route path="/sobre" component={Sobre} />
+        <Route path="/contato" component={Contato} />
+
         {/* ✅ App (página dedicada) */}
         <Route path="/app" component={AppOnly} />
-
-        {/* ✅ Instruções de instalação */}
         <Route path="/instalar" component={AppInstructions} />
 
         {/* ✅ Guia (conteúdo grátis + ativação do pacote) */}
@@ -48,7 +59,7 @@ function Router() {
 
         {/* ✅ CORREÇÃO: Rota de Vendas atualizada para /vendas */}
         <Route path="/vendas" component={Vendas} />
-        
+
         {/* Mantendo /pro redirecionando para vendas ou como alias, se desejar. 
             Mas para corrigir o 404 do print, a linha acima é a essencial. */}
         <Route path="/pro" component={Vendas} />
@@ -58,7 +69,7 @@ function Router() {
         <Route path="/privacidade" component={Privacidade} />
         <Route path="/termos" component={Termos} />
         <Route path="/pwa/*" component={PWA} />
-        
+
         {/* Rota 404 e Fallback */}
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
