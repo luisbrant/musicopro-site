@@ -62,12 +62,24 @@ export const useAnalytics = () => {
     }
   };
 
+  // Rastrear clique em "Usar Grátis Agora"
+  const trackFreeClick = () => {
+    if (window.gtag) {
+      window.gtag('event', 'usar_gratis_agora', {
+        event_category: 'engagement',
+        event_label: 'Usar Grátis Agora',
+        value: 1
+      });
+    }
+  };
+
   return {
     trackBuyClick,
     trackPremiumClick,
     trackDownloadAppClick,
     trackPageView,
-    trackAccessCodeSubmit
+    trackAccessCodeSubmit,
+    trackFreeClick
   };
 };
 
