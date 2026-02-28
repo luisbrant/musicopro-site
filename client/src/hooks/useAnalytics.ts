@@ -2,11 +2,12 @@
 
 export const useAnalytics = () => {
   // Rastrear clique em "Comprar Licença PRO"
-  const trackBuyClick = () => {
+  const trackBuyClick = (source: string = 'unknown') => {
     if (window.gtag) {
       window.gtag('event', 'comprar_licenca_pro', {
         event_category: 'engagement',
-        event_label: 'Comprar Licença PRO',
+        event_label: `Comprar Licença PRO - ${source}`,
+        source: source,
         value: 1
       });
       window.gtag('event', 'conversion', {
@@ -63,11 +64,24 @@ export const useAnalytics = () => {
   };
 
   // Rastrear clique em "Usar Grátis Agora"
-  const trackFreeClick = () => {
+  const trackFreeClick = (source: string = 'unknown') => {
     if (window.gtag) {
       window.gtag('event', 'usar_gratis_agora', {
         event_category: 'engagement',
-        event_label: 'Usar Grátis Agora',
+        event_label: `Usar Grátis Agora - ${source}`,
+        source: source,
+        value: 1
+      });
+    }
+  };
+
+  // Rastrear a variante de teste que foi renderizada para o usuário
+  const trackVariantExposed = (variant: string) => {
+    if (window.gtag) {
+      window.gtag('event', 'variant_exposed', {
+        event_category: 'ab_test',
+        event_label: `Variante: ${variant}`,
+        variant_name: variant,
         value: 1
       });
     }
@@ -79,7 +93,8 @@ export const useAnalytics = () => {
     trackDownloadAppClick,
     trackPageView,
     trackAccessCodeSubmit,
-    trackFreeClick
+    trackFreeClick,
+    trackVariantExposed
   };
 };
 
