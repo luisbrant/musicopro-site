@@ -68,17 +68,17 @@ export default function Home() {
             {headlineVariant === 'A' ? (
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
                 Organize impostos de músico<br />
-                <span className="text-[#d4af37] underline decoration-[#0c2461]">sem planilhas.</span>
+                <span className="text-[#d4af37]">sem planilhas.</span>
               </h1>
             ) : (
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
                 Saiba quanto imposto pagar<br />
-                <span className="text-[#d4af37] underline decoration-[#0c2461]">mês a mês (sem planilha).</span>
+                mês a mês <span className="text-[#d4af37]">(sem planilha).</span>
               </h1>
             )}
 
             <p className="text-xl opacity-80 max-w-2xl mx-auto font-medium leading-relaxed">
-              Controle receitas, registre despesas, apure seu Carnê-Leão e saiba quanto de imposto pagar mês a mês.
+              Controle receitas, registre despesas, apure seu Carnê-Leão e gere documentos profissionais em um único sistema.
             </p>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-lg font-bold text-red-700/80 mb-8 pt-4">
