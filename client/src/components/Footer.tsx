@@ -56,9 +56,8 @@ export default function Footer() {
         {/* Disclaimer */}
         <div className="bg-white/10 rounded-lg p-4 mb-8 text-sm">
           <p className="opacity-90 leading-relaxed">
-            <strong>Aviso Importante:</strong> O Músico Pro é um material educativo e informativo.
-            Não substitui a orientação de um contador. As informações seguem a legislação vigente no momento da publicação.
-            Sempre consulte um profissional especializado antes de tomar decisões fiscais.
+            <strong>Aviso Legal de Compliance:</strong> O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
+            Para orientação formal, defesa em malha fina e declarações oficiais perante a Receita Federal, consulte um contador registrado (CRC). As ferramentas deste site visam organização financeira não substituem responsabilidades legais.
           </p>
         </div>
 

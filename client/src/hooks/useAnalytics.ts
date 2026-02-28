@@ -87,6 +87,18 @@ export const useAnalytics = () => {
     }
   };
 
+  // Rastrear clique na abertura de uma FAQ
+  const trackFaqOpen = (question: string) => {
+    if (window.gtag) {
+      window.gtag('event', 'faq_open', {
+        event_category: 'engagement',
+        event_label: `FAQ: ${question}`,
+        question: question,
+        value: 1
+      });
+    }
+  };
+
   return {
     trackBuyClick,
     trackPremiumClick,
@@ -94,7 +106,8 @@ export const useAnalytics = () => {
     trackPageView,
     trackAccessCodeSubmit,
     trackFreeClick,
-    trackVariantExposed
+    trackVariantExposed,
+    trackFaqOpen
   };
 };
 
