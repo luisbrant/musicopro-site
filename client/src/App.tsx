@@ -10,13 +10,6 @@ import { AttributionBanner } from "./components/AttributionBanner";
 
 import Vendas from "./pages/Vendas";
 import Demo from "./pages/Demo";
-// Novas páginas institucionais
-import Funcionalidades from "./pages/Funcionalidades";
-import CarneLeao from "./pages/CarneLeao";
-import Planos from "./pages/Planos";
-import Sobre from "./pages/Sobre";
-import Contato from "./pages/Contato";
-
 import Obrigado from "./pages/Obrigado";
 import Privacidade from "./pages/Privacidade";
 import Termos from "./pages/Termos";
@@ -39,13 +32,6 @@ function Router() {
 
       <Switch>
         <Route path="/" component={Home} />
-
-        {/* Rotas Institucionais Novas */}
-        <Route path="/funcionalidades" component={Funcionalidades} />
-        <Route path="/carne-leao" component={CarneLeao} />
-        <Route path="/planos" component={Planos} />
-        <Route path="/sobre" component={Sobre} />
-        <Route path="/contato" component={Contato} />
 
         {/* ✅ App (página dedicada) */}
         <Route path="/app" component={AppOnly} />

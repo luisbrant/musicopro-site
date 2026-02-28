@@ -23,11 +23,9 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-base font-bold">Navegação</h4>
             <div className="space-y-2 text-sm flex flex-col">
-              <Link href="/funcionalidades" className="opacity-80 hover:text-[#d4af37] transition">Funcionalidades</Link>
-              <Link href="/carne-leao" className="opacity-80 hover:text-[#d4af37] transition">Carnê-Leão</Link>
-              <Link href="/planos" className="opacity-80 hover:text-[#d4af37] transition">Planos</Link>
-              <Link href="/sobre" className="opacity-80 hover:text-[#d4af37] transition">Sobre</Link>
-              <Link href="/contato" className="opacity-80 hover:text-[#d4af37] transition">Contato</Link>
+              <a href="/#como-funciona" className="opacity-80 hover:text-[#d4af37] transition">Como Funciona</a>
+              <a href="/#planos" className="opacity-80 hover:text-[#d4af37] transition">Planos e Preços</a>
+              <a href="/#faq" className="opacity-80 hover:text-[#d4af37] transition">Perguntas Frequentes</a>
             </div>
           </div>
 
@@ -35,7 +33,6 @@ export default function Footer() {
           <div className="space-y-3">
             <h4 className="text-base font-bold">Suporte</h4>
             <div className="space-y-2 text-sm flex flex-col">
-              <Link href="/contato" className="opacity-80 hover:text-[#d4af37] transition">Fale Conosco</Link>
               <a
                 href="mailto:suporte@musicopro.app.br"
                 className="flex items-center gap-2 text-[#d4af37] hover:text-[#e5c158] transition font-semibold"
