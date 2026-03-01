@@ -44,12 +44,12 @@ export default function Home() {
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-[#E8E3DC] shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer group"
             onClick={() => window.scrollTo(0, 0)}
           >
-            <Music className="w-6 h-6 text-[#d4af37]" aria-hidden="true" />
+            <Music className="w-8 h-8 text-[#d4af37] group-hover:scale-105 transition-transform" aria-hidden="true" />
             <span
-              className="font-bold text-lg leading-none tracking-tight"
+              className="font-bold text-2xl leading-none tracking-tight text-[#0c2461]"
               style={{ fontFamily: 'Lexend, sans-serif' }}
             >
               MúsicoPro
@@ -59,7 +59,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => { trackBuyClick('header'); document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' }) }}
-              className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-4 py-2 rounded-lg transition shadow flex items-center gap-2 text-sm"
+              className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-base md:text-lg tracking-wide hover:-translate-y-0.5"
             >
               Seja PRO
             </button>
