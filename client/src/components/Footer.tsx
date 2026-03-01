@@ -5,24 +5,24 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0c2461] text-white py-12 md:py-16">
-      <div className="container mx-auto px-4">
+    <footer className="bg-[#0c2461] text-white pt-20 pb-10 border-t border-[#1a3a7a]">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-16">
           {/* Branding */}
-          <div className="space-y-3 col-span-2 md:col-span-1">
-            <h3 className="text-lg font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              Músico Pro
+          <div className="space-y-4 md:col-span-5">
+            <h3 className="text-2xl font-bold text-[#d4af37]" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              MúsicoPro
             </h3>
-            <p className="text-sm opacity-80">
-              A melhor ferramenta para organizar sua vida fiscal como músico autônomo.
+            <p className="text-base text-gray-300 max-w-sm leading-relaxed">
+              A ferramenta executiva definitiva para você organizar sua carreira musical e abandonar o improviso fiscal.
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="space-y-3">
-            <h4 className="text-base font-bold">Navegação</h4>
-            <div className="space-y-2 text-sm flex flex-col">
+          <div className="space-y-4 md:col-span-2">
+            <h4 className="text-lg font-bold text-white tracking-wide">Navegação</h4>
+            <div className="space-y-3 text-base flex flex-col">
               <a href="/#como-funciona" className="opacity-80 hover:text-[#d4af37] transition">Como Funciona</a>
               <a href="/#planos" className="opacity-80 hover:text-[#d4af37] transition">Planos e Preços</a>
               <a href="https://app.musicopro.app.br" className="opacity-80 hover:text-[#d4af37] transition">Entrar no App</a>
@@ -30,9 +30,9 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div className="space-y-3">
-            <h4 className="text-base font-bold">Suporte</h4>
-            <div className="space-y-2 text-sm flex flex-col">
+          <div className="space-y-4 md:col-span-3">
+            <h4 className="text-lg font-bold text-white tracking-wide">Suporte</h4>
+            <div className="space-y-3 text-base flex flex-col">
               <a
                 href="mailto:suporte@musicopro.app.br"
                 className="flex items-center gap-2 text-[#d4af37] hover:text-[#e5c158] transition font-semibold"
@@ -44,9 +44,9 @@ export default function Footer() {
           </div>
 
           {/* Legal */}
-          <div className="space-y-3">
-            <h4 className="text-base font-bold">Legal</h4>
-            <div className="space-y-2 text-sm flex flex-col">
+          <div className="space-y-4 md:col-span-2">
+            <h4 className="text-lg font-bold text-white tracking-wide">Legal</h4>
+            <div className="space-y-3 text-base flex flex-col">
               <Link href="/termos" className="opacity-80 hover:text-[#d4af37] transition">Termos de Uso</Link>
               <Link href="/privacidade" className="opacity-80 hover:text-[#d4af37] transition">Política de Privacidade</Link>
             </div>
@@ -54,17 +54,17 @@ export default function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <div className="pt-8 mb-8 text-xs text-center opacity-60">
-          <p className="max-w-4xl mx-auto leading-relaxed">
-            <strong>Aviso Legal:</strong> O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
-            Para orientação formal, defesa em malha fina e declarações oficiais perante a Receita Federal, consulte um contador registrado (CRC). As ferramentas deste site visam organização financeira e não substituem responsabilidades legais.
+        <div className="pt-8 mb-8 text-xs text-center text-gray-400 border-t border-white/10">
+          <p className="max-w-5xl mx-auto leading-relaxed">
+            <strong>Aviso Legal:</strong> O MúsicoPro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
+            Para orientação formal, defesa em malha fina e declarações oficiais perante a Receita Federal, consulte um contador registrado (CRC). As ferramentas deste site visam organização financeira e não substituem suas obrigações legais em momento algum.
           </p>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/20 pt-6 text-center text-sm opacity-75">
-          <p className="flex items-center justify-center gap-1">
-            © {currentYear} Músico Pro. Feito com <Heart size={14} className="text-[#d4af37]" /> para músicos.
+        <div className="border-t border-white/10 pt-8 pb-4 text-center text-sm text-gray-400">
+          <p className="flex items-center justify-center gap-1.5 font-medium">
+            © {currentYear} MúsicoPro. Desenvolvido com <Heart size={14} className="text-[#d4af37] fill-[#d4af37]" /> para músicos.
           </p>
         </div>
       </div>
