@@ -79,7 +79,7 @@ export default function Home() {
         <section className="bg-white pt-20 pb-24 px-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[120px] -z-10 translate-x-24 -translate-y-24" />
           <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
               Você já é profissional no palco.<br />
               <span className="text-[#d4af37]">Agora organize a carreira como um.</span>
             </h1>
@@ -115,13 +115,11 @@ export default function Home() {
               <div className="relative bg-gray-50 flex flex-col items-center justify-center p-0">
                 <img
                   src="/images/dashboard-print.png"
-                  alt="Dashboard Músico Pro"
-                  className="w-full h-auto block hidden"
-                  onLoad={(e) => {
-                    e.currentTarget.classList.remove('hidden')
-                    const fallback = e.currentTarget.nextElementSibling
-                    if (fallback) fallback.classList.add('hidden')
-                  }}
+                  alt="Dashboard do MúsicoPro mostrando receita total, despesas e imposto estimado"
+                  width={800}
+                  height={500}
+                  className="w-full rounded-2xl shadow-xl"
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     const fallback = e.currentTarget.nextElementSibling;
@@ -233,7 +231,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-4 gap-6 relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 relative">
               <div className="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0" />
               {[
                 { n: '1', title: 'Registre seus recebimentos', text: 'Lance os pagamentos recebidos de forma rápida e segura.' },
@@ -397,7 +395,7 @@ export default function Home() {
 
         {/* 8. SEGURANÇA E GARANTIA */}
         <section className="py-20 px-4 bg-white">
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+          <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {[
               { icon: <Lock size={32} />, title: '100% privado — seus dados nunca saem do seu dispositivo' },
               { icon: <Download size={32} />, title: 'Exporta tudo para o Carnê-Leão Web' },
@@ -405,7 +403,7 @@ export default function Home() {
               { icon: <Smartphone size={32} />, title: 'Funciona no celular e no computador' },
               { icon: <Power size={32} />, title: 'Cancele quando quiser, sem burocracia' }
             ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center">
+              <div key={idx} className={`flex flex-col items-center ${idx === 4 ? 'col-span-2 sm:col-span-1 md:col-span-1' : ''}`}>
                 <div className="text-[#0c2461] mb-4 bg-slate-50 p-5 rounded-2xl border border-gray-200">
                   {item.icon}
                 </div>
