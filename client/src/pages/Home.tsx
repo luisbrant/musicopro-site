@@ -35,7 +35,7 @@ export default function Home() {
 
 
   // Subir link do produto real da Hotmart
-  const HOTMART_URL = 'https://pay.hotmart.com/SEU_PRODUTO_ID?checkoutMode=10'
+  const HOTMART_URL = 'https://pay.hotmart.com/J104095456E?bid=1772371738966'
 
   return (
     <div className="min-h-screen bg-[#fafafa] font-sans text-[#0c2461] selection:bg-[#d4af37] selection:text-[#0c2461]">
