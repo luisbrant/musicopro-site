@@ -74,7 +74,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main>
+      <main className="pb-24 md:pb-16">
         {/* 1. HERO SECTION */}
         <section className="bg-white pt-20 pb-24 px-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[120px] -z-10 translate-x-24 -translate-y-24" />
@@ -449,11 +449,13 @@ export default function Home() {
 
       </main>
 
-      <Footer />
+      <div className="pb-24 md:pb-0">
+        <Footer />
+      </div>
 
       {/* MOBILE STICKY BOTTOM BAR */}
       <div
-        className={`fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 md:hidden transition-transform duration-300 ${showBottomBar ? 'translate-y-0' : 'translate-y-full'
+        className={`fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-40 md:hidden transition-transform duration-300 ${showBottomBar ? 'translate-y-0' : 'translate-y-full'
           }`}
         aria-hidden={!showBottomBar}
       >
