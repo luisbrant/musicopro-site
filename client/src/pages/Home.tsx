@@ -77,7 +77,7 @@ export default function Home() {
               <span className="text-[#d4af37]">Agora organize a carreira como um.</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">
-              Sistema completo para controle de receitas, despesas, Carnê-Leão, recibos e relatórios — feito para músicos autônomos.
+              Sistema completo para controle de receitas, despesas, Carnê-Leão, recibos e relatórios — feito para quem vive de música.
             </p>
             <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
@@ -142,26 +142,26 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mb-16">
               <div className="space-y-6 text-xl text-gray-700 font-medium">
                 <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>Pagamentos espalhados</p>
+                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
+                  <p>"Recebi três cachês esse mês. Quanto vou pagar de imposto? Não faço ideia."</p>
                 </div>
                 <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>Recibos improvisados</p>
+                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
+                  <p>"Fui chamar um contador. Ele nunca ouviu falar em cachê de show. Desisti."</p>
                 </div>
                 <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>Insegurança sobre qual imposto pagar</p>
+                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
+                  <p>"Sei que algumas despesas são dedutíveis. Só não sei quais."</p>
                 </div>
               </div>
               <div className="space-y-6 text-xl text-gray-700 font-medium md:mt-10">
                 <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>Medo de errar na declaração</p>
+                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
+                  <p>"Tenho medo de errar e ser chamado pela Receita."</p>
                 </div>
                 <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>Dependência excessiva de contador</p>
+                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
+                  <p>"Cada hora que gasto com isso é uma hora a menos no instrumento."</p>
                 </div>
               </div>
             </div>
@@ -403,7 +403,7 @@ export default function Home() {
               A gente dedicou os nossos para entender a vida fiscal de quem vive exclusivamente de música.
             </p>
             <p className="text-xl text-gray-500 font-medium max-w-2xl mx-auto">
-              O Músico Pro não é uma "planilha mais limpa". É a inteligência executiva que você precisava — sem a necessidade burocrática de virar um contador.
+              O Músico Pro não é uma "planilha mais limpa". É a expertise que você precisava — sem precisar virar contador.
             </p>
           </div>
         </section>
