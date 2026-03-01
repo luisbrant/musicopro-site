@@ -126,7 +126,7 @@ export default function Home() {
                     if (fallback) fallback.classList.remove('hidden');
                   }}
                 />
-                <div className="text-center p-10">
+                <div className="hidden text-center p-10 w-full min-h-[300px] flex-col justify-center items-center">
                   <BarChart2 size={64} className="text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-400 font-semibold text-xl">Print real do dashboard</p>
                   <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.png</p>
