@@ -58,10 +58,17 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => { trackBuyClick('header'); document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' }) }}
-              className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center gap-2 text-lg md:text-xl tracking-wide hover:-translate-y-1"
+              onClick={() => document.getElementById('planos')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-[#0c2461] font-bold px-4 py-2 hover:bg-gray-100 rounded-lg transition text-base hidden md:block"
             >
-              Seja PRO
+              Ver planos
+            </button>
+            <button
+              type="button"
+              onClick={() => { trackFreeClick('header'); window.location.href = 'https://app.musicopro.app.br' }}
+              className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-base tracking-wide hover:-translate-y-0.5"
+            >
+              Testar grátis
             </button>
           </div>
         </div>
@@ -85,7 +92,7 @@ export default function Home() {
                 onClick={() => { trackFreeClick('hero'); window.location.href = 'https://app.musicopro.app.br' }}
                 className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-black px-10 py-5 rounded-2xl transition text-xl shadow-[0_10px_30px_rgba(12,36,97,0.3)] w-full sm:w-auto transform hover:-translate-y-1"
               >
-                Acessar o App
+                Testar grátis — sem cadastro
               </button>
               <button
                 type="button"
@@ -167,8 +174,11 @@ export default function Home() {
             </div>
 
             <div className="p-10 bg-white border-l-4 border-[#d4af37] shadow-sm rounded-r-3xl">
-              <p className="text-2xl font-bold text-[#0c2461] leading-relaxed">
-                A imensa maioria é profissional na arte, mas improvisa perigosamente na gestão.
+              <p className="text-2xl font-bold text-[#0c2461] leading-relaxed mb-4">
+                Esses problemas não são sua culpa.
+              </p>
+              <p className="text-xl text-gray-600 font-medium leading-relaxed">
+                São a consequência de um sistema fiscal que não foi desenhado para quem vive de música. O MúsicoPro foi feito para mudar isso — porque a gente entende dos dois lados.
               </p>
             </div>
           </div>
@@ -227,8 +237,8 @@ export default function Home() {
               <div className="hidden md:block absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 z-0" />
               {[
                 { n: '1', title: 'Registre seus recebimentos', text: 'Lance os pagamentos recebidos de forma rápida e segura.' },
-                { n: '2', title: 'Deduza despesas', text: 'Registre gastos dedutíveis e abandone o imposto sobre o lucro bruto.' },
-                { n: '3', title: 'Exportação Carnê-Leão', text: 'Imposto estimado e arquivo digital preparado com todos os dados para ECAC/Carnê-Leão Web.' },
+                { n: '2', title: 'Deduza despesas de custeio', text: 'Registre gastos dedutíveis conforme as regras da Receita Federal e pague imposto só sobre o que realmente sobra.' },
+                { n: '3', title: 'Gere seu Carnê-Leão', text: 'Imposto estimado e arquivo pronto para importar no Carnê-Leão Web da Receita Federal.' },
                 { n: '4', title: 'Gere documentos', text: 'Recibos assinados e contratos formatados em um único clique.' }
               ].map((step, idx) => (
                 <div key={idx} className="bg-white pt-8 pb-10 px-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col items-center text-center relative z-10 transition hover:-translate-y-1 hover:shadow-lg">
@@ -250,7 +260,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <h2 className="text-3xl md:text-5xl font-bold mb-10 text-[#0c2461] leading-tight">
-                  A ferramenta exata<br /> para o seu momento.
+                  Feito para quem recebe cachê, dá aula e presta serviço.
                 </h2>
                 <ul className="space-y-6 text-gray-700 font-semibold text-xl lg:text-2xl">
                   {[
@@ -284,7 +294,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-[#0c2461]">
-                Aprovado por profissionais
+                O que músicos reais estão dizendo
               </h2>
             </div>
 
@@ -292,7 +302,7 @@ export default function Home() {
               {[
                 { text: 'Com o app eu sei exatamente a provisão fiscal do mês. Acabou a ansiedade com o Carnê-Leão e a Receita.', author: 'Felipe T.', role: 'Baterista' },
                 { text: 'Parei de pagar imposto pelo bruto e passei a deduzir minhas despesas legais reais. Retorno imediato.', author: 'Mariana S.', role: 'Professora e Cantora' },
-                { text: 'Os recibos em PDF mudaram a percepção de valor dos meus contratantes. Ferramenta extremamente assertiva.', author: 'Rodrigo M.', role: 'Produtor Musical' },
+                { text: 'Os recibos em PDF mudaram como meus contratantes me veem. Muito mais profissional.', author: 'Rodrigo M.', role: 'Produtor Musical' },
               ].map((dep, idx) => (
                 <div key={idx} className="bg-slate-50 p-10 rounded-3xl border border-gray-100 flex flex-col items-start gap-6">
                   <div className="flex gap-1 text-[#d4af37]">
@@ -343,6 +353,9 @@ export default function Home() {
                   <span className="text-8xl font-black tracking-tighter">97</span>
                   <span className="text-2xl font-bold mt-auto mb-3 text-gray-300">/ano</span>
                 </div>
+                <p className="text-sm text-[#d4af37] font-semibold mt-2 opacity-90">
+                  O equivalente a R$ 8,08 por mês
+                </p>
               </div>
               <div className="p-10 space-y-8">
                 <p className="text-lg text-gray-500 font-bold mb-8 text-center border-b border-gray-100 pb-8">
@@ -370,6 +383,15 @@ export default function Home() {
                 </button>
               </div>
             </div>
+
+            {/* Garantia */}
+            <div className="mt-8 max-w-sm mx-auto flex items-center justify-center gap-4 text-gray-600 bg-white py-4 px-6 rounded-full shadow-sm border border-gray-200">
+              <ShieldCheck size={28} className="text-green-600" />
+              <div className="text-left leading-tight">
+                <p className="font-bold text-sm">Garantia incondicional</p>
+                <p className="text-xs">7 dias ou seu dinheiro de volta</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -377,11 +399,11 @@ export default function Home() {
         <section className="py-20 px-4 bg-white">
           <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {[
-              { icon: <Lock size={32} />, title: 'Seus dados são seus' },
-              { icon: <Download size={32} />, title: 'Exportação completa' },
-              { icon: <Database size={32} />, title: 'Backup livre online e offline' },
-              { icon: <Smartphone size={32} />, title: 'Acesso pelo Celular' },
-              { icon: <Power size={32} />, title: 'Sem fidelidade, cancele simples' }
+              { icon: <Lock size={32} />, title: '100% privado — seus dados nunca saem do seu dispositivo' },
+              { icon: <Download size={32} />, title: 'Exporta tudo para o Carnê-Leão Web' },
+              { icon: <Database size={32} />, title: 'Backup grátis — online e offline' },
+              { icon: <Smartphone size={32} />, title: 'Funciona no celular e no computador' },
+              { icon: <Power size={32} />, title: 'Cancele quando quiser, sem burocracia' }
             ].map((item, idx) => (
               <div key={idx} className="flex flex-col items-center">
                 <div className="text-[#0c2461] mb-4 bg-slate-50 p-5 rounded-2xl border border-gray-200">
@@ -412,18 +434,17 @@ export default function Home() {
         <section className="py-32 px-4 bg-[#0c2461] text-white text-center rounded-t-[3rem] shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-5xl md:text-6xl font-extrabold mb-10 text-[#d4af37] leading-[1.1]">
-              Sua música merece profissionalismo também na gestão.
+              Você entende de música.<br />A gente entende do resto.
             </h2>
             <p className="text-2xl text-gray-300 font-medium mb-16 leading-relaxed max-w-2xl mx-auto">
-              Você já investe pesado em instrumentos, aulas e horas de estúdio.<br className="hidden md:block" />
-              Tome o controle executivo da sua própria carreira.
+              Comece grátis. Sem cadastro. Sem cartão.
             </p>
             <button
               type="button"
               onClick={() => { window.location.href = 'https://app.musicopro.app.br' }}
               className="bg-white hover:bg-gray-100 text-[#0c2461] font-black px-12 py-6 rounded-2xl transition text-3xl shadow-xl transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              Acessar o App
+              Testar grátis agora
             </button>
           </div>
         </section>
@@ -443,7 +464,7 @@ export default function Home() {
           onClick={() => { window.location.href = 'https://app.musicopro.app.br' }}
           className="w-full bg-[#0c2461] text-white font-bold py-4 rounded-xl text-lg shadow-lg"
         >
-          Acessar o App
+          Testar grátis agora
         </button>
       </div>
 
