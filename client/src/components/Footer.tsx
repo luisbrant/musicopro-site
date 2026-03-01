@@ -62,10 +62,10 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-8 pb-4 text-center text-lg text-gray-400">
-          <p className="flex items-center justify-center gap-1.5 font-medium">
-            © {currentYear} MúsicoPro. Desenvolvido com <Heart size={18} className="text-[#d4af37] fill-[#d4af37]" /> para músicos.
-          </p>
+        <div className="text-center text-xs text-gray-500 py-8">
+          © 2026 MúsicoPro. Desenvolvido com
+          <Heart className="w-4 h-4 inline ml-1 mr-1 text-[#d4af37]" aria-hidden="true" />
+          para músicos.
         </div>
       </div>
     </footer>
