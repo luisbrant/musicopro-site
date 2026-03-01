@@ -225,7 +225,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 md:mb-20">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-[#0c2461]">
-                Feito para quem recebe cachê, não para quem tem CNPJ.
+                Três passos. Dez minutos por mês.<br />Sem precisar entender de imposto.
               </h2>
               <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-6 py-3 rounded-xl border border-green-200 font-bold text-lg">
                 <CheckCircle size={22} className="text-green-600" />
