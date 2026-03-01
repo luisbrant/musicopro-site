@@ -105,18 +105,26 @@ export default function Home() {
                 </div>
               </div>
               {/* NOTE: Add actual dashboard screenshot here later */}
-              <div className="relative aspect-video bg-gray-50 flex flex-col items-center justify-center p-10">
+              <div className="relative bg-gray-50 flex flex-col items-center justify-center p-0">
                 <img
                   src="/images/dashboard-print.png"
                   alt="Dashboard Músico Pro"
-                  className="w-full h-full object-cover hidden"
-                  onLoad={(e) => e.currentTarget.classList.remove('hidden')}
-                  onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.remove('hidden'); }}
+                  className="w-full h-auto block hidden"
+                  onLoad={(e) => {
+                    e.currentTarget.classList.remove('hidden')
+                    const fallback = e.currentTarget.nextElementSibling
+                    if (fallback) fallback.classList.add('hidden')
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling;
+                    if (fallback) fallback.classList.remove('hidden');
+                  }}
                 />
-                <div className="text-center">
+                <div className="text-center p-10">
                   <BarChart2 size={64} className="text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-400 font-semibold text-xl">Print real do dashboard</p>
-                  <p className="text-sm text-gray-400 mt-2">Salve arquivo em: /public/images/dashboard-print.png</p>
+                  <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.png</p>
                 </div>
               </div>
             </div>
