@@ -25,7 +25,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm flex flex-col">
               <a href="/#como-funciona" className="opacity-80 hover:text-[#d4af37] transition">Como Funciona</a>
               <a href="/#planos" className="opacity-80 hover:text-[#d4af37] transition">Planos e Preços</a>
-              <a href="/#faq" className="opacity-80 hover:text-[#d4af37] transition">Perguntas Frequentes</a>
+              <a href="https://app.musicopro.app.br" className="opacity-80 hover:text-[#d4af37] transition">Entrar no App</a>
             </div>
           </div>
 
@@ -54,10 +54,10 @@ export default function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <div className="bg-white/10 rounded-lg p-4 mb-8 text-sm">
-          <p className="opacity-90 leading-relaxed">
-            <strong>Aviso Legal de Compliance:</strong> O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
-            Para orientação formal, defesa em malha fina e declarações oficiais perante a Receita Federal, consulte um contador registrado (CRC). As ferramentas deste site visam organização financeira não substituem responsabilidades legais.
+        <div className="pt-8 mb-8 text-xs text-center opacity-60">
+          <p className="max-w-4xl mx-auto leading-relaxed">
+            <strong>Aviso Legal:</strong> O Músico Pro fornece estimativas fiscais baseadas nos dados inseridos pelo usuário.
+            Para orientação formal, defesa em malha fina e declarações oficiais perante a Receita Federal, consulte um contador registrado (CRC). As ferramentas deste site visam organização financeira e não substituem responsabilidades legais.
           </p>
         </div>
 

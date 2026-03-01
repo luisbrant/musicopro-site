@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Redirect } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -33,8 +33,10 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
 
-        {/* ✅ App (página dedicada) */}
-        <Route path="/app" component={AppOnly} />
+        {/* ✅ App (agora redireciona para home) */}
+        <Route path="/app">
+          <Redirect to="/" />
+        </Route>
         <Route path="/instalar" component={AppInstructions} />
 
         {/* ✅ Guia (conteúdo grátis + ativação do pacote) */}
@@ -43,12 +45,13 @@ function Router() {
         {/* ✅ Guia PRO completo (Área do Aluno) */}
         <Route path="/guia-pro" component={GuidePro} />
 
-        {/* ✅ CORREÇÃO: Rota de Vendas atualizada para /vendas */}
-        <Route path="/vendas" component={Vendas} />
-
-        {/* Mantendo /pro redirecionando para vendas ou como alias, se desejar. 
-            Mas para corrigir o 404 do print, a linha acima é a essencial. */}
-        <Route path="/pro" component={Vendas} />
+        {/* ✅ CORREÇÃO: Rotas de Vendas redirecionando para home */}
+        <Route path="/vendas">
+          <Redirect to="/" />
+        </Route>
+        <Route path="/pro">
+          <Redirect to="/" />
+        </Route>
 
         <Route path="/obrigado" component={Obrigado} />
         <Route path="/demo" component={Demo} />
