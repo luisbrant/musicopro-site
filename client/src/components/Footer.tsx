@@ -15,7 +15,7 @@ export default function Footer() {
               MúsicoPro
             </h3>
             <p className="text-xl text-gray-300 max-w-sm leading-relaxed">
-              O sistema definitivo para o músico que trata a carreira como negócio, domina seus impostos e foca apenas na arte.
+              Você cuida da música. A gente cuida do resto.
             </p>
           </div>
 

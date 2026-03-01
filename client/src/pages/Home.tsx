@@ -178,7 +178,7 @@ export default function Home() {
                 Esses problemas não são sua culpa.
               </p>
               <p className="text-xl text-gray-600 font-medium leading-relaxed">
-                São a consequência de um sistema fiscal que não foi desenhado para quem vive de música. O MúsicoPro foi feito para mudar isso — porque a gente entende dos dois lados.
+                São a consequência de um sistema fiscal que nunca foi desenhado para quem vive de música. O MúsicoPro foi feito para mudar isso — porque a gente entende dos dois lados.
               </p>
             </div>
           </div>
@@ -225,7 +225,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 md:mb-20">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-[#0c2461]">
-                Simples. Direto. Feito para músico.
+                Feito para quem recebe cachê, não para quem tem CNPJ.
               </h2>
               <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-6 py-3 rounded-xl border border-green-200 font-bold text-lg">
                 <CheckCircle size={22} className="text-green-600" />
@@ -340,7 +340,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0c2461] leading-tight">
-                Gestão profissional segura<br /> <span className="text-[#d4af37]">a partir de R$ 97/ano.</span>
+                Menos que uma hora de aula particular.<br /> <span className="text-[#d4af37]">Por um ano inteiro.</span>
               </h2>
             </div>
 
