@@ -331,7 +331,7 @@ export default function Guide() {
 
                     <div className="space-y-3">
                       <input ref={emailRef} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail da compra" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="email" />
-                      <input value={transaction} onChange={(e) => setTransaction(e.target.value)} placeholder="Código Transação (Ex: HP...)" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="text" />
+                      <input value={transaction} onChange={(e) => setTransaction(e.target.value)} placeholder="Código da Transação Hotmart (Ex: HP...)" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="text" />
                       <button onClick={validate} disabled={status === 'checking'} className="w-full bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-50 text-white font-bold px-6 py-3 rounded-lg transition">
                         {status === 'checking' ? '...' : 'Liberar Acesso'}
                       </button>

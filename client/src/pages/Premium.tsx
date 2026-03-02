@@ -243,7 +243,7 @@ export default function Premium() {
                       type="text"
                       value={transaction}
                       onChange={(e) => setTransaction(e.target.value)}
-                      placeholder="Código Transação (Ex: HP...)"
+                      placeholder="Código da Transação Hotmart (Ex: HP...)"
                       className="w-full px-4 py-3 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0c2461]"
                     />
                     {accessError && (

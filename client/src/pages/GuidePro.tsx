@@ -221,7 +221,7 @@ export default function GuidePro() {
                   <input
                     value={transaction}
                     onChange={(e) => setTransaction(e.target.value)}
-                    placeholder="Código Transação (Ex: HP...)"
+                    placeholder="Código da Transação Hotmart (Ex: HP...)"
                     className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white"
                     type="text"
                   />
