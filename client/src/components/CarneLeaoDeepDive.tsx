@@ -1,533 +1,479 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, Calculator, AlertCircle, CheckCircle2, Info } from 'lucide-react';
+import React from 'react';
 
-export default function CarneLeaoDeepDive() {
-  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
-  const [anoBase, setAnoBase] = useState<'2025' | '2026'>('2026');
-  const [calculatorData, setCalculatorData] = useState({
-    rendaBruta: 0,
-    despesas: 0,
-    inss: 0,
-  });
+const GUIDE_PRO_STYLE = `
+  .guide-pro-doc {
+      --primary: #667eea; --secondary: #764ba2; --accent: #f59e0b;
+      --danger: #ef4444; --success: #10b981; --dark: #2d3748;
+      font-family: Georgia, serif; line-height: 1.7; color: #1a202c; 
+      font-size: 11pt;
+  }
+  .guide-pro-doc .container { max-width: 210mm; margin: 0 auto; background: white; 
+              padding: 25mm 20mm; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+  @media print {
+      .guide-pro-doc { font-family: Georgia, serif; line-height: 1.6; color: #1a202c; 
+             background: white; margin: 0; padding: 0; font-size: 11pt; }
+      .guide-pro-doc .container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; }
+      .guide-pro-doc h1, .guide-pro-doc h2, .guide-pro-doc h3, .guide-pro-doc h4 { page-break-after: avoid; page-break-inside: avoid; }
+      .guide-pro-doc p, .guide-pro-doc ul, .guide-pro-doc ol, .guide-pro-doc table { page-break-inside: avoid; orphans: 3; widows: 3; }
+      .guide-pro-doc .page-break { page-break-before: always; }
+      .guide-pro-doc .no-break { page-break-inside: avoid; }
+      .guide-pro-doc * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+  @page { size: A4 portrait; margin: 20mm 15mm; }
+  @page :first { margin: 0; }
+  .guide-pro-doc h1 { font-size: 24pt; color: var(--primary); margin: 30pt 0 15pt 0; font-weight: 700; line-height: 1.3; }
+  .guide-pro-doc h2 { font-size: 18pt; color: var(--primary); margin: 24pt 0 12pt 0; padding-bottom: 8pt; 
+       border-bottom: 2pt solid var(--primary); font-weight: 700; }
+  .guide-pro-doc h3 { font-size: 14pt; color: var(--secondary); margin: 18pt 0 10pt 0; font-weight: 600; }
+  .guide-pro-doc h4 { font-size: 12pt; color: var(--dark); margin: 15pt 0 8pt 0; font-weight: 600; }
+  .guide-pro-doc p { margin: 0 0 10pt 0; text-align: justify; hyphens: auto; }
+  .guide-pro-doc ul, .guide-pro-doc ol { margin: 10pt 0 10pt 20pt; }
+  .guide-pro-doc li { margin-bottom: 6pt; line-height: 1.6; }
+  .guide-pro-doc strong { font-weight: 600; color: var(--dark); }
+  .guide-pro-doc .box { padding: 12pt; margin: 15pt 0; border-radius: 4pt; page-break-inside: avoid; }
+  .guide-pro-doc .alert { background: #fef3c7; border-left: 4pt solid var(--accent); }
+  .guide-pro-doc .tip { background: #dbeafe; border-left: 4pt solid #3b82f6; }
+  .guide-pro-doc .tip::before { content: "💡 DICA PRO"; display: block; font-weight: bold; 
+                color: #1e40af; margin-bottom: 8pt; font-size: 10pt; }
+  .guide-pro-doc .warning { background: #fee2e2; border-left: 4pt solid var(--danger); }
+  .guide-pro-doc .warning::before { content: "🚨 ATENÇÃO"; display: block; font-weight: bold; 
+                    color: #dc2626; margin-bottom: 8pt; font-size: 10pt; }
+  .guide-pro-doc .success { background: #d1fae5; border-left: 4pt solid var(--success); }
+  .guide-pro-doc table { width: 100%; border-collapse: collapse; margin: 15pt 0; page-break-inside: avoid; font-size: 9.5pt; }
+  .guide-pro-doc th { background: var(--primary); color: white; padding: 8pt; text-align: left; 
+       font-weight: 600; border: 1pt solid #ddd; }
+  .guide-pro-doc td { padding: 6pt 8pt; border: 1pt solid #ddd; vertical-align: top; }
+  .guide-pro-doc tr:nth-child(even) { background: #f7fafc; }
+  .guide-pro-doc .highlight { background: #fef3c7; padding: 2pt 6pt; border-radius: 2pt; font-weight: 600; }
+  .guide-pro-doc .text-center { text-align: center !important; }
+  .guide-pro-doc code { background: #f1f5f9; padding: 2pt 4pt; border-radius: 2pt; 
+        font-family: 'Courier New', monospace; font-size: 9pt; display: block; white-space: pre-wrap; margin: 10px 0;}
+`;
 
-  const toggleTopic = (topic: string) => {
-    setExpandedTopics(prev => ({
-      ...prev,
-      [topic]: !prev[topic]
-    }));
-  };
+const CONTENT = `
+        <div class="container">
+            <h1 class="text-center">CAPÍTULO 6: CARNÊ-LEÃO - DO ZERO À EXPERT</h1>
+            <h3 class="text-center" style="margin-top: 0;">Domine Completamente o Recolhimento Mensal do Imposto de Renda</h3>
 
-  // Tabela progressiva 2026 (Isenção R$ 5.000)
-  const tabelaProgressiva = [
-    { faixa: 'Até R$ 5.000,00', aliquota: '0%', deducao: 'R$ 0,00', descricao: 'Isento' },
-    { faixa: 'R$ 5.000,01 a R$ 7.500,00', aliquota: '7,5%', deducao: 'R$ 375,00', descricao: 'Primeira faixa' },
-    { faixa: 'R$ 7.500,01 a R$ 10.000,00', aliquota: '15%', deducao: 'R$ 937,50', descricao: 'Segunda faixa' },
-    { faixa: 'R$ 10.000,01 a R$ 12.500,00', aliquota: '22,5%', deducao: 'R$ 1.687,50', descricao: 'Terceira faixa' },
-    { faixa: 'Acima de R$ 12.500,00', aliquota: '27,5%', deducao: 'R$ 2.312,50', descricao: 'Quarta faixa' },
-  ];
-
-  // Calcular IR (Tabela 2026 ou 2025)
-  const calcularIR = () => {
-    const baseCalculo = calculatorData.rendaBruta - calculatorData.despesas - calculatorData.inss;
-    
-    if (anoBase === '2026') {
-      // Tabela 2026 (Isenção 5k)
-      if (baseCalculo <= 5000.00) return 0;
-      if (baseCalculo <= 7500.00) return (baseCalculo * 0.075) - 375.00;
-      if (baseCalculo <= 10000.00) return (baseCalculo * 0.15) - 937.50;
-      if (baseCalculo <= 12500.00) return (baseCalculo * 0.225) - 1687.50;
-      return (baseCalculo * 0.275) - 2312.50;
-    } else {
-      // Tabela 2025 (Isenção 2.259,20)
-      if (baseCalculo <= 2259.20) return 0;
-      if (baseCalculo <= 2826.65) return (baseCalculo * 0.075) - 169.44;
-      if (baseCalculo <= 3751.05) return (baseCalculo * 0.15) - 381.44;
-      if (baseCalculo <= 4664.68) return (baseCalculo * 0.225) - 662.77;
-      return (baseCalculo * 0.275) - 896.00;
-    }
-  };
-
-  const irCalculado = calcularIR();
-  const baseCalculo = calculatorData.rendaBruta - calculatorData.despesas - calculatorData.inss;
-
-  return (
-    <div className="space-y-6">
-      {/* Introdução */}
-      <div className="bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg p-4 md:p-6 text-white space-y-3">
-            <h3 className="text-xl md:text-2xl font-bold" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              🎯 Carnê-Leão: Guia Completo (Tabela 2026)
-            </h3>
-        <p className="text-sm md:text-base opacity-90">
-          Entenda tudo sobre o Carnê-Leão: o que é, como funciona, quando é obrigatório, como calcular e como pagar. Com exemplos práticos e calculadora interativa.
-        </p>
-      </div>
-
-      {/* Tópico 1: O que é Carnê-Leão */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('oQueE')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            📖 O que é Carnê-Leão?
-          </h4>
-          {expandedTopics['oQueE'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['oQueE'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
-            <p>
-              <strong>Carnê-Leão</strong> é um documento de arrecadação de impostos que você preenche e paga mensalmente à Receita Federal. É obrigatório para quem recebe rendimentos de trabalho autônomo ou profissional liberal sem vínculo empregatício.
-            </p>
-            
-            <div className="bg-[#F9F7F4] border-l-4 border-[#6BA587] p-4 rounded">
-              <p className="font-semibold text-[#6BA587] mb-2">💡 Resumo Simples:</p>
-              <p>Carnê-Leão = Imposto que você calcula e paga por conta própria, todo mês, sobre seus rendimentos como músico autônomo.</p>
+            <div class="box success no-break">
+                <p><strong>Público-alvo:</strong> Músicos autônomos que recebem como Pessoa Física</p>
+                <p><strong>Nível:</strong> Iniciante ao Avançado</p>
+                <p><strong>Tempo de estudo:</strong> 3-4 horas</p>
+                <p><strong>Tempo de implementação:</strong> 30 minutos/mês após dominar</p>
             </div>
 
-            <h5 className="font-semibold text-[#1B4965] mt-4">Características principais:</h5>
-            <ul className="space-y-2 pl-4">
-              <li>✅ <strong>Obrigatório:</strong> Se sua renda mensal ultrapassa R$ 5.000,00</li>
-              <li>✅ <strong>Mensal:</strong> Você paga todo mês, não anualmente</li>
-              <li>✅ <strong>Progressivo:</strong> Quanto mais você ganha, maior a alíquota</li>
-              <li>✅ <strong>Descontável:</strong> Reduz sua renda na declaração anual de IR</li>
-              <li>✅ <strong>Sem retenção:</strong> Você recebe o valor integral e paga o imposto</li>
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Tópico 2: Quando é Obrigatório */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('obrigatorio')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ⚠️ Quando é Obrigatório?
-          </h4>
-          {expandedTopics['obrigatorio'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['obrigatorio'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
-            <h5 className="font-semibold text-[#1B4965]">Você DEVE preencher Carnê-Leão se:</h5>
-            <ul className="space-y-2 pl-4">
-              <li>✅ Recebe cachês como músico autônomo</li>
-              <li>✅ Dá aulas particulares de música</li>
-              <li>✅ Recebe direitos autorais de composições</li>
-              <li>✅ Tem rendimentos de shows e apresentações</li>
-              <li>✅ Trabalha como freelancer/profissional liberal</li>
-              <li>✅ Sua renda mensal ultrapassa R$ 5.000,00</li>
-            </ul>
-
-            <div className="bg-[#FFF3CD] border-l-4 border-[#D4A574] p-4 rounded mt-4">
-              <p className="font-semibold text-[#D4A574] mb-2">⚡ Atenção:</p>
-              <p>Mesmo que sua renda seja menor que R$ 5.000,00, você pode preencher Carnê-Leão voluntariamente. Isso é recomendado para manter controle e organização.</p>
-            </div>
-
-            <h5 className="font-semibold text-[#1B4965] mt-4">Você NÃO precisa de Carnê-Leão se:</h5>
-            <ul className="space-y-2 pl-4">
-              <li>❌ É empregado com carteira assinada (IR já é descontado)</li>
-              <li>❌ É MEI (Microempreendedor Individual) - paga DAS em vez disso</li>
-              <li>❌ É Empresa (PJ) - paga IR diferente</li>
-              <li>❌ Sua renda é muito baixa (abaixo do limite)</li>
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Tópico 3: Tabela Progressiva */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('tabela')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-            <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              📊 Tabela Progressiva 2026 (Isenção R$ 5k)
-            </h4>
-          {expandedTopics['tabela'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['tabela'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
-            <p className="text-sm md:text-base text-[#2C3E50]">
-              A tabela abaixo mostra as alíquotas progressivas do Carnê-Leão para 2026, com a nova isenção de R$ 5.000,00. Quanto maior sua renda, maior o percentual de imposto.
-            </p>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs md:text-sm border-collapse">
-                <thead>
-                  <tr className="bg-[#1B4965] text-white">
-                    <th className="border border-[#E8E3DC] p-2 text-left">Base de Cálculo</th>
-                    <th className="border border-[#E8E3DC] p-2 text-center">Alíquota</th>
-                    <th className="border border-[#E8E3DC] p-2 text-center">Dedução</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tabelaProgressiva.map((linha, idx) => (
-                    <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-[#F9F7F4]'}>
-                      <td className="border border-[#E8E3DC] p-2">{linha.faixa}</td>
-                      <td className="border border-[#E8E3DC] p-2 text-center font-semibold text-[#E07856]">{linha.aliquota}</td>
-                      <td className="border border-[#E8E3DC] p-2 text-center">{linha.deducao}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="bg-[#E8F5E9] border-l-4 border-[#6BA587] p-4 rounded mt-4">
-              <p className="font-semibold text-[#6BA587] mb-2">📌 Como Usar a Tabela:</p>
-              <p className="text-sm md:text-base">
-                1. Calcule sua <strong>base de cálculo</strong> (renda - despesas - INSS)<br/>
-                2. Encontre a faixa correspondente<br/>
-                3. Multiplique a base pela alíquota<br/>
-                4. Subtraia a dedução<br/>
-                5. O resultado é seu imposto mensal
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Tópico 4: Calculadora Interativa */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('calculadora')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            <Calculator size={18} className="inline mr-2" />
-            Calculadora de Carnê-Leão
-          </h4>
-          {expandedTopics['calculadora'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['calculadora'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
-            <p className="text-sm md:text-base text-[#2C3E50]">
-              Preencha os valores abaixo para calcular seu imposto mensal:
-            </p>
-
-            <div className="space-y-4">
-              {/* Seletor de Ano */}
-              <div className="flex gap-2 mb-4 bg-white p-1 rounded-lg border border-[#E8E3DC] w-fit">
-                <button
-                  onClick={() => setAnoBase('2026')}
-                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
-                    anoBase === '2026' 
-                      ? 'bg-[#1B4965] text-white shadow-sm' 
-                      : 'text-[#7F8C8D] hover:bg-[#F5F2ED]'
-                  }`}
-                >
-                  Regra 2026 (Carnê-Leão)
-                </button>
-                <button
-                  onClick={() => setAnoBase('2025')}
-                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
-                    anoBase === '2025' 
-                      ? 'bg-[#1B4965] text-white shadow-sm' 
-                      : 'text-[#7F8C8D] hover:bg-[#F5F2ED]'
-                  }`}
-                >
-                  Regra 2025 (Declaração)
-                </button>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-[#1B4965] mb-2">
-                  Renda Bruta Mensal (R$)
-                </label>
-                <input
-                  type="number"
-                  value={calculatorData.rendaBruta}
-                  onChange={(e) => setCalculatorData({...calculatorData, rendaBruta: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B4965]"
-                  placeholder="Ex: 5000"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-[#1B4965] mb-2">
-                  Despesas Dedutíveis (R$)
-                </label>
-                <input
-                  type="number"
-                  value={calculatorData.despesas}
-                  onChange={(e) => setCalculatorData({...calculatorData, despesas: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B4965]"
-                  placeholder="Ex: 800"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-[#1B4965] mb-2">
-                  INSS Pago (R$)
-                </label>
-                <input
-                  type="number"
-                  value={calculatorData.inss}
-                  onChange={(e) => setCalculatorData({...calculatorData, inss: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B4965]"
-                  placeholder="Ex: 300"
-                />
-              </div>
-            </div>
-
-            {/* Resultado */}
-            <div className="mt-6 p-4 bg-gradient-to-br from-[#1B4965] to-[#2C5F7F] rounded-lg text-white space-y-3">
-              <div className="border-b border-white/20 pb-3">
-                <p className="text-xs md:text-sm opacity-90">Base de Cálculo</p>
-                <p className="text-lg md:text-2xl font-bold">R$ {baseCalculo.toFixed(2).replace('.', ',')}</p>
-              </div>
-              
-              <div className="border-b border-white/20 pb-3">
-                <p className="text-xs md:text-sm opacity-90">Imposto Mensal (Carnê-Leão)</p>
-                <p className="text-2xl md:text-3xl font-bold text-[#E07856]">R$ {Math.max(0, irCalculado).toFixed(2).replace('.', ',')}</p>
-              </div>
-
-              <div>
-                <p className="text-xs md:text-sm opacity-90">Renda Líquida (após IR)</p>
-                <p className="text-lg md:text-xl font-bold">R$ {(calculatorData.rendaBruta - Math.max(0, irCalculado)).toFixed(2).replace('.', ',')}</p>
-              </div>
-            </div>
-
-            <div className="bg-[#E3F2FD] border-l-4 border-[#1B4965] p-4 rounded mt-4">
-              <p className="text-xs md:text-sm text-[#1B4965]">
-                <strong>Nota:</strong> Esta calculadora é apenas para fins educacionais. Para situações complexas, consulte um contador especializado.
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Tópico 5: Exemplos Práticos */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('exemplos')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            📝 Exemplos Práticos
-          </h4>
-          {expandedTopics['exemplos'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['exemplos'] && (
-          <div className="px-4 md:px-6 py-4 space-y-6">
-            {/* Exemplo 1 */}
-            <div className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
-              <h5 className="font-semibold text-[#1B4965] mb-3">Exemplo 1: Músico com Renda Baixa</h5>
-              <div className="space-y-2 text-sm md:text-base">
-                <p><strong>Situação:</strong> João toca em bares e recebe R$ 2.000/mês</p>
-                <p><strong>Despesas:</strong> R$ 300 (combustível e cordas)</p>
-                <p><strong>INSS:</strong> R$ 180 (contribuição mensal)</p>
-                
-                <div className="bg-white p-3 rounded mt-3 space-y-2">
-                  <p>Base de Cálculo = R$ 2.000 - R$ 300 - R$ 180 = <strong>R$ 1.520</strong></p>
-                  <p className="text-[#6BA587]">✅ Resultado 2026: <strong>ISENTO</strong> (abaixo de R$ 5.000,00)</p>
-                  <p className="text-xs text-[#7F8C8D] mt-1">Nota: Na declaração referente a 2025, o limite era R$ 2.259,20.</p>
-                  <p className="text-xs text-[#7F8C8D]">João não precisa pagar Carnê-Leão este mês</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Exemplo 2 */}
-            <div className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
-              <h5 className="font-semibold text-[#1B4965] mb-3">Exemplo 2: Músico com Renda Média</h5>
-              <div className="space-y-2 text-sm md:text-base">
-                <p><strong>Situação:</strong> Maria dá aulas e toca em eventos, recebe R$ 4.500/mês</p>
-                <p><strong>Despesas:</strong> R$ 800 (aluguel estúdio, material)</p>
-                <p><strong>INSS:</strong> R$ 400 (contribuição mensal)</p>
-                
-                <div className="bg-white p-3 rounded mt-3 space-y-2">
-                  <p>Base de Cálculo = R$ 4.500 - R$ 800 - R$ 400 = <strong>R$ 3.300</strong></p>
-                  <p>Alíquota: 15% | Dedução: R$ 381,44</p>
-                  <p>IR = (R$ 3.300 × 0,15) - R$ 381,44 = <strong>R$ 113,56</strong></p>
-                  <p className="text-[#E07856]">⚠️ Maria deve pagar R$ 113,56 de Carnê-Leão</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Exemplo 3 */}
-            <div className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
-              <h5 className="font-semibold text-[#1B4965] mb-3">Exemplo 3: Músico com Renda Alta</h5>
-              <div className="space-y-2 text-sm md:text-base">
-                <p><strong>Situação:</strong> Pedro é produtor musical, recebe R$ 8.000/mês</p>
-                <p><strong>Despesas:</strong> R$ 2.000 (estúdio, equipamentos)</p>
-                <p><strong>INSS:</strong> R$ 600 (contribuição mensal)</p>
-                
-                <div className="bg-white p-3 rounded mt-3 space-y-2">
-                  <p>Base de Cálculo = R$ 8.000 - R$ 2.000 - R$ 600 = <strong>R$ 5.400</strong></p>
-                  <p>Alíquota: 27,5% | Dedução: R$ 896,00</p>
-                  <p>IR = (R$ 5.400 × 0,275) - R$ 896,00 = <strong>R$ 589,00</strong></p>
-                  <p className="text-[#E07856]">⚠️ Pedro deve pagar R$ 589,00 de Carnê-Leão</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Tópico 6: Como Pagar */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('comoPagar')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            💳 Como Pagar o Carnê-Leão
-          </h4>
-          {expandedTopics['comoPagar'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['comoPagar'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
-            <h5 className="font-semibold text-[#1B4965]">Passo a Passo para Pagar:</h5>
-            
-            <ol className="space-y-3 pl-4 list-decimal">
-              <li>
-                <strong>Acesse o site da Receita Federal</strong>
-                <p className="text-xs md:text-sm text-[#7F8C8D] mt-1">www.gov.br/receitafederal</p>
-              </li>
-              <li>
-                <strong>Clique em "Gerar DARF"</strong>
-                <p className="text-xs md:text-sm text-[#7F8C8D] mt-1">Procure pela opção de gerar DARF (Documento de Arrecadação de Receitas Federais)</p>
-              </li>
-              <li>
-                <strong>Preencha os dados</strong>
-                <p className="text-xs md:text-sm text-[#7F8C8D] mt-1">CPF, período, valor do imposto calculado</p>
-              </li>
-              <li>
-                <strong>Gere o código de barras</strong>
-                <p className="text-xs md:text-sm text-[#7F8C8D] mt-1">O sistema gera um código de barras para pagamento</p>
-              </li>
-              <li>
-                <strong>Pague no banco ou internet banking</strong>
-                <p className="text-xs md:text-sm text-[#7F8C8D] mt-1">Use o código de barras para pagar até o último dia útil do mês</p>
-              </li>
+            <h2>📚 SUMÁRIO DO CAPÍTULO</h2>
+            <ol>
+                <li>História e Fundamentos Legais</li>
+                <li>Quem Deve Usar (e Quando)</li>
+                <li>Sistema Carnê-Leão Web: Acesso e Navegação</li>
+                <li>Lançamento de Receitas: Passo a Passo Completo</li>
+                <li>Lançamento de Despesas: Guia Definitivo</li>
+                <li>Cálculo do Imposto: Entendendo a Fórmula</li>
+                <li>Geração e Pagamento do DARF</li>
+                <li>Carnê-Leão em Atraso: Regularização</li>
+                <li>Integração com a Declaração Anual</li>
+                <li>15 Exercícios Práticos Resolvidos</li>
+                <li>Erros Mais Comuns (e Como Evitar)</li>
+                <li>Casos Complexos e Situações Especiais</li>
+                <li>Checklist Mensal de Ouro</li>
+                <li>Planilha de Controle Automatizada</li>
+                <li>Perguntas e Respostas Avançadas</li>
             </ol>
 
-            <div className="bg-[#FFF3CD] border-l-4 border-[#D4A574] p-4 rounded mt-4">
-              <p className="font-semibold text-[#D4A574] mb-2">⏰ Prazo Importante:</p>
-              <p>O pagamento deve ser feito até o <strong>último dia útil do mês</strong>. Se não pagar no prazo, você fica sujeito a multa e juros.</p>
-            </div>
+            <div class="page-break"></div>
 
-            <h5 className="font-semibold text-[#1B4965] mt-6">Alternativas de Pagamento:</h5>
-            <ul className="space-y-2 pl-4">
-              <li>✅ <strong>Débito automático:</strong> Configure no e-CAC da Receita</li>
-              <li>✅ <strong>Internet banking:</strong> Pague pelo app do seu banco</li>
-              <li>✅ <strong>Caixa eletrônico:</strong> Insira o código de barras</li>
-              <li>✅ <strong>Banco/Lotérica:</strong> Leve o DARF impresso</li>
+            <h2>1. HISTÓRIA E FUNDAMENTOS LEGAIS</h2>
+
+            <h3>1.1. O que é o Carnê-Leão?</h3>
+            <p>O <strong>Carnê-Leão</strong> é um sistema de <strong>recolhimento mensal obrigatório</strong> do Imposto de Renda instituído pela Receita Federal do Brasil para pessoas físicas que recebem rendimentos de outras pessoas físicas ou de pessoas jurídicas que não efetuam a retenção na fonte.</p>
+            <p><strong>Nome oficial:</strong> Carnê-Leão - Livro Caixa</p>
+            <p><strong>Base legal:</strong> Lei nº 7.713/1988 (art. 8º), Decreto nº 9.580/2018 (Regulamento do IR), Instrução Normativa RFB nº 1.500/2014</p>
+
+            <h3>1.2. Por que "Carnê-Leão"?</h3>
+            <p>O nome tem origem histórica:</p>
+            <ul>
+                <li><strong>Carnê:</strong> Referência ao antigo carnê de papel onde se anotavam os rendimentos mensais</li>
+                <li><strong>Leão:</strong> Símbolo tradicional do Imposto de Renda no Brasil (representa o "leão" do governo que cobra impostos)</li>
             </ul>
-          </div>
-        )}
-      </div>
 
-      {/* Tópico 7: Erros Comuns */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('erros')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ❌ Erros Comuns a Evitar
-          </h4>
-          {expandedTopics['erros'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['erros'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
-            <div className="space-y-3">
-              {[
-                {
-                  erro: 'Não preencher Carnê-Leão quando obrigatório',
-                  consequencia: 'Multa de 75% + juros + possível malha fina',
-                  solucao: 'Preencha se renda > R$ 5.000 (Regra 2026) ou > R$ 2.259 (Regra 2025)'
-                },
-                {
-                  erro: 'Deduzir despesas sem comprovação',
-                  consequencia: 'Autuação pela Receita Federal',
-                  solucao: 'Guarde todas as notas fiscais e recibos'
-                },
-                {
-                  erro: 'Pagar após o prazo (último dia útil)',
-                  consequencia: 'Multa de 0,33% ao dia + juros',
-                  solucao: 'Pague sempre antes do último dia útil do mês'
-                },
-                {
-                  erro: 'Omitir rendimentos no Carnê-Leão',
-                  consequencia: 'Fraude fiscal, multa pesada',
-                  solucao: 'Declare TODOS os rendimentos, mesmo pequenos'
-                },
-                {
-                  erro: 'Confundir Carnê-Leão com MEI',
-                  consequencia: 'Pagamento de imposto errado',
-                  solucao: 'Verifique se você é PF ou MEI'
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="border border-[#E8E3DC] rounded-lg p-3 md:p-4 bg-[#FFF3CD]/30">
-                  <p className="font-semibold text-[#C85A54] text-sm md:text-base mb-2">❌ {item.erro}</p>
-                  <p className="text-xs md:text-sm text-[#2C3E50] mb-2"><strong>Consequência:</strong> {item.consequencia}</p>
-                  <p className="text-xs md:text-sm text-[#6BA587]"><strong>✅ Solução:</strong> {item.solucao}</p>
-                </div>
-              ))}
+            <h3>1.3. Evolução Histórica</h3>
+            <ul>
+                <li><strong>1960-1980:</strong> Carnê físico em papel</li>
+                <li><strong>1990-2000:</strong> Disquetes e CD-ROMs</li>
+                <li><strong>2001-2010:</strong> Download de programa para PC</li>
+                <li><strong>2011-presente:</strong> Carnê-Leão Web (100% online via e-CAC)</li>
+            </ul>
+
+            <h3>1.4. Objetivo Legal</h3>
+            <p>O Carnê-Leão existe para:</p>
+            <ol>
+                <li><strong>Antecipar o recolhimento do IR</strong> (ao invés de pagar tudo na declaração anual)</li>
+                <li><strong>Facilitar a fiscalização</strong> da RFB</li>
+                <li><strong>Distribuir a carga tributária</strong> ao longo do ano</li>
+                <li><strong>Evitar surpresas</strong> na declaração anual</li>
+            </ol>
+
+            <h3>1.5. Natureza Jurídica</h3>
+            <p>O Carnê-Leão é uma <strong>obrigação tributária acessória</strong> (dever de informar) que pode gerar uma <strong>obrigação principal</strong> (dever de pagar imposto).</p>
+            
+            <div class="box warning no-break">
+                <p><strong>Importante:</strong> Mesmo quando não há imposto a pagar (resultado R$ 0,00), a obrigação de <strong>lançar</strong> os rendimentos no sistema continua existindo. O Músico Pro facilita todo este controle e preenchimento para você!</p>
             </div>
-          </div>
-        )}
-      </div>
 
-      {/* Tópico 8: FAQ */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
-        <button
-          onClick={() => toggleTopic('faq')}
-          className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
-        >
-          <h4 className="font-semibold text-[#1B4965] text-sm md:text-base" style={{ fontFamily: 'Lexend, sans-serif' }}>
-            ❓ Perguntas Frequentes
-          </h4>
-          {expandedTopics['faq'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </button>
-        {expandedTopics['faq'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
-            <div className="space-y-3">
-              {[
-                {
-                  pergunta: 'Posso deduzir TODAS as minhas despesas?',
-                  resposta: 'Não. Apenas despesas diretamente relacionadas à sua atividade profissional. Exemplo: combustível para ir a shows, cordas de instrumentos, aluguel de estúdio. Não pode: conta de água de casa, alimentação pessoal.'
-                },
-                {
-                  pergunta: 'E se eu tiver um mês sem renda?',
-                  resposta: 'Se sua renda mensal for zero ou muito baixa, você não precisa preencher Carnê-Leão naquele mês. Mas se tiver despesas, você pode deduzir do próximo mês com renda.'
-                },
-                {
-                  pergunta: 'Carnê-Leão reduz meu IR na declaração anual?',
-                  resposta: 'Sim! Todo Carnê-Leão pago durante o ano é abatido do seu IR anual. Se pagou R$ 500/mês (R$ 6.000/ano), isso reduz seu imposto final.'
-                },
-                {
-                  pergunta: 'Preciso guardar os comprovantes de pagamento?',
-                  resposta: 'Sim! Guarde por 5 anos. Em caso de fiscalização, você precisa comprovar que pagou. Guarde também as notas das despesas deduzidas.'
-                },
-                {
-                  pergunta: 'Posso pagar Carnê-Leão em atraso?',
-                  resposta: 'Pode, mas vai sofrer multa de 0,33% ao dia + juros. É melhor pagar no prazo. Se não conseguir, pague assim que possível.'
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="border border-[#E8E3DC] rounded-lg p-3 md:p-4">
-                  <p className="font-semibold text-[#1B4965] text-sm md:text-base mb-2">❓ {item.pergunta}</p>
-                  <p className="text-xs md:text-sm text-[#2C3E50]">{item.resposta}</p>
-                </div>
-              ))}
+            <h2>2. QUEM DEVE USAR (E QUANDO)</h2>
+
+            <h3>2.1. Regra Geral</h3>
+            <p><strong>Você DEVE usar o Carnê-Leão quando:</strong></p>
+            <ul>
+                <li>✅ Recebe rendimentos como <strong>Pessoa Física</strong> (CPF)</li>
+                <li>✅ O pagamento vem de outra <strong>Pessoa Física</strong></li>
+                <li>✅ OU o pagamento vem de <strong>Pessoa Jurídica</strong> que <strong>não reteve</strong> IR na fonte</li>
+                <li>✅ E o valor mensal ultrapassa a <strong>faixa de isenção</strong> (R$ 2.259,20 em 2024/2025)</li>
+            </ul>
+
+            <h3>2.2. Situações Específicas para Músicos</h3>
+
+            <h4>✅ DEVE USAR CARNÊ-LEÃO:</h4>
+            <ul>
+                <li><strong>Situação 1: Show em Bar (PF pagadora)</strong><br>Você toca em bar, o Dono (Pessoa Física) te paga R$ 500 em dinheiro/Pix. <strong>Deve lançar no Carnê-Leão</strong>.</li>
+                <li><strong>Situação 2: Aulas Particulares</strong><br>Você dá aulas de violão, Alunos (Pessoas Físicas) pagam R$ 200 cada. Total mensal: R$ 3.000. <strong>Deve lançar no Carnê-Leão</strong>.</li>
+                <li><strong>Situação 3: Evento Particular</strong><br>Você toca em casamento, Noivo (Pessoa Física) te paga R$ 2.500. <strong>Deve lançar no Carnê-Leão</strong>.</li>
+                <li><strong>Situação 4: Banda sem CNPJ</strong><br>Banda toca em festival, Produtora paga cachê para a banda, Banda divide entre membros. Cada músico <strong>deve lançar sua parte no Carnê-Leão</strong>.</li>
+                <li><strong>Situação 5: Produtora PJ sem Retenção</strong><br>Produtora com CNPJ contrata você, Paga R$ 1.500 mas <strong>não retém IR</strong> (apenas INSS ou nada). <strong>Deve lançar no Carnê-Leão</strong>.</li>
+            </ul>
+
+            <h4>❌ NÃO DEVE USAR CARNÊ-LEÃO:</h4>
+            <ul>
+                <li><strong>Situação 1: RPA com Retenção</strong><br>Produtora com CNPJ contrata você, Paga via RPA e <strong>retém IR na fonte</strong>. Você recebe líquido. <strong>Não usa Carnê-Leão</strong> (já foi tributado).</li>
+                <li><strong>Situação 2: Emprego CLT</strong><br>Você é funcionário CLT de escola de música, Recebe salário com IR retido na fonte. <strong>Não usa Carnê-Leão</strong> (é empregado).</li>
+                <li><strong>Situação 3: Você tem MEI</strong><br>Você emite nota fiscal como MEI, Cliente paga para seu CNPJ. <strong>Não usa Carnê-Leão</strong> (pessoa jurídica não usa).</li>
+                <li><strong>Situação 4: Direitos Autorais com Retenção</strong><br>Você recebe direitos do ECAD, ECAD retém IR na fonte. <strong>Não usa Carnê-Leão</strong>.</li>
+            </ul>
+
+            <div class="box tip no-break">
+                <p>O App Músico Pro já classifica e alerta sobre essas diferentes origens de renda automaticamente. Assim, você não corre riscos de esquecer onde lança as coisas!</p>
             </div>
-          </div>
-        )}
-      </div>
 
-      {/* Resumo Final */}
-      <div className="bg-[#E8F5E9] border-l-4 border-[#6BA587] rounded-lg p-4 md:p-6 space-y-3">
-        <h4 className="font-semibold text-[#6BA587] text-base md:text-lg">✅ Resumo: Carnê-Leão em 5 Pontos</h4>
-        <ol className="space-y-2 pl-4 list-decimal text-sm md:text-base text-[#2C3E50]">
-          <li><strong>Para 2026 (Carnê-Leão):</strong> Obrigatório se renda mensal &gt; R$ 5.000,00</li>
-          <li><strong>Para Declaração 2026 (Ano-base 2025):</strong> Obrigatório se renda mensal &gt; R$ 2.259,20</li>
-          <li><strong>Você calcula e paga</strong> mensalmente (até o último dia útil)</li>
-          <li><strong>Use a tabela progressiva</strong> para calcular o valor correto</li>
-          <li><strong>Deduza apenas despesas comprovadas</strong> relacionadas à sua atividade</li>
-          <li><strong>Guarde comprovantes</strong> por 5 anos para possível fiscalização</li>
-        </ol>
-      </div>
-    </div>
-  );
+            <h3>2.3. Fluxograma de Decisão</h3>
+            <code>
+Você recebeu dinheiro/Pix/transferência?
+├─ SIM → Continue
+└─ NÃO → Não precisa lançar
+
+Esse dinheiro é renda (cachê, aula, produção)?
+├─ SIM → Continue
+└─ NÃO → Não precisa lançar (ex: presente, empréstimo)
+
+Você recebeu como Pessoa Física (seu CPF)?
+├─ SIM → Continue
+└─ NÃO → Se recebeu como MEI/Empresa, não usa Carnê-Leão
+
+Quem pagou reteve Imposto de Renda na fonte?
+├─ SIM → Não usa Carnê-Leão (já foi tributado)
+└─ NÃO → DEVE USAR CARNÊ-LEÃO
+
+O valor mensal total passou da faixa isenta?
+├─ SIM → Pode haver imposto a pagar
+└─ NÃO → Imposto será R$ 0, mas deve lançar mesmo assim
+            </code>
+
+            <h3>2.4. Limites e Faixas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Situação</th>
+                        <th>Obrigação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Recebi abaixo da faixa de isenção no mês</td>
+                        <td>Deve lançar, imposto = R$ 0</td>
+                    </tr>
+                    <tr>
+                        <td>Recebi acima da faixa de isenção no mês</td>
+                        <td>Deve lançar, pode ter imposto</td>
+                    </tr>
+                    <tr>
+                        <td>Não recebi nada no mês</td>
+                        <td>Não precisa lançar aquele mês</td>
+                    </tr>
+                    <tr>
+                        <td>Recebi só em alguns meses do ano</td>
+                        <td>Lança apenas os meses que recebeu</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.5. Prazo de Lançamento</h3>
+            <p><strong>Regra oficial:</strong></p>
+            <ul>
+                <li>Lançar até o <strong>último dia do mês</strong> em que recebeu</li>
+                <li>Pagar DARF até o <strong>último dia útil do mês seguinte</strong></li>
+            </ul>
+            <p><strong>Exemplo:</strong> Recebeu em março: Lança até 31/março. DARF de março: Paga até último dia útil de abril.</p>
+
+            <h2>3. SISTEMA CARNÊ-LEÃO WEB: ACESSO E NAVEGAÇÃO</h2>
+            <h3>3.1. Onde Acessar</h3>
+            <p><strong>URL:</strong> https://cav.receita.fazenda.gov.br</p>
+            <p><strong>Caminho:</strong></p>
+            <ol>
+                <li>Acesse o portal e-CAC</li>
+                <li>Faça login com Gov.br</li>
+                <li>Menu: <strong>Declarações e Demonstrativos</strong></li>
+                <li>Selecione: <strong>Carnê-Leão</strong></li>
+                <li>Clique: <strong>Acessar Carnê-Leão Web</strong></li>
+            </ol>
+
+            <h3>3.2. Requisitos de Acesso</h3>
+            <p><strong>Obrigatório:</strong> Conta Gov.br (nível <strong>prata</strong> ou <strong>ouro</strong>), CPF regular, Internet.</p>
+
+            <h3>3.3. Interface do Sistema</h3>
+            <ul>
+                <li><strong>Receitas:</strong> Lançar cachês, aulas, etc.</li>
+                <li><strong>Despesas:</strong> Lançar gastos dedutíveis.</li>
+                <li><strong>Livro Caixa:</strong> Resumo mensal.</li>
+                <li><strong>DARF:</strong> Gerar boleto.</li>
+            </ul>
+
+            <div class="page-break"></div>
+
+            <h2>4. LANÇAMENTO DE RECEITAS: PASSO A PASSO COMPLETO</h2>
+
+            <h3>4.1. Conceitos Importantes</h3>
+            <p><strong>Receita bruta:</strong> Valor total recebido (antes de qualquer desconto)<br>
+            <strong>Mês de competência:</strong> Mês em que você RECEBEU (não quando combinou ou fez o serviço)<br>
+            <strong>Fonte pagadora:</strong> Quem te pagou (CPF ou CNPJ)</p>
+
+            <h3>4.4. Tipos de Rendimento</h3>
+            <p>O sistema oferece várias categorias. Para músicos, use:</p>
+            <ul>
+                <li><strong>Outros Rendimentos</strong> (mais comum): Cachês de shows, Aulas particulares, Produção musical, Participações</li>
+                <li><strong>Aluguéis</strong> (se aplicável): Aluguel de instrumentos, espaço de estúdio</li>
+            </ul>
+
+            <h3>4.5. Receitas Fracionadas vs. Consolidadas</h3>
+            <p><strong>Recomendação:</strong> Lance separadamente se tiver poucos shows. Consolide se tiver muitos da mesma fonte pagadora. No entanto, se você utiliza o Músico Pro, ele já irá consolidar tudo lindamente para você extrair o relatório de importar direto na plataforma da Receita!</p>
+
+            <h3>4.6. Receitas em Dinheiro (Sem Comprovante)</h3>
+            <p><strong>Situação comum:</strong> Tocou em evento, recebeu R$ 800 em dinheiro vivo.</p>
+            <p>A RFB aceita lançamentos mesmo sem comprovante completo. O fundamental é <strong>declarar a renda</strong>.</p>
+
+            <h2>5. LANÇAMENTO DE DESPESAS: GUIA DEFINITIVO</h2>
+
+            <h3>5.1. Conceito de Despesa Dedutível</h3>
+            <p><strong>Despesa dedutível</strong> é um gasto que:</p>
+            <ol>
+                <li>Foi <strong>necessário</strong> para obter a receita</li>
+                <li>Está relacionado à sua <strong>atividade profissional</strong></li>
+                <li>Possui <strong>comprovação fiscal</strong> (NF, recibo)</li>
+                <li>Foi pago no mesmo mês em que está deduzindo</li>
+            </ol>
+
+            <h3>5.2. Por que Deduzir Despesas?</h3>
+            <code>
+Algoritmo Rápido:
+Base de Cálculo = Receita Bruta - Despesas - INSS
+Imposto = Base de Cálculo × Alíquota - Parcela a Deduzir
+            </code>
+            <p>Sem despesas, a Base de Cálculo é maior (e o imposto sobe agressivamente). Com as despesas lançadas corretamente, a Base cai e o Imposto pode até mesmo chegar a <strong>ZERO (ISENTO)!</strong></p>
+
+            <h3>5.5. Despesas Comuns para Músicos (com Exemplos)</h3>
+
+            <h4>🚗 Transporte</h4>
+            <ul>
+                <li><strong>O que PODE:</strong> Uber para show (com recibo), combustível no dia (com NF), estacionamento do local (NF).</li>
+                <li><strong>O que NÃO PODE:</strong> IPVA, seguro (são do veículo).</li>
+            </ul>
+
+            <h4>🎸 Equipamentos</h4>
+            <ul>
+                <li><strong>O que PODE:</strong> Cordas, baquetas, manutenção (luthier), cabos.</li>
+                <li><strong>O que NÃO PODE:</strong> Compra de Bens duráveis caros de uma vez como despesa de livro caixa (ex: Bateria de R$ 10.000, isso entra na ficha Bens e Direitos).</li>
+            </ul>
+
+            <h4>📢 Marketing e Divulgação</h4>
+            <ul>
+                <li><strong>O que PODE:</strong> Tráfego Pago, Designer de arte, fotógrafo, clipe musical. (Sempre com NFs ou faturas válidas!).</li>
+            </ul>
+
+            <div class="box tip no-break">
+                <p>Dentro do App Músico Pro, você já cadastra suas despesas com tags e categorias de despesa. O App cruza as informações automaticamente ao final do mês, dizendo exatamente o que entra no Carnê-Leão e o que não entra.</p>
+            </div>
+
+            <div class="page-break"></div>
+
+            <h2>6. CÁLCULO DO IMPOSTO: ENTENDENDO A FÓRMULA</h2>
+
+            <h3>6.1. Fórmula Completa</h3>
+            <ol>
+                <li>Receita Bruta = Soma de todas as receitas do mês</li>
+                <li>Despesas Dedutíveis = Soma de todas as despesas lançadas</li>
+                <li>INSS = Contribuição previdenciária paga</li>
+                <li>Base de Cálculo = Receita Bruta - Despesas - INSS</li>
+                <li>Identificar Faixa da Tabela</li>
+                <li>Aplicar Fórmula = (Base × Alíquota) - Parcela a Deduzir</li>
+                <li>Imposto Devido</li>
+            </ol>
+
+            <h3>6.3. Exercício Prático 1: Caso Simples</h3>
+            <p><strong>Dados:</strong> Receita: R$ 3.000 / Despesas: R$ 500 / INSS: R$ 300</p>
+            <p><strong>Cálculo:</strong> Base = 3.000 - 500 - 300 = R$ 2.500</p>
+            <p>Utilizando a alíquota respectiva para base 2500 (7,5%) e descontando parcela: Resulta no DARF à recolher.</p>
+
+            <h3>6.5. Por que a "Parcela a Deduzir"?</h3>
+            <p>A tabela é <strong>progressiva</strong>, não linear. Você não paga 27,5% sobre tudo. A <strong>parcela a deduzir</strong> simplifica a matemática no final, subtraindo os "créditos" das faixas mais baixas sobre as quais o percentual foi maior do que deveria ser na conta direta.</p>
+
+            <h2>7. GERAÇÃO E PAGAMENTO DO DARF</h2>
+
+            <p><strong>O que é DARF?</strong> DARF = Documento de Arrecadação de Receitas Federais. O "boleto" para pagar o imposto.</p>
+            <ul>
+                <li>Gerado através do Carnê-Leão Web após finalizar o mês.</li>
+                <li><strong>Vencimento:</strong> Último dia útil do mês <strong>seguinte</strong> (recebimentos de Março vencem no final de Abril).</li>
+                <li><strong>Se o Imposto for R$ 0,00?</strong> Não gera DARF e nem deve pagar nada, mas sua prestação de contas no Livro Caixa foi cumprida.</li>
+            </ul>
+
+            <div class="box warning no-break">
+                <p>Guarde todo ano seus comprovantes por 5 anos (PDF do DARF e PDF da confirmação bancária).</p>
+            </div>
+
+            <h2>8. CARNÊ-LEÃO EM ATRASO: REGULARIZAÇÃO</h2>
+            <p>Atrasou? É muito melhor regularizar AGORA pagando juros justos + Multa (20% limite máximo para regularização voluntária) do que ser pego na malha fina por <strong>Omissão de Receitas</strong> e pagar multa punitiva de 75%.</p>
+            <p>No site <strong>Sicalc Web</strong> ou no próprio Carnê Leão, os valores atrasados são recalculados com o índice da Taxa Selic automaticamente.</p>
+
+            <h2>9. INTEGRAÇÃO COM A DECLARAÇÃO ANUAL</h2>
+
+            <p>Isso é a cereja do bolo! Chegando a época da Declaração de IRPF Anual, ao abrir o Programa gerador do governo, basta selecionar <strong>Importar dados do Carnê-Leão</strong> e todo ou seu sofrimento com relatórios mensais some num clique.</p>
+            <p>Ou, caso use o Músico Pro de forma disciplinada, o relatório fornecido pelo App refletirá perfeitamente todas as linhas do fluxo da declaração.</p>
+
+            <h2>10. 15 EXERCÍCIOS PRÁTICOS RESOLVIDOS</h2>
+            <p>Nesta seção, consolidamos casos que acontecem com os músicos em geral:</p>
+
+            <h3>Exercício 6: Múltiplas Fontes Pagadoras</h3>
+            <p>Você tocou no Bar A, B, aulas pra João, etc. Se a receita total no mês for R$ 3.500, despesas forem de R$ 650 e INSS R$ 350. Base final: R$ 2500.</p>
+            <p>Isso recai na casa dos 7,5%, fazendo pagar dezoito reais. Uma pessoa que não preencheu despesas basearia os impostos em 3150 e pagaria quase dez vezes mais!</p>
+
+            <h3>Exercício 8: Eventos Grandes que consomem "muita grama"</h3>
+            <p>Show do ano pagou R$ 8.000, mas a equipe te custou R$ 5.000 em recibos pagos (roadies, designers, aluguel de backline). Não tenha medo, deduzindo estes 5 mil no Livro-Caixa ou apontando na sua organização, a sua base do IR será apenas o saldo limpo.</p>
+            <p><strong>Despesas bem documentadas reduzem drasticamente ou zeram o imposto do mês.</strong></p>
+
+            <h3>Exercício 13: Sou CLT de dia e Músico à Noite</h3>
+            <p>Essa é a pegadinha. Lance no Carnê-Leão APENAS A PARTE RELATIVA AOS SEUS SHOWS. O seu salário mensal da Empregadora (que ela pagou retenção) você colocará lá na época da declaração Anual direto no App do IR do Governo. Não misture esses dois recolhimentos todos os meses no Carnê Leão para não causar bitributação à toa na ponta do seu bolso.</p>
+
+            <div class="page-break"></div>
+
+            <h1 class="text-center">✅ CHECKLIST MENSAL CARNÊ-LEÃO</h1>
+            <h3 class="text-center" style="margin-top: 0;">Rotina Completa do Músico Autônomo</h3>
+
+            <h2>📅 DURANTE O MÊS (Dia a Dia)</h2>
+
+            <h3>☑️ Toda vez que receber um pagamento:</h3>
+            <ul>
+                <li><strong>Anotar imediatamente</strong> os dados (Data, Valor bruto, Nome de quem pagou, CPF/CNPJ, Descrição).</li>
+                <li><strong>Tirar print/foto</strong> do comprovante (Pix, extrato ou recibo).</li>
+                <li><strong>Solicitar dados</strong> do pagador, caso não tenha. Diga: "Preciso do seu CPF/CNPJ para minha contabilidade".</li>
+            </ul>
+
+            <h3>☑️ Toda vez que tiver uma despesa profissional:</h3>
+            <ul>
+                <li><strong>Solicitar nota fiscal</strong> COM SEU CPF.</li>
+                <li><strong>Se não der nota fiscal</strong>, peça um recibo completo (Nome, CPF/CNPJ, Data, Descrição, Valor e Assinatura).</li>
+                <li><strong>Guardar comprovante imediatamente</strong> (Foto do cupom fiscal não pode faltar, pois ele apaga rápido).</li>
+                <li><strong>Organizar:</strong> Insira o lançamento e anexe a foto da nota diretamente no Músico Pro.</li>
+            </ul>
+
+            <h2>📊 FIM DO MÊS (Dias 25-30)</h2>
+
+            <h3>ETAPA 1: ORGANIZAR DOCUMENTOS (10 minutos)</h3>
+            <ul>
+                <li><strong>Conferir se está faltando algo:</strong> Algum pagamento que você recebeu mas não anotou? Alguma despesa sem nota/recibo?</li>
+                <li>Se você usa o <strong>Músico Pro</strong>, tudo já estará listado, somado e organizado na palma da sua mão!</li>
+            </ul>
+
+            <h3>ETAPA 2: LANÇAR NO SISTEMA OFICIAL (15 minutos)</h3>
+            <h4>🎯 Acessar o Carnê-Leão Web</h4>
+            <ul>
+                <li>Entrar no portal e-CAC: https://cav.receita.fazenda.gov.br</li>
+                <li>Fazer Login com Gov.br (nível prata ou ouro) e menu "Declarações e Demonstrativos" → Carnê-Leão.</li>
+            </ul>
+
+            <h4>💰 Lançar Receitas / 💸 Despesas</h4>
+            <p>Copie os lançamentos e totais do mês organizados no seu App Músico Pro. Insira cada item no sistema da Receita Federal preenchendo os dados do cliente ou fornecedor rigorosamente.</p>
+
+            <h4>🏛️ Lançar INSS (se aplicável)</h4>
+            <p>Se você paga INSS autônomo como contribuinte individual (NÃO CONFUNDA com INSS já retido do seu emprego como CLT), preencha o valor pago no mês.</p>
+
+            <h3>ETAPA 3: CONFERIR E CALCULAR (5 minutos)</h3>
+            <ul>
+                <li>O Sistema Web governamental calculará automaticamente a sua Base de Cálculo e o Imposto Devido cruzando suas Receitas com as Despesas de Trabalho Autônomo repassadas do App Músico Pro.</li>
+                <li>Se o valor for R$ 0,00 → Você está isento de pagar imposto neste mês. Seu dever fiscal acabou.</li>
+            </ul>
+
+            <h3>ETAPA 4: GERAR DARF (2 minutos)</h3>
+            <ul>
+                <li>Apenas se houver imposto a pagar (> R$ 0,00).</li>
+                <li>Clique em "DARF", confira e gere o documento (o Vencimento cai legalmente sempre no último dia útil do mês seguinte).</li>
+                <li><strong>Salve em PDF e não deixe para pagar na última hora!</strong></li>
+            </ul>
+
+            <h2>💳 MÊS SEGUINTE (Até o último dia útil)</h2>
+            <h3>☑️ PAGAR O DARF e GUARDAR O COMPROVANTE</h3>
+            <ul>
+                <li>Pague via Internet Banking, Pix ou Lotérica.</li>
+                <li><strong>SALVE O COMPROVANTE BANCÁRIO DE PAGAMENTO</strong> junto com o arquivo PDF do seu DARF gerado. Lembre-se, um arquivamento fiscal sem o comprovante de pagamento é inválido perante o Leão. Faça backup físico ou na nuvem destes pares por até 5 anos.</li>
+            </ul>
+
+            <div class="page-break"></div>
+
+            <h2>📋 CHECKLIST RÁPIDO PARA IMPRIMIR</h2>
+            <div class="box tip no-break">
+                <h4>✅ DURANTE O MÊS</h4>
+                <ul>
+                    <li>[ ] Anotar cada recebimento (data, valor, quem pagou).</li>
+                    <li>[ ] Guardar comprovantes de receitas (Pix/Extratos).</li>
+                    <li>[ ] Pedir nota fiscal COM CPF em todas as despesas da atividade.</li>
+                    <li>[ ] Anexar todos os recibos e comprovantes dentro do Músico Pro.</li>
+                </ul>
+                <h4>✅ FIM DO MÊS (Dias 25-30)</h4>
+                <ul>
+                    <li>[ ] Abrir os Relatórios e Transações e conferir a consolidação no Músico Pro (1 min).</li>
+                    <li>[ ] Acessar Carnê-Leão Web pela Receita Federal.</li>
+                    <li>[ ] Lançar receitas e despesas mensais apuradas no App na plataforma oficial.</li>
+                    <li>[ ] Gerar DARF (se houver imposto finalizado) e salvar o PDF.</li>
+                </ul>
+                <h4>✅ MÊS SEGUINTE</h4>
+                <ul>
+                    <li>[ ] Pagar DARF gerado no seu banco on-line antes do último dia útil deste mês seguinte.</li>
+                    <li>[ ] Salvar comprovante deste pagamento junto ao PDF da guia e fechar seu Backup na nuvem com segurança.</li>
+                </ul>
+            </div>
+
+            <h2>⏰ DICAS DE ORGANIZAÇÃO: A FÓRMULA MÚSICO PRO</h2>
+            <p>Esqueça perder seus recibos desbotados na mochila, sofrer montando planilhas travadas no Excel ou depender de anotações caóticas no bloco de notas do celular que são esquecidas no fim do mês.</p>
+            <ol>
+                <li><strong>No seu dia-a-dia:</strong> Registre as transações financeiras no Músico Pro assim que elas acontecerem. E tire a foto/Print dos anexos e cupons na hora para o fluxo.</li>
+                <li><strong>No fim do mês:</strong> Em vez de gastar preciosas horas caçando comprovantes perdidos na galeria quilométrica do celular, você simplesmente abre e copia o resumo pronto e classificado pelo seu sistema nas poucas caixas de texto do Leão, gastando apenas de 15 a 20 minutos de paz na Receita Federal.</li>
+                <li><strong>Fechamento Certeiro:</strong> Defina um Lembrete no seu calendário do celular para a checagem quinzenal e outra para o Repasse de Dados Fiscal (Ex: Dia 28 de todos os meses, o Dia Livre da Organização). E aproveite a vida produzindo música!</li>
+            </ol>
+
+            <div class="box success no-break">
+                <h2 style="margin-top: 0; border: none;">💡 A MISSÃO DO MÚSICO PRO</h2>
+                <p>Nós criamos o Músico Pro App para impedir que você tenha que decorar cada uma dessas regras na ponta da língua todos os meses.</p>
+                <p>Todas as despesas que são de categoria dedutível já estão selecionadas; O cálculo de Livro-Caixa e Impostos que mostrei sendo feito à mão nas demonstrações rola sozinho, ao vivo, conforme você atualiza o Fluxo e Orçamento dentro da Plataforma.</p>
+                <p>Não há mais erro matemático nem risco fiscal se você plugar seu modelo de negócios em nossa ferramenta.</p>
+            </div>
+        </div>
+`;
+
+export default function CarneLeaoDeepDive() {
+    return (
+        <div className="bg-[#f8fafc] h-full rounded-xl overflow-hidden">
+            <style dangerouslySetInnerHTML={{ __html: GUIDE_PRO_STYLE }} />
+            <div
+                className="guide-pro-doc bg-transparent p-0 max-w-full"
+                dangerouslySetInnerHTML={{ __html: CONTENT }}
+            />
+        </div>
+    );
 }

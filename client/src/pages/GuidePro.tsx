@@ -22,7 +22,7 @@ import {
 
 // Se não tiver os componentes criados, o código usará placeholders para não quebrar
 // Caso tenha, descomente as importações reais
-// import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
+import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
 // import DeducoesDeepDive from '@/components/DeducoesDeepDive';
 // import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
 // import RPADeepDive from '@/components/RPADeepDive';
@@ -250,7 +250,7 @@ export default function GuidePro() {
 
                   {status !== 'idle' && (
                     <div className={`rounded-xl p-3 text-sm text-center font-medium ${status === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
-                        status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800 border border-red-200' : 'bg-blue-100 text-blue-800 border border-blue-200'
+                      status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800 border border-red-200' : 'bg-blue-100 text-blue-800 border border-blue-200'
                       }`}>
                       {status === 'checking' ? <span className="flex items-center justify-center gap-2"><Loader2 className="animate-spin w-4 h-4" /> Autenticando...</span> : msg}
                     </div>
@@ -318,8 +318,9 @@ export default function GuidePro() {
               {/* CONTEÚDO */}
               <div className="pro-content">
                 {activeModule === 'completo' && <GuiaCompleto />}
+                {activeModule === 'carneLeao' && <CarneLeaoDeepDive />}
 
-                {activeModule !== 'completo' && (
+                {activeModule !== 'completo' && activeModule !== 'carneLeao' && (
                   <div className="prose text-[#0c2461]">
                     <p className="text-lg">Conteúdo do módulo: <strong>{activeModuleData?.title}</strong></p>
                     <p>Aqui entrará o material aprofundado sobre este tema em breve.</p>
