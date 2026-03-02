@@ -27,13 +27,19 @@ import Footer from '@/components/Footer';
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 
 const getProEmail = () => localStorage.getItem('musicopro_email') || '';
-const setProEmail = (email: string) =>
-  localStorage.setItem('musicopro_email', email);
+const setProEmail = (email: string) => localStorage.setItem('musicopro_email', email);
+const getProTx = () => localStorage.getItem('musicopro_tx') || '';
+const setProTx = (tx: string) => localStorage.setItem('musicopro_tx', tx);
+
 const setProActive = (active: boolean) =>
   localStorage.setItem('musicopro_pro', active ? 'true' : 'false');
 
-async function verificarLicencaPorEmail(email: string): Promise<boolean> {
-  const res = await fetch(`${PRO_API}?email=${encodeURIComponent(email)}`);
+async function verificarLicencaPorEmail(email: string, transaction: string): Promise<boolean> {
+  const res = await fetch(PRO_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, transaction })
+  });
   const data = await res.json();
   return data?.active === true;
 }
@@ -42,6 +48,7 @@ export default function Premium() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   const [email, setEmail] = useState('');
+  const [transaction, setTransaction] = useState('');
   const [accessError, setAccessError] = useState('');
   const [activeSection, setActiveSection] = useState('carneLeao');
 
@@ -75,11 +82,12 @@ export default function Premium() {
   ===================================================== */
   useEffect(() => {
     const savedEmail = getProEmail();
-    if (!savedEmail) return;
+    const savedTx = getProTx();
+    if (!savedEmail || !savedTx) return;
 
     (async () => {
       try {
-        const ok = await verificarLicencaPorEmail(savedEmail);
+        const ok = await verificarLicencaPorEmail(savedEmail, savedTx);
         if (ok) {
           setProActive(true);
           document.body.classList.add('pro-enabled');
@@ -98,23 +106,25 @@ export default function Premium() {
     e.preventDefault();
     setAccessError('');
 
-    const normalized = email.trim().toLowerCase();
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
-    if (!emailOk) {
-      setAccessError('Digite o e-mail usado na compra.');
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedTx = transaction.trim().toUpperCase();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
+    if (!emailOk || !normalizedTx.startsWith('HP')) {
+      setAccessError('Digite o e-mail e o código da transação da Hotmart (ex: HP...).');
       return;
     }
 
     try {
-      const ok = await verificarLicencaPorEmail(normalized);
+      const ok = await verificarLicencaPorEmail(normalizedEmail, normalizedTx);
 
       if (!ok) {
-        setAccessError('Licença não encontrada para este e-mail.');
+        setAccessError('Licença não encontrada para estes dados.');
         return;
       }
 
       // Marca PRO (mesmo padrão do PWA)
-      setProEmail(normalized);
+      setProEmail(normalizedEmail);
+      setProTx(normalizedTx);
       setProActive(true);
       document.body.classList.add('pro-enabled');
       setIsLocked(false);
@@ -216,17 +226,25 @@ export default function Premium() {
                 </h3>
 
                 <form onSubmit={handleActivateByEmail} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-[#0c2461] mb-2">
-                      E-mail usado na compra
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-[#0c2461] mb-1">
+                      Dados da compra na Hotmart
                     </label>
                     <input
                       id="pro-email"
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="seuemail@dominio.com"
-                      className="w-full px-4 py-3 border border-[#d4af37] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0c2461]"
+                      placeholder="E-mail de compra"
+                      className="w-full px-4 py-3 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0c2461]"
+                    />
+                    <input
+                      id="pro-tx"
+                      type="text"
+                      value={transaction}
+                      onChange={(e) => setTransaction(e.target.value)}
+                      placeholder="Código Transação (Ex: HP...)"
+                      className="w-full px-4 py-3 border border-[#E8E3DC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0c2461]"
                     />
                     {accessError && (
                       <p className="text-sm text-[#C85A54] mt-2">{accessError}</p>

@@ -7,8 +7,12 @@ const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 const getProEmail = () => localStorage.getItem('musicopro_email') || '';
 const setProEmail = (email: string) => localStorage.setItem('musicopro_email', email);
 
-async function verificarLicencaPorEmail(email: string): Promise<boolean> {
-  const res = await fetch(`${PRO_API}?email=${encodeURIComponent(email)}`);
+async function verificarLicencaPorEmail(email: string, transaction: string): Promise<boolean> {
+  const res = await fetch(PRO_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, transaction })
+  });
   const data = await res.json();
   return data?.active === true;
 }
@@ -16,61 +20,89 @@ async function verificarLicencaPorEmail(email: string): Promise<boolean> {
 type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
 const GUIDE_FREE_HTML =
-  "<h2>O Guia Essencial do Músico: Sobrevivendo aos Impostos</h2>\
-  <p>Ser músico profissional no Brasil exige mais do que talento no palco; exige organização financeira. Se você toca na noite, dá aulas ou é freelancer, este guia rápido vai salvar seu bolso e evitar multas da Receita Federal.</p>\
+  "<h2>Parte 1: Fundamentos do Imposto para Músicos</h2>\
+  <p>Para a Receita Federal, <span class='highlight' style='background-color:#fef3c7; padding:2px 4px; border-radius:4px; font-weight:bold;'>renda</span> é todo valor recebido que aumenta seu patrimônio e não possui caráter de devolução.</p>\
 \
-  <h3>1. As Duas Formas de Receber</h3>\
-  <p>A primeira coisa que você precisa entender é de onde vem o seu dinheiro:</p>\
+  <h3>💰 Renda tributável na música:</h3>\
   <ul>\
-    <li><strong>De Empresa (CNPJ):</strong> Quando um bar ou produtora te contrata via RPA (Recibo de Pagamento a Autônomo). Eles já retêm o imposto e o INSS na fonte. Você recebe o valor <em>líquido</em>.</li>\
-    <li><strong>De Pessoa Física (PF):</strong> Cachês de shows particulares (como casamentos), aulas de música para alunos particulares, etc. <strong>É aqui que mora o perigo!</strong> Esse dinheiro entra limpo na sua conta, e é sua obrigação declarar e pagar o imposto todo mês através do <strong>Carnê-Leão</strong>.</li>\
+      <li><strong>Cachês</strong> de shows (ao vivo/online)</li>\
+      <li><strong>Direitos autorais</strong> e conexos</li>\
+      <li><strong>Aulas</strong> particulares ou online</li>\
+      <li><strong>Vendas</strong> de merchandising/produtos digitais</li>\
+      <li><strong>Plataformas digitais</strong> (YouTube, Spotify)</li>\
+      <li><strong>Participações</strong> em eventos</li>\
   </ul>\
 \
-  <h3>2. O Que é o Carnê-Leão?</h3>\
-  <p>O Carnê-Leão é o recolhimento mensal obrigatório do Imposto de Renda para quem recebe de Pessoa Física ou do exterior. Se você ganha acima da faixa de isenção mensal (em 2024, R$ 2.259,20), você <strong>precisa</strong> emitir o DARF e pagar no mês seguinte.</p>\
-  <p>Não espere até a Declaração Anual! Deixar para pagar tudo no ano seguinte gera multas altíssimas (de 20% a 50%) e juros.</p>\
+  <div class='box success'>\
+      <h4>🎯 Regra de Ouro</h4>\
+      <p><strong>Cachês são SEMPRE renda tributável</strong>, independentemente de: frequência, meio de pagamento, quem pagou, ou valor individual.</p>\
+  </div>\
 \
-  <h3>3. O Segredo: Livro Caixa e Despesas Dedutíveis</h3>\
-  <p>A boa notícia é que você não paga imposto sobre tudo que entra. A Receita permite que profissionais autônomos abatam (deduzam) gastos essenciais para o trabalho usando o <strong>Livro Caixa</strong>.</p>\
-  <p>O que você <strong>pode</strong> abater (desde que tenha recibo/nota no seu CPF):</p>\
-  <ul>\
-    <li>Transporte para os shows (Uber, 99, Táxi, passagens).</li>\
-    <li>Manutenção de instrumentos (luthier, cordas, palhetas, baquetas).</li>\
-    <li>Aluguel de estúdio de ensaio ou gravação.</li>\
-    <li>Marketing, anúncios e honorários de contador.</li>\
-  </ul>\
-  <p>O que você <strong>NÃO pode</strong> abater:</p>\
-  <ul>\
-    <li>Compra de instrumentos musicais (isso é patrimônio, não despesa de custeio).</li>\
-    <li>Roupas para show (a Receita não aceita, salvo raras exceções de EPI).</li>\
-    <li>Alimentação padrão do dia a dia.</li>\
-  </ul>\
+  <h3>2. Obrigatoriedade da Declaração</h3>\
+  <p><strong>Você DEVE declarar se (regras 2026 / ano-base 2025):</strong></p>\
+  <ol style='margin-left:1.5rem; margin-bottom:1rem;'>\
+      <li>Recebeu rendimentos tributáveis acima de R$ 33.888,00 no ano</li>\
+      <li>Recebeu rendimentos isentos acima de R$ 200.000,00</li>\
+      <li>Possui bens acima de R$ 800.000,00</li>\
+      <li>Teve imposto retido na fonte (RPA)</li>\
+  </ol>\
 \
-  <h3>4. A Conta Mágica da Sobra Real</h3>\
-  <div class='box'>\
-    <h4>💡 Exemplo de Mês Típico (A Força da Dedução)</h4>\
-    <p>Imagine que você faturou <strong>R$ 4.000</strong> dando aulas e tocando em festas (PF).</p>\
-    <ul>\
-      <li><strong>Sem organização:</strong> Você paga o imposto sobre os R$ 4.000 (aprox. R$ 263,00 de IR).</li>\
-      <li><strong>Com Livro Caixa:</strong> Você registra R$ 1.000 de despesas dedutíveis (Uber, cordas, estúdio). A base cai para R$ 3.000. O imposto cai para R$ 55,00.</li>\
-    </ul>\
-    <p><strong>A organização te economizou mais de R$ 200 em um único mês!</strong></p>\
-  </div>";
+  <div class='box tip'>\
+      <p>A maioria dos músicos que buscam profissionalização precisa declarar. A declaração não significa pagamento de imposto, mas sim obrigação de informar e justificar o aumento do seu patrimônio (como a compra de um instrumento caro).</p>\
+  </div>\
+\
+  <h3>3. Meios de Recebimento: O Mito do Pix</h3>\
+  <p><strong>Não existe \"imposto sobre Pix\".</strong> O Pix é apenas meio de pagamento. O imposto incide sobre a origem e natureza do dinheiro (seus cachês).</p>\
+\
+  <div class='box warning'>\
+      <p>A Receita Federal cruza dados bancários, transferências Pix, cartões e notas fiscais. A falta de declaração de milhares de reais recebidos via Pix pode levar à presunção de renda omitida, com multas altíssimas.</p>\
+      <p><strong>O problema não é o Pix. O problema é a omissão de renda.</strong></p>\
+  </div>\
+\
+  <h3>4. Pessoa Física (PF) vs. Pessoa Jurídica (PJ)</h3>\
+  <p>Qual regime você se encaixa hoje?</p>\
+  <table style='width:100%; text-align:left; border-collapse:collapse; margin-top:1rem; margin-bottom:1rem; border:1px solid #e2e8f0; font-size:0.9rem;'>\
+      <thead>\
+          <tr style='background-color:#f1f5f9;'>\
+              <th style='padding:0.5rem; border:1px solid #e2e8f0;'>Situação</th>\
+              <th style='padding:0.5rem; border:1px solid #e2e8f0;'>Modelo</th>\
+              <th style='padding:0.5rem; border:1px solid #e2e8f0;'>Tributação</th>\
+          </tr>\
+      </thead>\
+      <tbody>\
+          <tr>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>Músico Autônomo (Cachês Eventuais, Aulas Particulares)</td>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>PF</td>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>Carnê-Leão mensal obrigatório</td>\
+          </tr>\
+          <tr>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>Músico MEI (Baixo Faturamento)</td>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>Microempreendedor Individual</td>\
+              <td style='padding:0.5rem; border:1px solid #e2e8f0;'>Aberto ~R$ 77/mês Fixo</td>\
+          </tr>\
+      </tbody>\
+  </table>\
+  <p>Enquanto você for Pessoa Física (CPF), a lei te obriga a usar o <strong>Carnê-Leão e o Livro Caixa</strong>. É no Livro Caixa que moram as Deduções Legais — Onde você legalmente abate seus gastos para pagar menos imposto. Isso você aprende a fundo no Pacote PRO.</p>";
 
 const CONTENT_STYLE = `
-  .guide-content h2 { font-size: 1.5rem; font-weight: 800; margin: 2rem 0 1rem; color: #0c2461; }
+  .guide-content h2 { font-size: 1.5rem; font-weight: 800; margin: 2rem 0 1rem; color: #0c2461; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
   .guide-content h3 { font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: #0c2461; display: flex; align-items: center; gap: 8px; }
-  .guide-content h4 { font-size: 1rem; font-weight: 700; margin: .5rem 0 .4rem; color: #0c2461; }
+  .guide-content h4 { font-size: 1rem; font-weight: 800; margin: 0 0 .5rem; color: inherit; }
   .guide-content p { line-height: 1.75; color: #334155; margin: .75rem 0; font-size: 1.05rem; }
   .guide-content ul { margin: .5rem 0 1rem 1.2rem; color: #334155; list-style-type: disc; }
   .guide-content li { margin: .35rem 0; line-height: 1.6; }
   .guide-content code { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-family: monospace; color: #d4af37; font-weight: 700; border: 1px solid #e2e8f0; }
-  .guide-content .box { border: 1px solid #e2e8f0; border-left: 4px solid #d4af37; background: #f8fafc; border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .guide-content .box { border-radius: 8px; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .guide-content .box.success { background-color: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #16a34a; color: #166534; }
+  .guide-content .box.tip { background-color: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #3b82f6; color: #1e3a8a; }
+  .guide-content .box.warning { background-color: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #d97706; color: #92400e; }
+  .guide-content .box p { color: inherit; margin-bottom: 0; }
 `;
 
 export default function Guide() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [transaction, setTransaction] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
   const [isPro, setIsPro] = useState(false);
@@ -88,26 +120,29 @@ export default function Guide() {
   };
 
   const validate = async () => {
-    const normalized = email.trim().toLowerCase();
-    setEmail(normalized);
-    if (!normalized) {
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedTx = transaction.trim().toUpperCase();
+    setEmail(normalizedEmail);
+    setTransaction(normalizedTx);
+
+    if (!normalizedEmail || !normalizedTx.startsWith('HP')) {
       setStatus('error');
-      setMsg('Digite o e-mail usado na compra.');
+      setMsg('Digite o e-mail e o código da transação da Hotmart.');
       scrollToValidate(true);
       return;
     }
     try {
       setStatus('checking');
       setMsg('Validando…');
-      setProEmail(normalized);
-      const ok = await verificarLicencaPorEmail(normalized);
+      setProEmail(normalizedEmail);
+      const ok = await verificarLicencaPorEmail(normalizedEmail, normalizedTx);
       setIsPro(ok);
       if (ok) {
         setStatus('success');
         setMsg('✅ Pacote Músico Pro ativo! Guia PRO + App PRO liberados.');
       } else {
         setStatus('inactive');
-        setMsg('Licença não encontrada. Verifique se é o mesmo e-mail da compra.');
+        setMsg('Dados incorretos ou licença inativa. Verifique seu recibo.');
       }
     } catch (e) {
       setIsPro(false);
@@ -296,6 +331,7 @@ export default function Guide() {
 
                     <div className="space-y-3">
                       <input ref={emailRef} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail da compra" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="email" />
+                      <input value={transaction} onChange={(e) => setTransaction(e.target.value)} placeholder="Código Transação (Ex: HP...)" className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:ring-2 focus:ring-[#d4af37] outline-none" type="text" />
                       <button onClick={validate} disabled={status === 'checking'} className="w-full bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-50 text-white font-bold px-6 py-3 rounded-lg transition">
                         {status === 'checking' ? '...' : 'Liberar Acesso'}
                       </button>

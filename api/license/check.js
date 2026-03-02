@@ -46,9 +46,13 @@ export default async function handler(req, res) {
   const body = typeof req.body === "string" ? safeJsonParse(req.body) : req.body;
 
   const emailRaw = req.method === "GET" ? req.query?.email : body?.email;
+  const transactionRaw = req.method === "GET" ? req.query?.transaction : body?.transaction;
+
   const email = normalizeEmail(emailRaw);
+  const transaction = String(transactionRaw || "").trim().toUpperCase();
 
   if (!email) return json(res, 400, { ok: false, error: "missing_email" });
+  if (!transaction) return json(res, 400, { ok: false, error: "missing_transaction" });
 
   try {
     const key = `license:email:${email}`;
@@ -57,14 +61,22 @@ export default async function handler(req, res) {
     // Upstash REST pode devolver string/objeto; tratamos os dois
     const doc =
       typeof raw === "string" ? safeJsonParse(raw) :
-      (raw && typeof raw === "object" ? raw : null);
+        (raw && typeof raw === "object" ? raw : null);
 
     const active = Boolean(doc?.active);
+
+    // Validação de segurança: transação bate?
+    const savedTx = String(doc?.transaction || "").trim().toUpperCase();
+    const isValidTx = (transaction === savedTx) || (transaction === doc?.productUcode); // Aceita também o ucode do produto caso alguém use? melhor focar na transação.
+
+    if (active && (!savedTx || transaction !== savedTx)) {
+      return json(res, 401, { ok: false, error: "invalid_transaction", active: false });
+    }
 
     return json(res, 200, {
       ok: true,
       email,
-      active,
+      active: active && transaction === savedTx,
       lastEvent: doc?.lastEvent ?? null,
       updatedAt: doc?.updatedAt ?? null,
     });

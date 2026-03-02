@@ -35,10 +35,16 @@ const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 
 const getProEmail = () => localStorage.getItem('musicopro_email') || '';
 const setProEmail = (email: string) => localStorage.setItem('musicopro_email', email);
+const getProTx = () => localStorage.getItem('musicopro_tx') || '';
+const setProTx = (tx: string) => localStorage.setItem('musicopro_tx', tx);
 const setProActive = (active: boolean) => localStorage.setItem('musicopro_pro', active ? 'true' : 'false');
 
-async function verificarLicencaPorEmail(email: string): Promise<boolean> {
-  const res = await fetch(`${PRO_API}?email=${encodeURIComponent(email)}`);
+async function verificarLicencaPorEmail(email: string, transaction: string): Promise<boolean> {
+  const res = await fetch(PRO_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, transaction })
+  });
   const data = await res.json();
   return data?.active === true;
 }
@@ -49,6 +55,7 @@ export default function GuidePro() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   const [email, setEmail] = useState('');
+  const [transaction, setTransaction] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
 
@@ -69,11 +76,13 @@ export default function GuidePro() {
     } catch { }
 
     const savedEmail = getProEmail();
-    if (savedEmail) {
+    const savedTx = getProTx();
+    if (savedEmail && savedTx) {
       setEmail(savedEmail);
+      setTransaction(savedTx);
       (async () => {
         try {
-          const ok = await verificarLicencaPorEmail(savedEmail);
+          const ok = await verificarLicencaPorEmail(savedEmail, savedTx);
           if (ok) {
             setProActive(true);
             setIsLocked(false);
@@ -84,23 +93,31 @@ export default function GuidePro() {
   }, []);
 
   const validate = async () => {
-    const normalized = email.trim().toLowerCase();
-    setEmail(normalized);
-    if (!normalized) { setStatus('error'); setMsg('Digite o e-mail da compra.'); return; }
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedTx = transaction.trim().toUpperCase();
+    setEmail(normalizedEmail);
+    setTransaction(normalizedTx);
+
+    if (!normalizedEmail || !normalizedTx.startsWith('HP')) {
+      setStatus('error');
+      setMsg('Digite o e-mail e o código da transação da Hotmart (ex: HP...).');
+      return;
+    }
 
     try {
       setStatus('checking'); setMsg('Validando...');
-      const ok = await verificarLicencaPorEmail(normalized);
+      const ok = await verificarLicencaPorEmail(normalizedEmail, normalizedTx);
 
       if (ok) {
-        setProEmail(normalized);
+        setProEmail(normalizedEmail);
+        setProTx(normalizedTx);
         setProActive(true);
         setStatus('success');
         setMsg('✅ Acesso Liberado!');
         setTimeout(() => setIsLocked(false), 1000);
       } else {
         setStatus('inactive');
-        setMsg('Licença não encontrada.');
+        setMsg('Licença ou código não encontrados.');
       }
     } catch (err) {
       setStatus('error');
@@ -198,8 +215,15 @@ export default function GuidePro() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="E-mail usado na compra"
-                    className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white"
+                    className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white mb-3"
                     type="email"
+                  />
+                  <input
+                    value={transaction}
+                    onChange={(e) => setTransaction(e.target.value)}
+                    placeholder="Código Transação (Ex: HP...)"
+                    className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white"
+                    type="text"
                   />
 
                   {status !== 'idle' && (
