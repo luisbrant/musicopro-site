@@ -26,6 +26,7 @@ export default function Footer() {
               <a href="/#como-funciona" className="opacity-80 hover:text-[#d4af37] transition">Como Funciona</a>
               <a href="/#planos" className="opacity-80 hover:text-[#d4af37] transition">Planos e Preços</a>
               <a href="https://app.musicopro.app.br" className="opacity-80 hover:text-[#d4af37] transition">Entrar no App</a>
+              <Link href="/guia" className="opacity-80 hover:text-[#d4af37] transition">Guia Grátis IR</Link>
             </div>
           </div>
 
