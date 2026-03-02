@@ -16,7 +16,8 @@ import {
   BookOpen,
   Loader2,
   ArrowRight,
-  PlayCircle
+  PlayCircle,
+  CheckCircle2
 } from 'lucide-react';
 
 // Se não tiver os componentes criados, o código usará placeholders para não quebrar
@@ -53,7 +54,8 @@ type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
 export default function GuidePro() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLocked, setIsLocked] = useState(true);
+  // Inicialização síncrona evita piscar a tela de bloqueio se já tiver acesso
+  const [isLocked, setIsLocked] = useState(() => localStorage.getItem('musicopro_pro') !== 'true');
   const [email, setEmail] = useState('');
   const [transaction, setTransaction] = useState('');
   const [status, setStatus] = useState<Status>('idle');
@@ -184,62 +186,82 @@ export default function GuidePro() {
           /* =============================
              ESTADO BLOQUEADO
           ============================== */
-          <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E8E3DC]">
-            <div className="bg-[#0c2461] p-8 text-white text-center">
-              <Lock className="w-12 h-12 text-[#d4af37] mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-2">Módulo Avançado</h2>
-              <p className="opacity-80">Você entendeu o básico no Guia Grátis. Aqui aprofundamos a estratégia.</p>
-            </div>
+          <div className="min-h-[70vh] flex items-center justify-center -mt-4 md:-mt-8">
+            <div className="max-w-4xl w-full grid md:grid-cols-2 bg-white rounded-3xl shadow-2xl overflow-hidden border border-[#E8E3DC]">
+              {/* Lado Esquerdo - Apresentação */}
+              <div className="bg-[#0c2461] p-10 md:p-12 text-white flex flex-col justify-center relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#d4af37] opacity-10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
 
-            <div className="p-8 md:p-12 space-y-8">
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-[#0c2461]">Conteúdo exclusivo desta área:</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {modules.map(m => (
-                    <div key={m.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                      <m.icon className="w-5 h-5 text-[#d4af37] mt-1 shrink-0" />
-                      <span className="text-sm font-medium">{m.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-blue-50 border border-blue-100 p-6 rounded-xl">
-                <p className="text-sm font-bold text-[#0c2461] mb-3 text-center flex items-center justify-center gap-2">
-                  <Zap size={16} className="text-[#d4af37]" /> Já é aluno? Libere seu acesso:
+                <h2 className="text-sm font-bold tracking-widest text-[#d4af37] uppercase mb-3">Área de Membros</h2>
+                <h3 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">Músico Pro Academy</h3>
+                <p className="text-lg opacity-90 mb-8 leading-relaxed">
+                  Acesse o material Premium. Aprenda a reduzir seus impostos e profissionalizar de vez a sua carreira musical.
                 </p>
 
-                <div className="space-y-3">
-                  <input
-                    ref={emailRef}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="E-mail usado na compra"
-                    className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white mb-3"
-                    type="email"
-                  />
-                  <input
-                    value={transaction}
-                    onChange={(e) => setTransaction(e.target.value)}
-                    placeholder="Código da Transação Hotmart (Ex: HP...)"
-                    className="w-full px-4 py-3 rounded-lg border border-[#E8E3DC] focus:outline-none focus:ring-2 focus:ring-[#d4af37] bg-white"
-                    type="text"
-                  />
+                <ul className="space-y-4">
+                  <li className="flex items-center gap-3">
+                    <CheckCircle2 className="text-[#d4af37] w-6 h-6 shrink-0" />
+                    <span className="opacity-90 font-medium">Estratégias Avançadas de Dedução</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle2 className="text-[#d4af37] w-6 h-6 shrink-0" />
+                    <span className="opacity-90 font-medium">Tutoriais Práticos do Carnê-Leão</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle2 className="text-[#d4af37] w-6 h-6 shrink-0" />
+                    <span className="opacity-90 font-medium">Comparativo Completo: PF x MEI x PJ</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Lado Direito - Formulário de Acesso */}
+              <div className="p-8 md:p-12 flex flex-col justify-center bg-gray-50/50">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-blue-50 bg-opacity-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100">
+                    <Lock className="w-8 h-8 text-[#0c2461]" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-[#0c2461]">Acessar Conta</h4>
+                  <p className="text-sm text-gray-500 mt-2">Valide a sua compra da Hotmart</p>
+                </div>
+
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">E-mail de Comprador</label>
+                    <input
+                      ref={emailRef}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="seu@email.com"
+                      className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0c2461] bg-white text-[15px] transition-shadow shadow-sm"
+                      type="email"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Código da Transação</label>
+                    <input
+                      value={transaction}
+                      onChange={(e) => setTransaction(e.target.value)}
+                      placeholder="Ex: HP12345678"
+                      className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0c2461] bg-white text-[15px] transition-shadow shadow-sm"
+                      type="text"
+                    />
+                  </div>
 
                   {status !== 'idle' && (
-                    <div className={`rounded p-2 text-sm text-center font-medium ${status === 'success' ? 'bg-green-100 text-green-800' :
-                      status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
+                    <div className={`rounded-xl p-3 text-sm text-center font-medium ${status === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
+                        status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800 border border-red-200' : 'bg-blue-100 text-blue-800 border border-blue-200'
                       }`}>
-                      {status === 'checking' ? <span className="flex items-center justify-center gap-2"><Loader2 className="animate-spin w-4 h-4" /> Validando...</span> : msg}
+                      {status === 'checking' ? <span className="flex items-center justify-center gap-2"><Loader2 className="animate-spin w-4 h-4" /> Autenticando...</span> : msg}
                     </div>
                   )}
 
                   <button
                     onClick={validate}
                     disabled={status === 'checking' || status === 'success'}
-                    className="w-full bg-[#0c2461] hover:bg-[#1a3a7a] disabled:opacity-50 text-white font-bold px-6 py-3 rounded-lg transition"
+                    className="w-full bg-[#d4af37] hover:bg-[#c99a2e] disabled:opacity-50 text-[#0c2461] font-bold px-6 py-4 rounded-xl transition shadow-lg mt-2 text-lg"
                   >
-                    Desbloquear Agora
+                    Entrar na Plataforma
                   </button>
                 </div>
               </div>

@@ -30,7 +30,7 @@ export default function AppOnly() {
   const [transaction, setTransaction] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
-  const [isPro, setIsPro] = useState(false);
+  const [isPro, setIsPro] = useState(() => localStorage.getItem('musicopro_pro') === 'true');
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   const pwaUrlWithEmail = useMemo(() => {

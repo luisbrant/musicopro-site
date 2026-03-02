@@ -46,7 +46,7 @@ async function verificarLicencaPorEmail(email: string, transaction: string): Pro
 
 export default function Premium() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLocked, setIsLocked] = useState(true);
+  const [isLocked, setIsLocked] = useState(() => localStorage.getItem('musicopro_pro') !== 'true');
   const [email, setEmail] = useState('');
   const [transaction, setTransaction] = useState('');
   const [accessError, setAccessError] = useState('');
