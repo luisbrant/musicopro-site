@@ -52,7 +52,7 @@ export default function GuidePro() {
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
 
-  const [activeModule, setActiveModule] = useState<'completo'>('completo');
+  const [activeModule, setActiveModule] = useState<'completo' | 'carneLeao' | 'deducoes' | 'regimes' | 'rpa'>('completo');
   const emailRef = useRef<HTMLInputElement | null>(null);
 
   /* =====================================================
@@ -109,7 +109,11 @@ export default function GuidePro() {
   };
 
   const modules = [
-    { id: 'completo', title: 'Guia Completo 2025', icon: BookOpen },
+    { id: 'completo', title: 'Guia Base 2025', icon: BookOpen },
+    { id: 'carneLeao', title: 'Carnê-Leão na Prática', icon: BarChart3 },
+    { id: 'deducoes', title: 'Deduções Avançadas', icon: DollarSign },
+    { id: 'regimes', title: 'PF x MEI x Empresa', icon: TrendingUp },
+    { id: 'rpa', title: 'Retenção (RPA)', icon: AlertCircle },
   ] as const;
 
   // Lógica corrigida para renderização do ícone
@@ -200,7 +204,7 @@ export default function GuidePro() {
 
                   {status !== 'idle' && (
                     <div className={`rounded p-2 text-sm text-center font-medium ${status === 'success' ? 'bg-green-100 text-green-800' :
-                        status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
+                      status === 'error' || status === 'inactive' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
                       }`}>
                       {status === 'checking' ? <span className="flex items-center justify-center gap-2"><Loader2 className="animate-spin w-4 h-4" /> Validando...</span> : msg}
                     </div>
@@ -241,8 +245,8 @@ export default function GuidePro() {
                     key={m.id}
                     onClick={() => setActiveModule(m.id)}
                     className={`text-sm px-4 py-3 rounded-lg cursor-pointer transition flex items-center gap-3 ${activeModule === m.id
-                        ? 'bg-[#0c2461] text-white font-bold shadow-md'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-[#0c2461]'
+                      ? 'bg-[#0c2461] text-white font-bold shadow-md'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-[#0c2461]'
                       }`}
                   >
                     <m.icon size={18} className={activeModule === m.id ? 'text-[#d4af37]' : 'text-gray-400'} />
@@ -274,9 +278,23 @@ export default function GuidePro() {
                 </h2>
               </div>
 
-              {/* PLACEHOLDER DE CONTEÚDO (Substituir pelos componentes reais se tiver) */}
+              {/* CONTEÚDO */}
               <div className="pro-content">
                 {activeModule === 'completo' && <GuiaCompleto />}
+
+                {activeModule !== 'completo' && (
+                  <div className="prose text-[#0c2461]">
+                    <p className="text-lg">Conteúdo do módulo: <strong>{activeModuleData?.title}</strong></p>
+                    <p>Aqui entrará o material aprofundado sobre este tema em breve.</p>
+                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mt-4 flex gap-3 items-start">
+                      <PlayCircle className="w-6 h-6 text-[#d4af37] shrink-0" />
+                      <div>
+                        <p className="font-bold">Em Construção</p>
+                        <p className="text-sm opacity-80">Estamos preparando conteúdos práticos e vídeos detalhados para esta seção.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Call to Action Final */}
