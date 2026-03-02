@@ -243,15 +243,6 @@ export default function GuidePro() {
                   </button>
                 </div>
               </div>
-
-              <div className="text-center pt-4 border-t border-gray-100">
-                <p className="text-gray-500 mb-4 text-sm">Ainda não tem o Pacote Músico Pro?</p>
-                <Link href="/vendas">
-                  <button className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-bold px-8 py-3 rounded-xl transition shadow-lg w-full md:w-auto">
-                    Comprar Acesso Vitalício
-                  </button>
-                </Link>
-              </div>
             </div>
           </div>
         ) : (

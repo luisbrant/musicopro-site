@@ -6,6 +6,8 @@ import Footer from '@/components/Footer';
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
 const getProEmail = () => localStorage.getItem('musicopro_email') || '';
 const setProEmail = (email: string) => localStorage.setItem('musicopro_email', email);
+const getProTx = () => localStorage.getItem('musicopro_tx') || '';
+const setProTx = (tx: string) => localStorage.setItem('musicopro_tx', tx);
 
 async function verificarLicencaPorEmail(email: string, transaction: string): Promise<boolean> {
   const res = await fetch(PRO_API, {
@@ -135,6 +137,7 @@ export default function Guide() {
       setStatus('checking');
       setMsg('Validando…');
       setProEmail(normalizedEmail);
+      setProTx(normalizedTx);
       const ok = await verificarLicencaPorEmail(normalizedEmail, normalizedTx);
       setIsPro(ok);
       if (ok) {
