@@ -19,6 +19,13 @@ export default function Home() {
 
   // Scroll listener otimizado
   useEffect(() => {
+    // SEO
+    document.title = "MúsicoPro | Aplicativo de Gestão Financeira para Músicos";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "O MúsicoPro é o aplicativo definitivo de gestão financeira e recibos para músicos autônomos. Calcule o Carnê-Leão rápido e sem erros.");
+    }
+
     let ticking = false
     const handleScroll = () => {
       if (!ticking) {

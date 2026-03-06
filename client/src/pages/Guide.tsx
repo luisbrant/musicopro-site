@@ -155,6 +155,21 @@ export default function Guide() {
   };
 
   useEffect(() => {
+    // SEO
+    document.title = "Guia do Músico Autônomo | MúsicoPro";
+
+    // Meta Description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Descubra como proteger seu cachê da Malha Fina com o Guia do Músico Autônomo. O MúsicoPro descomplica o Carnê-Leão e recibos para músicos.");
+    }
+
+    // Meta Canonical
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute("href", "https://musicopro.app.br" + window.location.pathname);
+    }
+
     const saved = getProEmail().trim().toLowerCase();
     if (saved) setEmail(saved);
   }, []);
@@ -168,9 +183,9 @@ export default function Guide() {
           <div className="flex items-center gap-2">
             <Music className="w-8 h-8 text-[#d4af37]" />
             <div>
-              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              <span className="font-bold text-xl leading-none block" style={{ fontFamily: 'Lexend, sans-serif' }}>
                 Músico Pro
-              </h1>
+              </span>
               <p className="text-[10px] uppercase tracking-wider text-[#6ba587] font-bold">Guia</p>
             </div>
           </div>
@@ -183,8 +198,8 @@ export default function Guide() {
               </button>
             </Link>
           </nav>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
+            {mobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
       </header>
@@ -205,7 +220,7 @@ export default function Guide() {
               <div className="inline-block bg-[#d4af37] text-[#0c2461] px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
                 Módulo 1: Fundamentos
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold leading-tight">Guia do Músico Autônomo</h2>
+              <h1 className="text-3xl md:text-5xl font-bold leading-tight">Guia do Músico Autônomo</h1>
               <p className="text-lg opacity-90">
                 Aprenda a sobreviver ao leão sem precisar de contador. <br />
                 Para automatizar tudo isso, use o <strong>App Músico Pro</strong>.
