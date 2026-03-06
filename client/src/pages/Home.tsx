@@ -79,12 +79,15 @@ export default function Home() {
         <section className="bg-white pt-20 pb-24 px-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[120px] -z-10 translate-x-24 -translate-y-24" />
           <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+            <h1 className="text-lg md:text-xl text-[#d4af37] font-bold uppercase tracking-widest mb-4">
+              MúsicoPro: Gestão Financeira e Fiscal Descomplicada para Músicos
+            </h1>
+            <p className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
               Você já é profissional no palco.<br />
               <span className="text-[#d4af37]">Agora organize a carreira como um.</span>
-            </h1>
+            </p>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">
-              Sistema completo para controle de receitas, despesas, Carnê-Leão, recibos e relatórios — feito para quem vive de música.
+              O <strong>app para músicos</strong> definitivo: sistema completo de <strong>gestão financeira musical</strong> com controle de receitas, despesas, <strong>cálculo de imposto</strong>, Carnê-Leão e relatórios.
             </p>
             <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
@@ -114,8 +117,8 @@ export default function Home() {
               {/* NOTE: Add actual dashboard screenshot here later */}
               <div className="relative bg-gray-50 flex flex-col items-center justify-center p-0">
                 <img
-                  src="/images/dashboard-print.png"
-                  alt="Dashboard do MúsicoPro mostrando receita total, despesas e imposto estimado"
+                  src="/images/dashboard-print.webp"
+                  alt="Dashboard do MúsicoPro mostrando receita total, despesas dedutíveis e imposto estimado para o Carnê-Leão"
                   width={800}
                   height={500}
                   className="w-full rounded-2xl shadow-xl"
@@ -129,55 +132,60 @@ export default function Home() {
                 <div className="hidden text-center p-10 w-full min-h-[300px] flex-col justify-center items-center">
                   <BarChart2 size={64} className="text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-400 font-semibold text-xl">Print real do dashboard</p>
-                  <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.png</p>
+                  <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.webp</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 2. A DOR REAL */}
+        {/* 2. POR QUE O MÚSICO AUTÔNOMO PRECISA */}
         <section className="py-24 px-4 bg-slate-50 border-t border-gray-100">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 text-[#0c2461] text-center md:text-left leading-tight">
-              O palco é onde você domina.<br />
-              <span className="text-gray-500">O problema começa depois do show.</span>
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mb-16">
-              <div className="space-y-6 text-xl text-gray-700 font-medium">
-                <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>"Recebi três cachês esse mês. Quanto vou pagar de imposto? Não faço ideia."</p>
-                </div>
-                <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>"Fui chamar um contador. Ele nunca ouviu falar em cachê de show. Desisti."</p>
-                </div>
-                <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>"Sei que algumas despesas são dedutíveis. Só não sei quais."</p>
-                </div>
-              </div>
-              <div className="space-y-6 text-xl text-gray-700 font-medium md:mt-10">
-                <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>"Tenho medo de errar e ser chamado pela Receita."</p>
-                </div>
-                <div className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="text-[#0c2461] bg-red-50 p-3 rounded-xl min-w-max"><AlertCircle size={24} className="text-red-500" /></div>
-                  <p>"Cada hora que gasto com isso é uma hora a menos no instrumento."</p>
-                </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-sm md:text-base text-gray-500 font-bold uppercase tracking-widest mb-4">
+                Por que o músico autônomo precisa do MúsicoPro?
+              </h2>
+              <p className="text-4xl md:text-5xl font-extrabold mb-8 text-[#0c2461] leading-tight tracking-tight">
+                A vida de quem vive de música vai <span className="text-[#d4af37]">muito além do palco.</span>
+              </p>
+              <div className="text-xl md:text-2xl text-gray-600 font-medium leading-relaxed space-y-4">
+                <p>
+                  Depois que o show acaba, o equipamento é guardado e a adrenalina baixa, começa a verdadeira dor de cabeça: organizar os cachês, preencher recibos improvisados e lidar com o medo constante de cair na malha fina da Receita Federal.
+                </p>
+                <p className="font-bold text-[#0c2461] mt-8 p-6 bg-white rounded-2xl shadow-sm border border-gray-100 italic">
+                  O MúsicoPro foi desenhado exatamente para tirar esse peso das suas costas.
+                </p>
               </div>
             </div>
 
-            <div className="p-10 bg-white border-l-4 border-[#d4af37] shadow-sm rounded-r-3xl">
-              <p className="text-2xl font-bold text-[#0c2461] leading-relaxed mb-4">
-                Esses problemas não são sua culpa.
-              </p>
-              <p className="text-xl text-gray-600 font-medium leading-relaxed">
-                São a consequência de um sistema fiscal que nunca foi desenhado para quem vive de música. O MúsicoPro foi feito para mudar isso — porque a gente entende dos dois lados.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Emissão */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
+                <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">🧾</div>
+                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Emissão Imediata de Recibos de Cachê</h3>
+                <p className="text-gray-600 font-medium leading-relaxed">
+                  Chega de andar com bloquinhos de papelaria ou perder tempo montando PDFs no computador de casa. Com o MúsicoPro, você gera recibos profissionais, com validade legal e a sua identidade, direto do celular. O contratante pede o comprovante? Você envia pelo WhatsApp em menos de um minuto, antes mesmo de sair do bar ou do evento. Transmita profissionalismo e garanta o seu pagamento sem atrasos.
+                </p>
+              </div>
+
+              {/* Carnê-Leão */}
+              <div className="bg-[#0c2461] text-white p-8 md:p-10 rounded-3xl shadow-2xl border border-[#1a3a7a] transform md:-translate-y-4 transition duration-300 flex flex-col items-center text-center">
+                <div className="text-5xl mb-6 bg-white/10 w-20 h-20 flex items-center justify-center rounded-2xl">🦁</div>
+                <h3 className="text-2xl font-bold text-[#d4af37] mb-4 leading-snug">Cálculo Automático do Carnê-Leão sem Erros</h3>
+                <p className="text-gray-300 font-medium leading-relaxed">
+                  O leão da Receita Federal não perdoa cachês não declarados. Se você recebe de pessoas físicas (como em casamentos, formaturas ou aulas particulares), o Carnê-Leão é obrigatório. Mas você não precisa de um diploma em contabilidade para resolver isso. O aplicativo faz o cálculo automático dos seus impostos com base nos seus ganhos mensais, gerando os valores exatos para você ficar 100% regularizado e dormir tranquilo.
+                </p>
+              </div>
+
+              {/* Histórico */}
+              <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
+                <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">📊</div>
+                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Histórico Financeiro de Shows e Eventos</h3>
+                <p className="text-gray-600 font-medium leading-relaxed">
+                  Você sabe exatamente quanto ganhou de música no último mês? E quanto gastou com cordas, palhetas, transporte e manutenção de equipamentos? O MúsicoPro centraliza todo o seu fluxo de caixa. Tenha um histórico claro de todos os seus shows, saiba quem já pagou, quem ainda deve e entenda a real lucratividade da sua carreira musical.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -193,10 +201,10 @@ export default function Home() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
               {[
-                { icon: <BarChart2 size={28} />, title: 'Controle mensal de receitas' },
+                { icon: <BarChart2 size={28} />, title: 'Histórico Financeiro de Shows' },
                 { icon: <CheckCircle size={28} />, title: 'Registro de despesas dedutíveis' },
-                { icon: <DollarSign size={28} />, title: 'Cálculo com arquivo pronto para o Carnê-Leão Web' },
-                { icon: <FileText size={28} />, title: 'Geração de recibos profissionais' },
+                { icon: <DollarSign size={28} />, title: 'Cálculo Automático do Carnê-Leão Músico' },
+                { icon: <FileText size={28} />, title: 'Gerar Recibo de Cachê Online' },
                 { icon: <Download size={28} />, title: 'Relatórios prontos para contador' },
                 { icon: <Database size={28} />, title: 'Backup seguro' }
               ].map((item, idx) => (
@@ -222,9 +230,12 @@ export default function Home() {
         <section id="como-funciona" className="py-24 px-4 bg-white relative">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 md:mb-20">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-[#0c2461]">
-                Um processo simples.<br />Feito em minutos, sem complicação.
+              <h2 className="text-sm md:text-base text-gray-400 font-bold uppercase tracking-widest mb-3 text-center">
+                Como proteger seu cachê da Malha Fina da Receita Federal
               </h2>
+              <p className="text-3xl md:text-5xl font-bold mb-6 text-[#0c2461]">
+                Um processo simples.<br />Feito em minutos, sem complicação.
+              </p>
               <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-6 py-3 rounded-xl border border-green-200 font-bold text-lg">
                 <CheckCircle size={22} className="text-green-600" />
                 Não precisa entender de contabilidade.
@@ -249,6 +260,50 @@ export default function Home() {
               ))}
             </div>
 
+          </div>
+        </section>        {/* 4.5 PWA INSTALLATION */}
+        <section className="py-24 px-4 bg-[#0c2461] text-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#d4af37] leading-tight">
+              Leve o MúsicoPro no bolso <br className="hidden md:block" />
+              <span className="text-white opacity-90 text-2xl md:text-4xl">(sem lotar a memória do celular)</span>
+            </h2>
+            <p className="text-xl text-gray-300 font-medium mb-12 leading-relaxed max-w-3xl mx-auto">
+              O MúsicoPro é um aplicativo moderno que funciona direto do seu navegador. Você não precisa procurar na Play Store ou App Store, nem apagar seus vídeos e guias de áudio para liberar espaço.
+            </p>
+
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-left mb-10 max-w-2xl mx-auto">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+              <p className="font-bold text-2xl text-white mb-6 flex items-center gap-3">
+                <span className="bg-[#d4af37] text-[#0c2461] w-8 h-8 flex items-center justify-center rounded-full text-lg">👇</span>
+                Adicione à sua tela inicial em 2 cliques:
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
+                  <div>
+                    <h4 className="font-bold text-xl text-white">No Android (Chrome)</h4>
+                    <p className="text-gray-400 mt-1">Toque nos 3 pontinhos <strong className="text-white">⋮</strong> no topo da tela e escolha "Adicionar à tela inicial".</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
+                  <div>
+                    <h4 className="font-bold text-xl text-white">No iPhone (Safari)</h4>
+                    <p className="text-gray-400 mt-1">Toque no ícone de compartilhar <strong className="text-white">[↑]</strong> e escolha "Adicionar à Tela de Início".</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
+              onClick={() => { trackBuyClick('install_pwa'); window.location.href = 'https://app.musicopro.app.br' }}
+            >
+              <Smartphone size={28} /> Instalar MúsicoPro Agora
+            </button>
           </div>
         </section>
 
@@ -428,7 +483,48 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 9. FECHAMENTO EMOCIONAL */}
+        {/* 9. FAQ */}
+        <section className="py-24 px-4 max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0c2461]">Dúvidas Frequentes (FAQ)</h2>
+          </div>
+
+          <div className="space-y-4">
+            <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                Por que não tem login e senha?
+                <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
+                Porque <strong>sua segurança vem em primeiro lugar</strong>. Quando um site pede senha, é para salvar seus dados na nuvem deles (o que traz risco de vazamento).
+                <br /><br />
+                O MusicoPro usa tecnologia <strong>Local-First</strong>: seus dados ficam salvos criptografados apenas no seu celular/computador. Nós não temos acesso.
+              </p>
+            </details>
+
+            <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                E se eu perder o celular?
+                <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
+                Como não guardamos seus dados, você é o responsável pelo backup. O App tem uma função simples: <strong>"Exportar Dados"</strong>. Recomendamos que você faça isso uma vez por mês e salve no seu e-mail ou nuvem pessoal.
+              </p>
+            </details>
+
+            <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                O app substitui um contador?
+                <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
+                Não. O MúsicoPro é uma ferramenta de suporte. Ele deixa tudo organizado, emite os recibos e calcula tudo pronto para você mesmo utilizar no Carnê-Leão Web ou entregar mastigado para o seu contador declarar, evitando erros.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        {/* 10. FECHAMENTO EMOCIONAL */}
         <section className="py-32 px-4 bg-[#0c2461] text-white text-center rounded-t-[3rem] shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-5xl md:text-6xl font-extrabold mb-10 text-[#d4af37] leading-[1.1]">

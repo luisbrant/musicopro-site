@@ -6,34 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
   <!-- Primary Meta Tags -->
-  <title>MúsicoPro — Carnê-Leão e finanças para músicos</title>
+  <title>MúsicoPro | Carnê-Leão e Recibos para Músicos Autônomos</title>
   <meta name="description"
-    content="Organize suas finanças, estime o Carnê-Leão e gere recibos em PDF em menos de 10 minutos por mês. Feito para quem vive de música. 100% offline e privado." />
+    content="O aplicativo definitivo para o músico freelancer. Emita recibos de cachê, calcule o Carnê-Leão e fique em dia com a Receita Federal sem precisar de contador." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://www.musicopro.app.br" />
+  <link rel="canonical" href="https://musicopro.app.br/" />
 
   <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.musicopro.app.br" />
+  <meta property="og:url" content="https://musicopro.app.br/" />
   <meta property="og:site_name" content="MúsicoPro" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:title" content="MúsicoPro — Você cuida da música. A gente cuida do resto." />
+  <meta property="og:title" content="MúsicoPro: Proteja seu cachê da Malha Fina" />
   <meta property="og:description"
-    content="Carnê-Leão, recibos em PDF e organização financeira para músicos. Sem planilha. Sem contador. Sem cadastro." />
-  <meta property="og:image" content="https://www.musicopro.app.br/og-image.png" />
+    content="Foque na música, deixe a burocracia com a gente. Emissão de recibos e gestão de impostos para músicos independentes." />
+  <meta property="og:image" content="https://musicopro.app.br/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="MúsicoPro — Finanças e Carnê-Leão para músicos" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MúsicoPro — Você cuida da música. A gente cuida do resto." />
-  <meta name="twitter:description" content="Carnê-Leão, recibos em PDF e organização financeira para músicos." />
-  <meta name="twitter:image" content="https://www.musicopro.app.br/og-image.png" />
+  <meta name="twitter:title" content="MúsicoPro: Proteja seu cachê da Malha Fina" />
+  <meta name="twitter:description"
+    content="Foque na música, deixe a burocracia com a gente. Emissão de recibos e gestão de impostos para músicos independentes." />
+  <meta name="twitter:image" content="https://musicopro.app.br/assets/og-image.jpg" />
 
-  <!-- Ícones -->
+  <!-- Ícones e PWA Manifest -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0c2461" />
 
   <!-- JSON-LD Schema.org -->
   <script type="application/ld+json">
@@ -41,17 +44,48 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "MúsicoPro",
+    "operatingSystem": "Web, Android, iOS",
     "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web",
-    "url": "https://www.musicopro.app.br",
-    "inLanguage": "pt-BR",
-    "description": "App para músicos organizarem finanças e estimarem o Carnê-Leão.",
+    "description": "Aplicativo PWA de gestão financeira e fiscal para músicos autônomos. Facilita o cálculo de Carnê-Leão e a emissão de recibos de cachê.",
+    "url": "https://musicopro.app.br",
     "offers": {
       "@type": "Offer",
-      "price": "97",
-      "priceCurrency": "BRL",
-      "description": "Acesso Anual PRO"
+      "price": "0.00",
+      "priceCurrency": "BRL"
     }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Músico autônomo precisa pagar Carnê-Leão?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim. Se você recebe cachês de pessoas físicas e o valor mensal ultrapassa a faixa de isenção da Receita Federal, o recolhimento via Carnê-Leão é obrigatório. O MúsicoPro automatiza esse cálculo para você."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como emitir recibo de cachê para bares e contratantes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Com o MúsicoPro, você gera recibos profissionais em PDF com validade legal em poucos cliques, prontos para enviar pelo WhatsApp ou e-mail para o contratante."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "O MúsicoPro precisa ser baixado nas lojas de aplicativos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Não. O MúsicoPro é um Progressive Web App (PWA). Você acessa pelo navegador do seu celular ou computador e pode instalá-lo diretamente na tela inicial, ocupando muito menos espaço que um app tradicional."
+        }
+      }
+    ]
   }
   </script>
 

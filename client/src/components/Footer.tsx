@@ -1,4 +1,4 @@
-import { Mail, Heart } from 'lucide-react';
+import { Mail, Heart, Instagram, Facebook } from 'lucide-react';
 import { Link } from 'wouter';
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-16">
           {/* Branding */}
-          <div className="space-y-5 md:col-span-5">
+          <div className="space-y-5 md:col-span-4">
             <h3 className="text-3xl font-bold text-[#d4af37]" style={{ fontFamily: 'Lexend, sans-serif' }}>
               MúsicoPro
             </h3>
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div className="space-y-5 md:col-span-3">
+          <div className="space-y-5 md:col-span-2">
             <h4 className="text-2xl font-bold text-white tracking-wide">Suporte</h4>
             <div className="space-y-4 text-xl flex flex-col">
               <a
@@ -39,7 +39,23 @@ export default function Footer() {
                 className="flex items-center gap-2 text-[#d4af37] hover:text-[#e5c158] transition font-semibold"
               >
                 <Mail size={16} />
-                suporte@musicopro.app.br
+                E-mail
+              </a>
+            </div>
+          </div>
+
+          {/* Social */}
+          <div className="space-y-5 md:col-span-2">
+            <h4 className="text-2xl font-bold text-white tracking-wide">Redes Sociais</h4>
+            <div className="space-y-4 text-xl flex flex-col">
+              <a href="https://instagram.com/musicopro.app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 opacity-80 hover:text-[#d4af37] transition">
+                <Instagram size={16} /> Instagram
+              </a>
+              <a href="https://tiktok.com/@musicopro" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 opacity-80 hover:text-[#d4af37] transition">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg> TikTok
+              </a>
+              <a href="https://www.facebook.com/share/17Ye1vSqri/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 opacity-80 hover:text-[#d4af37] transition">
+                <Facebook size={16} /> Facebook
               </a>
             </div>
           </div>
