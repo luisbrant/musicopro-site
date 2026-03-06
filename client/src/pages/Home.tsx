@@ -122,7 +122,7 @@ export default function Home() {
               {/* NOTE: Add actual dashboard screenshot here later */}
               <div className="relative bg-gray-50 flex flex-col items-center justify-center p-0">
                 <img
-                  src="/images/dashboard-print.webp"
+                  src="/images/dashboard-print.png"
                   alt="Dashboard do MúsicoPro mostrando receita total, despesas dedutíveis e imposto estimado para o Carnê-Leão"
                   width={800}
                   height={500}
@@ -137,7 +137,7 @@ export default function Home() {
                 <div className="hidden text-center p-10 w-full min-h-[300px] flex-col justify-center items-center">
                   <BarChart2 size={64} className="text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-400 font-semibold text-xl">Print real do dashboard</p>
-                  <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.webp</p>
+                  <p className="text-sm text-gray-400 mt-2">Salve o arquivo em: /public/images/dashboard-print.png</p>
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function Home() {
               {/* Emissão */}
               <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
                 <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">🧾</div>
-                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Emissão Imediata de Recibos de Cachê</h3>
+                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Emissão Imediata de Recibos</h3>
                 <p className="text-gray-600 font-medium leading-relaxed">
                   Gere recibos profissionais direto do celular e envie pelo WhatsApp antes de sair do evento.
                   Sem bloquinho, sem PDF montado em casa — com a sua identidade e validade legal.
@@ -188,7 +188,7 @@ export default function Home() {
               {/* Histórico */}
               <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col items-center text-center">
                 <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">📊</div>
-                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Histórico Financeiro de Shows e Eventos</h3>
+                <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Histórico Financeiro</h3>
                 <p className="text-gray-600 font-medium leading-relaxed">
                   Saiba exatamente quanto entrou e saiu a cada mês — shows, aulas, cordas, transporte.
                   Veja quem pagou, quem ainda deve e a lucratividade real da sua carreira.
