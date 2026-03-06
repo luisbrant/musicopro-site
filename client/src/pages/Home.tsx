@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 
 export default function Home() {
   const [showBottomBar, setShowBottomBar] = useState(false)
+  const [passedPricing, setPassedPricing] = useState(false)
 
   const {
     trackBuyClick,
@@ -23,6 +24,10 @@ export default function Home() {
       if (!ticking) {
         requestAnimationFrame(() => {
           setShowBottomBar(window.scrollY > 400)
+          const planosEl = document.getElementById('planos')
+          if (planosEl) {
+            setPassedPricing(window.scrollY > planosEl.offsetTop)
+          }
           ticking = false
         })
         ticking = true
@@ -79,13 +84,13 @@ export default function Home() {
         <section className="bg-white pt-20 pb-24 px-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4af37]/10 rounded-full blur-[120px] -z-10 translate-x-24 -translate-y-24" />
           <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
-            <h1 className="text-lg md:text-xl text-[#d4af37] font-bold uppercase tracking-widest mb-4">
-              MúsicoPro: Gestão Financeira e Fiscal Descomplicada para Músicos
-            </h1>
-            <p className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
+            <p className="text-lg md:text-xl text-[#d4af37] font-bold uppercase tracking-widest mb-4">
+              Gestão Financeira e Fiscal para Músicos
+            </p>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
               Você já é profissional no palco.<br />
               <span className="text-[#d4af37]">Agora organize a carreira como um.</span>
-            </p>
+            </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">
               O <strong>app para músicos</strong> definitivo: sistema completo de <strong>gestão financeira musical</strong> com controle de receitas, despesas, <strong>cálculo de imposto</strong>, Carnê-Leão e relatórios.
             </p>
@@ -165,7 +170,8 @@ export default function Home() {
                 <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">🧾</div>
                 <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Emissão Imediata de Recibos de Cachê</h3>
                 <p className="text-gray-600 font-medium leading-relaxed">
-                  Chega de andar com bloquinhos de papelaria ou perder tempo montando PDFs no computador de casa. Com o MúsicoPro, você gera recibos profissionais, com validade legal e a sua identidade, direto do celular. O contratante pede o comprovante? Você envia pelo WhatsApp em menos de um minuto, antes mesmo de sair do bar ou do evento. Transmita profissionalismo e garanta o seu pagamento sem atrasos.
+                  Gere recibos profissionais direto do celular e envie pelo WhatsApp antes de sair do evento.
+                  Sem bloquinho, sem PDF montado em casa — com a sua identidade e validade legal.
                 </p>
               </div>
 
@@ -174,7 +180,8 @@ export default function Home() {
                 <div className="text-5xl mb-6 bg-white/10 w-20 h-20 flex items-center justify-center rounded-2xl">🦁</div>
                 <h3 className="text-2xl font-bold text-[#d4af37] mb-4 leading-snug">Cálculo Automático do Carnê-Leão sem Erros</h3>
                 <p className="text-gray-300 font-medium leading-relaxed">
-                  O leão da Receita Federal não perdoa cachês não declarados. Se você recebe de pessoas físicas (como em casamentos, formaturas ou aulas particulares), o Carnê-Leão é obrigatório. Mas você não precisa de um diploma em contabilidade para resolver isso. O aplicativo faz o cálculo automático dos seus impostos com base nos seus ganhos mensais, gerando os valores exatos para você ficar 100% regularizado e dormir tranquilo.
+                  Se você recebe de pessoas físicas, o Carnê-Leão é obrigatório. O app calcula automaticamente
+                  o imposto mensal com base nos seus ganhos — sem diploma de contabilidade.
                 </p>
               </div>
 
@@ -183,7 +190,8 @@ export default function Home() {
                 <div className="text-5xl mb-6 bg-slate-50 w-20 h-20 flex items-center justify-center rounded-2xl">📊</div>
                 <h3 className="text-2xl font-bold text-[#0c2461] mb-4 leading-snug">Histórico Financeiro de Shows e Eventos</h3>
                 <p className="text-gray-600 font-medium leading-relaxed">
-                  Você sabe exatamente quanto ganhou de música no último mês? E quanto gastou com cordas, palhetas, transporte e manutenção de equipamentos? O MúsicoPro centraliza todo o seu fluxo de caixa. Tenha um histórico claro de todos os seus shows, saiba quem já pagou, quem ainda deve e entenda a real lucratividade da sua carreira musical.
+                  Saiba exatamente quanto entrou e saiu a cada mês — shows, aulas, cordas, transporte.
+                  Veja quem pagou, quem ainda deve e a lucratividade real da sua carreira.
                 </p>
               </div>
             </div>
@@ -201,18 +209,19 @@ export default function Home() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
               {[
-                { icon: <BarChart2 size={28} />, title: 'Histórico Financeiro de Shows' },
-                { icon: <CheckCircle size={28} />, title: 'Registro de despesas dedutíveis' },
-                { icon: <DollarSign size={28} />, title: 'Cálculo Automático do Carnê-Leão Músico' },
-                { icon: <FileText size={28} />, title: 'Gerar Recibo de Cachê Online' },
-                { icon: <Download size={28} />, title: 'Relatórios prontos para contador' },
-                { icon: <Database size={28} />, title: 'Backup seguro' }
+                { icon: <BarChart2 size={28} />, title: 'Histórico Financeiro de Shows', desc: 'Veja tudo que entrou mês a mês.' },
+                { icon: <CheckCircle size={28} />, title: 'Registro de despesas dedutíveis', desc: 'Instrumento, transporte, hospedagem.' },
+                { icon: <DollarSign size={28} />, title: 'Cálculo Automático do Carnê-Leão', desc: 'Valor exato, sem surpresa no vencimento.' },
+                { icon: <FileText size={28} />, title: 'Gerar Recibo de Cachê Online', desc: 'PDF profissional em um clique.' },
+                { icon: <Download size={28} />, title: 'Relatórios prontos para contador', desc: 'CSV e PDF formatados. Só encaminhar.' },
+                { icon: <Database size={28} />, title: 'Backup seguro', desc: 'Exporte seus dados e salve onde quiser.' }
               ].map((item, idx) => (
                 <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col items-center text-center gap-5 transition hover:bg-white/10">
                   <div className="text-[#d4af37] bg-[#0c2461] p-4 rounded-2xl shadow-lg border border-white/5">
                     {item.icon}
                   </div>
                   <h3 className="font-bold text-xl leading-snug">{item.title}</h3>
+                  <p className="text-white/60 text-sm mt-2">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -302,7 +311,7 @@ export default function Home() {
               className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
               onClick={() => { trackBuyClick('install_pwa'); window.location.href = 'https://app.musicopro.app.br' }}
             >
-              <Smartphone size={28} /> Instalar MúsicoPro Agora
+              <Smartphone size={28} /> Abrir o app e instalar →
             </button>
           </div>
         </section>
@@ -353,18 +362,23 @@ export default function Home() {
 
             <div className="grid md:grid-cols-3 gap-8 mb-20">
               {[
-                { text: 'Com o app eu sei exatamente a provisão fiscal do mês. Acabou a ansiedade com o Carnê-Leão e a Receita.', author: 'Felipe T.', role: 'Baterista' },
-                { text: 'Parei de pagar imposto pelo bruto e passei a deduzir minhas despesas legais reais. Retorno imediato.', author: 'Mariana S.', role: 'Professora e Cantora' },
-                { text: 'Os recibos em PDF mudaram como meus contratantes me veem. Muito mais profissional.', author: 'Rodrigo M.', role: 'Produtor Musical' },
+                { text: 'Com o app eu sei exatamente a provisão fiscal do mês. Acabou a ansiedade com o Carnê-Leão e a Receita.', author: 'Felipe T.', role: 'Baterista', city: 'São Paulo, SP' },
+                { text: 'Parei de pagar imposto pelo bruto e passei a deduzir minhas despesas legais reais. Retorno imediato.', author: 'Mariana S.', role: 'Professora e Cantora', city: 'Belo Horizonte, MG' },
+                { text: 'Os recibos em PDF mudaram como meus contratantes me veem. Muito mais profissional.', author: 'Rodrigo M.', role: 'Produtor Musical', city: 'Recife, PE' },
               ].map((dep, idx) => (
                 <div key={idx} className="bg-slate-50 p-10 rounded-3xl border border-gray-100 flex flex-col items-start gap-6">
                   <div className="flex gap-1 text-[#d4af37]">
                     {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="#d4af37" />)}
                   </div>
                   <p className="italic font-medium text-lg text-gray-700 leading-relaxed">"{dep.text}"</p>
-                  <div className="mt-auto">
-                    <p className="font-bold text-xl text-[#0c2461]">{dep.author}</p>
-                    <p className="text-md text-gray-500 font-semibold">{dep.role}</p>
+                  <div className="flex items-center gap-3 mt-auto">
+                    <div className="w-10 h-10 rounded-full bg-[#0c2461] text-white flex items-center justify-center font-bold text-lg shrink-0">
+                      {dep.author[0]}
+                    </div>
+                    <div>
+                      <p className="font-bold text-xl text-[#0c2461]">{dep.author}</p>
+                      <p className="text-sm text-gray-500 font-semibold">{dep.role} · {dep.city}</p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -393,7 +407,8 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0c2461] leading-tight">
-                Menos que uma hora de aula particular.<br /> <span className="text-[#d4af37]">Por um ano inteiro.</span>
+                Menos que uma corda de guitarra por mês.<br />
+                <span className="text-[#d4af37]">Por um ano inteiro de controle fiscal.</span>
               </h2>
             </div>
 
@@ -411,9 +426,15 @@ export default function Home() {
                 </p>
               </div>
               <div className="p-10 space-y-8">
-                <p className="text-lg text-gray-500 font-bold mb-8 text-center border-b border-gray-100 pb-8">
-                  Menos que o custo de um único erro fiscal.
-                </p>
+                <div className="mb-8 border-b border-gray-100 pb-8 text-center">
+                  <p className="text-lg text-gray-500 font-bold">
+                    Menos que o custo de um único erro fiscal.
+                  </p>
+                  <p className="text-sm text-gray-400 mt-2">
+                    💡 Uma multa por Carnê-Leão não declarado começa em R$ 165,74 —
+                    o MúsicoPro custa R$ 97 o <em>ano</em>.
+                  </p>
+                </div>
                 <ul className="space-y-5 text-gray-700 font-semibold mb-8">
                   {[
                     'Lançamentos ilimitados',
@@ -492,13 +513,25 @@ export default function Home() {
           <div className="space-y-4">
             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
               <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                Preciso ser MEI ou ter CNPJ para usar?
+                <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
+                Não. O MúsicoPro foi feito para músicos que recebem como <strong>pessoa física (CPF)</strong>.
+                Se você recebe cachês, dá aulas ou presta serviços sem nota fiscal de empresa,
+                é exatamente para você — sem necessidade de CNPJ ou MEI.
+              </p>
+            </details>
+
+            <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
                 Por que não tem login e senha?
                 <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
               </summary>
               <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
                 Porque <strong>sua segurança vem em primeiro lugar</strong>. Quando um site pede senha, é para salvar seus dados na nuvem deles (o que traz risco de vazamento).
                 <br /><br />
-                O MusicoPro usa tecnologia <strong>Local-First</strong>: seus dados ficam salvos criptografados apenas no seu celular/computador. Nós não temos acesso.
+                O MúsicoPro usa tecnologia <strong>Local-First</strong>: seus dados ficam salvos criptografados apenas no seu celular/computador. Nós não temos acesso.
               </p>
             </details>
 
@@ -557,10 +590,18 @@ export default function Home() {
       >
         <button
           type="button"
-          onClick={() => { window.location.href = 'https://app.musicopro.app.br' }}
+          onClick={() => {
+            if (passedPricing) {
+              trackBuyClick('bottom_bar_pro')
+              window.open(HOTMART_URL, '_blank')
+            } else {
+              trackFreeClick('bottom_bar_free')
+              window.location.href = 'https://app.musicopro.app.br'
+            }
+          }}
           className="w-full bg-[#0c2461] text-white font-bold py-4 rounded-xl text-lg shadow-lg"
         >
-          Testar grátis agora
+          {passedPricing ? 'Assinar PRO — R$97/ano' : 'Testar grátis agora'}
         </button>
       </div>
 
