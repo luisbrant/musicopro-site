@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "br.app.musicopro.app.twa",
+            "sha256_cert_fingerprints": [
+                "AD:F6:67:DC:4A:D3:08:01:DC:E2:3B:E1:AB:0B:C6:EE:59:5E:C7:4C:B0:99:74:64:E1:E2:7E:69:42:9D:92:72"
+            ]
+        }
+    }
+]

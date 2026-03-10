@@ -520,6 +520,15 @@ export default function Home() {
           <div className="space-y-4">
             <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
               <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
+                O MúsicoPro é uma distribuidora digital de músicas?
+                <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
+              </summary>
+              <p className="text-[#0c2461] opacity-80 mt-4 leading-relaxed text-lg">
+                <strong>Não.</strong> O MúsicoPro é um sistema de Gestão Financeira, Emissão de Recibos e cálculo de Carnê-Leão para músicos autônomos. Se você procura distribuição digital (como CD Baby ou ONErpm), esse não é o nosso serviço. Nosso foco exclusivo é proteger o seu dinheiro e o seu cachê da Malha Fina.
+              </p>
+            </details>
+            <details className="bg-[#f8fafc] border border-[#E8E3DC] rounded-xl p-6 cursor-pointer group hover:bg-white transition shadow-sm">
+              <summary className="flex items-center justify-between font-bold text-[#0c2461] text-lg list-none">
                 Preciso ser MEI ou ter CNPJ para usar?
                 <span className="group-open:rotate-180 transition transform text-[#d4af37]">▼</span>
               </summary>
