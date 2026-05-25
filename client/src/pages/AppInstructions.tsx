@@ -133,8 +133,22 @@ export default function AppInstructions() {
               O Músico Pro agora está disponível na loja oficial do Android! Baixe diretamente na Play Store para ter a melhor experiência e atualizações automáticas.
             </p>
             <div className="pt-2">
-              <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-8 py-4 rounded-xl transition shadow-md hover:shadow-lg">
-                Baixar na Google Play Store →
+              <a
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center bg-black hover:bg-zinc-900 text-white border border-zinc-800 rounded-2xl px-6 py-3 transition shadow-lg transform hover:-translate-y-0.5 active:scale-95 text-left"
+              >
+                <svg viewBox="0 0 24 24" className="w-8 h-8 mr-3 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.25 2.25v19.5c0 .65.45 1 1 .65l10.25-9.15-10.25-9.15c-.55-.35-1 0-1 .65z" fill="#00F0FF"/>
+                  <path d="M14.5 13.25l3.95 3.5c.5.45 1.25.25 1.25-.4V7.65c0-.65-.75-.85-1.25-.4L14.5 10.75v2.5z" fill="#4CAF50"/>
+                  <path d="M14.5 10.75l-10.25-9.15c-.45-.4-1.2-.2-1.2.45v.35L14.5 10.75z" fill="#FF3D00"/>
+                  <path d="M14.5 13.25L3.05 21.6v.35c0 .65.75.85 1.2.45l10.25-9.15z" fill="#FFEA00"/>
+                </svg>
+                <div className="text-left">
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none">Disponível no</p>
+                  <p className="text-xl font-black font-sans leading-none mt-1">Google Play</p>
+                </div>
               </a>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">

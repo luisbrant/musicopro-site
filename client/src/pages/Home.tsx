@@ -320,13 +320,26 @@ export default function Home() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
-                  onClick={() => { trackBuyClick('install_playstore'); window.open(getAppUrl(), '_blank') }}
-                >
-                  <Smartphone size={28} /> Baixar na Google Play →
-                </button>
+                <div className="pt-4 flex justify-center">
+                  <a
+                    href={getAppUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackBuyClick('install_playstore')}
+                    className="inline-flex items-center bg-black hover:bg-zinc-900 text-white border border-zinc-800 rounded-2xl px-8 py-3.5 transition shadow-2xl transform hover:-translate-y-1 active:scale-95 w-full sm:w-auto justify-center"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 mr-3 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.25 2.25v19.5c0 .65.45 1 1 .65l10.25-9.15-10.25-9.15c-.55-.35-1 0-1 .65z" fill="#00F0FF"/>
+                      <path d="M14.5 13.25l3.95 3.5c.5.45 1.25.25 1.25-.4V7.65c0-.65-.75-.85-1.25-.4L14.5 10.75v2.5z" fill="#4CAF50"/>
+                      <path d="M14.5 10.75l-10.25-9.15c-.45-.4-1.2-.2-1.2.45v.35L14.5 10.75z" fill="#FF3D00"/>
+                      <path d="M14.5 13.25L3.05 21.6v.35c0 .65.75.85 1.2.45l10.25-9.15z" fill="#FFEA00"/>
+                    </svg>
+                    <div className="text-left">
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-none">Disponível no</p>
+                      <p className="text-xl font-black font-sans leading-none mt-1">Google Play</p>
+                    </div>
+                  </a>
+                </div>
               </>
             ) : (
               <>
@@ -634,13 +647,35 @@ export default function Home() {
             <p className="text-2xl text-gray-300 font-medium mb-16 leading-relaxed max-w-2xl mx-auto">
               Comece grátis. Sem cadastro. Sem cartão.
             </p>
-            <button
-              type="button"
-              onClick={() => { window.location.href = getAppUrl() }}
-              className="bg-white hover:bg-gray-100 text-[#0c2461] font-black px-12 py-6 rounded-2xl transition text-3xl shadow-xl transform hover:-translate-y-2 hover:shadow-2xl"
-            >
-              {isAndroid ? 'Baixar na Play Store' : 'Testar grátis agora'}
-            </button>
+            {isAndroid ? (
+              <div className="flex justify-center">
+                <a
+                  href={getAppUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center bg-black hover:bg-zinc-900 text-white border border-zinc-800 rounded-2xl px-10 py-4.5 transition shadow-2xl transform hover:-translate-y-1.5 active:scale-95 text-left"
+                >
+                  <svg viewBox="0 0 24 24" className="w-10 h-10 mr-4 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.25 2.25v19.5c0 .65.45 1 1 .65l10.25-9.15-10.25-9.15c-.55-.35-1 0-1 .65z" fill="#00F0FF"/>
+                    <path d="M14.5 13.25l3.95 3.5c.5.45 1.25.25 1.25-.4V7.65c0-.65-.75-.85-1.25-.4L14.5 10.75v2.5z" fill="#4CAF50"/>
+                    <path d="M14.5 10.75l-10.25-9.15c-.45-.4-1.2-.2-1.2.45v.35L14.5 10.75z" fill="#FF3D00"/>
+                    <path d="M14.5 13.25L3.05 21.6v.35c0 .65.75.85 1.2.45l10.25-9.15z" fill="#FFEA00"/>
+                  </svg>
+                  <div>
+                    <p className="text-[12px] text-gray-400 font-bold uppercase tracking-widest leading-none">Disponível no</p>
+                    <p className="text-2xl font-black font-sans leading-none mt-1.5">Google Play</p>
+                  </div>
+                </a>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => { window.location.href = getAppUrl() }}
+                className="bg-white hover:bg-gray-100 text-[#0c2461] font-black px-12 py-6 rounded-2xl transition text-3xl shadow-xl transform hover:-translate-y-2 hover:shadow-2xl"
+              >
+                Testar grátis agora
+              </button>
+            )}
           </div>
         </section>
 
