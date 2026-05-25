@@ -522,10 +522,13 @@ export default function Home() {
                 </ul>
                 <button
                   type="button"
-                  onClick={() => { trackBuyClick('pricing'); window.open(HOTMART_URL, '_blank') }}
+                  onClick={() => { 
+                    trackBuyClick('pricing'); 
+                    window.open(isAndroid ? getAppUrl() : HOTMART_URL, '_blank') 
+                  }}
                   className="w-full bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black py-6 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1"
                 >
-                  Assinar PRO
+                  {isAndroid ? 'Assinar no App Android' : 'Assinar PRO'}
                 </button>
               </div>
             </div>
@@ -696,7 +699,7 @@ export default function Home() {
           onClick={() => {
             if (passedPricing) {
               trackBuyClick('bottom_bar_pro')
-              window.open(HOTMART_URL, '_blank')
+              window.open(isAndroid ? getAppUrl() : HOTMART_URL, '_blank')
             } else {
               trackFreeClick('bottom_bar_free')
               window.location.href = getAppUrl()
@@ -704,7 +707,7 @@ export default function Home() {
           }}
           className="w-full bg-[#0c2461] text-white font-bold py-4 rounded-xl text-lg shadow-lg"
         >
-          {passedPricing ? 'Assinar PRO — R$97/ano' : isAndroid ? 'Baixar na Play Store' : 'Testar grátis agora'}
+          {passedPricing ? (isAndroid ? 'Instalar e Assinar — Google Play' : 'Assinar PRO — R$97/ano') : isAndroid ? 'Baixar na Play Store' : 'Testar grátis agora'}
         </button>
       </div>
 
