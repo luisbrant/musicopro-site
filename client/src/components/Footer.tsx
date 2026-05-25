@@ -1,5 +1,6 @@
 import { Mail, Heart, Instagram, Facebook } from 'lucide-react';
 import { Link } from 'wouter';
+import { getAppUrl } from '@/const';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -25,7 +26,7 @@ export default function Footer() {
             <div className="space-y-4 text-xl flex flex-col">
               <a href="/#como-funciona" className="opacity-80 hover:text-[#d4af37] transition">Como Funciona</a>
               <a href="/#planos" className="opacity-80 hover:text-[#d4af37] transition">Planos e Preços</a>
-              <a href="https://app.musicopro.app.br" className="opacity-80 hover:text-[#d4af37] transition">Entrar no App</a>
+              <a href={getAppUrl()} className="opacity-80 hover:text-[#d4af37] transition">Entrar no App</a>
               <Link href="/guia" className="opacity-80 hover:text-[#d4af37] transition">Guia Grátis IR</Link>
             </div>
           </div>

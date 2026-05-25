@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
+import { getAppUrl } from '@/const';
 
 export default function PWA() {
   useEffect(() => {
-    // Redireciona para 'https://app.musicopro.app.br/' (o app PWA)
-    window.location.href = 'https://app.musicopro.app.br/';
+    // Redireciona para o app (Google Play no Android, PWA nos demais)
+    window.location.href = getAppUrl();
   }, []);
 
   return (

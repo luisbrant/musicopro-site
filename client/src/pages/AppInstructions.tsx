@@ -2,12 +2,14 @@ import { Link } from 'wouter';
 import Footer from '@/components/Footer';
 import { Smartphone, Globe, Lock } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { getAppUrl, isAndroidDevice, PLAY_STORE_URL } from '@/const';
 
 export default function AppInstructions() {
   const [showModal, setShowModal] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [isAndroid, setIsAndroid] = useState(false);
 
-  const APP_URL = 'https://app.musicopro.app.br/';
+  const APP_URL = getAppUrl();
   const LS_KEY = 'mp_install_prompt_dismissed_until';
   const DAYS_30 = 30 * 24 * 60 * 60 * 1000;
 
@@ -26,6 +28,7 @@ export default function AppInstructions() {
   useEffect(() => {
     const isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     setIsIOS(isIOSDevice);
+    setIsAndroid(isAndroidDevice());
 
     if (shouldShowModal()) {
       setShowModal(true);
@@ -124,37 +127,21 @@ export default function AppInstructions() {
         <section className="mb-16 md:mb-20">
           <div className="bg-white rounded-lg border border-[#E8E3DC] p-8 md:p-12 space-y-6">
             <h2 className="text-3xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              📱 Android (Chrome)
+              📱 Android (Google Play Store)
             </h2>
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#d4af37] text-[#0c2461] flex items-center justify-center font-bold flex-shrink-0">1</div>
-                <div>
-                  <p className="font-semibold text-[#0c2461] mb-1">Abra o App no Google Chrome</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#d4af37] text-[#0c2461] flex items-center justify-center font-bold flex-shrink-0">2</div>
-                <div>
-                  <p className="font-semibold text-[#0c2461] mb-1">Toque no menu ⋮ (canto superior direito)</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#d4af37] text-[#0c2461] flex items-center justify-center font-bold flex-shrink-0">3</div>
-                <div>
-                  <p className="font-semibold text-[#0c2461] mb-1">Toque em "Adicionar à tela inicial"</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#d4af37] text-[#0c2461] flex items-center justify-center font-bold flex-shrink-0">4</div>
-                <div>
-                  <p className="font-semibold text-[#0c2461] mb-1">Confirme Adicionar</p>
-                </div>
-              </div>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              O Músico Pro agora está disponível na loja oficial do Android! Baixe diretamente na Play Store para ter a melhor experiência e atualizações automáticas.
+            </p>
+            <div className="pt-2">
+              <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-8 py-4 rounded-xl transition shadow-md hover:shadow-lg">
+                Baixar na Google Play Store →
+              </a>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <p className="text-[#0c2461] font-semibold">✅ Pronto!</p>
-              <p className="text-[#0c2461] opacity-85 text-sm mt-1">Um ícone será criado e o app abrirá como aplicativo.</p>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+              <p className="text-[#0c2461] font-semibold">💡 Prefere não baixar?</p>
+              <p className="text-[#0c2461] opacity-85 text-sm mt-1">
+                Você também pode usar a versão web (PWA) no navegador. Abra o menu ⋮ do Chrome e selecione "Adicionar à tela inicial" para criar um atalho rápido.
+              </p>
             </div>
           </div>
         </section>
@@ -339,17 +326,18 @@ export default function AppInstructions() {
           </div>
         </section>
       </main>
-
       {/* Modal de Instalacao */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md space-y-4">
             <h2 className="text-2xl font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>
-              Instale o atalho do Músico Pro
+              {isAndroid ? 'Baixe o App Músico Pro' : 'Instale o atalho do Músico Pro'}
             </h2>
             <p className="text-[#0c2461] opacity-90">
               {isIOS
                 ? 'No iPhone, a instalação é feita pelo menu de compartilhamento do Safari.'
+                : isAndroid 
+                ? 'O Músico Pro está disponível na Google Play Store para o seu celular!'
                 : 'Instale para abrir como aplicativo e acessar mais rápido.'}
             </p>
 
@@ -372,18 +360,18 @@ export default function AppInstructions() {
                 onClick={handleInstallApp}
                 className="flex-1 bg-[#6ba587] hover:bg-[#5a9475] text-white font-bold py-3 rounded-lg transition"
               >
-                {isIOS ? '✓ Entendi' : '📲 Instalar agora'}
+                {isIOS ? '✓ Entendi' : isAndroid ? '📲 Baixar na Google Play' : '📲 Instalar agora'}
               </button>
               <button
                 onClick={() => closeModal(true)}
                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-[#0c2461] font-bold py-3 rounded-lg transition"
               >
-                Continuar sem instalar
+                {isAndroid ? 'Usar versão Web' : 'Continuar sem instalar'}
               </button>
             </div>
 
             <p className="text-xs text-[#0c2461] opacity-75 text-center">
-              Você pode instalar depois a qualquer momento nesta página.
+              Você pode {isAndroid ? 'baixar' : 'instalar'} depois a qualquer momento nesta página.
             </p>
           </div>
         </div>

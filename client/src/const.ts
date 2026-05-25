@@ -15,3 +15,19 @@ export const getLoginUrl = () => {
 
   return url.toString();
 };
+
+export const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=br.app.musicopro.app.twa";
+export const PWA_URL = "https://app.musicopro.app.br";
+
+export const isAndroidDevice = () => {
+  if (typeof window !== "undefined" && typeof navigator !== "undefined") {
+    const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android/i.test(ua);
+  }
+  return false;
+};
+
+export const getAppUrl = () => {
+  return isAndroidDevice() ? PLAY_STORE_URL : PWA_URL;
+};
+

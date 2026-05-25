@@ -7,10 +7,12 @@ import {
 } from 'lucide-react'
 import { useAnalytics } from '../hooks/useAnalytics'
 import Footer from '../components/Footer'
+import { getAppUrl, isAndroidDevice } from '@/const'
 
 export default function Home() {
   const [showBottomBar, setShowBottomBar] = useState(false)
   const [passedPricing, setPassedPricing] = useState(false)
+  const [isAndroid, setIsAndroid] = useState(false)
 
   const {
     trackBuyClick,
@@ -19,6 +21,7 @@ export default function Home() {
 
   // Scroll listener otimizado
   useEffect(() => {
+    setIsAndroid(isAndroidDevice())
     // SEO
     document.title = "MúsicoPro | Aplicativo de Gestão Financeira para Músicos";
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -77,7 +80,7 @@ export default function Home() {
             </button>
             <button
               type="button"
-              onClick={() => { trackFreeClick('header'); window.location.href = 'https://app.musicopro.app.br' }}
+              onClick={() => { trackFreeClick('header'); window.location.href = getAppUrl() }}
               className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 text-base tracking-wide hover:-translate-y-0.5"
             >
               Testar grátis
@@ -104,7 +107,7 @@ export default function Home() {
             <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 type="button"
-                onClick={() => { trackFreeClick('hero'); window.location.href = 'https://app.musicopro.app.br' }}
+                onClick={() => { trackFreeClick('hero'); window.location.href = getAppUrl() }}
                 className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-black px-10 py-5 rounded-2xl transition text-xl shadow-[0_10px_30px_rgba(12,36,97,0.3)] w-full sm:w-auto transform hover:-translate-y-1"
               >
                 Testar grátis — sem cadastro
@@ -277,49 +280,98 @@ export default function Home() {
             </div>
 
           </div>
-        </section>        {/* 4.5 PWA INSTALLATION */}
+        </section>
+
+        {/* 4.5 PWA / PLAY STORE INSTALLATION */}
         <section className="py-24 px-4 bg-[#0c2461] text-white">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#d4af37] leading-tight">
-              Leve o MúsicoPro no bolso <br className="hidden md:block" />
-              <span className="text-white opacity-90 text-2xl md:text-4xl">(sem lotar a memória do celular)</span>
-            </h2>
-            <p className="text-xl text-gray-300 font-medium mb-12 leading-relaxed max-w-3xl mx-auto">
-              O MúsicoPro é um aplicativo moderno que funciona direto do seu navegador. Você não precisa procurar na Play Store ou App Store, nem apagar seus vídeos e guias de áudio para liberar espaço.
-            </p>
+            {isAndroid ? (
+              <>
+                <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#d4af37] leading-tight">
+                  MúsicoPro na Google Play Store! <br className="hidden md:block" />
+                  <span className="text-white opacity-90 text-2xl md:text-4xl">(Baixe o app oficial agora)</span>
+                </h2>
+                <p className="text-xl text-gray-300 font-medium mb-12 leading-relaxed max-w-3xl mx-auto">
+                  Acesse com a melhor experiência no seu Android, com notificações, atualizações automáticas e melhor desempenho.
+                </p>
 
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-left mb-10 max-w-2xl mx-auto">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
-              <p className="font-bold text-2xl text-white mb-6 flex items-center gap-3">
-                <span className="bg-[#d4af37] text-[#0c2461] w-8 h-8 flex items-center justify-center rounded-full text-lg">👇</span>
-                Adicione à sua tela inicial em 2 cliques:
-              </p>
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-left mb-10 max-w-2xl mx-auto">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+                  <p className="font-bold text-2xl text-white mb-6 flex items-center gap-3">
+                    <span className="bg-[#d4af37] text-[#0c2461] w-8 h-8 flex items-center justify-center rounded-full text-lg">🚀</span>
+                    Vantagens do app oficial:
+                  </p>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
-                  <div>
-                    <h4 className="font-bold text-xl text-white">No Android (Chrome)</h4>
-                    <p className="text-gray-400 mt-1">Toque nos 3 pontinhos <strong className="text-white">⋮</strong> no topo da tela e escolha "Adicionar à tela inicial".</p>
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-white/10 p-3 rounded-xl min-w-max"><Check className="text-[#d4af37]" /></div>
+                      <div>
+                        <h4 className="font-bold text-xl text-white">Instalação Segura</h4>
+                        <p className="text-gray-400 mt-1">Instale com um clique pela loja de aplicativos oficial da Google.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="bg-white/10 p-3 rounded-xl min-w-max"><Check className="text-[#d4af37]" /></div>
+                      <div>
+                        <h4 className="font-bold text-xl text-white">Acesso Rápido</h4>
+                        <p className="text-gray-400 mt-1">O ícone fica direto na gaveta de aplicativos do seu celular Android.</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
-                  <div>
-                    <h4 className="font-bold text-xl text-white">No iPhone (Safari)</h4>
-                    <p className="text-gray-400 mt-1">Toque no ícone de compartilhar <strong className="text-white">[↑]</strong> e escolha "Adicionar à Tela de Início".</p>
+
+                <button
+                  type="button"
+                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
+                  onClick={() => { trackBuyClick('install_playstore'); window.open(getAppUrl(), '_blank') }}
+                >
+                  <Smartphone size={28} /> Baixar na Google Play →
+                </button>
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-[#d4af37] leading-tight">
+                  Leve o MúsicoPro no bolso <br className="hidden md:block" />
+                  <span className="text-white opacity-90 text-2xl md:text-4xl">(sem lotar a memória do celular)</span>
+                </h2>
+                <p className="text-xl text-gray-300 font-medium mb-12 leading-relaxed max-w-3xl mx-auto">
+                  O MúsicoPro é um aplicativo moderno que funciona direto do seu navegador. Você não precisa procurar na Play Store ou App Store, nem apagar seus vídeos e guias de áudio para liberar espaço.
+                </p>
+
+                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden text-left mb-10 max-w-2xl mx-auto">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37] opacity-10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+                  <p className="font-bold text-2xl text-white mb-6 flex items-center gap-3">
+                    <span className="bg-[#d4af37] text-[#0c2461] w-8 h-8 flex items-center justify-center rounded-full text-lg">👇</span>
+                    Adicione à sua tela inicial em 2 cliques:
+                  </p>
+
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
+                      <div>
+                        <h4 className="font-bold text-xl text-white">No Android (Chrome)</h4>
+                        <p className="text-gray-400 mt-1">Toque nos 3 pontinhos <strong className="text-white">⋮</strong> no topo da tela e escolha "Adicionar à tela inicial".</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="bg-white/10 p-3 rounded-xl min-w-max"><Smartphone className="text-[#d4af37]" /></div>
+                      <div>
+                        <h4 className="font-bold text-xl text-white">No iPhone (Safari)</h4>
+                        <p className="text-gray-400 mt-1">Toque no ícone de compartilhar <strong className="text-white">[↑]</strong> e escolha "Adicionar à Tela de Início".</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <button
-              type="button"
-              className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
-              onClick={() => { trackBuyClick('install_pwa'); window.location.href = 'https://app.musicopro.app.br' }}
-            >
-              <Smartphone size={28} /> Abrir o app e instalar →
-            </button>
+                <button
+                  type="button"
+                  className="bg-[#d4af37] hover:bg-[#c99a2e] text-[#0c2461] font-black px-10 py-5 rounded-2xl transition text-2xl shadow-[0_10px_30px_rgba(212,175,55,0.3)] transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full sm:w-auto mx-auto"
+                  onClick={() => { trackBuyClick('install_pwa'); window.location.href = getAppUrl() }}
+                >
+                  <Smartphone size={28} /> Abrir o app e instalar →
+                </button>
+              </>
+            )}
           </div>
         </section>
 
@@ -584,10 +636,10 @@ export default function Home() {
             </p>
             <button
               type="button"
-              onClick={() => { window.location.href = 'https://app.musicopro.app.br' }}
+              onClick={() => { window.location.href = getAppUrl() }}
               className="bg-white hover:bg-gray-100 text-[#0c2461] font-black px-12 py-6 rounded-2xl transition text-3xl shadow-xl transform hover:-translate-y-2 hover:shadow-2xl"
             >
-              Testar grátis agora
+              {isAndroid ? 'Baixar na Play Store' : 'Testar grátis agora'}
             </button>
           </div>
         </section>
@@ -612,12 +664,12 @@ export default function Home() {
               window.open(HOTMART_URL, '_blank')
             } else {
               trackFreeClick('bottom_bar_free')
-              window.location.href = 'https://app.musicopro.app.br'
+              window.location.href = getAppUrl()
             }
           }}
           className="w-full bg-[#0c2461] text-white font-bold py-4 rounded-xl text-lg shadow-lg"
         >
-          {passedPricing ? 'Assinar PRO — R$97/ano' : 'Testar grátis agora'}
+          {passedPricing ? 'Assinar PRO — R$97/ano' : isAndroid ? 'Baixar na Play Store' : 'Testar grátis agora'}
         </button>
       </div>
 

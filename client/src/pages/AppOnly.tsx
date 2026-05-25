@@ -2,10 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Music, Menu, X, Check, ShieldCheck, Lock, ExternalLink, CheckCircle2, Loader2, Smartphone, FileText, Database, HardDrive, Download, Bot, Zap, Key } from 'lucide-react';
 import { Link } from 'wouter';
 import Footer from '@/components/Footer';
+import { getAppUrl } from '@/const';
 
 const PRO_API = 'https://www.musicopro.app.br/api/license/check';
-const PWA_URL = 'https://app.musicopro.app.br';
-const PWA_FALLBACK_URL = 'https://app.musicopro.app.br/pwa/index.html';
+const PWA_URL = getAppUrl();
+const PWA_FALLBACK_URL = `${PWA_URL}/pwa/index.html`;
 
 const getSavedEmail = () => localStorage.getItem('musicopro_email') || '';
 const setSavedEmail = (email: string) => localStorage.setItem('musicopro_email', email);
