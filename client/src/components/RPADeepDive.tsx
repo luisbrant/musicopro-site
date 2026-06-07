@@ -129,8 +129,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['oQueE'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['oQueE'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['oQueE'] ? 'block' : 'hidden print:block'}`}>
             <p>
               <strong>RPA (Recibo de Pagamento a Autônomo)</strong> é um documento que comprova o pagamento de um cachê a um profissional autônomo. Quando você recebe um cachê, o pagador pode reter (descontar) uma parte do valor como Imposto de Renda e repassar à Receita Federal.
             </p>
@@ -155,7 +154,6 @@ export default function RPADeepDive() {
               </p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 2: Quando Ocorre Retenção */}
@@ -169,8 +167,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['quando'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['quando'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['quando'] ? 'block' : 'hidden print:block'}`}>
             <h5 className="font-semibold text-[#1B4965]">Retenção ocorre quando:</h5>
             <ul className="space-y-2 pl-4">
               <li>✅ Você recebe cachê de produtora/agência</li>
@@ -193,7 +190,6 @@ export default function RPADeepDive() {
               <p>A retenção só ocorre se o pagador está obrigado a fazer. Nem todos os pagadores fazem retenção corretamente. Sempre peça o RPA como comprovante.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 3: Tabela de Alíquotas */}
@@ -207,8 +203,7 @@ export default function RPADeepDive() {
             </h4>
           {expandedTopics['tabela'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['tabela'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['tabela'] ? 'block' : 'hidden print:block'}`}>
             <p className="text-sm md:text-base text-[#2C3E50]">
               A tabela abaixo mostra as alíquotas de retenção por valor de cachê para 2026, com a nova isenção de R$ 5.000,00:
             </p>
@@ -244,7 +239,6 @@ export default function RPADeepDive() {
               </p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 4: Calculadora */}
@@ -258,8 +252,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['calculadora'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['calculadora'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['calculadora'] ? 'block' : 'hidden print:block'}`}>
             <p className="text-sm md:text-base text-[#2C3E50]">
               Digite o valor bruto do cachê para calcular quanto será retido:
             </p>
@@ -299,7 +292,6 @@ export default function RPADeepDive() {
               <p><strong>Nota:</strong> Este cálculo é apenas para fins educacionais. Sempre solicite o RPA ao pagador para confirmar o valor retido.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 5: Exemplos Práticos */}
@@ -313,8 +305,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['exemplos'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['exemplos'] && (
-          <div className="px-4 md:px-6 py-4 space-y-6">
+        <div className={`px-4 md:px-6 py-4 space-y-6 ${expandedTopics['exemplos'] ? 'block' : 'hidden print:block'}`}>
             {exemplosRPA.map((exemplo, idx) => (
               <div key={idx} className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
                 <h5 className="font-semibold text-[#1B4965] mb-3">{exemplo.titulo}</h5>
@@ -336,7 +327,6 @@ export default function RPADeepDive() {
               </div>
             ))}
           </div>
-        )}
       </div>
 
       {/* Tópico 6: Compensação na Declaração */}
@@ -350,8 +340,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['compensacao'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['compensacao'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['compensacao'] ? 'block' : 'hidden print:block'}`}>
             <p>
               A retenção que você sofreu durante o ano é <strong>abatida do seu IR</strong> na declaração anual. Aqui está como funciona:
             </p>
@@ -396,7 +385,6 @@ export default function RPADeepDive() {
               <p className="text-xs md:text-sm">Se o pagador não fez retenção quando deveria, você continua obrigado a declarar e pagar o IR. Sempre peça o RPA!</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 7: Erros Comuns */}
@@ -410,8 +398,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['erros'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['erros'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['erros'] ? 'block' : 'hidden print:block'}`}>
             <div className="space-y-3">
               {[
                 {
@@ -448,7 +435,6 @@ export default function RPADeepDive() {
               ))}
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 8: FAQ */}
@@ -462,8 +448,7 @@ export default function RPADeepDive() {
           </h4>
           {expandedTopics['faq'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['faq'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['faq'] ? 'block' : 'hidden print:block'}`}>
             <div className="space-y-3">
               {[
                 {
@@ -494,7 +479,6 @@ export default function RPADeepDive() {
               ))}
             </div>
           </div>
-        )}
       </div>
 
       {/* Resumo Final */}

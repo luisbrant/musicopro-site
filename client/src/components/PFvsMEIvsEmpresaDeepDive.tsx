@@ -221,8 +221,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['entender'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['entender'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['entender'] ? 'block' : 'hidden print:block'}`}>
             <div className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
               <h5 className="font-semibold text-[#1B4965] mb-2">👤 PF (Pessoa Física)</h5>
               <p className="mb-2">Você trabalha como autônomo, sem empresa. Recebe em seu CPF.</p>
@@ -241,7 +240,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               <p className="text-xs md:text-sm text-[#7F8C8D]"><strong>Quando usar:</strong> Renda alta, quer separação patrimonial, pode contratar.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 2: Calculadora Comparativa */}
@@ -255,8 +253,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['calculadora'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['calculadora'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['calculadora'] ? 'block' : 'hidden print:block'}`}>
             <div>
               <label className="block text-sm font-semibold text-[#1B4965] mb-2">
                 Renda Mensal (R$)
@@ -383,7 +380,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               </ul>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 3: Tabela Comparativa */}
@@ -397,8 +393,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['tabela'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['tabela'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['tabela'] ? 'block' : 'hidden print:block'}`}>
             <div className="overflow-x-auto">
               <table className="w-full text-xs md:text-sm border-collapse">
                 <thead>
@@ -422,7 +417,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               </table>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 4: Vantagens e Desvantagens */}
@@ -436,8 +430,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['vantagens'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['vantagens'] && (
-          <div className="px-4 md:px-6 py-4 space-y-6">
+        <div className={`px-4 md:px-6 py-4 space-y-6 ${expandedTopics['vantagens'] ? 'block' : 'hidden print:block'}`}>
             <div className="grid md:grid-cols-3 gap-4">
               {/* PF */}
               <div>
@@ -497,7 +490,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               </div>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 5: Quando Migrar */}
@@ -511,8 +503,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['migrar'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['migrar'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['migrar'] ? 'block' : 'hidden print:block'}`}>
             <div className="border border-[#E8E3DC] rounded-lg p-4 bg-[#F9F7F4]">
               <h5 className="font-semibold text-[#1B4965] mb-2">PF → MEI</h5>
               <p className="mb-2"><strong>Quando:</strong> Sua renda está entre R$ 3.000-6.750/mês</p>
@@ -542,7 +533,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               <p className="text-xs md:text-sm">Sempre consulte um contador especializado antes de migrar. Cada situação é única e há custos envolvidos.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 6: Recomendações por Perfil */}
@@ -556,8 +546,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           </h4>
           {expandedTopics['recomendacoes'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['recomendacoes'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['recomendacoes'] ? 'block' : 'hidden print:block'}`}>
             {[
               {
                 perfil: 'Músico com Renda Baixa (até R$ 2.500/mês)',
@@ -596,7 +585,6 @@ export default function PFvsMEIvsEmpresaDeepDive() {
               </div>
             ))}
           </div>
-        )}
       </div>
 
       {/* Resumo Final */}

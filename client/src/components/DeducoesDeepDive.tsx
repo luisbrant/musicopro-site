@@ -194,8 +194,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['oQueE'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['oQueE'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['oQueE'] ? 'block' : 'hidden print:block'}`}>
             <p>
               <strong>Dedução fiscal</strong> é uma despesa que você teve para exercer sua profissão e que pode ser descontada da sua renda para calcular o imposto. Quanto maior a dedução, menor o imposto que você paga.
             </p>
@@ -211,7 +210,6 @@ export default function DeducoesDeepDive() {
             </p>
             <p>Sem comprovação (nota fiscal, recibo), a Receita Federal pode rejeitar a dedução e aplicar multa.</p>
           </div>
-        )}
       </div>
 
       {/* Tópico 2: Deduções Permitidas vs Proibidas */}
@@ -225,8 +223,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['permitidas'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['permitidas'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['permitidas'] ? 'block' : 'hidden print:block'}`}>
             {deducoesPermitidas.map((categoria, idx) => (
               <div key={idx} className="border border-[#E8E3DC] rounded-lg p-4">
                 <h5 className="font-semibold text-[#1B4965] mb-3">{categoria.categoria}</h5>
@@ -255,7 +252,6 @@ export default function DeducoesDeepDive() {
               <p className="text-sm md:text-base">A despesa deve estar <strong>diretamente relacionada</strong> à sua atividade profissional. Despesas pessoais (alimentação, moradia 100%, diversão) NÃO são dedutíveis.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 3: Comprovação */}
@@ -269,8 +265,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['comprovacao'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['comprovacao'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50]">
+        <div className={`px-4 md:px-6 py-4 space-y-4 text-sm md:text-base text-[#2C3E50] ${expandedTopics['comprovacao'] ? 'block' : 'hidden print:block'}`}>
             <h5 className="font-semibold text-[#1B4965]">Documentos que Comprovam:</h5>
             <ul className="space-y-2 pl-4">
               <li>✅ <strong>Nota Fiscal</strong> - Melhor comprovação (com CNPJ do fornecedor)</li>
@@ -294,7 +289,6 @@ export default function DeducoesDeepDive() {
               <p>📸 <strong>Fotos:</strong> Fotografe os recibos para backup digital</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 4: Calculadora de Economia */}
@@ -308,8 +302,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['calculadora'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['calculadora'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['calculadora'] ? 'block' : 'hidden print:block'}`}>
             <p className="text-sm md:text-base text-[#2C3E50]">
               Preencha suas despesas mensais para ver quanto você economiza em impostos:
             </p>
@@ -359,7 +352,6 @@ export default function DeducoesDeepDive() {
               <p><strong>Nota:</strong> Este cálculo é apenas ilustrativo. A economia real depende de sua alíquota de IR, que varia conforme sua renda total.</p>
             </div>
           </div>
-        )}
       </div>
 
       {/* Tópico 5: Exemplos Práticos */}
@@ -373,8 +365,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['exemplos'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['exemplos'] && (
-          <div className="px-4 md:px-6 py-4 space-y-6">
+        <div className={`px-4 md:px-6 py-4 space-y-6 ${expandedTopics['exemplos'] ? 'block' : 'hidden print:block'}`}>
             {exemplosDeducoes.map((exemplo, idx) => {
               const totalEx = Object.values(exemplo.deducoes).reduce((a, b) => a + b, 0);
               return (
@@ -401,7 +392,6 @@ export default function DeducoesDeepDive() {
               );
             })}
           </div>
-        )}
       </div>
 
       {/* Tópico 6: Erros Comuns */}
@@ -415,8 +405,7 @@ export default function DeducoesDeepDive() {
           </h4>
           {expandedTopics['erros'] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
-        {expandedTopics['erros'] && (
-          <div className="px-4 md:px-6 py-4 space-y-4">
+        <div className={`px-4 md:px-6 py-4 space-y-4 ${expandedTopics['erros'] ? 'block' : 'hidden print:block'}`}>
             <div className="space-y-3">
               {[
                 {
@@ -453,7 +442,6 @@ export default function DeducoesDeepDive() {
               ))}
             </div>
           </div>
-        )}
       </div>
 
       {/* Resumo Final */}
