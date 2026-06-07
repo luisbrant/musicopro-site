@@ -39,11 +39,14 @@ function Router() {
         </Route>
         <Route path="/instalar" component={AppInstructions} />
 
-        {/* ✅ Guia (conteúdo grátis + ativação do pacote) */}
-        <Route path="/guia" component={Guide} />
+        {/* ✅ Guia (agora unificado, gratuito e aberto a todos) */}
+        <Route path="/guia" component={GuidePro} />
+        <Route path="/guia/:module" component={GuidePro} />
 
-        {/* ✅ Guia PRO completo (Área do Aluno) */}
-        <Route path="/guia-pro" component={GuidePro} />
+        {/* ✅ Redirecionamento da antiga rota /guia-pro para a nova centralizada /guia */}
+        <Route path="/guia-pro">
+          <Redirect to="/guia" />
+        </Route>
 
         {/* ✅ CORREÇÃO: Rotas de Vendas redirecionando para home */}
         <Route path="/vendas">

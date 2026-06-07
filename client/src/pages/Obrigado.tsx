@@ -41,9 +41,9 @@ export default function Obrigado() {
   const handleGoToVip = () => {
     if (email) {
       // Redireciona já passando o e-mail para facilitar
-      window.location.href = `/guia-pro?email=${encodeURIComponent(email)}`;
+      window.location.href = `/guia?email=${encodeURIComponent(email)}`;
     } else {
-      setLocation('/guia-pro');
+      setLocation('/guia');
     }
   };
 

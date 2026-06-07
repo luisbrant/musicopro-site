@@ -14,9 +14,9 @@ export default function Vendas() {
           <Link href="/" className="flex items-center gap-2">
             <Music className="w-8 h-8 text-[#d4af37]" />
             <div>
-              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>
+              <span className="font-bold text-xl leading-none block" style={{ fontFamily: 'Lexend, sans-serif' }}>
                 Músico Pro
-              </h1>
+              </span>
               <p className="text-[10px] uppercase tracking-wider text-[#d4af37] font-bold">Pacote Oficial</p>
             </div>
           </Link>

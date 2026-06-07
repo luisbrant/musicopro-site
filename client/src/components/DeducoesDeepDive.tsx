@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, X, ArrowRight } from 'lucide-react';
+import { Link } from 'wouter';
+import PromoCardApp from './PromoCardApp';
 
 export default function DeducoesDeepDive() {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
@@ -20,6 +22,19 @@ export default function DeducoesDeepDive() {
       ...prev,
       [topic]: !prev[topic]
     }));
+  };
+
+  const handleScrollAndExpand = (topic: string) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topic]: true
+    }));
+    setTimeout(() => {
+      const element = document.getElementById(topic);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const totalDeducoes = Object.values(deducoes).reduce((a, b) => a + b, 0);
@@ -142,8 +157,34 @@ export default function DeducoesDeepDive() {
         </p>
       </div>
 
+      {/* Sumário do Capítulo */}
+      <div className="bg-[#F9F7F4] border border-[#E8E3DC] rounded-xl p-6 shadow-sm">
+        <h4 className="font-extrabold text-[#1B4965] text-lg mb-4 flex items-center gap-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
+          📚 Sumário do Capítulo
+        </h4>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[
+            { id: 'oQueE', label: '1. O que é Dedução Fiscal?' },
+            { id: 'permitidas', label: '2. Deduções Permitidas vs Proibidas' },
+            { id: 'comprovacao', label: '3. Como Comprovar Deduções' },
+            { id: 'calculadora', label: '4. Calculadora de Economia' },
+            { id: 'exemplos', label: '5. Exemplos de Deduções por Perfil' },
+            { id: 'erros', label: '6. Erros Comuns com Deduções' }
+          ].map((topic) => (
+            <button
+              key={topic.id}
+              onClick={() => handleScrollAndExpand(topic.id)}
+              className="text-left text-sm font-semibold text-[#6BA587] hover:text-[#5A9470] hover:underline flex items-center gap-2 py-1 transition"
+            >
+              <span className="text-xs">▶</span>
+              {topic.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Tópico 1: O que é Dedução */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="oQueE" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('oQueE')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -174,7 +215,7 @@ export default function DeducoesDeepDive() {
       </div>
 
       {/* Tópico 2: Deduções Permitidas vs Proibidas */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="permitidas" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('permitidas')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -218,7 +259,7 @@ export default function DeducoesDeepDive() {
       </div>
 
       {/* Tópico 3: Comprovação */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="comprovacao" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('comprovacao')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -257,7 +298,7 @@ export default function DeducoesDeepDive() {
       </div>
 
       {/* Tópico 4: Calculadora de Economia */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="calculadora" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('calculadora')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -322,7 +363,7 @@ export default function DeducoesDeepDive() {
       </div>
 
       {/* Tópico 5: Exemplos Práticos */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="exemplos" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('exemplos')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -364,7 +405,7 @@ export default function DeducoesDeepDive() {
       </div>
 
       {/* Tópico 6: Erros Comuns */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="erros" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('erros')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -425,6 +466,19 @@ export default function DeducoesDeepDive() {
           <li><strong>Organize mensalmente</strong> para não perder nada</li>
           <li><strong>Consulte contador</strong> para situações complexas</li>
         </ol>
+      </div>
+      
+      <PromoCardApp chapterName="deducoes" />
+
+      {/* Linkagem Interna Cruzada */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 border border-gray-200 p-6 rounded-2xl gap-4 my-8">
+          <div>
+              <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Próximo Capítulo</span>
+              <h4 className="font-bold text-[#0c2461] text-lg mt-1" style={{ fontFamily: 'Lexend, sans-serif' }}>PF x MEI x Empresa para Músicos</h4>
+          </div>
+          <Link href="/guia/regimes" className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 text-sm shadow-md w-full sm:w-auto justify-center">
+              Ler Capítulo <ArrowRight size={16} />
+          </Link>
       </div>
     </div>
   );

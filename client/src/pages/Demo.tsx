@@ -1,8 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { ArrowLeft, Lock, Download, Plus, Minus, FileText } from 'lucide-react';
 
 export default function Demo() {
+  useEffect(() => {
+    document.title = "Demonstração do App | Músico Pro";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Experimente a versão de testes do aplicativo Músico Pro e veja como funciona o lançamento de receitas, controle de saldo e gestão de cachê.");
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute("href", "https://musicopro.app.br/demo");
+    }
+  }, []);
+
   const [transactions, setTransactions] = useState([
     { id: 1, desc: 'Cachê Bar do Zé', valor: 450, tipo: 'entrada', data: '15/01' },
     { id: 2, desc: 'Cordas Guitarra', valor: 120, tipo: 'saida', data: '16/01' },

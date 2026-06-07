@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'wouter';
+import { ArrowRight } from 'lucide-react';
+import PromoCardApp from './PromoCardApp';
 
 const GUIDE_PRO_STYLE = `
   .guide-pro-doc {
@@ -606,6 +609,21 @@ export default function GuiaCompleto() {
         <div className="guide-pro-doc">
             <style>{GUIDE_PRO_STYLE}</style>
             <div className="container" dangerouslySetInnerHTML={{ __html: GUIDE_CONTENT }} />
+            
+            <div className="max-w-3xl mx-auto px-4 mt-8">
+                <PromoCardApp chapterName="completo" />
+                
+                {/* Linkagem Interna Cruzada */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 border border-gray-200 p-6 rounded-2xl gap-4 my-8">
+                    <div>
+                        <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Próximo Capítulo</span>
+                        <h4 className="font-bold text-[#0c2461] text-lg mt-1" style={{ fontFamily: 'Lexend, sans-serif' }}>Capítulo 6: Carnê-Leão na Prática</h4>
+                    </div>
+                    <Link href="/guia/carne-leao" className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 text-sm shadow-md w-full sm:w-auto justify-center">
+                        Ler Capítulo <ArrowRight size={16} />
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

@@ -99,7 +99,7 @@ export default function Home() {
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-[#0c2461] tracking-tight">
               Você já é profissional no palco.<br />
-              <span className="text-[#d4af37]">Agora organize a carreira como um.</span>
+              <span className="text-[#d4af37]">Organize sua carreira com o app MúsicoPro.</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-medium leading-relaxed">
               O <strong>app para músicos</strong> definitivo: sistema completo de <strong>gestão financeira musical</strong> com controle de receitas, despesas, <strong>cálculo de imposto</strong>, Carnê-Leão e relatórios.

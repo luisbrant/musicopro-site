@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'wouter';
+import { Link, useRoute, useLocation } from 'wouter';
 import {
   Menu,
   X,
@@ -23,9 +23,9 @@ import {
 // Se não tiver os componentes criados, o código usará placeholders para não quebrar
 // Caso tenha, descomente as importações reais
 import CarneLeaoDeepDive from '@/components/CarneLeaoDeepDive';
-// import DeducoesDeepDive from '@/components/DeducoesDeepDive';
-// import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
-// import RPADeepDive from '@/components/RPADeepDive';
+import DeducoesDeepDive from '@/components/DeducoesDeepDive';
+import PFvsMEIvsEmpresaDeepDive from '@/components/PFvsMEIvsEmpresaDeepDive';
+import RPADeepDive from '@/components/RPADeepDive';
 import Footer from '@/components/Footer';
 import GuiaCompleto from '@/components/GuiaCompleto';
 
@@ -54,15 +54,56 @@ type Status = 'idle' | 'checking' | 'success' | 'inactive' | 'error';
 
 export default function GuidePro() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [, setLocation] = useLocation();
+  const [match, params] = useRoute('/guia/:module?');
+  
+  // O módulo ativo é lido do parâmetro da rota; se vazio ou inválido, padrão é 'completo'
+  const activeModule = (params?.module as 'completo' | 'carne-leao' | 'deducoes' | 'regimes' | 'rpa') || 'completo';
+
   // Inicialização síncrona evita piscar a tela de bloqueio se já tiver acesso
-  const [isLocked, setIsLocked] = useState(() => localStorage.getItem('musicopro_pro') !== 'true');
+  const [isLocked, setIsLocked] = useState(false);
   const [email, setEmail] = useState('');
   const [transaction, setTransaction] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [msg, setMsg] = useState('');
-
-  const [activeModule, setActiveModule] = useState<'completo' | 'carneLeao' | 'deducoes' | 'regimes' | 'rpa'>('completo');
   const emailRef = useRef<HTMLInputElement | null>(null);
+
+  /* =====================================================
+     SEO METADATA BY MODULE
+  ===================================================== */
+  useEffect(() => {
+    let title = "Guia do Músico Autônomo | MúsicoPro Academy";
+    let description = "Acesse gratuitamente o Guia Avançado do Músico Autônomo. Módulos completos sobre Carnê-Leão, deduções dedutíveis, RPA e MEI vs PF.";
+    let canonicalUrl = "https://musicopro.app.br/guia";
+
+    if (activeModule === 'carne-leao') {
+      title = "Carnê-Leão para Músicos: Como Declarar Passo a Passo | MúsicoPro";
+      description = "Aprenda a declarar seus cachês de shows e aulas no Carnê-Leão Web da Receita Federal. Evite a malha fina com nosso tutorial completo.";
+      canonicalUrl = "https://musicopro.app.br/guia/carne-leao";
+    } else if (activeModule === 'deducoes') {
+      title = "Deduções Legais de Livro-Caixa para Músicos | MúsicoPro";
+      description = "Descubra quais despesas você pode deduzir legalmente no Livro-Caixa para pagar menos imposto: transporte, instrumentos, estúdio e mais.";
+      canonicalUrl = "https://musicopro.app.br/guia/deducoes";
+    } else if (activeModule === 'regimes') {
+      title = "Músico Autônomo: CPF ou abrir MEI/CNPJ? | MúsicoPro";
+      description = "Compare a tributação de músico autônomo (Pessoa Física) vs MEI vs Simples Nacional. Saiba qual modelo economiza mais impostos na sua carreira.";
+      canonicalUrl = "https://musicopro.app.br/guia/regimes";
+    } else if (activeModule === 'rpa') {
+      title = "RPA para Músicos: Imposto de Renda e Retenção na Fonte | MúsicoPro";
+      description = "Entenda como funciona o Recibo de Pagamento a Autônomo (RPA) para músicos, quais são os descontos de INSS, ISS/IBS e IRPF na fonte.";
+      canonicalUrl = "https://musicopro.app.br/guia/rpa";
+    }
+
+    document.title = title;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", description);
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute("href", canonicalUrl);
+    }
+  }, [activeModule]);
 
   /* =====================================================
      AUTO-CHECK
@@ -129,7 +170,7 @@ export default function GuidePro() {
 
   const modules = [
     { id: 'completo', title: 'Guia Base 2025', icon: BookOpen },
-    { id: 'carneLeao', title: 'Carnê-Leão na Prática', icon: BarChart3 },
+    { id: 'carne-leao', title: 'Carnê-Leão na Prática', icon: BarChart3 },
     { id: 'deducoes', title: 'Deduções Avançadas', icon: DollarSign },
     { id: 'regimes', title: 'PF x MEI x Empresa', icon: TrendingUp },
     { id: 'rpa', title: 'Retenção (RPA)', icon: AlertCircle },
@@ -139,8 +180,43 @@ export default function GuidePro() {
   const activeModuleData = modules.find(m => m.id === activeModule);
   const ActiveIcon = activeModuleData?.icon;
 
+  // JSON-LD dinâmico estruturado para o Google (SEO E-E-A-T)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": activeModule === 'completo' ? "Guia Essencial do Imposto de Renda para Músicos Autônomos" :
+                activeModule === 'carne-leao' ? "Carnê-Leão para Músicos: Como Declarar Passo a Passo" :
+                activeModule === 'deducoes' ? "Deduções Legais de Livro-Caixa para Músicos" :
+                activeModule === 'regimes' ? "Músico Autônomo: CPF ou abrir MEI/CNPJ?" :
+                "RPA para Músicos: Imposto de Renda e Retenção na Fonte",
+    "description": activeModule === 'completo' ? "Acesse gratuitamente o Guia Avançado do Músico Autônomo. Módulos completos sobre Carnê-Leão, deduções dedutíveis, RPA e MEI vs PF." :
+                   activeModule === 'carne-leao' ? "Aprenda a declarar seus cachês de shows e aulas no Carnê-Leão Web da Receita Federal. Evite a malha fina com nosso tutorial completo." :
+                   activeModule === 'deducoes' ? "Descubra quais despesas você pode deduzir legalmente no Livro-Caixa para pagar menos imposto: transporte, instrumentos, estúdio e mais." :
+                   activeModule === 'regimes' ? "Compare a tributação de músico autônomo (Pessoa Física) vs MEI vs Simples Nacional. Saiba qual modelo economiza mais impostos na sua carreira." :
+                   "Entenda como funciona o Recibo de Pagamento a Autônomo (RPA) para músicos, quais são os descontos de INSS, ISS/IBS e IRPF na fonte.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "MúsicoPro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://musicopro.app.br/favicon.png"
+      }
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "MúsicoPro"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": activeModule === 'completo' ? "https://musicopro.app.br/guia" : `https://musicopro.app.br/guia/${activeModule}`
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-[#0c2461]">
+      <script type="application/ld+json">
+        {JSON.stringify(jsonLd)}
+      </script>
       {/* HEADER */}
       <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -150,7 +226,7 @@ export default function GuidePro() {
             </Link>
             <div className="h-6 w-px bg-gray-200 hidden md:block"></div>
             <div>
-              <h1 className="font-bold text-xl leading-none" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</h1>
+              <span className="font-bold text-xl leading-none block" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</span>
               <p className="text-[10px] uppercase tracking-wider text-[#d4af37] font-bold">Academy</p>
             </div>
           </div>
@@ -159,7 +235,7 @@ export default function GuidePro() {
             <Link href="/"><button className="hover:text-[#d4af37] transition font-medium">Home</button></Link>
             <Link href="/app"><button className="hover:text-[#d4af37] transition font-medium font-bold flex items-center gap-1"><Smartphone size={16} /> Ir para o App</button></Link>
             <div className="h-4 w-px bg-gray-300"></div>
-            <span className="text-xs font-bold bg-[#0c2461] text-white px-3 py-1 rounded-full">ÁREA VIP</span>
+            <span className="text-xs font-bold bg-[#6ba587] text-white px-3 py-1 rounded-full">GUIA GRATUITO</span>
           </nav>
 
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
@@ -174,7 +250,18 @@ export default function GuidePro() {
           <Link href="/"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Home</button></Link>
           <Link href="/app"><button className="w-full text-left px-4 py-2 rounded hover:bg-white/10 transition">Ir para o App</button></Link>
           {!isLocked && modules.map(m => (
-            <button key={m.id} onClick={() => { setActiveModule(m.id); setMobileMenuOpen(false); }} className={`w-full text-left px-4 py-2 rounded transition ${activeModule === m.id ? 'bg-[#d4af37] text-[#0c2461] font-bold' : 'hover:bg-white/10'}`}>
+            <button
+              key={m.id}
+              onClick={() => {
+                if (m.id === 'completo') {
+                  setLocation('/guia');
+                } else {
+                  setLocation(`/guia/${m.id}`);
+                }
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-4 py-2 rounded transition ${activeModule === m.id ? 'bg-[#d4af37] text-[#0c2461] font-bold' : 'hover:bg-white/10'}`}
+            >
               {m.title}
             </button>
           ))}
@@ -280,7 +367,13 @@ export default function GuidePro() {
                 {modules.map(m => (
                   <li
                     key={m.id}
-                    onClick={() => setActiveModule(m.id)}
+                    onClick={() => {
+                      if (m.id === 'completo') {
+                        setLocation('/guia');
+                      } else {
+                        setLocation(`/guia/${m.id}`);
+                      }
+                    }}
                     className={`text-sm px-4 py-3 rounded-lg cursor-pointer transition flex items-center gap-3 ${activeModule === m.id
                       ? 'bg-[#0c2461] text-white font-bold shadow-md'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-[#0c2461]'
@@ -318,21 +411,10 @@ export default function GuidePro() {
               {/* CONTEÚDO */}
               <div className="pro-content">
                 {activeModule === 'completo' && <GuiaCompleto />}
-                {activeModule === 'carneLeao' && <CarneLeaoDeepDive />}
-
-                {activeModule !== 'completo' && activeModule !== 'carneLeao' && (
-                  <div className="prose text-[#0c2461]">
-                    <p className="text-lg">Conteúdo do módulo: <strong>{activeModuleData?.title}</strong></p>
-                    <p>Aqui entrará o material aprofundado sobre este tema em breve.</p>
-                    <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mt-4 flex gap-3 items-start">
-                      <PlayCircle className="w-6 h-6 text-[#d4af37] shrink-0" />
-                      <div>
-                        <p className="font-bold">Em Construção</p>
-                        <p className="text-sm opacity-80">Estamos preparando conteúdos práticos e vídeos detalhados para esta seção.</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {activeModule === 'carne-leao' && <CarneLeaoDeepDive />}
+                {activeModule === 'deducoes' && <DeducoesDeepDive />}
+                {activeModule === 'regimes' && <PFvsMEIvsEmpresaDeepDive />}
+                {activeModule === 'rpa' && <RPADeepDive />}
               </div>
 
               {/* Call to Action Final */}

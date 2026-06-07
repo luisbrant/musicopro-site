@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, Info } from 'lucide-react';
+import PromoCardApp from './PromoCardApp';
 
 export default function RPADeepDive() {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
@@ -14,6 +15,19 @@ export default function RPADeepDive() {
       ...prev,
       [topic]: !prev[topic]
     }));
+  };
+
+  const handleScrollAndExpand = (topic: string) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topic]: true
+    }));
+    setTimeout(() => {
+      const element = document.getElementById(topic);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   // Tabela de alíquotas de retenção 2026 (Isenção R$ 5k)
@@ -76,8 +90,36 @@ export default function RPADeepDive() {
         </p>
       </div>
 
+      {/* Sumário do Capítulo */}
+      <div className="bg-[#F9F7F4] border border-[#E8E3DC] rounded-xl p-6 shadow-sm">
+        <h4 className="font-extrabold text-[#1B4965] text-lg mb-4 flex items-center gap-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
+          📚 Sumário do Capítulo
+        </h4>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[
+            { id: 'oQueE', label: '1. O que é RPA (Retenção de IR)?' },
+            { id: 'quando', label: '2. Quando Ocorre a Retenção?' },
+            { id: 'tabela', label: '3. Tabela de Alíquotas 2026' },
+            { id: 'calculadora', label: '4. Calculadora de Retenção' },
+            { id: 'exemplos', label: '5. Exemplos Práticos' },
+            { id: 'compensacao', label: '6. Como Compensar na Declaração Anual' },
+            { id: 'erros', label: '7. Erros Comuns com RPA' },
+            { id: 'faq', label: '8. Perguntas Frequentes' }
+          ].map((topic) => (
+            <button
+              key={topic.id}
+              onClick={() => handleScrollAndExpand(topic.id)}
+              className="text-left text-sm font-semibold text-[#E07856] hover:text-[#D4A574] hover:underline flex items-center gap-2 py-1 transition"
+            >
+              <span className="text-xs">▶</span>
+              {topic.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Tópico 1: O que é RPA */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="oQueE" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('oQueE')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -117,7 +159,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 2: Quando Ocorre Retenção */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="quando" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('quando')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -155,7 +197,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 3: Tabela de Alíquotas */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="tabela" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('tabela')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -206,7 +248,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 4: Calculadora */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="calculadora" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('calculadora')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -261,7 +303,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 5: Exemplos Práticos */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="exemplos" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('exemplos')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -298,7 +340,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 6: Compensação na Declaração */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="compensacao" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('compensacao')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -358,7 +400,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 7: Erros Comuns */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="erros" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('erros')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -410,7 +452,7 @@ export default function RPADeepDive() {
       </div>
 
       {/* Tópico 8: FAQ */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="faq" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('faq')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -466,6 +508,8 @@ export default function RPADeepDive() {
           <li><strong>Consulte contador</strong> se tiver dúvidas sobre compensação</li>
         </ol>
       </div>
+
+      <PromoCardApp chapterName="rpa" />
     </div>
   );
 }

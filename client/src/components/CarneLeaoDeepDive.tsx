@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'wouter';
+import { ArrowRight } from 'lucide-react';
+import PromoCardApp from './PromoCardApp';
 
 const GUIDE_PRO_STYLE = `
   .guide-pro-doc {
@@ -63,27 +66,21 @@ const CONTENT = `
             </div>
 
             <h2>📚 SUMÁRIO DO CAPÍTULO</h2>
-            <ol>
-                <li>História e Fundamentos Legais</li>
-                <li>Quem Deve Usar (e Quando)</li>
-                <li>Sistema Carnê-Leão Web: Acesso e Navegação</li>
-                <li>Lançamento de Receitas: Passo a Passo Completo</li>
-                <li>Lançamento de Despesas: Guia Definitivo</li>
-                <li>Cálculo do Imposto: Entendendo a Fórmula</li>
-                <li>Geração e Pagamento do DARF</li>
-                <li>Carnê-Leão em Atraso: Regularização</li>
-                <li>Integração com a Declaração Anual</li>
-                <li>15 Exercícios Práticos Resolvidos</li>
-                <li>Erros Mais Comuns (e Como Evitar)</li>
-                <li>Casos Complexos e Situações Especiais</li>
-                <li>Checklist Mensal de Ouro</li>
-                <li>Planilha de Controle Automatizada</li>
-                <li>Perguntas e Respostas Avançadas</li>
+            <ol style="margin-left: 20px; line-height: 2;">
+                <li><a href="#fundamentos" style="color: #667eea; text-decoration: underline;">História e Fundamentos Legais</a></li>
+                <li><a href="#quem-deve-usar" style="color: #667eea; text-decoration: underline;">Quem Deve Usar (e Quando)</a></li>
+                <li><a href="#acesso" style="color: #667eea; text-decoration: underline;">Sistema Carnê-Leão Web: Acesso e Navegação</a></li>
+                <li><a href="#lancamento-receitas" style="color: #667eea; text-decoration: underline;">Lançamento de Receitas: Passo a Passo Completo</a></li>
+                <li><a href="#lancamento-despesas" style="color: #667eea; text-decoration: underline;">Lançamento de Despesas: Guia Definitivo</a></li>
+                <li><a href="#calculo-imposto" style="color: #667eea; text-decoration: underline;">Cálculo do Imposto: Entendendo a Fórmula</a></li>
+                <li><a href="#darf" style="color: #667eea; text-decoration: underline;">Geração e Pagamento do DARF</a></li>
+                <li><a href="#atraso" style="color: #667eea; text-decoration: underline;">Carnê-Leão em Atraso: Regularização</a></li>
+                <li><a href="#integracao" style="color: #667eea; text-decoration: underline;">Integração com a Declaração Anual</a></li>
             </ol>
 
             <div class="page-break"></div>
 
-            <h2>1. HISTÓRIA E FUNDAMENTOS LEGAIS</h2>
+            <h2 id="fundamentos">1. HISTÓRIA E FUNDAMENTOS LEGAIS</h2>
 
             <h3>1.1. O que é o Carnê-Leão?</h3>
             <p>O <strong>Carnê-Leão</strong> é um sistema de <strong>recolhimento mensal obrigatório</strong> do Imposto de Renda instituído pela Receita Federal do Brasil para pessoas físicas que recebem rendimentos de outras pessoas físicas ou de pessoas jurídicas que não efetuam a retenção na fonte.</p>
@@ -121,7 +118,7 @@ const CONTENT = `
                 <p><strong>Importante:</strong> Mesmo quando não há imposto a pagar (resultado R$ 0,00), a obrigação de <strong>lançar</strong> os rendimentos no sistema continua existindo. O Músico Pro facilita todo este controle e preenchimento para você!</p>
             </div>
 
-            <h2>2. QUEM DEVE USAR (E QUANDO)</h2>
+            <h2 id="quem-deve-usar">2. QUEM DEVE USAR (E QUANDO)</h2>
 
             <h3>2.1. Regra Geral</h3>
             <p><strong>Você DEVE usar o Carnê-Leão quando:</strong></p>
@@ -214,7 +211,7 @@ O valor mensal total passou da faixa isenta?
             </ul>
             <p><strong>Exemplo:</strong> Recebeu em março: Lança até 31/março. DARF de março: Paga até último dia útil de abril.</p>
 
-            <h2>3. SISTEMA CARNÊ-LEÃO WEB: ACESSO E NAVEGAÇÃO</h2>
+            <h2 id="acesso">3. SISTEMA CARNÊ-LEÃO WEB: ACESSO E NAVEGAÇÃO</h2>
             <h3>3.1. Onde Acessar</h3>
             <p><strong>URL:</strong> https://cav.receita.fazenda.gov.br</p>
             <p><strong>Caminho:</strong></p>
@@ -239,7 +236,7 @@ O valor mensal total passou da faixa isenta?
 
             <div class="page-break"></div>
 
-            <h2>4. LANÇAMENTO DE RECEITAS: PASSO A PASSO COMPLETO</h2>
+            <h2 id="lancamento-receitas">4. LANÇAMENTO DE RECEITAS: PASSO A PASSO COMPLETO</h2>
 
             <h3>4.1. Conceitos Importantes</h3>
             <p><strong>Receita bruta:</strong> Valor total recebido (antes de qualquer desconto)<br>
@@ -260,7 +257,7 @@ O valor mensal total passou da faixa isenta?
             <p><strong>Situação comum:</strong> Tocou em evento, recebeu R$ 800 em dinheiro vivo.</p>
             <p>A RFB aceita lançamentos mesmo sem comprovante completo. O fundamental é <strong>declarar a renda</strong>.</p>
 
-            <h2>5. LANÇAMENTO DE DESPESAS: GUIA DEFINITIVO</h2>
+            <h2 id="lancamento-despesas">5. LANÇAMENTO DE DESPESAS: GUIA DEFINITIVO</h2>
 
             <h3>5.1. Conceito de Despesa Dedutível</h3>
             <p><strong>Despesa dedutível</strong> é um gasto que:</p>
@@ -304,7 +301,7 @@ Imposto = Base de Cálculo × Alíquota - Parcela a Deduzir
 
             <div class="page-break"></div>
 
-            <h2>6. CÁLCULO DO IMPOSTO: ENTENDENDO A FÓRMULA</h2>
+            <h2 id="calculo-imposto">6. CÁLCULO DO IMPOSTO: ENTENDENDO A FÓRMULA</h2>
 
             <h3>6.1. Fórmula Completa</h3>
             <ol>
@@ -325,7 +322,7 @@ Imposto = Base de Cálculo × Alíquota - Parcela a Deduzir
             <h3>6.5. Por que a "Parcela a Deduzir"?</h3>
             <p>A tabela é <strong>progressiva</strong>, não linear. Você não paga 27,5% sobre tudo. A <strong>parcela a deduzir</strong> simplifica a matemática no final, subtraindo os "créditos" das faixas mais baixas sobre as quais o percentual foi maior do que deveria ser na conta direta.</p>
 
-            <h2>7. GERAÇÃO E PAGAMENTO DO DARF</h2>
+            <h2 id="darf">7. GERAÇÃO E PAGAMENTO DO DARF</h2>
 
             <p><strong>O que é DARF?</strong> DARF = Documento de Arrecadação de Receitas Federais. O "boleto" para pagar o imposto.</p>
             <ul>
@@ -338,16 +335,16 @@ Imposto = Base de Cálculo × Alíquota - Parcela a Deduzir
                 <p>Guarde todo ano seus comprovantes por 5 anos (PDF do DARF e PDF da confirmação bancária).</p>
             </div>
 
-            <h2>8. CARNÊ-LEÃO EM ATRASO: REGULARIZAÇÃO</h2>
+            <h2 id="atraso">8. CARNÊ-LEÃO EM ATRASO: REGULARIZAÇÃO</h2>
             <p>Atrasou? É muito melhor regularizar AGORA pagando juros justos + Multa (20% limite máximo para regularização voluntária) do que ser pego na malha fina por <strong>Omissão de Receitas</strong> e pagar multa punitiva de 75%.</p>
             <p>No site <strong>Sicalc Web</strong> ou no próprio Carnê Leão, os valores atrasados são recalculados com o índice da Taxa Selic automaticamente.</p>
 
-            <h2>9. INTEGRAÇÃO COM A DECLARAÇÃO ANUAL</h2>
+            <h2 id="integracao">9. INTEGRAÇÃO COM A DECLARAÇÃO ANUAL</h2>
 
             <p>Isso é a cereja do bolo! Chegando a época da Declaração de IRPF Anual, ao abrir o Programa gerador do governo, basta selecionar <strong>Importar dados do Carnê-Leão</strong> e todo ou seu sofrimento com relatórios mensais some num clique.</p>
             <p>Ou, caso use o Músico Pro de forma disciplinada, o relatório fornecido pelo App refletirá perfeitamente todas as linhas do fluxo da declaração.</p>
 
-            <h2>10. 15 EXERCÍCIOS PRÁTICOS RESOLVIDOS</h2>
+            <h2 id="exercicios">10. 15 EXERCÍCIOS PRÁTICOS RESOLVIDOS</h2>
             <p>Nesta seção, consolidamos casos que acontecem com os músicos em geral:</p>
 
             <h3>Exercício 6: Múltiplas Fontes Pagadoras</h3>
@@ -474,6 +471,20 @@ export default function CarneLeaoDeepDive() {
                 className="guide-pro-doc bg-transparent p-0 max-w-full"
                 dangerouslySetInnerHTML={{ __html: CONTENT }}
             />
+            <div className="max-w-3xl mx-auto px-4 mt-8 pb-12">
+                <PromoCardApp chapterName="carne-leao" />
+                
+                {/* Linkagem Interna Cruzada */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 border border-gray-200 p-6 rounded-2xl gap-4 my-8">
+                    <div>
+                        <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Próximo Capítulo</span>
+                        <h4 className="font-bold text-[#0c2461] text-lg mt-1" style={{ fontFamily: 'Lexend, sans-serif' }}>Deduções Legais de Livro-Caixa</h4>
+                    </div>
+                    <Link href="/guia/deducoes" className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 text-sm shadow-md w-full sm:w-auto justify-center">
+                        Ler Capítulo <ArrowRight size={16} />
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

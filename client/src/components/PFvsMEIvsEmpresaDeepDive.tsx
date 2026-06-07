@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, TrendingUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, TrendingUp, ArrowRight } from 'lucide-react';
+import { Link } from 'wouter';
+import PromoCardApp from './PromoCardApp';
 
 export default function PFvsMEIvsEmpresaDeepDive() {
   const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>({});
@@ -10,6 +12,19 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       ...prev,
       [topic]: !prev[topic]
     }));
+  };
+
+  const handleScrollAndExpand = (topic: string) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topic]: true
+    }));
+    setTimeout(() => {
+      const element = document.getElementById(topic);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   // Cálculos para cada regime
@@ -169,8 +184,34 @@ export default function PFvsMEIvsEmpresaDeepDive() {
         </p>
       </div>
 
+      {/* Sumário do Capítulo */}
+      <div className="bg-[#F9F7F4] border border-[#E8E3DC] rounded-xl p-6 shadow-sm">
+        <h4 className="font-extrabold text-[#1B4965] text-lg mb-4 flex items-center gap-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
+          📚 Sumário do Capítulo
+        </h4>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[
+            { id: 'entender', label: '1. Entendendo os Três Regimes' },
+            { id: 'calculadora', label: '2. Calculadora Comparativa' },
+            { id: 'tabela', label: '3. Tabela Comparativa Completa' },
+            { id: 'vantagens', label: '4. Vantagens e Desvantagens' },
+            { id: 'migrar', label: '5. Quando Migrar de Regime?' },
+            { id: 'recomendacoes', label: '6. Recomendações por Perfil' }
+          ].map((topic) => (
+            <button
+              key={topic.id}
+              onClick={() => handleScrollAndExpand(topic.id)}
+              className="text-left text-sm font-semibold text-[#1B4965] hover:text-[#2C5F7F] hover:underline flex items-center gap-2 py-1 transition"
+            >
+              <span className="text-xs">▶</span>
+              {topic.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Tópico 1: Entendendo os Regimes */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="entender" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('entender')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -204,7 +245,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       </div>
 
       {/* Tópico 2: Calculadora Comparativa */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="calculadora" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('calculadora')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -346,7 +387,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       </div>
 
       {/* Tópico 3: Tabela Comparativa */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="tabela" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('tabela')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -385,7 +426,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       </div>
 
       {/* Tópico 4: Vantagens e Desvantagens */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="vantagens" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('vantagens')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -460,7 +501,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       </div>
 
       {/* Tópico 5: Quando Migrar */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="migrar" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('migrar')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -505,7 +546,7 @@ export default function PFvsMEIvsEmpresaDeepDive() {
       </div>
 
       {/* Tópico 6: Recomendações por Perfil */}
-      <div className="border border-[#E8E3DC] rounded-lg overflow-hidden">
+      <div id="recomendacoes" style={{ scrollMarginTop: '2rem' }} className="border border-[#E8E3DC] rounded-lg overflow-hidden">
         <button
           onClick={() => toggleTopic('recomendacoes')}
           className="w-full px-4 md:px-6 py-4 bg-[#F9F7F4] hover:bg-[#F0EBE3] flex items-center justify-between transition"
@@ -568,6 +609,19 @@ export default function PFvsMEIvsEmpresaDeepDive() {
           <li><strong>Consulte contador:</strong> Cada caso é único</li>
           <li><strong>Revise anualmente:</strong> Sua situação pode mudar</li>
         </ol>
+      </div>
+
+      <PromoCardApp chapterName="regimes" />
+
+      {/* Linkagem Interna Cruzada */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 border border-gray-200 p-6 rounded-2xl gap-4 my-8">
+          <div>
+              <span className="text-xs uppercase text-gray-400 font-bold tracking-wider">Próximo Capítulo</span>
+              <h4 className="font-bold text-[#0c2461] text-lg mt-1" style={{ fontFamily: 'Lexend, sans-serif' }}>RPA: Imposto de Renda e Retenção</h4>
+          </div>
+          <Link href="/guia/rpa" className="bg-[#0c2461] hover:bg-[#1a3a7a] text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 text-sm shadow-md w-full sm:w-auto justify-center">
+              Ler Capítulo <ArrowRight size={16} />
+          </Link>
       </div>
     </div>
   );

@@ -26,6 +26,17 @@ export default function AppInstructions() {
   };
 
   useEffect(() => {
+    // SEO
+    document.title = "Como Instalar o App Músico Pro | Celular e Computador";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Passo a passo simples de como acessar e instalar o Músico Pro no Android (Google Play), iPhone (Safari) e no computador.");
+    }
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute("href", "https://musicopro.app.br/instalar");
+    }
+
     const isIOSDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     setIsIOS(isIOSDevice);
     setIsAndroid(isAndroidDevice());
@@ -45,7 +56,7 @@ export default function AppInstructions() {
       <header className="sticky top-0 z-40 bg-white border-b border-[#E8E3DC]">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <h1 className="font-bold text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</h1>
+            <span className="font-bold text-xl text-[#0c2461]" style={{ fontFamily: 'Lexend, sans-serif' }}>Músico Pro</span>
           </Link>
           <nav className="hidden md:flex gap-6 text-sm font-medium">
             <Link href="/" className="text-[#0c2461] hover:text-[#d4af37] transition">App</Link>
